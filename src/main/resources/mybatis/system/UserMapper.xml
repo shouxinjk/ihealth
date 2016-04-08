@@ -51,11 +51,23 @@
 		LAST_LOGIN,
 		IP,
 		STATUS,
-		BZ,
 		SKIN,
-		EMAIL,
+		BZ,
 		NUMBER,
-		PHONE
+		PHONE,
+		EMAIL,
+		OPENID,
+		ALIAS,
+		BIRTHDAY,
+		SEX,
+		BIRTHPLACE,
+		LIVEPLACE,
+		MARRIAGESTATUS,
+		CAREER,
+		DEGREE,
+		AVATAR,
+		HEIGHT,
+		WEIGHT
 	</sql>
 	
 	<!-- 字段值 -->
@@ -69,11 +81,23 @@
 		#{LAST_LOGIN},
 		#{IP},
 		#{STATUS},
-		#{BZ},
 		#{SKIN},
-		#{EMAIL},
+		#{BZ},
 		#{NUMBER},
-		#{PHONE}
+		#{PHONE},
+		#{EMAIL},
+		#{OPENID},
+		#{ALIAS},
+		#{BIRTHDAY},
+		#{SEX},
+		#{BIRTHPLACE},
+		#{LIVEPLACE},
+		#{MARRIAGESTATUS},
+		#{CAREER},
+		#{DEGREE},
+		#{AVATAR},
+		#{HEIGHT},
+		#{WEIGHT}
 	</sql>
 	
 	<!-- 判断用户名和密码 -->
