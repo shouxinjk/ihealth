@@ -310,30 +310,38 @@ INSERT INTO `sys_role_fhbutton` VALUES ('f627982cc9d4479dbc03af726dc6ac58', 'de9
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
-  `USER_ID` varchar(100) NOT NULL,
-  `USERNAME` varchar(255) DEFAULT NULL,
-  `PASSWORD` varchar(255) DEFAULT NULL,
-  `NAME` varchar(255) DEFAULT NULL,
-  `RIGHTS` varchar(255) DEFAULT NULL,
-  `ROLE_ID` varchar(100) DEFAULT NULL,
-  `LAST_LOGIN` varchar(255) DEFAULT NULL,
-  `IP` varchar(15) DEFAULT NULL,
-  `STATUS` varchar(32) DEFAULT NULL,
+  `USER_ID` varchar(100) NOT NULL COMMENT '用户id',
+  `USERNAME` varchar(255) DEFAULT NULL COMMENT '用户名',
+  `PASSWORD` varchar(255) DEFAULT NULL COMMENT '密码',
+  `NAME` varchar(255) DEFAULT NULL COMMENT '姓名',
+  `RIGHTS` varchar(255) DEFAULT NULL COMMENT '权限',
+  `ROLE_ID` varchar(100) DEFAULT NULL COMMENT '角色id',
+  `LAST_LOGIN` varchar(255) DEFAULT NULL COMMENT '最后登录时间',
+  `IP` varchar(15) DEFAULT NULL COMMENT '用户登录ip地址',
+  `STATUS` varchar(32) DEFAULT NULL COMMENT '状态',
   `BZ` varchar(255) DEFAULT NULL,
-  `SKIN` varchar(100) DEFAULT NULL,
-  `EMAIL` varchar(32) DEFAULT NULL,
+  `SKIN` varchar(100) DEFAULT NULL COMMENT '皮肤',
+  `EMAIL` varchar(32) DEFAULT NULL COMMENT '电子邮件',
   `NUMBER` varchar(100) DEFAULT NULL,
-  `PHONE` varchar(32) DEFAULT NULL,
+  `PHONE` varchar(32) DEFAULT NULL COMMENT '电话',
+  `OPENID` varchar(255) DEFAULT NULL COMMENT '对应微信OPENID',
+  `ALIAS` varchar(255) DEFAULT NULL COMMENT '昵称',
+  `BIRTHDAY` varchar(255) DEFAULT NULL COMMENT '生日',
+  `SEX` varchar(255) DEFAULT NULL COMMENT '性别',
+  `BIRTHPLACE` varchar(255) DEFAULT NULL COMMENT '出生地',
+  `LIVEPLACE` varchar(255) DEFAULT NULL COMMENT '居住地',
+  `MARRIAGESTATUS` varchar(255) DEFAULT NULL COMMENT '婚姻状态',
+  `CAREER` varchar(255) DEFAULT NULL COMMENT '职业',
+  `DEGREE` varchar(255) DEFAULT NULL COMMENT '学历',
+  `AVATAR` varchar(255) DEFAULT NULL COMMENT '用户图像',
+  `HEIGHT` int(11) DEFAULT NULL COMMENT '身高',
+  `WEIGHT` int(11) DEFAULT NULL COMMENT '体重',
   PRIMARY KEY (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of sys_user
--- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'de41b7fb99201d8334c23c014db35ecd92df81bc', '系统管理员', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2016-01-27 23:45:53', '127.0.0.1', '0', '最高统治者', 'default', 'QQ313596790@main.com', '001', '18788888888');
-INSERT INTO `sys_user` VALUES ('69177258a06e4927b4639ab1684c3320', 'san', '47c4a8dc64ac2f0bb46bbd8813b037c9718f9349', '三', '', '3264c8e83d0248bb9e3ea6195b4c0216', '2016-01-25 16:25:36', '192.168.1.102', '0', '111', 'default', '978336446@qq.com', '333', '13562202556');
-INSERT INTO `sys_user` VALUES ('9991f4d7782a4ccfb8a65bd96ea7aafa', 'lisi', '2612ade71c1e48cd7150b5f4df152faa699cedfe', '李四', '', '3264c8e83d0248bb9e3ea6195b4c0216', '2016-01-06 01:24:26', '127.0.0.1', '0', '小李', 'default', '313596790@qq.com', '1102', '13566233663');
-INSERT INTO `sys_user` VALUES ('e29149962e944589bb7da23ad18ddeed', 'zhangsan', 'c2da1419caf053885c492e10ebde421581cdc03f', '张三', '', '3264c8e83d0248bb9e3ea6195b4c0216', '', '', '0', '小张', 'default', 'zhangsan@www.com', '1101', '2147483647');
+/*Data for the table `sys_user` */
+
+insert  into `sys_user`(`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS`,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`,`OPENID`,`ALIAS`,`BIRTHDAY`,`SEX`,`BIRTHPLACE`,`LIVEPLACE`,`MARRIAGESTATUS`,`CAREER`,`DEGREE`,`AVATAR`,`HEIGHT`,`WEIGHT`) values ('1','admin','de41b7fb99201d8334c23c014db35ecd92df81bc','系统管理员','1133671055321055258374707980945218933803269864762743594642571294','1','2016-04-07 16:16:52','0:0:0:0:0:0:0:1','0','最高统治者',NULL,'QQ313596790@main.com','001','18788888888',NULL,'系统管理员',NULL,'男','成都','成都','未婚','高级架构师','本科','img/logo.jpg',188,50),('69177258a06e4927b4639ab1684c3320','san','47c4a8dc64ac2f0bb46bbd8813b037c9718f9349','三','3264c8e83d0248bb9e3ea6195b4c0216',NULL,'2016-04-07 16:28:44	','0:0:0:0:0:0:0:1','0','111',NULL,'978336446@qq.com','333','13562202556',NULL,'测试用户',NULL,'男','成都','成都','已婚','程序员','专科','img/logo.jpg',188,60),('9991f4d7782a4ccfb8a65bd96ea7aafa','lisi','2612ade71c1e48cd7150b5f4df152faa699cedfe','李四','3264c8e83d0248bb9e3ea6195b4c0216',NULL,'2016-01-06 01:24:26','127.0.0.1','0','小李',NULL,'313596790@qq.com','1102','13566233663',NULL,'李',NULL,'男','上海','上海','未婚','销售','博士','img/logo.jpg',198,67),('a',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('e29149962e944589bb7da23ad18ddeed','zhangsan','c2da1419caf053885c492e10ebde421581cdc03f','张三','3264c8e83d0248bb9e3ea6195b4c0216','0',NULL,NULL,NULL,'校长',NULL,'zhangsan@www.com','1101','2147483647',NULL,'张',NULL,'男','北京','北京','未婚','个体','小学','img/logo.jpg',178,56);
 
 -- ----------------------------
 -- Table structure for tb_pictures
