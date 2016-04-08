@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DiseaseCategoryMapper">
+
+	<resultMap type="DiseaseCategory" id="diseaseCategoryResultMap">
+		<id column="DISEASECATEGORY_ID" property="DISEASECATEGORY_ID" />
+		<result column="NAME" property="NAME"/>
+		<result column="DESCRIPTION" property="DESCRIPTION"/>
+		<result column="CREATEBY" property="CREATEBY"/>
+		<result column="CREATEON" property="CREATEON"/>
+	</resultMap>
+	
+	<resultMap type="DiseaseCategory" id="diseaseCategoryAndDiseaseResultMap">
+		<id column="DISEASECATEGORY_ID" property="DISEASECATEGORY_ID" />
+		<result column="NAME" property="NAME"/>
+		<result column="DESCRIPTION" property="DESCRIPTION"/>
+		<result column="CREATEBY" property="CREATEBY"/>
+		<result column="CREATEON" property="CREATEON"/>
+		<collection property="diseases" ofType="Disease">
+			<id column="DISEASE_ID" property="DISEASE_ID" />
+			<result column="NAME" property="NAME"/>
+			<result column="DESCRIPTION" property="DESCRIPTION"/>
+			<result column="ISINHERITABLE" property="ISINHERITABLE"/>
+			<result column="ISHIGHINCIDENCE" property="ISHIGHINCIDENCE"/>
+			<result column="CREATEBY" property="CREATEBY"/>
+			<result column="CREATEON" property="CREATEON"/>
+		</collection>
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		ADMIN_DISEASECATEGORY
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		NAME,	
+		DESCRIPTION,	
+		CREATEBY,	
+		CREATEON,	
+		DISEASECATEGORY_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{NAME},	
+		#{DESCRIPTION},	
+		#{CREATEBY},	
+		#{CREATEON},	
+		#{DISEASECATEGORY_ID}
+	</sql>
+	
+	<select id="listSubDiseaseCategorybyParentID" parameterType="java.lang.String" resultMap="diseaseCategoryResultMap">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include> 
+		where DISEASECATEGORY_ID=#{parentid} order by name
+	</select>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			DISEASECATEGORY_ID = #{DISEASECATEGORY_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			NAME = #{NAME},
+			DESCRIPTION = #{DESCRIPTION},
+			CREATEBY = #{CREATEBY},
+			CREATEON = #{CREATEON},
+		DISEASECATEGORY_ID = DISEASECATEGORY_ID
+		where 
+		DISEASECATEGORY_ID = #{DISEASECATEGORY_ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			DISEASECATEGORY_ID = #{DISEASECATEGORY_ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			DISEASECATEGORY_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- shouxin -->
+</mapper>
