@@ -65,6 +65,57 @@
 											<td style="width:79px;text-align: right;padding-top: 13px;">邮箱:</td>
 											<td><input type="email" name="EMAIL" id="EMAIL"  value="${pd.EMAIL }" maxlength="32" title="邮箱" onblur="hasE('${pd.USERNAME }')" style="width:98%;" disabled="disabled"/></td>
 										</tr>
+										
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">生日:</td>
+											<td><input type="text" name="BIRTHDAY" id="BIRTHDAY"  value="${pd.BIRTHDAY }" maxlength="32" title="生日" style="width:98%;"/></td>
+										</tr>
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">性别:</td>
+											<td><input type="text" name="SEX" id="SEX"  value="${pd.SEX }" maxlength="32" title="性别" style="width:98%;"/></td>
+										</tr>
+										
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">昵称:</td>
+											<td><input type="text" name="ALIAS" id="ALIAS"  value="${pd.ALIAS }" maxlength="32" title="昵称" style="width:98%;"/></td>
+										</tr>
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">出生地:</td>
+											<td><input type="text" name="BIRTHPLACE" id="BIRTHPLACE"  value="${pd.BIRTHPLACE }" maxlength="32" title="出生地" style="width:98%;"/></td>
+										</tr>
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">居住地:</td>
+											<td><input type="text" name="LIVEPLACE" id="LIVEPLACE"  value="${pd.LIVEPLACE }" maxlength="32" title="居住地" style="width:98%;"/></td>
+										</tr>
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">婚姻状态:</td>
+											<td><input type="text" name="MARRIAGESTATUS" id="MARRIAGESTATUS"  value="${pd.MARRIAGESTATUS }" maxlength="32" title="婚姻状态" style="width:98%;"/></td>
+										</tr>
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">职业:</td>
+											<td><input type="text" name="CAREER" id="CAREER"  value="${pd.CAREER }" maxlength="32"  title="职业" style="width:98%;"/></td>
+										</tr>
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">学历:</td>
+											<td><input type="text" name="DEGREE" id="DEGREE"  value="${pd.DEGREE }" maxlength="32" title="学历" style="width:98%;"/></td>
+										</tr>
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">用户图像:</td>
+											<td><input type="text" name="AVATAR" id="AVATAR"  value="${pd.AVATAR }" maxlength="32" title="用户图像" style="width:98%;"/></td>
+										</tr>
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">身高:</td>
+											<td><input type="text" name="HEIGHT" id="HEIGHT"  value="${pd.HEIGHT }" maxlength="32" title="身高" style="width:98%;"/></td>
+										</tr>
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">体重:</td>
+											<td><input type="text" name="WEIGHT" id="WEIGHT"  value="${pd.WEIGHT }" maxlength="32" title="体重" style="width:98%;"/></td>
+										</tr>
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">备注:</td>
+											<td><input type="text" name="BZ" id="BZ"value="${pd.BZ }" placeholder="这里输入备注" maxlength="64" title="备注" style="width:98%;"/></td>
+										</tr>
+										
 										<tr>
 											<td style="width:79px;text-align: right;padding-top: 13px;">备注:</td>
 											<td><input type="text" name="BZ" id="BZ"value="${pd.BZ }"  maxlength="64" title="备注" style="width:98%;" disabled="disabled"/></td>

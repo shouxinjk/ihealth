@@ -77,6 +77,18 @@
 									<th class="center"><i class="ace-icon fa fa-envelope-o"></i>邮箱</th>
 									<th class="center"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>最近登录</th>
 									<th class="center">上次登录IP</th>
+									<th class="center">电话</th>
+									<th class="center">昵称</th>
+									<th class="center">生日</th>
+									<th class="center">性别</th>
+									<th class="center">出生地</th>
+									<th class="center">居住地</th>
+									<th class="center">婚姻状态</th>
+									<th class="center">职业</th>
+									<th class="center">学历</th>
+									<th class="center">用户头像地址</th>
+									<th class="center">身高</th>
+									<th class="center">体重</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -102,6 +114,18 @@
 											<td class="center"><a title="发送电子邮件" style="text-decoration:none;cursor:pointer;" <c:if test="${QX.email == 1 }">onclick="sendEmail('${user.EMAIL }');"</c:if>>${user.EMAIL }&nbsp;<i class="ace-icon fa fa-envelope-o"></i></a></td>
 											<td class="center">${user.LAST_LOGIN}</td>
 											<td class="center">${user.IP}</td>
+											<td class="center">${user.PHONE}</td>
+											<td class="center">${user.ALIAS}</td>
+											<td class="center">${user.BIRTHDAY}</td>
+											<td class="center">${user.SEX}</td>
+											<td class="center">${user.BIRTHPLACE}</td>
+											<td class="center">${user.LIVEPLACE}</td>
+											<td class="center">${user.MARRIAGESTATUS}</td>
+											<td class="center">${user.CAREER}</td>
+											<td class="center">${user.DEGREE}</td>
+											<td class="center">${user.AVATAR}</td>
+											<td class="center">${user.HEIGHT}</td>
+											<td class="center">${user.WEIGHT}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
@@ -180,13 +204,13 @@
 									</c:if>
 									<c:if test="${QX.cha == 0 }">
 										<tr>
-											<td colspan="10" class="center">您无权查看</td>
+											<td colspan="22" class="center">您无权查看</td>
 										</tr>
 									</c:if>
 								</c:when>
 								<c:otherwise>
 									<tr class="main_info">
-										<td colspan="10" class="center">没有相关数据</td>
+										<td colspan="22" class="center">没有相关数据</td>
 									</tr>
 								</c:otherwise>
 							</c:choose>
@@ -262,7 +286,7 @@ function delUser(userId,msg){
 			top.jzts();
 			var url = "<%=basePath%>user/deleteU.do?USER_ID="+userId+"&tm="+new Date().getTime();
 			$.get(url,function(data){
-				nextPage(${page.currentPage});
+				nextPage('${page.currentPage}');
 			});
 		};
 	});
@@ -283,7 +307,7 @@ function add(){
 				 top.jzts();
 				 setTimeout("self.location=self.location",100);
 			 }else{
-				 nextPage(${page.currentPage});
+				 nextPage('${page.currentPage}');
 			 }
 		}
 		diag.close();
@@ -302,7 +326,7 @@ function editUser(user_id){
 	 diag.Height = 510;
 	 diag.CancelEvent = function(){ //关闭事件
 		 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-			nextPage(${page.currentPage});
+			nextPage('${page.currentPage}');
 		}
 		diag.close();
 	 };
@@ -359,7 +383,7 @@ function makeAll(msg){
 						cache: false,
 						success: function(data){
 							 $.each(data.list, function(i, list){
-									nextPage(${page.currentPage});
+									nextPage('${page.currentPage}');
 							 });
 						}
 					});
@@ -487,7 +511,7 @@ function fromExcel(){
 				 top.jzts();
 				 setTimeout("self.location.reload()",100);
 			 }else{
-				 nextPage(${page.currentPage});
+				 nextPage('${page.currentPage}');
 			 }
 		}
 		diag.close();
