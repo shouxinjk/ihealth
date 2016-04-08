@@ -48,6 +48,10 @@
 								<td><input class="span10 date-picker" name="CREATEON" id="CREATEON" value="${pd.CREATEON}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="创建记录时间" title="创建记录时间" style="width:98%;"/></td>
 							</tr>
 							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">上级列表id:</td>
+								<td><input type="text" name="PARENT_ID" id="PARENT_ID" value="${pd.PARENT_ID}" maxlength="255" placeholder="这里输入上级列表id" title="上级列表id" style="width:98%;"/></td>
+							</tr>
+							<tr>
 								<td style="text-align: center;" colspan="10">
 									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
 									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
@@ -124,6 +128,16 @@
 		            time:2
 		        });
 				$("#CREATEON").focus();
+			return false;
+			}
+			if($("#PARENT_ID").val()==""){
+				$("#PARENT_ID").tips({
+					side:3,
+		            msg:'请输入上级列表id',
+		            bg:'#AE81FF',
+		            time:2
+		        });
+				$("#PARENT_ID").focus();
 			return false;
 			}
 			$("#Form").submit();

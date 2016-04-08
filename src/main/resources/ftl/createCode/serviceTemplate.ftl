@@ -24,7 +24,7 @@ public class ${objectName}Service implements ${objectName}Manager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	//@Override
 	public void save(PageData pd)throws Exception{
 		dao.save("${objectName}Mapper.save", pd);
 	}
@@ -33,7 +33,7 @@ public class ${objectName}Service implements ${objectName}Manager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	//@Override
 	public void delete(PageData pd)throws Exception{
 		dao.delete("${objectName}Mapper.delete", pd);
 	}
@@ -42,7 +42,7 @@ public class ${objectName}Service implements ${objectName}Manager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	//@Override
 	public void edit(PageData pd)throws Exception{
 		dao.update("${objectName}Mapper.edit", pd);
 	}
@@ -51,7 +51,7 @@ public class ${objectName}Service implements ${objectName}Manager{
 	 * @param page
 	 * @throws Exception
 	 */
-	@Override
+	//@Override
 	@SuppressWarnings("unchecked")
 	public List<PageData> list(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("${objectName}Mapper.datalistPage", page);
@@ -61,7 +61,7 @@ public class ${objectName}Service implements ${objectName}Manager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	//@Override
 	@SuppressWarnings("unchecked")
 	public List<PageData> listAll(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("${objectName}Mapper.listAll", pd);
@@ -71,7 +71,7 @@ public class ${objectName}Service implements ${objectName}Manager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	//@Override
 	public PageData findById(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("${objectName}Mapper.findById", pd);
 	}
@@ -80,7 +80,7 @@ public class ${objectName}Service implements ${objectName}Manager{
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
 	 */
-	@Override
+	//@Override
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("${objectName}Mapper.deleteAll", ArrayDATA_IDS);
 	}

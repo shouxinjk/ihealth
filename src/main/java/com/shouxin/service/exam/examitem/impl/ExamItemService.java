@@ -24,7 +24,6 @@ public class ExamItemService implements ExamItemManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
 	public void save(PageData pd)throws Exception{
 		dao.save("ExamItemMapper.save", pd);
 	}
@@ -33,7 +32,6 @@ public class ExamItemService implements ExamItemManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
 	public void delete(PageData pd)throws Exception{
 		dao.delete("ExamItemMapper.delete", pd);
 	}
@@ -42,7 +40,6 @@ public class ExamItemService implements ExamItemManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
 	public void edit(PageData pd)throws Exception{
 		dao.update("ExamItemMapper.edit", pd);
 	}
@@ -51,7 +48,6 @@ public class ExamItemService implements ExamItemManager{
 	 * @param page
 	 * @throws Exception
 	 */
-	@Override
 	@SuppressWarnings("unchecked")
 	public List<PageData> list(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("ExamItemMapper.datalistPage", page);
@@ -61,7 +57,6 @@ public class ExamItemService implements ExamItemManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
 	@SuppressWarnings("unchecked")
 	public List<PageData> listAll(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("ExamItemMapper.listAll", pd);
@@ -71,7 +66,6 @@ public class ExamItemService implements ExamItemManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
 	public PageData findById(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("ExamItemMapper.findById", pd);
 	}
@@ -80,7 +74,6 @@ public class ExamItemService implements ExamItemManager{
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
 	 */
-	@Override
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("ExamItemMapper.deleteAll", ArrayDATA_IDS);
 	}

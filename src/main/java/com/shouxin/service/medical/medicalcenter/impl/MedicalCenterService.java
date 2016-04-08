@@ -24,7 +24,7 @@ public class MedicalCenterService implements MedicalCenterManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void save(PageData pd)throws Exception{
 		dao.save("MedicalCenterMapper.save", pd);
 	}
@@ -33,7 +33,7 @@ public class MedicalCenterService implements MedicalCenterManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void delete(PageData pd)throws Exception{
 		dao.delete("MedicalCenterMapper.delete", pd);
 	}
@@ -42,7 +42,7 @@ public class MedicalCenterService implements MedicalCenterManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void edit(PageData pd)throws Exception{
 		dao.update("MedicalCenterMapper.edit", pd);
 	}
@@ -51,7 +51,7 @@ public class MedicalCenterService implements MedicalCenterManager{
 	 * @param page
 	 * @throws Exception
 	 */
-	@Override
+	
 	@SuppressWarnings("unchecked")
 	public List<PageData> list(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("MedicalCenterMapper.datalistPage", page);
@@ -61,7 +61,7 @@ public class MedicalCenterService implements MedicalCenterManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	@SuppressWarnings("unchecked")
 	public List<PageData> listAll(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("MedicalCenterMapper.listAll", pd);
@@ -71,7 +71,7 @@ public class MedicalCenterService implements MedicalCenterManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public PageData findById(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("MedicalCenterMapper.findById", pd);
 	}
@@ -80,7 +80,7 @@ public class MedicalCenterService implements MedicalCenterManager{
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("MedicalCenterMapper.deleteAll", ArrayDATA_IDS);
 	}

@@ -3,15 +3,17 @@ package com.shouxin.entity.admin;
 import java.sql.Date;
 
 public class Disease {
-	private String DISEASE_ID;// varchar(100) NOT NULL,
-	private String NAME;// varchar(255) DEFAULT NULL COMMENT '名称',
-	private String DESCRIPTION;// varchar(255) DEFAULT NULL COMMENT '描述',
-	private int ISINHERITABLE;// int(11) NOT NULL COMMENT '是否遗传倾向',
-	private int ISHIGHINCIDENCE;// int(11) NOT NULL COMMENT '是否高发',
-	private String CREATEBY;// varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
-	private Date CREATEON;// varchar(32) DEFAULT NULL COMMENT '创建记录时间',
-	private DiseaseCategory diseaseCategory;
+	private String DISEASE_ID; // varchar(100) NOT NULL,
+	private String NAME; // varchar(255) DEFAULT NULL COMMENT '名称',
+	private String DESCRIPTION; // varchar(255) DEFAULT NULL COMMENT '描述',
+	private int ISINHERITABLE; // int(11) NOT NULL COMMENT '是否遗传倾向',
+	private int ISHIGHINCIDENCE; // int(11) NOT NULL COMMENT '是否高发',
+	private String CREATEBY; // varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
+	private Date CREATEON; // varchar(32) DEFAULT NULL COMMENT '创建记录时间',
+	
 
+
+	
 	public String getDISEASE_ID() {
 		return DISEASE_ID;
 	}
@@ -68,12 +70,6 @@ public class Disease {
 		CREATEON = cREATEON;
 	}
 
-	public DiseaseCategory getDiseaseCategory() {
-		return diseaseCategory;
-	}
 
-	public void setDiseaseCategory(DiseaseCategory diseaseCategory) {
-		this.diseaseCategory = diseaseCategory;
-	}
 
 }

@@ -27,7 +27,7 @@ import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
 /** 
  * 说明：疾病分类
  * 创建人：shouxin
- * 创建时间：2016-04-07
+ * 创建时间：2016-04-08
  */
 @Controller
 @RequestMapping(value="/diseasecategory")
@@ -111,6 +111,9 @@ public class DiseaseCategoryController extends BaseController {
 		return mv;
 	}
 	
+	
+	
+	
 	/**去新增页面
 	 * @param
 	 * @throws Exception
@@ -185,6 +188,7 @@ public class DiseaseCategoryController extends BaseController {
 		titles.add("描述");	//2
 		titles.add("创建记录员工id");	//3
 		titles.add("创建记录时间");	//4
+		titles.add("上级列表id");	//5
 		dataMap.put("titles", titles);
 		List<PageData> varOList = diseasecategoryService.listAll(pd);
 		List<PageData> varList = new ArrayList<PageData>();
@@ -194,6 +198,7 @@ public class DiseaseCategoryController extends BaseController {
 			vpd.put("var2", varOList.get(i).getString("DESCRIPTION"));	//2
 			vpd.put("var3", varOList.get(i).getString("CREATEBY"));	//3
 			vpd.put("var4", varOList.get(i).getString("CREATEON"));	//4
+			vpd.put("var5", varOList.get(i).getString("PARENT_ID"));	//5
 			varList.add(vpd);
 		}
 		dataMap.put("varList", varList);

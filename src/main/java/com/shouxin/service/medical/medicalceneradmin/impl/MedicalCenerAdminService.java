@@ -24,7 +24,7 @@ public class MedicalCenerAdminService implements MedicalCenerAdminManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void save(PageData pd)throws Exception{
 		dao.save("MedicalCenerAdminMapper.save", pd);
 	}
@@ -33,7 +33,7 @@ public class MedicalCenerAdminService implements MedicalCenerAdminManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void delete(PageData pd)throws Exception{
 		dao.delete("MedicalCenerAdminMapper.delete", pd);
 	}
@@ -42,7 +42,7 @@ public class MedicalCenerAdminService implements MedicalCenerAdminManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void edit(PageData pd)throws Exception{
 		dao.update("MedicalCenerAdminMapper.edit", pd);
 	}
@@ -51,7 +51,7 @@ public class MedicalCenerAdminService implements MedicalCenerAdminManager{
 	 * @param page
 	 * @throws Exception
 	 */
-	@Override
+	
 	@SuppressWarnings("unchecked")
 	public List<PageData> list(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("MedicalCenerAdminMapper.datalistPage", page);
@@ -61,7 +61,7 @@ public class MedicalCenerAdminService implements MedicalCenerAdminManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	@SuppressWarnings("unchecked")
 	public List<PageData> listAll(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("MedicalCenerAdminMapper.listAll", pd);
@@ -71,7 +71,7 @@ public class MedicalCenerAdminService implements MedicalCenerAdminManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public PageData findById(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("MedicalCenerAdminMapper.findById", pd);
 	}
@@ -80,7 +80,7 @@ public class MedicalCenerAdminService implements MedicalCenerAdminManager{
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("MedicalCenerAdminMapper.deleteAll", ArrayDATA_IDS);
 	}

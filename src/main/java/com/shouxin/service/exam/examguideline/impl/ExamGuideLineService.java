@@ -24,7 +24,6 @@ public class ExamGuideLineService implements ExamGuideLineManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
 	public void save(PageData pd)throws Exception{
 		dao.save("ExamGuideLineMapper.save", pd);
 	}
@@ -33,7 +32,6 @@ public class ExamGuideLineService implements ExamGuideLineManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
 	public void delete(PageData pd)throws Exception{
 		dao.delete("ExamGuideLineMapper.delete", pd);
 	}
@@ -42,7 +40,6 @@ public class ExamGuideLineService implements ExamGuideLineManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
 	public void edit(PageData pd)throws Exception{
 		dao.update("ExamGuideLineMapper.edit", pd);
 	}
@@ -51,7 +48,6 @@ public class ExamGuideLineService implements ExamGuideLineManager{
 	 * @param page
 	 * @throws Exception
 	 */
-	@Override
 	@SuppressWarnings("unchecked")
 	public List<PageData> list(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("ExamGuideLineMapper.datalistPage", page);
@@ -61,7 +57,6 @@ public class ExamGuideLineService implements ExamGuideLineManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
 	@SuppressWarnings("unchecked")
 	public List<PageData> listAll(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("ExamGuideLineMapper.listAll", pd);
@@ -71,7 +66,6 @@ public class ExamGuideLineService implements ExamGuideLineManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
 	public PageData findById(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("ExamGuideLineMapper.findById", pd);
 	}
@@ -80,7 +74,6 @@ public class ExamGuideLineService implements ExamGuideLineManager{
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
 	 */
-	@Override
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("ExamGuideLineMapper.deleteAll", ArrayDATA_IDS);
 	}

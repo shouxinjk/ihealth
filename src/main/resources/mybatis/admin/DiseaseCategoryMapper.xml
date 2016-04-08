@@ -2,12 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="DiseaseCategoryMapper">
 
-	<resultMap type="DiseaseCategory" id="diseaseCategoryResultMap">
+<resultMap type="DiseaseCategory" id="diseaseCategoryResultMap">
 		<id column="DISEASECATEGORY_ID" property="DISEASECATEGORY_ID" />
 		<result column="NAME" property="NAME"/>
 		<result column="DESCRIPTION" property="DESCRIPTION"/>
 		<result column="CREATEBY" property="CREATEBY"/>
 		<result column="CREATEON" property="CREATEON"/>
+		<result column="PARENT_ID" property="PARENT_ID"/>
 	</resultMap>
 	
 	<resultMap type="DiseaseCategory" id="diseaseCategoryAndDiseaseResultMap">
@@ -16,6 +17,7 @@
 		<result column="DESCRIPTION" property="DESCRIPTION"/>
 		<result column="CREATEBY" property="CREATEBY"/>
 		<result column="CREATEON" property="CREATEON"/>
+		<result column="PARENT_ID" property="PARENT_ID"/>
 		<collection property="diseases" ofType="Disease">
 			<id column="DISEASE_ID" property="DISEASE_ID" />
 			<result column="NAME" property="NAME"/>
@@ -38,6 +40,7 @@
 		DESCRIPTION,	
 		CREATEBY,	
 		CREATEON,	
+		PARENT_ID,	
 		DISEASECATEGORY_ID
 	</sql>
 	
@@ -47,15 +50,17 @@
 		#{DESCRIPTION},	
 		#{CREATEBY},	
 		#{CREATEON},	
+		#{PARENT_ID},	
 		#{DISEASECATEGORY_ID}
 	</sql>
 	
+	<!-- 通过id获取子级列表 -->
 	<select id="listSubDiseaseCategorybyParentID" parameterType="java.lang.String" resultMap="diseaseCategoryResultMap">
 		select 
 		<include refid="Field"></include> 
 		from 
 		<include refid="tableName"></include> 
-		where DISEASECATEGORY_ID=#{parentid} order by name
+		where PARENT_ID=#{parentID} order by name
 	</select>
 	
 	<!-- 新增-->
@@ -86,6 +91,7 @@
 			DESCRIPTION = #{DESCRIPTION},
 			CREATEBY = #{CREATEBY},
 			CREATEON = #{CREATEON},
+			PARENT_ID = #{PARENT_ID},
 		DISEASECATEGORY_ID = DISEASECATEGORY_ID
 		where 
 		DISEASECATEGORY_ID = #{DISEASECATEGORY_ID}

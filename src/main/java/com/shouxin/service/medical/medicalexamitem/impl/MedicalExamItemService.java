@@ -26,7 +26,7 @@ public class MedicalExamItemService implements MedicalExamItemManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void save(PageData pd)throws Exception{
 		dao.save("MedicalExamItemMapper.save", pd);
 	}
@@ -35,7 +35,7 @@ public class MedicalExamItemService implements MedicalExamItemManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void delete(PageData pd)throws Exception{
 		dao.delete("MedicalExamItemMapper.delete", pd);
 	}
@@ -44,7 +44,7 @@ public class MedicalExamItemService implements MedicalExamItemManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void edit(PageData pd)throws Exception{
 		dao.update("MedicalExamItemMapper.edit", pd);
 	}
@@ -53,7 +53,7 @@ public class MedicalExamItemService implements MedicalExamItemManager{
 	 * @param page
 	 * @throws Exception
 	 */
-	@Override
+	
 	@SuppressWarnings("unchecked")
 	public List<PageData> list(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("MedicalExamItemMapper.datalistPage", page);
@@ -63,7 +63,7 @@ public class MedicalExamItemService implements MedicalExamItemManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	@SuppressWarnings("unchecked")
 	public List<PageData> listAll(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("MedicalExamItemMapper.listAll", pd);
@@ -73,7 +73,7 @@ public class MedicalExamItemService implements MedicalExamItemManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	@Override
+	
 	public PageData findById(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("MedicalExamItemMapper.findById", pd);
 	}
@@ -82,12 +82,12 @@ public class MedicalExamItemService implements MedicalExamItemManager{
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
 	 */
-	@Override
+	
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("MedicalExamItemMapper.deleteAll", ArrayDATA_IDS);
 	}
 
-	@Override
+	
 	public List<PageData> listExamItemAndCenter(PageData pd) throws Exception {
 		// TODO Auto-generated method stub
 		return (List<PageData>)dao.findForList("MedicalExamItemMapper.listMedicalExamItemAndMedicalCenter", pd);

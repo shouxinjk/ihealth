@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +22,12 @@ import com.shouxin.entity.Page;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
+
+import net.sf.json.JSONArray;
+
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.service.admin.disease.DiseaseManager;
+import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
 
 /** 
  * 说明：疾病
@@ -36,6 +41,9 @@ public class DiseaseController extends BaseController {
 	String menuUrl = "disease/list.do"; //菜单地址(权限用)
 	@Resource(name="diseaseService")
 	private DiseaseManager diseaseService;
+	@Resource(name="diseasecategoryService")
+	private DiseaseCategoryManager diseasecategoryService;
+	
 	
 	/**保存
 	 * @param
@@ -98,7 +106,8 @@ public class DiseaseController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		String keywords = pd.getString("keywords");				//关键词检索条件
+		String keywords = pd.getString("keywords");	
+		//关键词检索条件
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
@@ -109,6 +118,27 @@ public class DiseaseController extends BaseController {
 		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
+	}
+	
+	@RequestMapping(value="/listAllDiseasecategory")
+	public ModelAndView listDiseaseCategory(Model model,String DISEASECATEGORY_ID) throws Exception{
+		
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		try{
+			JSONArray arr = JSONArray.fromObject(diseasecategoryService.listAllDiseaseCategory("0"));
+			String json = arr.toString();
+			json = json.replaceAll("DISEASECATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subDiseasegory", "nodes").replaceAll("hasDiseasegory", "checked").replaceAll("treeurl", "url");
+			model.addAttribute("zTreeNodes", json);
+			mv.addObject("DISEASECATEGORY_ID",DISEASECATEGORY_ID);
+			mv.addObject("pd", pd);	
+			mv.setViewName("admin/disease/disease_ztree");
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		return mv;
+		
 	}
 	
 	/**去新增页面
