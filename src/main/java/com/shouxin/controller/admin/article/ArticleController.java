@@ -28,6 +28,7 @@ import com.shouxin.service.admin.article.ArticleManager;
  * 说明：推送文章信息
  * 创建人：shouxin
  * 创建时间：2016-04-07
+ * 
  */
 @Controller
 @RequestMapping(value="/article")

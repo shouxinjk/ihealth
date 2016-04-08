@@ -33,6 +33,7 @@ import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
  * 说明：疾病
  * 创建人：shouxin
  * 创建时间：2016-04-07
+ * 
  */
 @Controller
 @RequestMapping(value="/disease")
