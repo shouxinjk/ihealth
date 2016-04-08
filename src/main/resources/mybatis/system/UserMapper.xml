@@ -182,6 +182,22 @@
 				u.EMAIL,
 				u.NUMBER,
 				u.PHONE,
+				u.RIGHTS,
+				u.STATUS,
+				u.SKIN,
+				u.BZ,
+				u.OPENID,
+				u.ALIAS,
+				u.BIRTHDAY,
+				u.SEX,
+				u.BIRTHPLACE,
+				u.LIVEPLACE,
+				u.MARRIAGESTATUS,
+				u.CAREER,
+				u.DEGREE,
+				u.AVATAR,
+				u.HEIGHT,
+				u.WEIGHT,
 				r.ROLE_ID,
 				r.ROLE_NAME
 		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r 
@@ -200,6 +216,10 @@
 					 u.NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
 					 or
 					 u.PHONE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					 u.BIRTHPLACE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					 u.LIVEPLACE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
 				)
 		</if>
 		<if test="pd.ROLE_ID != null and pd.ROLE_ID != ''"><!-- 角色检索 -->
@@ -268,7 +288,15 @@
 				BZ						= #{BZ},
 				EMAIL					= #{EMAIL},
 				NUMBER					= #{NUMBER},
-				PHONE					= #{PHONE}
+				PHONE					= #{PHONE},
+				ALIAS					= #{ALIAS},
+				LIVEPLACE				= #{LIVEPLACE},
+				MARRIAGESTATUS			= #{MARRIAGESTATUS},
+				CAREER					= #{CAREER},
+				DEGREE					= #{DEGREE},
+				AVATAR					= #{AVATAR},
+				HEIGHT					= #{HEIGHT},
+				WEIGHT					= #{WEIGHT}
 			<if test="PASSWORD != null and PASSWORD != ''">
 				,PASSWORD				= #{PASSWORD}
 			</if>
@@ -304,6 +332,22 @@
 				u.EMAIL,
 				u.NUMBER,
 				u.PHONE,
+				u.RIGHTS,
+				u.STATUS,
+				u.SKIN,
+				u.BZ,
+				u.OPENID,
+				u.ALIAS,
+				u.BIRTHDAY,
+				u.SEX,
+				u.BIRTHPLACE,
+				u.LIVEPLACE,
+				u.MARRIAGESTATUS,
+				u.CAREER,
+				u.DEGREE,
+				u.AVATAR,
+				u.HEIGHT,
+				u.WEIGHT,
 				r.ROLE_ID,
 				r.ROLE_NAME
 		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r 
