@@ -341,8 +341,7 @@ CREATE TABLE `sys_user` (
 
 /*Data for the table `sys_user` */
 
-insert  into `sys_user`(`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS`,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`,`OPENID`,`ALIAS`,`BIRTHDAY`,`SEX`,`BIRTHPLACE`,`LIVEPLACE`,`MARRIAGESTATUS`,`CAREER`,`DEGREE`,`AVATAR`,`HEIGHT`,`WEIGHT`) values ('1','admin','de41b7fb99201d8334c23c014db35ecd92df81bc','系统管理员','1133671055321055258374707980945218933803269864762743594642571294','1','2016-04-07 16:16:52','0:0:0:0:0:0:0:1','0','最高统治者',NULL,'QQ313596790@main.com','001','18788888888',NULL,'系统管理员',NULL,'男','成都','成都','未婚','高级架构师','本科','img/logo.jpg',188,50),('69177258a06e4927b4639ab1684c3320','san','47c4a8dc64ac2f0bb46bbd8813b037c9718f9349','三','3264c8e83d0248bb9e3ea6195b4c0216',NULL,'2016-04-07 16:28:44	','0:0:0:0:0:0:0:1','0','111',NULL,'978336446@qq.com','333','13562202556',NULL,'测试用户',NULL,'男','成都','成都','已婚','程序员','专科','img/logo.jpg',188,60),('9991f4d7782a4ccfb8a65bd96ea7aafa','lisi','2612ade71c1e48cd7150b5f4df152faa699cedfe','李四','3264c8e83d0248bb9e3ea6195b4c0216',NULL,'2016-01-06 01:24:26','127.0.0.1','0','小李',NULL,'313596790@qq.com','1102','13566233663',NULL,'李',NULL,'男','上海','上海','未婚','销售','博士','img/logo.jpg',198,67),('a',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('e29149962e944589bb7da23ad18ddeed','zhangsan','c2da1419caf053885c492e10ebde421581cdc03f','张三','3264c8e83d0248bb9e3ea6195b4c0216','0',NULL,NULL,NULL,'校长',NULL,'zhangsan@www.com','1101','2147483647',NULL,'张',NULL,'男','北京','北京','未婚','个体','小学','img/logo.jpg',178,56);
-
+insert  into `sys_user`(`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS`,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`,`OPENID`,`ALIAS`,`BIRTHDAY`,`SEX`,`BIRTHPLACE`,`LIVEPLACE`,`MARRIAGESTATUS`,`CAREER`,`DEGREE`,`AVATAR`,`HEIGHT`,`WEIGHT`) values ('1','admin','de41b7fb99201d8334c23c014db35ecd92df81bc','系统管理员','1133671055321055258374707980945218933803269864762743594642571294','1','2016-04-10 22:38:14','0:0:0:0:0:0:0:1','0','最高统治者',NULL,'QQ313596790@main.com','001','18788888888',NULL,'系统管理员',NULL,'男','成都','成都','未婚','高级架构师','本科','img/logo.jpg',188,50),('69177258a06e4927b4639ab1684c3320','san','47c4a8dc64ac2f0bb46bbd8813b037c9718f9349','三','3264c8e83d0248bb9e3ea6195b4c0216','1','2016-04-10 21:12:04','0:0:0:0:0:0:0:1','0','111',NULL,'978336446@qq.com','333','13562202556',NULL,'测试用户',NULL,'男','成都','成都','已婚','程序员','专科','img/logo.jpg',188,60),('9991f4d7782a4ccfb8a65bd96ea7aafa','lisi','2612ade71c1e48cd7150b5f4df152faa699cedfe','李四','3264c8e83d0248bb9e3ea6195b4c0216','1','2016-01-06 01:24:26','127.0.0.1','0','小李',NULL,'313596790@qq.com','1102','13566233663',NULL,'李',NULL,'男','上海','上海','未婚','销售','博士','img/logo.jpg',198,67),('d28812dffc7b4c91924dd73c8487a86c','admin123','c9f55b944bbd496ff462196310dcb383586b4a5e','默默','','3264c8e83d0248bb9e3ea6195b4c0216','','','0','要嘿嘿嘿么','default','828777292@qq.com','1001','13567899876',NULL,'双黑狗','1992-08-20','男','成都','成都','未婚','程序员','大壮','image/logo.jpg',189,89),('e29149962e944589bb7da23ad18ddeed','zhangsan','c2da1419caf053885c492e10ebde421581cdc03f','张三','3264c8e83d0248bb9e3ea6195b4c0216','0',NULL,NULL,NULL,'校长',NULL,'zhangsan@www.com','1101','2147483647',NULL,'张',NULL,'男','北京','北京','未婚','个体','小学','img/logo.jpg',178,56);
 -- ----------------------------
 -- Table structure for tb_pictures
 -- ----------------------------
@@ -631,5 +630,50 @@ CREATE TABLE `ADMIN_DISEASE` (
 		`DISEASECATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '疾病分类外键',
   		PRIMARY KEY (`DISEASE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tb_checkupitem` (
+  `CHECKUPITEM_ID` varchar(100) NOT NULL,
+  `SUBGROUP` varchar(255) DEFAULT NULL COMMENT '检查项目分组',
+  `NAME` varchar(255) DEFAULT NULL COMMENT '检查项目名称',
+  `FEATURES` varchar(255) DEFAULT NULL COMMENT '特性',
+  `FREQUENCY` varchar(255) DEFAULT NULL COMMENT '检查频率',
+  `STATUS` varchar(255) DEFAULT NULL COMMENT '状态',
+  `ORIGINATE` varchar(255) DEFAULT NULL COMMENT '指南来源',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '详细描述',
+  `GENERATEDTIME` datetime DEFAULT NULL COMMENT '该记录生成时间',
+  `WORKER` varchar(255) DEFAULT NULL COMMENT '用于产生该记录的标记',
+  `REVISION` int(11) NOT NULL COMMENT '版本',
+  `SYSFLAG` varchar(255) DEFAULT NULL COMMENT '系统标记',
+  `CHECKUPPACKAGE_ID` varchar(100) DEFAULT NULL COMMENT '体检套餐外键',
+  `USER_ID` varchar(100) DEFAULT NULL COMMENT '用户表外键',
+  PRIMARY KEY (`CHECKUPITEM_ID`),
+  KEY `CHECKUPPACKAGE_ID` (`CHECKUPPACKAGE_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  CONSTRAINT `tb_checkupitem_ibfk_1` FOREIGN KEY (`CHECKUPPACKAGE_ID`) REFERENCES `tb_checkuppackage` (`CHECKUPPACKAGE_ID`),
+  CONSTRAINT `tb_checkupitem_ibfk_2` FOREIGN KEY (`USER_ID`) REFERENCES `sys_user` (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `tb_checkupitem` */
+
+insert  into `tb_checkupitem`(`CHECKUPITEM_ID`,`SUBGROUP`,`NAME`,`FEATURES`,`FREQUENCY`,`STATUS`,`ORIGINATE`,`DESCRIPTION`,`GENERATEDTIME`,`WORKER`,`REVISION`,`SYSFLAG`,`CHECKUPPACKAGE_ID`,`USER_ID`) values ('101','CT','胸部检查','经济,全面','每年一次','已选中','美国加州','胸部检查癌细胞变异','2016-04-10 22:29:46','admin',1,'amdin','1001','1'),('102','X光','肺部检查','经济','每年一次','已选中','加拿大','吸烟20年,致癌细胞变异','2016-04-04 22:31:12','admin',1,'admin','1002','1');
+
+/*Table structure for table `tb_checkuppackage` */
+
+CREATE TABLE `tb_checkuppackage` (
+  `CHECKUPPACKAGE_ID` varchar(100) NOT NULL,
+  `WORKER` varchar(255) DEFAULT NULL COMMENT '生成该记录的标记',
+  `GENERATEDTIME` datetime DEFAULT NULL COMMENT '该记录生成时间',
+  `EFFECTIVEFROM` datetime DEFAULT NULL COMMENT '开始生效时间',
+  `EXPIREON` datetime DEFAULT NULL COMMENT '失效时间',
+  `STATUS` varchar(255) DEFAULT NULL COMMENT '状态',
+  `REVISION` varchar(255) DEFAULT NULL COMMENT '版本',
+  `SYSFLAG` varchar(255) DEFAULT NULL COMMENT '系统标记',
+  PRIMARY KEY (`CHECKUPPACKAGE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `tb_checkuppackage` */
+
+insert  into `tb_checkuppackage`(`CHECKUPPACKAGE_ID`,`WORKER`,`GENERATEDTIME`,`EFFECTIVEFROM`,`EXPIREON`,`STATUS`,`REVISION`,`SYSFLAG`) values ('1001','套餐1','2016-04-10 22:26:42','2016-04-10 22:26:44','2016-04-10 22:26:46','已选中','1','admin'),('1002','套餐2','2016-04-11 22:27:25','2016-04-12 22:27:28','2016-04-12 22:27:33','未选中','1','amin');
+
 
 
