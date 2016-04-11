@@ -58,7 +58,31 @@
 		#{ISHIGHINCIDENCE},	
 		#{CREATEBY},	
 		#{CREATEON},	
-		#{diseaseCategory.DISEASE_ID}
+		#{DISEASE_ID}
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field1">
+		NAME,	
+		DESCRIPTION,	
+		ISINHERITABLE,	
+		ISHIGHINCIDENCE,	
+		CREATEBY,	
+		CREATEON,	
+		DISEASE_ID,
+		DISEASECATEGORY_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue1">
+		#{NAME},	
+		#{DESCRIPTION},	
+		#{ISINHERITABLE},	
+		#{ISHIGHINCIDENCE},	
+		#{CREATEBY},	
+		#{CREATEON},	
+		#{DISEASE_ID},
+		#{DISEASECATEGORY_ID}
 	</sql>
 	
 	<!-- 通过疾病分类id获取疾病信息 -->
@@ -74,9 +98,9 @@
 		insert into 
 	<include refid="tableName"></include>
 		(
-	<include refid="Field"></include>
+	<include refid="Field1"></include>
 		) values (
-	<include refid="FieldValue"></include>
+	<include refid="FieldValue1"></include>
 		)
 	</insert>
 	
@@ -97,8 +121,6 @@
 			DESCRIPTION = #{DESCRIPTION},
 			ISINHERITABLE = #{ISINHERITABLE},
 			ISHIGHINCIDENCE = #{ISHIGHINCIDENCE},
-			CREATEBY = #{CREATEBY},
-			CREATEON = #{CREATEON},
 		DISEASE_ID = DISEASE_ID
 		where 
 		DISEASE_ID = #{DISEASE_ID}
@@ -120,15 +142,18 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 1=1
+		where 1=1 
+		<if test="pd.DISEASECATEGORY_ID!= null and pd.DISEASECATEGORY_ID != ''"><!-- 检索 -->
+		and DISEASECATEGORY_ID = #{pd.DISEASECATEGORY_ID}
+		</if>
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
-				<!--	根据需求自己加检索条件
-					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				
+					NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
 					 or 
-					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
-				-->
+					DESCRIPTION LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				
 				)
 		</if>
 	</select>

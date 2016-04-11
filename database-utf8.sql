@@ -624,4 +624,33 @@ CREATE TABLE `ADMIN_DISEASE` (
   		PRIMARY KEY (`DISEASE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Table structure for `TAG_TAG`
+-- ----------------------------
+DROP TABLE IF EXISTS `TAG_TAG`;
+CREATE TABLE `TAG_TAG` (
+ 		`TAG_ID` varchar(100) NOT NULL,
+		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+		`EXPRESSION` varchar(255) DEFAULT NULL COMMENT '表达式',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '用户id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '时间',
+		`TAGCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '所属分类id',
+  		PRIMARY KEY (`TAG_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ADMIN_TAGCATEGORY`
+-- ----------------------------
+DROP TABLE IF EXISTS `ADMIN_TAGCATEGORY`;
+CREATE TABLE `ADMIN_TAGCATEGORY` (
+ 		`TAGCATEGORY_ID` varchar(100) NOT NULL,
+		`NAME` varchar(255) DEFAULT NULL COMMENT '标签分类名称',
+		`MATETYPE` varchar(255) DEFAULT NULL COMMENT '特性',
+		`ISEXCLUSIVE` int(11) NOT NULL COMMENT '是否多选',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '用户id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '时间',
+		`PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父级id',
+  		PRIMARY KEY (`TAGCATEGORY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 

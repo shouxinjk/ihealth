@@ -1,4 +1,4 @@
-package com.shouxin.controller.admin.diseasecategory;
+package com.shouxin.controller.admin.tagcategory;
 
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -26,20 +26,20 @@ import com.shouxin.util.PageData;
 import net.sf.json.JSONArray;
 
 import com.shouxin.util.Jurisdiction;
-import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
+import com.shouxin.service.admin.tagcategory.TagCategoryManager;
 
 /** 
- * 说明：疾病分类
+ * 说明：标签分类
  * 创建人：shouxin
- * 创建时间：2016-04-08
+ * 创建时间：2016-04-10
  */
 @Controller
-@RequestMapping(value="/diseasecategory")
-public class DiseaseCategoryController extends BaseController {
+@RequestMapping(value="/tagcategory")
+public class TagCategoryController extends BaseController {
 	
-	String menuUrl = "diseasecategory/list.do"; //菜单地址(权限用)
-	@Resource(name="diseasecategoryService")
-	private DiseaseCategoryManager diseasecategoryService;
+	String menuUrl = "tagcategory/list.do"; //菜单地址(权限用)
+	@Resource(name="tagcategoryService")
+	private TagCategoryManager tagcategoryService;
 	
 	/**保存
 	 * @param
@@ -47,13 +47,18 @@ public class DiseaseCategoryController extends BaseController {
 	 */
 	@RequestMapping(value="/save")
 	public ModelAndView save() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"新增DiseaseCategory");
+		logBefore(logger, Jurisdiction.getUsername()+"新增TagCategory");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("DISEASECATEGORY_ID", this.get32UUID());	//主键
-		diseasecategoryService.save(pd);
+		pd.put("TAGCATEGORY_ID", this.get32UUID());	//主键
+		logBefore(logger, pd.get("PARENT_ID")+"新增department");
+		pd.put("CREATEBY", Jurisdiction.getUserID());
+		pd.put("CREATEON", new Date());
+		pd.put("MATETYPE", "生活方式");
+		pd.put("ISEXCLUSIVE", 1);
+		tagcategoryService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -65,11 +70,11 @@ public class DiseaseCategoryController extends BaseController {
 	 */
 	@RequestMapping(value="/delete")
 	public void delete(PrintWriter out) throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"删除DiseaseCategory");
+		logBefore(logger, Jurisdiction.getUsername()+"删除TagCategory");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		diseasecategoryService.delete(pd);
+		tagcategoryService.delete(pd);
 		out.write("success");
 		out.close();
 	}
@@ -80,12 +85,12 @@ public class DiseaseCategoryController extends BaseController {
 	 */
 	@RequestMapping(value="/edit")
 	public ModelAndView edit() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"修改DiseaseCategory");
+		logBefore(logger, Jurisdiction.getUsername()+"修改TagCategory");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		diseasecategoryService.edit(pd);
+		tagcategoryService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -97,7 +102,7 @@ public class DiseaseCategoryController extends BaseController {
 	 */
 	@RequestMapping(value="/list")
 	public ModelAndView list(Page page) throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"列表DiseaseCategory");
+		logBefore(logger, Jurisdiction.getUsername()+"列表TagCategory");
 		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
@@ -106,50 +111,49 @@ public class DiseaseCategoryController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
-		String DISEASECATEGORY_ID = null == pd.get("DISEASECATEGORY_ID")?"":pd.get("DISEASECATEGORY_ID").toString();
+		String TAGCATEGORY_ID = null == pd.get("TAGCATEGORY_ID")?"":pd.get("TAGCATEGORY_ID").toString();
 		if(null != pd.get("id") && !"".equals(pd.get("id").toString())){
-			DISEASECATEGORY_ID = pd.get("id").toString();
+			TAGCATEGORY_ID = pd.get("id").toString();
 		}
-		pd.put("DISEASECATEGORY_ID", DISEASECATEGORY_ID);					//上级ID
+		pd.put("TAGCATEGORY_ID", TAGCATEGORY_ID);					//上级ID
 		logBefore(logger, pd.get("TAGCATEGORY_ID")+"列表department");
 		page.setPd(pd);
-		List<PageData>	varList = diseasecategoryService.list(page);	//列出DiseaseCategory列表
-		mv.setViewName("admin/diseasecategory/diseasecategory_list");
+		List<PageData>	varList = tagcategoryService.list(page);	//列出TagCategory列表
+		mv.setViewName("admin/tagcategory/tagcategory_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
-		mv.addObject("DISEASECATEGORY_ID", DISEASECATEGORY_ID);		
+		mv.addObject("TAGCATEGORY_ID", TAGCATEGORY_ID);		
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
 	}
 	
 	/***
-	 * 显示所有DISEASECATEGORY tree
+	 * 显示所有tagCategory tree
 	 * @param model
 	 * @param TAGATEGORY_ID
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/listAllDiseaseCategoryTree")
-	public ModelAndView listDiseaseCategory(Model model,String DISEASECATEGORY_ID) throws Exception{
+	@RequestMapping(value="/listAllTagCategoryTree")
+	public ModelAndView listDiseaseCategory(Model model,String TAGATEGORY_ID) throws Exception{
 		
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try{
-			JSONArray arr = JSONArray.fromObject(diseasecategoryService.listAllDiseaseCategoryTree("0"));
+			JSONArray arr = JSONArray.fromObject(tagcategoryService.listAllTagCategoryTree("0"));
 			String json = arr.toString();
-			logBefore(logger, json+"列表DISEASECATEGORY=======");
-			json = json.replaceAll("DISEASECATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subDiseaseCategory", "nodes").replaceAll("hasDiseaseCategory", "checked").replaceAll("treeUrl", "url");
+			logBefore(logger, json+"列表DiseaseCategory=======");
+			json = json.replaceAll("TAGCATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subTagCategory", "nodes").replaceAll("hasTagCategory", "checked").replaceAll("treeUrl", "url");
 			model.addAttribute("zTreeNodes", json);
-			mv.addObject("DISEASECATEGORY_ID",DISEASECATEGORY_ID);
+			mv.addObject("TAGATEGORY_ID",TAGATEGORY_ID);
 			mv.addObject("pd", pd);	
-			mv.setViewName("admin/diseasecategory/diseasecategory_ztree");
+			mv.setViewName("admin/tagcategory/tagcategory_ztree");
 		} catch(Exception e){
 			logger.error(e.toString(), e);
 		}
 		return mv;
 	}
-	
 	
 	/**去新增页面
 	 * @param
@@ -160,13 +164,13 @@ public class DiseaseCategoryController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		String DISEASECATEGORY_ID = null == pd.get("DISEASECATEGORY_ID")?"":pd.get("DISEASECATEGORY_ID").toString();
-		pd.put("DISEASECATEGORY_ID", DISEASECATEGORY_ID);	
-		logBefore(logger, pd.get("DISEASECATEGORY_ID")+"标签分类DISEASECATEGORY_ID===============");
-		mv.addObject("pds",diseasecategoryService.findById(pd));
-		mv.setViewName("admin/diseasecategory/diseasecategory_edit");
+		String TAGCATEGORY_ID = null == pd.get("TAGCATEGORY_ID")?"":pd.get("TAGCATEGORY_ID").toString();
+		pd.put("TAGCATEGORY_ID", TAGCATEGORY_ID);	
+		logBefore(logger, pd.get("TAGCATEGORY_ID")+"标签分类TAGCATEGORY_ID===============");
+		mv.addObject("pds",tagcategoryService.findById(pd));
+		mv.setViewName("admin/tagcategory/tagcategory_edit");
 		mv.addObject("msg", "save");
-		mv.addObject("DISEASECATEGORY_ID",DISEASECATEGORY_ID);
+		mv.addObject("TAGATEGGORY_ID",TAGCATEGORY_ID);
 		mv.addObject("pd", pd);
 		return mv;
 	}	
@@ -180,14 +184,16 @@ public class DiseaseCategoryController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		String DISEASECATEGORY_ID = pd.getString("DISEASECATEGORY_ID");
-		pd = diseasecategoryService.findById(pd);	//根据ID读取
+		String TAGCATEGORY_ID = pd.getString("TAGCATEGORY_ID");
+		pd = tagcategoryService.findById(pd);	//根据ID读取
 		mv.addObject("pd", pd);
-		pd.put("DISEASECATEGORY_ID", pd.get("PARENT_ID").toString());
-		mv.addObject("pds",diseasecategoryService.findById(pd));
-		mv.setViewName("admin/diseasecategory/diseasecategory_edit");
+		logBefore(logger, pd.get("PARENT_ID").toString()+"列表parent_id");
+		pd.put("TAGCATEGORY_ID", pd.get("PARENT_ID").toString());	
+		mv.addObject("pds",tagcategoryService.findById(pd));
+		mv.setViewName("admin/tagcategory/tagcategory_edit");
+		pd.put("TAGCATEGORY_ID", TAGCATEGORY_ID);
+		logBefore(logger, pd.get("TAGCATEGORY_ID").toString()+"列表parent_id1111");
 		mv.addObject("msg", "edit");
-		pd.put("DISEASECATEGORY_ID", DISEASECATEGORY_ID);
 		return mv;
 	}	
 	
@@ -198,7 +204,7 @@ public class DiseaseCategoryController extends BaseController {
 	@RequestMapping(value="/deleteAll")
 	@ResponseBody
 	public Object deleteAll() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"批量删除DiseaseCategory");
+		logBefore(logger, Jurisdiction.getUsername()+"批量删除TagCategory");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return null;} //校验权限
 		PageData pd = new PageData();		
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -207,7 +213,7 @@ public class DiseaseCategoryController extends BaseController {
 		String DATA_IDS = pd.getString("DATA_IDS");
 		if(null != DATA_IDS && !"".equals(DATA_IDS)){
 			String ArrayDATA_IDS[] = DATA_IDS.split(",");
-			diseasecategoryService.deleteAll(ArrayDATA_IDS);
+			tagcategoryService.deleteAll(ArrayDATA_IDS);
 			pd.put("msg", "ok");
 		}else{
 			pd.put("msg", "no");
@@ -223,28 +229,30 @@ public class DiseaseCategoryController extends BaseController {
 	 */
 	@RequestMapping(value="/excel")
 	public ModelAndView exportExcel() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"导出DiseaseCategory到excel");
+		logBefore(logger, Jurisdiction.getUsername()+"导出TagCategory到excel");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;}
 		ModelAndView mv = new ModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		Map<String,Object> dataMap = new HashMap<String,Object>();
 		List<String> titles = new ArrayList<String>();
-		titles.add("名称");	//1
-		titles.add("描述");	//2
-		titles.add("创建记录员工id");	//3
-		titles.add("创建记录时间");	//4
-		titles.add("上级列表id");	//5
+		titles.add("标签分类名称");	//1
+		titles.add("特性");	//2
+		titles.add("是否多选");	//3
+		titles.add("用户id");	//4
+		titles.add("时间");	//5
+		titles.add("父级id");	//6
 		dataMap.put("titles", titles);
-		List<PageData> varOList = diseasecategoryService.listAll(pd);
+		List<PageData> varOList = tagcategoryService.listAll(pd);
 		List<PageData> varList = new ArrayList<PageData>();
 		for(int i=0;i<varOList.size();i++){
 			PageData vpd = new PageData();
 			vpd.put("var1", varOList.get(i).getString("NAME"));	//1
-			vpd.put("var2", varOList.get(i).getString("DESCRIPTION"));	//2
-			vpd.put("var3", varOList.get(i).getString("CREATEBY"));	//3
-			vpd.put("var4", varOList.get(i).getString("CREATEON"));	//4
-			vpd.put("var5", varOList.get(i).getString("PARENT_ID"));	//5
+			vpd.put("var2", varOList.get(i).getString("MATETYPE"));	//2
+			vpd.put("var3", varOList.get(i).get("ISEXCLUSIVE").toString());	//3
+			vpd.put("var4", varOList.get(i).getString("CREATEBY"));	//4
+			vpd.put("var5", varOList.get(i).getString("CREATEON"));	//5
+			vpd.put("var6", varOList.get(i).getString("PARENT_ID"));	//6
 			varList.add(vpd);
 		}
 		dataMap.put("varList", varList);

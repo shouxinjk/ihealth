@@ -53,6 +53,7 @@ public class DepartmentController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("DEPARTMENT_ID", this.get32UUID());	//主键
+		logBefore(logger, pd.get("PARENT_ID")+"新增department");
 		departmentService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -119,6 +120,7 @@ public class DepartmentController extends BaseController {
 			DEPARTMENT_ID = pd.get("id").toString();
 		}
 		pd.put("DEPARTMENT_ID", DEPARTMENT_ID);					//上级ID
+		logBefore(logger, pd.get(DEPARTMENT_ID)+"列表department");
 		page.setPd(pd);
 		List<PageData>	varList = departmentService.list(page);	//列出Dictionaries列表
 		mv.addObject("pd", departmentService.findById(pd));		//传入上级所有信息
@@ -142,6 +144,7 @@ public class DepartmentController extends BaseController {
 		try{
 			JSONArray arr = JSONArray.fromObject(departmentService.listAllDepartment("0"));
 			String json = arr.toString();
+			logBefore(logger, json+"列表depa=======");
 			json = json.replaceAll("DEPARTMENT_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subDepartment", "nodes").replaceAll("hasDepartment", "checked").replaceAll("treeurl", "url");
 			model.addAttribute("zTreeNodes", json);
 			mv.addObject("DEPARTMENT_ID",DEPARTMENT_ID);

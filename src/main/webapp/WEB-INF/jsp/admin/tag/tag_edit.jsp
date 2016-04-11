@@ -27,9 +27,9 @@
 				<div class="row">
 					<div class="col-xs-12">
 					
-					<form action="disease/${msg }.do" name="Form" id="Form" method="post">
-						<input type="hidden" name="DISEASE_ID" id="DISEASE_ID" value="${pd.DISEASE_ID}"/>
-						<input type="hidden" name="DISEASECATEGORY_ID" id="DISEASECATEGORY_ID" value="${DISEASECATEGORY_ID}"/>
+					<form action="tag/${msg }.do" name="Form" id="Form" method="post">
+						<input type="hidden" name="TAG_ID" id="TAG_ID" value="${pd.TAG_ID}"/>
+						<input type="hidden" name="TAGCATEGORY_ID" id="TAGATEGORY_ID" value="${TAGCATEGORY_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
@@ -41,20 +41,12 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">疾病名称:</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">名称:</td>
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入名称" title="名称" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">症状说明:</td>
-								<td><input type="text" name="DESCRIPTION" id="DESCRIPTION" value="${pd.DESCRIPTION}" maxlength="255" placeholder="这里输入描述" title="描述" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">是否遗传倾向:</td>
-								<td><input type="number" name="ISINHERITABLE" id="ISINHERITABLE" value="${pd.ISINHERITABLE}" maxlength="32" placeholder="这里输入是否遗传倾向" title="是否遗传倾向" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">是否高发:</td>
-								<td><input type="number" name="ISHIGHINCIDENCE" id="ISHIGHINCIDENCE" value="${pd.ISHIGHINCIDENCE}" maxlength="32" placeholder="这里输入是否高发" title="是否高发" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">表达式:</td>
+								<td><input type="text" name="EXPRESSION" id="EXPRESSION" value="${pd.EXPRESSION}" maxlength="255" placeholder="这里输入表达式" title="表达式" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">
@@ -105,40 +97,20 @@
 				$("#NAME").focus();
 			return false;
 			}
-			if($("#DESCRIPTION").val()==""){
-				$("#DESCRIPTION").tips({
+			if($("#EXPRESSION").val()==""){
+				$("#EXPRESSION").tips({
 					side:3,
-		            msg:'请输入描述',
+		            msg:'请输入表达式',
 		            bg:'#AE81FF',
 		            time:2
 		        });
-				$("#DESCRIPTION").focus();
-			return false;
-			}
-			if($("#ISINHERITABLE").val()==""){
-				$("#ISINHERITABLE").tips({
-					side:3,
-		            msg:'请输入是否遗传倾向',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#ISINHERITABLE").focus();
-			return false;
-			}
-			if($("#ISHIGHINCIDENCE").val()==""){
-				$("#ISHIGHINCIDENCE").tips({
-					side:3,
-		            msg:'请输入是否高发',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#ISHIGHINCIDENCE").focus();
+				$("#EXPRESSION").focus();
 			return false;
 			}
 			if($("#CREATEBY").val()==""){
 				$("#CREATEBY").tips({
 					side:3,
-		            msg:'请输入创建记录员工id',
+		            msg:'请输入用户id',
 		            bg:'#AE81FF',
 		            time:2
 		        });
@@ -148,7 +120,7 @@
 			if($("#CREATEON").val()==""){
 				$("#CREATEON").tips({
 					side:3,
-		            msg:'请输入创建记录时间',
+		            msg:'请输入时间',
 		            bg:'#AE81FF',
 		            time:2
 		        });

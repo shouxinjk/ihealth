@@ -1,17 +1,17 @@
-package com.shouxin.service.admin.diseasecategory;
+package com.shouxin.service.admin.tagcategory;
 
 import java.util.List;
 import com.shouxin.entity.Page;
-import com.shouxin.entity.admin.DiseaseCategory;
+import com.shouxin.entity.admin.TagCategory;
 import com.shouxin.util.PageData;
 
 /** 
- * 说明： 疾病分类接口
+ * 说明： 标签分类接口
  * 创建人：shouxin
- * 创建时间：2016-04-08
+ * 创建时间：2016-04-10
  * @version
  */
-public interface DiseaseCategoryManager{
+public interface TagCategoryManager{
 
 	/**新增
 	 * @param pd
@@ -54,29 +54,27 @@ public interface DiseaseCategoryManager{
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
-	/**
-	 * 通过父级id获取其子级列表
-	 * @param parentID
-	 * @return
-	 * @throws Exception
-	 */
-	public List<DiseaseCategory> listSubDiseaseCategoryByParentId(String parentID)throws Exception;
 	
 	/**
-	 * 获取所有数据并填充每条数据的子级列表(递归处理)
+	 * 通过parentID获取子级列表
 	 * @param parentID
 	 * @return
-	 * @throws Exception
 	 */
-	public List<DiseaseCategory> listAllDiseaseCategory(String parentID) throws Exception;
+	public List<TagCategory> listSubTagCategoryByParentId(String parentID) throws Exception; 
 	
-
 	/**
-	 * 获取所有数据并填充每条数据的子级列表(递归处理)
+	 * 获取所有数据并通过递归获取所有子级列表
 	 * @param parentID
 	 * @return
-	 * @throws Exception
 	 */
-	public List<DiseaseCategory> listAllDiseaseCategoryTree(String parentID) throws Exception;
+	public List<TagCategory> listAllTagCategory(String parentID) throws Exception;
+	
+	/**
+	 * 获取所有数据并通过递归获取所有子级列表
+	 * @param parentID
+	 * @return
+	 */
+	public List<TagCategory> listAllTagCategoryTree(String parentID) throws Exception;
+	
 }
 

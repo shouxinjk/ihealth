@@ -31,7 +31,7 @@
 						<div class="col-xs-12">
 							
 						<!-- 检索  -->
-						<form action="diseasecategory/list.do" method="post" name="Form" id="Form">
+						<form action="tagcategory/list.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
 								<td>
@@ -66,11 +66,12 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">名称</th>
-									<th class="center">描述</th>
-									<th class="center">创建记录员工id</th>
-									<th class="center">创建记录时间</th>
-									<th class="center">上级列表id</th>
+									<th class="center">标签分类名称</th>
+									<th class="center">特性</th>
+									<th class="center">是否多选</th>
+									<th class="center">用户id</th>
+									<th class="center">时间</th>
+									<th class="center">父级id</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -83,11 +84,12 @@
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
 											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.DISEASECATEGORY_ID}" class="ace" /><span class="lbl"></span></label>
+												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.TAGCATEGORY_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'><a href="javascript:goSondict('${var.DISEASECATEGORY_ID }')"><i class="ace-icon fa fa-share bigger-100"></i>&nbsp;${var.NAME}</a></td>
-											<td class='center'>${var.DESCRIPTION}</td>
+											<td class='center'><a href="javascript:goSondict('${var.TAGCATEGORY_ID }')"><i class="ace-icon fa fa-share bigger-100"></i>&nbsp;${var.NAME}</a></td>
+											<td class='center'>${var.MATETYPE}</td>
+											<td class='center'>${var.ISEXCLUSIVE}</td>
 											<td class='center'>${var.CREATEBY}</td>
 											<td class='center'>${var.CREATEON}</td>
 											<td class='center'>${var.PARENT_ID}</td>
@@ -97,12 +99,12 @@
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
 													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.DISEASECATEGORY_ID}');">
+													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.TAGCATEGORY_ID}');">
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 													</a>
 													</c:if>
 													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.DISEASECATEGORY_ID}');">
+													<a class="btn btn-xs btn-danger" onclick="del('${var.TAGCATEGORY_ID}');">
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 													</c:if>
@@ -116,7 +118,7 @@
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 															<c:if test="${QX.edit == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="edit('${var.DISEASECATEGORY_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
+																<a style="cursor:pointer;" onclick="edit('${var.TAGCATEGORY_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
 																	<span class="green">
 																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																	</span>
@@ -125,7 +127,7 @@
 															</c:if>
 															<c:if test="${QX.del == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="del('${var.DISEASECATEGORY_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
+																<a style="cursor:pointer;" onclick="del('${var.TAGCATEGORY_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
 																	<span class="red">
 																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																	</span>
@@ -159,7 +161,7 @@
 							<tr>
 								<td style="vertical-align:top;">
 									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-sm btn-success" onclick="add('${DISEASECATEGORY_ID}');">新增</a>
+									<a class="btn btn-sm btn-success" onclick="add('${TAGCATEGORY_ID}');">新增</a>
 									</c:if>
 									<c:if test="${QX.del == 1 }">
 									<a class="btn btn-sm btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
@@ -256,20 +258,19 @@
 			});
 		});
 		
-		
 		//去此ID下子级列表
-		function goSondict(DISEASECATEGORY_ID){
+		function goSondict(TAGCATEGORY_ID){
 			top.jzts();
-			window.location.href="<%=basePath%>diseasecategory/list.do?id="+DISEASECATEGORY_ID;
+			window.location.href="<%=basePath%>tagcategory/list.do?id="+TAGCATEGORY_ID;
 		};
 		
 		//新增
-		function add(DISEASECATEGORY_ID){
+		function add(TAGCATEGORY_ID){
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>diseasecategory/goAdd.do?DISEASECATEGORY_ID='+DISEASECATEGORY_ID;
+			 diag.URL = '<%=basePath%>tagcategory/goAdd.do?TAGCATEGORY_ID='+TAGCATEGORY_ID;
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
@@ -291,7 +292,7 @@
 			bootbox.confirm("确定要删除吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>diseasecategory/delete.do?DISEASECATEGORY_ID="+Id+"&tm="+new Date().getTime();
+					var url = "<%=basePath%>tagcategory/delete.do?TAGCATEGORY_ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage(${page.currentPage});
 					});
@@ -301,11 +302,12 @@
 		
 		//修改
 		function edit(Id){
+			alert(Id)
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>diseasecategory/goEdit.do?DISEASECATEGORY_ID='+Id;
+			 diag.URL = '<%=basePath%>tagcategory/goEdit.do?TAGCATEGORY_ID='+Id;
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
@@ -346,7 +348,7 @@
 							top.jzts();
 							$.ajax({
 								type: "POST",
-								url: '<%=basePath%>diseasecategory/deleteAll.do?tm='+new Date().getTime(),
+								url: '<%=basePath%>tagcategory/deleteAll.do?tm='+new Date().getTime(),
 						    	data: {DATA_IDS:str},
 								dataType:'json',
 								//beforeSend: validateData,
@@ -365,7 +367,7 @@
 		
 		//导出excel
 		function toExcel(){
-			window.location.href='<%=basePath%>diseasecategory/excel.do';
+			window.location.href='<%=basePath%>tagcategory/excel.do';
 		}
 	</script>
 

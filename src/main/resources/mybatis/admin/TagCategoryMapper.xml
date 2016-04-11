@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="DiseaseCategoryMapper">
+<mapper namespace="TagCategoryMapper">
 
-<resultMap type="DiseaseCategory" id="diseaseCategoryResultMap">
-		<id column="DISEASECATEGORY_ID" property="DISEASECATEGORY_ID" />
+	<resultMap type="TagCategory" id="TagCategoryResultMap">
+		<id column="TAGCATEGORY_ID" property="TAGCATEGORY_ID" />
 		<result column="NAME" property="NAME"/>
-		<result column="DESCRIPTION" property="DESCRIPTION"/>
+		<result column="MATETYPE" property="MATETYPE"/>
+		<result column="ISEXCLUSIVE" property="ISEXCLUSIVE"/>
 		<result column="CREATEBY" property="CREATEBY"/>
 		<result column="CREATEON" property="CREATEON"/>
 		<result column="PARENT_ID" property="PARENT_ID"/>
 	</resultMap>
 	
-	<resultMap type="DiseaseCategory" id="diseaseCategoryAndDiseaseResultMap">
-		<id column="DISEASECATEGORY_ID" property="DISEASECATEGORY_ID" />
+	<resultMap type="TagCategory" id="TagCategoryAndTagResultMap">
+		<id column="TAGCATEGORY_ID" property="TAGCATEGORY_ID" />
 		<result column="NAME" property="NAME"/>
-		<result column="DESCRIPTION" property="DESCRIPTION"/>
+		<result column="MATETYPE" property="MATETYPE"/>
+		<result column="ISEXCLUSIVE" property="ISEXCLUSIVE"/>
 		<result column="CREATEBY" property="CREATEBY"/>
 		<result column="CREATEON" property="CREATEON"/>
 		<result column="PARENT_ID" property="PARENT_ID"/>
-		<collection property="diseases" ofType="Disease">
-			<id column="DISEASE_ID" property="DISEASE_ID" />
+		<collection property="tags" ofType="Tag">
+			<id column="TAG_ID" property="TAG_ID" />
 			<result column="NAME" property="NAME"/>
-			<result column="DESCRIPTION" property="DESCRIPTION"/>
-			<result column="ISINHERITABLE" property="ISINHERITABLE"/>
-			<result column="ISHIGHINCIDENCE" property="ISHIGHINCIDENCE"/>
+			<result column="EXPRESSION" property="EXPRESSION"/>
 			<result column="CREATEBY" property="CREATEBY"/>
 			<result column="CREATEON" property="CREATEON"/>
 		</collection>
@@ -31,31 +31,33 @@
 	
 	<!--表名 -->
 	<sql id="tableName">
-		ADMIN_DISEASECATEGORY
+		ADMIN_TAGCATEGORY
 	</sql>
 	
 	<!-- 字段 -->
 	<sql id="Field">
 		NAME,	
-		DESCRIPTION,	
+		MATETYPE,	
+		ISEXCLUSIVE,	
 		CREATEBY,	
 		CREATEON,	
 		PARENT_ID,	
-		DISEASECATEGORY_ID
+		TAGCATEGORY_ID
 	</sql>
 	
 	<!-- 字段值 -->
 	<sql id="FieldValue">
 		#{NAME},	
-		#{DESCRIPTION},	
+		#{MATETYPE},	
+		#{ISEXCLUSIVE},	
 		#{CREATEBY},	
 		#{CREATEON},	
 		#{PARENT_ID},	
-		#{DISEASECATEGORY_ID}
+		#{TAGCATEGORY_ID}
 	</sql>
 	
 	<!-- 通过id获取子级列表 -->
-	<select id="listSubDiseaseCategorybyParentID" parameterType="java.lang.String" resultMap="diseaseCategoryResultMap">
+	<select id="listSubTagCategorybyParentID" parameterType="java.lang.String" resultMap="TagCategoryResultMap">
 		select 
 		<include refid="Field"></include> 
 		from 
@@ -79,7 +81,7 @@
 		delete from
 		<include refid="tableName"></include>
 		where 
-			DISEASECATEGORY_ID = #{DISEASECATEGORY_ID}
+			TAGCATEGORY_ID = #{TAGCATEGORY_ID}
 	</delete>
 	
 	<!-- 修改 -->
@@ -88,9 +90,9 @@
 		<include refid="tableName"></include>
 		set 
 			NAME = #{NAME},
-		DISEASECATEGORY_ID = DISEASECATEGORY_ID
+		TAGCATEGORY_ID = TAGCATEGORY_ID
 		where 
-		DISEASECATEGORY_ID = #{DISEASECATEGORY_ID}
+		TAGCATEGORY_ID = #{TAGCATEGORY_ID}
 	</update>
 	
 	<!-- 通过ID获取数据 -->
@@ -100,7 +102,7 @@
 		from 
 		<include refid="tableName"></include>
 		where 
-			DISEASECATEGORY_ID = #{DISEASECATEGORY_ID}
+			TAGCATEGORY_ID = #{TAGCATEGORY_ID}
 	</select>
 	
 	<!-- 列表 -->
@@ -110,8 +112,8 @@
 		from 
 		<include refid="tableName"></include>
 		where 1=1 
-		<if test="pd.DISEASECATEGORY_ID!= null and pd.DISEASECATEGORY_ID != ''"><!-- 检索 -->
-		and PARENT_ID = #{pd.DISEASECATEGORY_ID}
+		<if test="pd.TAGCATEGORY_ID!= null and pd.TAGCATEGORY_ID != ''"><!-- 检索 -->
+		and PARENT_ID = #{pd.TAGCATEGORY_ID}
 		</if>
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
@@ -138,7 +140,7 @@
 		delete from
 		<include refid="tableName"></include>
 		where 
-			DISEASECATEGORY_ID in
+			TAGCATEGORY_ID in
 		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
                  #{item}
 		</foreach>

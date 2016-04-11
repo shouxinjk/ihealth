@@ -31,7 +31,7 @@
 						<div class="col-xs-12">
 							
 						<!-- 检索  -->
-						<form action="diseasecategory/list.do" method="post" name="Form" id="Form">
+						<form action="tag/list.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
 								<td>
@@ -67,10 +67,7 @@
 									</th>
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">名称</th>
-									<th class="center">描述</th>
-									<th class="center">创建记录员工id</th>
-									<th class="center">创建记录时间</th>
-									<th class="center">上级列表id</th>
+									<th class="center">表达式</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -83,26 +80,23 @@
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
 											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.DISEASECATEGORY_ID}" class="ace" /><span class="lbl"></span></label>
+												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.TAG_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'><a href="javascript:goSondict('${var.DISEASECATEGORY_ID }')"><i class="ace-icon fa fa-share bigger-100"></i>&nbsp;${var.NAME}</a></td>
-											<td class='center'>${var.DESCRIPTION}</td>
-											<td class='center'>${var.CREATEBY}</td>
-											<td class='center'>${var.CREATEON}</td>
-											<td class='center'>${var.PARENT_ID}</td>
+											<td class='center'>${var.NAME}</td>
+											<td class='center'>${var.EXPRESSION}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
 													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.DISEASECATEGORY_ID}');">
+													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.TAG_ID}','${TAGCATEGORY_ID} }');">
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 													</a>
 													</c:if>
 													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.DISEASECATEGORY_ID}');">
+													<a class="btn btn-xs btn-danger" onclick="del('${var.TAG_ID}');">
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 													</c:if>
@@ -116,7 +110,7 @@
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 															<c:if test="${QX.edit == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="edit('${var.DISEASECATEGORY_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
+																<a style="cursor:pointer;" onclick="edit('${var.TAG_ID}','${TAGCATEGORY_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
 																	<span class="green">
 																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																	</span>
@@ -125,7 +119,7 @@
 															</c:if>
 															<c:if test="${QX.del == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="del('${var.DISEASECATEGORY_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
+																<a style="cursor:pointer;" onclick="del('${var.TAG_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
 																	<span class="red">
 																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																	</span>
@@ -159,7 +153,7 @@
 							<tr>
 								<td style="vertical-align:top;">
 									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-sm btn-success" onclick="add('${DISEASECATEGORY_ID}');">新增</a>
+									<a class="btn btn-sm btn-success" onclick="add('${TAGCATEGORY_ID}');">新增</a>
 									</c:if>
 									<c:if test="${QX.del == 1 }">
 									<a class="btn btn-sm btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
@@ -256,20 +250,14 @@
 			});
 		});
 		
-		
-		//去此ID下子级列表
-		function goSondict(DISEASECATEGORY_ID){
-			top.jzts();
-			window.location.href="<%=basePath%>diseasecategory/list.do?id="+DISEASECATEGORY_ID;
-		};
-		
 		//新增
-		function add(DISEASECATEGORY_ID){
+		function add(TAGCATEGORY_ID){
+			alert(TAGCATEGORY_ID)
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>diseasecategory/goAdd.do?DISEASECATEGORY_ID='+DISEASECATEGORY_ID;
+			 diag.URL = '<%=basePath%>tag/goAdd.do?TAGCATEGORY_ID='+TAGCATEGORY_ID;
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
@@ -291,7 +279,7 @@
 			bootbox.confirm("确定要删除吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>diseasecategory/delete.do?DISEASECATEGORY_ID="+Id+"&tm="+new Date().getTime();
+					var url = "<%=basePath%>tag/delete.do?TAG_ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage(${page.currentPage});
 					});
@@ -300,12 +288,13 @@
 		}
 		
 		//修改
-		function edit(Id){
+		function edit(Id,TAGCATEGORY_ID){
+			alert(TAGCATEGORY_ID)
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>diseasecategory/goEdit.do?DISEASECATEGORY_ID='+Id;
+			 diag.URL = '<%=basePath%>tag/goEdit.do?TAG_ID='+Id+'&TAGCATEGORY_ID='+TAGCATEGORY_ID;
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
@@ -346,7 +335,7 @@
 							top.jzts();
 							$.ajax({
 								type: "POST",
-								url: '<%=basePath%>diseasecategory/deleteAll.do?tm='+new Date().getTime(),
+								url: '<%=basePath%>tag/deleteAll.do?tm='+new Date().getTime(),
 						    	data: {DATA_IDS:str},
 								dataType:'json',
 								//beforeSend: validateData,
@@ -365,7 +354,7 @@
 		
 		//导出excel
 		function toExcel(){
-			window.location.href='<%=basePath%>diseasecategory/excel.do';
+			window.location.href='<%=basePath%>tag/excel.do';
 		}
 	</script>
 
