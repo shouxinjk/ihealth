@@ -218,22 +218,19 @@ public class CheckupItemController extends BaseController {
 		return mv;
 	}
 	
+	/**
+	 * 根据关联关系查询所有体检项目和用户信息
+	 * @param id checkupPackageId
+	 * @return modelAndView
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/lists/{id}")
 	public ModelAndView lists(@PathVariable String id) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表CheckupItem");
-		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		ModelAndView mv = this.getModelAndView();
-		//PageData pd = new PageData();
-		//pd = this.getPageData();
-		//String keywords = pd.getString("keywords");				//关键词检索条件
-		/*if(null != keywords && !"".equals(keywords)){
-			pd.put("keywords", keywords.trim());
-		}*/
-		//page.setPd(pd);
 		List<CheckupItem>	varList = checkupitemService.findAllById(id);	//列出CheckupItem列表
 		mv.setViewName("checkup/checkupitem/checkupitem_list");
 		mv.addObject("varList", varList);
-		//mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
 	}

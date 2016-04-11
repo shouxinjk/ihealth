@@ -55,6 +55,13 @@ public interface CheckupItemManager{
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
 	
+	
+	/**
+	 * 根据checkupPackageId 查询所有关联的checkupItem和User信息
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	public List<CheckupItem> findAllById(String id)throws Exception;
 	
 }

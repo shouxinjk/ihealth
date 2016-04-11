@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.checkup.CheckupPackage;
 import com.shouxin.util.PageData;
 import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
 
@@ -83,6 +84,11 @@ public class CheckupPackageService implements CheckupPackageManager{
 	//@Override
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("CheckupPackageMapper.deleteAll", ArrayDATA_IDS);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<CheckupPackage> listAllById(String id) throws Exception {
+		return (List<CheckupPackage>) dao.findForList("CheckupPackageMapper.findByUserId", id);
 	}
 	
 }

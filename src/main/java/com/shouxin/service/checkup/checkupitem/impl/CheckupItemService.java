@@ -86,6 +86,9 @@ public class CheckupItemService implements CheckupItemManager{
 		dao.delete("CheckupItemMapper.deleteAll", ArrayDATA_IDS);
 	}
 
+	/**
+	 * 查询所有
+	 */
 	@SuppressWarnings("unchecked")
 	public List<CheckupItem> findAllById(String id) throws Exception {
 		return (List<CheckupItem>) dao.findForList("CheckupItemMapper.findAllById", id);

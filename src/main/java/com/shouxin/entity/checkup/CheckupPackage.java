@@ -2,6 +2,8 @@ package com.shouxin.entity.checkup;
 
 import java.io.Serializable;
 
+import com.shouxin.entity.system.User;
+
 /**
  * 推送给用户的体检套餐，包含有多个体检项目
  * @author sks
@@ -23,6 +25,14 @@ public class CheckupPackage implements Serializable{
 	private Integer REVISION;			// 版本
 	private String SYSFLAG;				// 系统标记
 	
+	private User users;		//关联user对象
+	
+	public User getUsers() {
+		return users;
+	}
+	public void setUsers(User users) {
+		this.users = users;
+	}
 	public Integer getREVISION() {
 		return REVISION;
 	}

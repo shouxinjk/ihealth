@@ -2,6 +2,7 @@ package com.shouxin.service.checkup.checkuppackage;
 
 import java.util.List;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.checkup.CheckupPackage;
 import com.shouxin.util.PageData;
 
 /** 
@@ -54,5 +55,6 @@ public interface CheckupPackageManager{
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
 	
+	public List<CheckupPackage> listAllById(String id)throws Exception;
 }
 

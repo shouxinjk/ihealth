@@ -7,6 +7,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
 import com.shouxin.entity.system.Menu;
+import com.shouxin.entity.system.User;
 
 /**
  * 权限处理
@@ -124,6 +125,14 @@ public class Jurisdiction {
 	 */
 	public static String getUsername(){
 		return getSession().getAttribute(Const.SESSION_USERNAME).toString();
+	}
+	
+	/**
+	 * 获取当前登录的用户ID
+	 * @return
+	 */
+	public static String getUserId(){
+		return ((User) getSession().getAttribute(Const.SESSION_USER)).getUSER_ID();
 	}
 	
 	/**获取当前按钮权限(增删改查)
