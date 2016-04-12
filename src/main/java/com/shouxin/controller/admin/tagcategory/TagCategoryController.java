@@ -54,7 +54,7 @@ public class TagCategoryController extends BaseController {
 		pd = this.getPageData();
 		pd.put("TAGCATEGORY_ID", this.get32UUID());	//主键
 		logBefore(logger, pd.get("PARENT_ID")+"新增department");
-		pd.put("CREATEBY", Jurisdiction.getUserID());
+		pd.put("CREATEBY", Jurisdiction.getUserId());
 		pd.put("CREATEON", new Date());
 //		pd.put("MATETYPE", "生活方式");
 		pd.put("ISEXCLUSIVE", 1);
