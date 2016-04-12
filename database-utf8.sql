@@ -242,6 +242,11 @@ INSERT INTO `sys_menu` VALUES ('47', '八级菜单', 'login_default.do', '45', '
 INSERT INTO `sys_menu` VALUES ('48', '图表报表', ' tool/fusionchartsdemo.do', '9', '5', 'menu-icon fa fa-bar-chart-o black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('49', '组织机构', 'department/listAllDepartment.do?DEPARTMENT_ID=0', '1', '5', 'menu-icon fa fa-users blue', '1', '1');
 INSERT INTO `sys_menu` VALUES ('50', '站内信', 'fhsms/list.do', '6', '2', 'menu-icon fa fa-envelope green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('51', '标签管理', 'tag/listAllTagCategory.do', '6', '3', 'menu-icon fa fa-envelope green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('50', '标签分类管理', 'tagcategory/listAllTagCategoryTree.do?TAGCATEGORY_ID=0', '6', '4', 'menu-icon fa fa-envelope green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('50', '疾病管理', 'disease/listAllDiseasecategory.do', '6', '5', 'menu-icon fa fa-envelope green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('50', '疾病分类管理', 'diseasecategory/listAllDiseaseCategoryTree.do?DISEASECATEGORY=0', '6', '6', 'menu-icon fa fa-envelope green', '1', '1');
+
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -603,7 +608,7 @@ CREATE TABLE `ADMIN_DISEASECATEGORY` (
 		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
 		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
 		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建记录时间',
+		`CREATEON` DATE DEFAULT NULL COMMENT '创建记录时间',
 		`PARENT_ID` varchar(32) DEFAULT NULL COMMENT '父级列表id',
   		PRIMARY KEY (`DISEASECATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -619,7 +624,7 @@ CREATE TABLE `ADMIN_DISEASE` (
 		`ISINHERITABLE` int(11) NOT NULL COMMENT '是否遗传倾向',
 		`ISHIGHINCIDENCE` int(11) NOT NULL COMMENT '是否高发',
 		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建记录时间',
+		`CREATEON` DATE DEFAULT NULL COMMENT '创建记录时间',
 		`DISEASECATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '疾病分类外键',
   		PRIMARY KEY (`DISEASE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -627,13 +632,13 @@ CREATE TABLE `ADMIN_DISEASE` (
 -- ----------------------------
 -- Table structure for `TAG_TAG`
 -- ----------------------------
-DROP TABLE IF EXISTS `TAG_TAG`;
+DROP TABLE IF EXISTS `ADMIN_TAG`;
 CREATE TABLE `TAG_TAG` (
  		`TAG_ID` varchar(100) NOT NULL,
 		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
 		`EXPRESSION` varchar(255) DEFAULT NULL COMMENT '表达式',
 		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '用户id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '时间',
+		`CREATEON` DATE DEFAULT NULL COMMENT '时间',
 		`TAGCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '所属分类id',
   		PRIMARY KEY (`TAG_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -648,7 +653,7 @@ CREATE TABLE `ADMIN_TAGCATEGORY` (
 		`MATETYPE` varchar(255) DEFAULT NULL COMMENT '特性',
 		`ISEXCLUSIVE` int(11) NOT NULL COMMENT '是否多选',
 		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '用户id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '时间',
+		`CREATEON` DATE DEFAULT NULL COMMENT '时间',
 		`PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父级id',
   		PRIMARY KEY (`TAGCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

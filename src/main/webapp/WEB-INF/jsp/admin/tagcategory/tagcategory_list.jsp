@@ -68,10 +68,6 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">标签分类名称</th>
 									<th class="center">特性</th>
-									<th class="center">是否多选</th>
-									<th class="center">用户id</th>
-									<th class="center">时间</th>
-									<th class="center">父级id</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -89,10 +85,6 @@
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'><a href="javascript:goSondict('${var.TAGCATEGORY_ID }')"><i class="ace-icon fa fa-share bigger-100"></i>&nbsp;${var.NAME}</a></td>
 											<td class='center'>${var.MATETYPE}</td>
-											<td class='center'>${var.ISEXCLUSIVE}</td>
-											<td class='center'>${var.CREATEBY}</td>
-											<td class='center'>${var.CREATEON}</td>
-											<td class='center'>${var.PARENT_ID}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

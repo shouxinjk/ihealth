@@ -30,6 +30,7 @@
 					<form action="tagcategory/${msg }.do" name="Form" id="Form" method="post">
 						<input type="hidden" name="TAGCATEGORY_ID" id="TAGCATEGORY_ID" value="${pd.TAGCATEGORY_ID}"/>
 						<input type="hidden" name="PARENT_ID" id="PARENT_ID" value="${null == pd.PARENT_ID ? TAGATEGGORY_ID:pd.TAGCATEGORY_ID}"/>
+						<input type="hidden" name=""/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
@@ -43,6 +44,10 @@
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">标签分类名称:</td>
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入标签分类名称" title="标签分类名称" style="width:98%;"/></td>
+							</tr>
+							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">特性:</td>
+								<td><input type="text" name="MATETYPE" id="MATETYPE" value="${null == pds.MATETYPE ?pd.MATETYPE:pds.MATETYPE}" maxlength="255" placeholder="这里输入标签特性" title="标签分类特性" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">

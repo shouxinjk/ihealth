@@ -68,9 +68,6 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">名称</th>
 									<th class="center">描述</th>
-									<th class="center">创建记录员工id</th>
-									<th class="center">创建记录时间</th>
-									<th class="center">上级列表id</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -88,9 +85,6 @@
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'><a href="javascript:goSondict('${var.DISEASECATEGORY_ID }')"><i class="ace-icon fa fa-share bigger-100"></i>&nbsp;${var.NAME}</a></td>
 											<td class='center'>${var.DESCRIPTION}</td>
-											<td class='center'>${var.CREATEBY}</td>
-											<td class='center'>${var.CREATEON}</td>
-											<td class='center'>${var.PARENT_ID}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
