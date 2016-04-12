@@ -182,6 +182,7 @@ INSERT INTO `sys_fhsms` VALUES ('e5376b1bd54b489cb7f2203632bd74ec', '管理员�
 INSERT INTO `sys_fhsms` VALUES ('e613ac0fcc454f32895a70b747bf4fb5', '你也好', '2', 'admin', 'san', '2016-01-25 16:27:54', '2', 'ce8dc3b15afb40f28090f8b8e13f078d');
 INSERT INTO `sys_fhsms` VALUES ('f25e00cfafe741a3a05e3839b66dc7aa', '你好', '2', 'san', 'admin', '2016-01-25 16:26:44', '1', '920b20dafdfb4c09b560884eb277c51d');
 
+
 -- ----------------------------
 -- Table structure for sys_menu
 -- ----------------------------
@@ -456,21 +457,6 @@ INSERT INTO `weixin_textmsg` VALUES ('695cd74779734231928a253107ab0eeb', '吃饭
 INSERT INTO `weixin_textmsg` VALUES ('d4738af7aea74a6ca1a5fb25a98f9acb', '关注', '这里是关注后回复的内容', '2015-05-11 02:12:36', '1', '关注回复');
 
 
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for `TB_TAGCATEGORY`
--- ----------------------------
-DROP TABLE IF EXISTS `TB_TAGCATEGORY`;
-CREATE TABLE `TB_TAGCATEGORY` (
- 		`TAGCATEGORY_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-		`PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父标签ID',
-		`METATYPE` varchar(255) DEFAULT NULL COMMENT '元类型，如“生活方式”',
-		`ISEXCLUSIVE` varchar(255) DEFAULT NULL COMMENT '该分类下的标签是否互斥',
-  		PRIMARY KEY (`TAGCATEGORY_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- ----------------------------
 -- Table structure for `TB_MEDICALEXAMITEM`
 -- ----------------------------
@@ -657,5 +643,3 @@ CREATE TABLE `ADMIN_TAGCATEGORY` (
 		`PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父级id',
   		PRIMARY KEY (`TAGCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-

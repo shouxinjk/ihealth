@@ -22,9 +22,29 @@ public class User {
 	private String LAST_LOGIN;	//最后登录时间
 	private String IP;			//用户登录ip地址
 	private String STATUS;		//状态
+	private String SKIN;		//皮肤
+	
+	private String BZ;
+	private String NUMBER;
+	
+	/*合并用户信息*/
+	private String PHONE;			// 电话号码
+	private String EMAIL;			// 电子邮件
+	private String OPENID;			// 对应微信OPENID
+	private String ALIAS;			// 昵称
+	private String BIRTHDAY;		// 生日
+	private String SEX;				// 性别
+	private String BIRTHPLACE;		// 出生地
+	private String LIVEPLACE;		// 居住地
+	private String MARRIAGESTATUS;	// 婚姻状态
+	private String CAREER;			// 职业
+	private String DEGREE;			// 学历
+	private String AVATAR;			// 用户图像
+	private Integer HEIGHT;			// 身高
+	private Integer WEIGHT;			// 体重
+	
 	private Role role;			//角色对象
 	private Page page;			//分页对象
-	private String SKIN;		//皮肤
 	
 	public String getSKIN() {
 		return SKIN;
@@ -102,5 +122,103 @@ public class User {
 	public void setPage(Page page) {
 		this.page = page;
 	}
+	public String getBZ() {
+		return BZ;
+	}
+	public void setBZ(String bZ) {
+		BZ = bZ;
+	}
+	public String getNUMBER() {
+		return NUMBER;
+	}
+	public void setNUMBER(String nUMBER) {
+		NUMBER = nUMBER;
+	}
+	public String getPHONE() {
+		return PHONE;
+	}
+	public void setPHONE(String pHONE) {
+		PHONE = pHONE;
+	}
+	public String getEMAIL() {
+		return EMAIL;
+	}
+	public void setEMAIL(String eMAIL) {
+		EMAIL = eMAIL;
+	}
+	public String getOPENID() {
+		return OPENID;
+	}
+	public void setOPENID(String oPENID) {
+		OPENID = oPENID;
+	}
+	public String getALIAS() {
+		return ALIAS;
+	}
+	public void setALIAS(String aLIAS) {
+		ALIAS = aLIAS;
+	}
+	public String getBIRTHDAY() {
+		return BIRTHDAY;
+	}
+	public void setBIRTHDAY(String bIRTHDAY) {
+		BIRTHDAY = bIRTHDAY;
+	}
+	public String getSEX() {
+		return SEX;
+	}
+	public void setSEX(String sEX) {
+		SEX = sEX;
+	}
+	public String getBIRTHPLACE() {
+		return BIRTHPLACE;
+	}
+	public void setBIRTHPLACE(String bIRTHPLACE) {
+		BIRTHPLACE = bIRTHPLACE;
+	}
+	public String getLIVEPLACE() {
+		return LIVEPLACE;
+	}
+	public void setLIVEPLACE(String lIVEPLACE) {
+		LIVEPLACE = lIVEPLACE;
+	}
+	public String getMARRIAGESTATUS() {
+		return MARRIAGESTATUS;
+	}
+	public void setMARRIAGESTATUS(String mARRIAGESTATUS) {
+		MARRIAGESTATUS = mARRIAGESTATUS;
+	}
+	public String getCAREER() {
+		return CAREER;
+	}
+	public void setCAREER(String cAREER) {
+		CAREER = cAREER;
+	}
+	public String getDEGREE() {
+		return DEGREE;
+	}
+	public void setDEGREE(String dEGREE) {
+		DEGREE = dEGREE;
+	}
+	public String getAVATAR() {
+		return AVATAR;
+	}
+	public void setAVATAR(String aVATAR) {
+		AVATAR = aVATAR;
+	}
+	public Integer getHEIGHT() {
+		return HEIGHT;
+	}
+	public void setHEIGHT(Integer hEIGHT) {
+		HEIGHT = hEIGHT;
+	}
+	public Integer getWEIGHT() {
+		return WEIGHT;
+	}
+	public void setWEIGHT(Integer wEIGHT) {
+		WEIGHT = wEIGHT;
+	}
+	
+	
 	
 }

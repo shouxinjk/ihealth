@@ -126,12 +126,12 @@ public class Jurisdiction {
 	public static String getUsername(){
 		return getSession().getAttribute(Const.SESSION_USERNAME).toString();
 	}
-	
 
-	/**获取当前登录的用户ID
+	/**
+	 * 获取当前登录的用户ID
 	 * @return
 	 */
-	public static String getUserID(){
+	public static String getUserId(){
 		return ((User) getSession().getAttribute(Const.SESSION_USER)).getUSER_ID();
 	}
 	
