@@ -301,6 +301,7 @@
 				NUMBER					= #{NUMBER},
 				PHONE					= #{PHONE},
 				ALIAS					= #{ALIAS},
+				OPENID                  = #{OPENID},
 				LIVEPLACE				= #{LIVEPLACE},
 				MARRIAGESTATUS			= #{MARRIAGESTATUS},
 				CAREER					= #{CAREER},

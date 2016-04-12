@@ -155,50 +155,6 @@ public class UserController extends BaseController {
 		return mv;
 	}
 	
-	/**
-	 * 用户注册，通过手机号码 url : user/rest/register
-	 * 当用户填写了手机号码并点击注册时需要的数据{phone:"xx",openid:"xxx"}
-	 * @return json
-	 * 当手号码不存在时，执行新增用户并返回用户ID{"msg":"success"}{"userId",userId}
-	 * 当手机号码存在，返回{"msg","existence"}{"pd",pageDate}
-	 */
-	@RequestMapping(value="/rest/register")
-	@ResponseBody
-	private Object register(HttpServletRequest request) throws Exception{
-		logBefore(logger,"通过手机号码注册user");
-		Map<String,String> map = new HashMap<String,String>();
-		String msg = null;
-		PageData pd = new PageData();
-		pd = this.getPageData();
-		//生成ID
-		String userId = this.get32UUID();
-		//获取电话号码
-		String phone = this.getRequest().getParameter("phone");
-		//获取openid
-		String openid = this.getRequest().getParameter("openId");
-		//将数据添加到PageDate
-		pd.put("USER_ID", userId);	//ID 主键
-		pd.put("PHONE", phone);
-		pd.put("OPENID", openid);
-		
-		if(null == userService.findByPhone(pd)){	//判断手机号码是否存在
-			logger.debug("经过判断，手机号码在数据库中不存在，执行新增操作");
-			userService.saveU(pd); 					//执行保存
-			logger.debug("将用户ID保存，在后续页面上取值");
-			msg="success";
-			request.getSession().setAttribute("userId", userId);
-		}else{
-			//手机号码存在，通过手机号码查询用户信息
-			PageData pageDate = this.userService.findByPhone(pd);
-			request.getSession().setAttribute("pd", pageDate);
-			msg = "existence";
-		}
-		map.put("result", msg);
-		return AppUtil.returnObject(new PageData(), map);
-	}
-	
-	//通过用户ID 修改用户信息
-	
 	
 	/**
 	 * 判断手机号是否存在
