@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /eclipse/
 /data/
 /tmp/
@@ -10,3 +11,17 @@
 =======
 >>>>>>> bfdab7b85bbbc776f91a5b332cc00544542f0965
 /target/
+=======
+<<<<<<< HEAD
+/eclipse/
+/data/
+/tmp/
+/.settings/
+.classpath
+.project
+/modules/
+/precompiled/
+=======
+>>>>>>> bfdab7b85bbbc776f91a5b332cc00544542f0965
+/target/
+>>>>>>> branch 'master' of github.com:shouxinjk/ihealth.git
