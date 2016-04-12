@@ -182,6 +182,7 @@ INSERT INTO `sys_fhsms` VALUES ('e5376b1bd54b489cb7f2203632bd74ec', '管理员好', 
 INSERT INTO `sys_fhsms` VALUES ('e613ac0fcc454f32895a70b747bf4fb5', '你也好', '2', 'admin', 'san', '2016-01-25 16:27:54', '2', 'ce8dc3b15afb40f28090f8b8e13f078d');
 INSERT INTO `sys_fhsms` VALUES ('f25e00cfafe741a3a05e3839b66dc7aa', '你好', '2', 'san', 'admin', '2016-01-25 16:26:44', '1', '920b20dafdfb4c09b560884eb277c51d');
 
+DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu` (
   `MENU_ID` int(11) NOT NULL,
   `MENU_NAME` varchar(255) DEFAULT NULL,
@@ -232,10 +233,10 @@ insert  into `sys_menu` values (49,'组织机构','department/listAllDepartment.do?D
 insert  into `sys_menu` values (50,'站内信','fhsms/list.do','6','2','menu-icon fa fa-envelope green','1',1);
 insert  into `sys_menu` values (51,'文章信息管理','article/list.do','6','1','menu-icon fa fa-leaf black','1',1);
 insert  into `sys_menu` values (72,'体检套餐管理','checkuppackage/listAll.do','6','2','menu-icon fa fa-leaf black','1',1);
-INSERT INTO `sys_menu` VALUES ('73', '标签管理', 'tag/listAllTagCategory.do', '6', '3', 'menu-icon fa fa-envelope green', '1', '1');
-INSERT INTO `sys_menu` VALUES ('74', '标签分类管理', 'tagcategory/listAllTagCategoryTree.do?TAGCATEGORY_ID=0', '6', '4', 'menu-icon fa fa-envelope green', '1', '1');
-INSERT INTO `sys_menu` VALUES ('75', '疾病管理', 'disease/listAllDiseasecategory.do', '6', '5', 'menu-icon fa fa-envelope green', '1', '1');
-INSERT INTO `sys_menu` VALUES ('76', '疾病分类管理', 'diseasecategory/listAllDiseaseCategoryTree.do?DISEASECATEGORY=0', '6', '6', 'menu-icon fa fa-envelope green', '1', '1');
+INSERT INTO `sys_menu` VALUES (73, '标签管理', 'tag/listAllTagCategory.do', '6', '3', 'menu-icon fa fa-envelope green', '1', '1');
+INSERT INTO `sys_menu` VALUES (74, '标签分类管理', 'tagcategory/listAllTagCategoryTree.do?TAGCATEGORY_ID=0', '6', '4', 'menu-icon fa fa-envelope green', '1', '1');
+INSERT INTO `sys_menu` VALUES (75, '疾病管理', 'disease/listAllDiseasecategory.do', '6', '5', 'menu-icon fa fa-envelope green', '1', '1');
+INSERT INTO `sys_menu` VALUES (76, '疾病分类管理', 'diseasecategory/listAllDiseaseCategoryTree.do?DISEASECATEGORY=0', '6', '6', 'menu-icon fa fa-envelope green', '1', '1');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -334,8 +335,11 @@ CREATE TABLE `sys_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_user` */
+INSERT INTO `sys_user` (`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS` ,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`) VALUES ('1', 'admin', 'de41b7fb99201d8334c23c014db35ecd92df81bc', '系统管理员', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2016-01-27 23:45:53', '127.0.0.1', '0', '最高统治者', 'default', 'QQ313596790@main.com', '001', '18788888888');
+INSERT INTO `sys_user` (`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS` ,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`) VALUES ('69177258a06e4927b4639ab1684c3320', 'san', '47c4a8dc64ac2f0bb46bbd8813b037c9718f9349', '三', '', '3264c8e83d0248bb9e3ea6195b4c0216', '2016-01-25 16:25:36', '192.168.1.102', '0', '111', 'default', '978336446@qq.com', '333', '13562202556');
+INSERT INTO `sys_user` (`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS` ,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`) VALUES ('9991f4d7782a4ccfb8a65bd96ea7aafa', 'lisi', '2612ade71c1e48cd7150b5f4df152faa699cedfe', '李四', '', '3264c8e83d0248bb9e3ea6195b4c0216', '2016-01-06 01:24:26', '127.0.0.1', '0', '小李', 'default', '313596790@qq.com', '1102', '13566233663');
+INSERT INTO `sys_user` (`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS` ,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`) VALUES ('e29149962e944589bb7da23ad18ddeed', 'zhangsan', 'c2da1419caf053885c492e10ebde421581cdc03f', '张三', '', '3264c8e83d0248bb9e3ea6195b4c0216', '', '', '0', '小张', 'default', 'zhangsan@www.com', '1101', '2147483647');
 
-insert  into `sys_user`(`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS`,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`,`OPENID`,`ALIAS`,`BIRTHDAY`,`SEX`,`BIRTHPLACE`,`LIVEPLACE`,`MARRIAGESTATUS`,`CAREER`,`DEGREE`,`AVATAR`,`HEIGHT`,`WEIGHT`) values ('1','admin','de41b7fb99201d8334c23c014db35ecd92df81bc','系统管理员','1133671055321055258374707980945218933803269864762743594642571294','1','2016-04-10 22:38:14','0:0:0:0:0:0:0:1','0','最高统治者',NULL,'QQ313596790@main.com','001','18788888888',NULL,'系统管理员',NULL,'男','成都','成都','未婚','高级架构师','本科','img/logo.jpg',188,50),('69177258a06e4927b4639ab1684c3320','san','47c4a8dc64ac2f0bb46bbd8813b037c9718f9349','三','3264c8e83d0248bb9e3ea6195b4c0216','1','2016-04-10 21:12:04','0:0:0:0:0:0:0:1','0','111',NULL,'978336446@qq.com','333','13562202556',NULL,'测试用户',NULL,'男','成都','成都','已婚','程序员','专科','img/logo.jpg',188,60),('9991f4d7782a4ccfb8a65bd96ea7aafa','lisi','2612ade71c1e48cd7150b5f4df152faa699cedfe','李四','3264c8e83d0248bb9e3ea6195b4c0216','1','2016-01-06 01:24:26','127.0.0.1','0','小李',NULL,'313596790@qq.com','1102','13566233663',NULL,'李',NULL,'男','上海','上海','未婚','销售','博士','img/logo.jpg',198,67),('d28812dffc7b4c91924dd73c8487a86c','admin123','c9f55b944bbd496ff462196310dcb383586b4a5e','默默','','3264c8e83d0248bb9e3ea6195b4c0216','','','0','要嘿嘿嘿么','default','828777292@qq.com','1001','13567899876',NULL,'双黑狗','1992-08-20','男','成都','成都','未婚','程序员','大壮','image/logo.jpg',189,89),('e29149962e944589bb7da23ad18ddeed','zhangsan','c2da1419caf053885c492e10ebde421581cdc03f','张三','3264c8e83d0248bb9e3ea6195b4c0216','0',NULL,NULL,NULL,'校长',NULL,'zhangsan@www.com','1101','2147483647',NULL,'张',NULL,'男','北京','北京','未婚','个体','小学','img/logo.jpg',178,56);
 -- ----------------------------
 -- Table structure for tb_pictures
 -- ----------------------------
