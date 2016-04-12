@@ -200,6 +200,7 @@
 		
 		//新增
 		function add(DEPARTMENT_ID){
+			alert(DEPARTMENT_ID)
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;

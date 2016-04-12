@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.admin.DiseaseCategory;
+import com.shouxin.util.Logger;
 import com.shouxin.util.PageData;
 import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
 
@@ -17,7 +18,6 @@ import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
  */
 @Service("diseasecategoryService")
 public class DiseaseCategoryService implements DiseaseCategoryManager{
-
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
 	
@@ -107,13 +107,34 @@ public class DiseaseCategoryService implements DiseaseCategoryManager{
 		// TODO Auto-generated method stub
 		List<DiseaseCategory> diseaseCategory = this.listAllDiseaseCategory(parentID);
 		for (DiseaseCategory cate : diseaseCategory) {
-			cate.setTreeUrl("/disease/list.do?DISEASECATEGORY_ID="+cate.getDISEASECATEGORY_ID());
-			cate.setSubDiseaseCategory(listAllDiseaseCategory(cate.getDISEASECATEGORY_ID()));
-			System.out.println(cate.getSubDiseaseCategory().toString());
-			cate.setTarget("treeForm");
+			
+			List<DiseaseCategory> dis = this.listAllDiseaseCategory(cate.getDISEASECATEGORY_ID());
+			for (DiseaseCategory diseaseCategory2 : dis) {
+				diseaseCategory2.setTreeUrl("disease/list.do?DISEASECATEGORY_ID="+diseaseCategory2.getDISEASECATEGORY_ID());
+				diseaseCategory2.setTarget("treeFrame");
+			}
+			cate.setSubDiseaseCategory(dis);
+			
 		}
 		
 		return diseaseCategory;
+	}
+	/**
+	 * 获取所有数据并填充每条数据的子级列表(递归处理)
+	 * @param parentID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DiseaseCategory> listAllDiseaseCategoryTree(String parentID) throws Exception {
+		// TODO Auto-generated method stub
+				List<DiseaseCategory> diseaseCategory = this.listAllDiseaseCategory(parentID);
+				for (DiseaseCategory cate : diseaseCategory) {
+					List<DiseaseCategory> dis = this.listAllDiseaseCategory(cate.getDISEASECATEGORY_ID());
+					cate.setTreeUrl("diseasecategory/list.do?DISEASECATEGORY_ID="+cate.getDISEASECATEGORY_ID());
+					cate.setTarget("treeFrame");
+					cate.setSubDiseaseCategory(dis);
+				}
+				return diseaseCategory;
 	}
 	
 }

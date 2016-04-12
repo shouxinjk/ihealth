@@ -29,14 +29,23 @@
 					
 					<form action="disease/${msg }.do" name="Form" id="Form" method="post">
 						<input type="hidden" name="DISEASE_ID" id="DISEASE_ID" value="${pd.DISEASE_ID}"/>
+						<input type="hidden" name="DISEASECATEGORY_ID" id="DISEASECATEGORY_ID" value="${DISEASECATEGORY_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">名称:</td>
+								<td style="width:79px;text-align: right;padding-top: 13px;">上级:</td>
+								<td>
+									<div class="col-xs-4 label label-lg label-light arrowed-in arrowed-right">
+										<b>${null == pds.NAME ?'(无) 此部门为顶级':pds.NAME}</b>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">疾病名称:</td>
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入名称" title="名称" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">描述:</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">症状说明:</td>
 								<td><input type="text" name="DESCRIPTION" id="DESCRIPTION" value="${pd.DESCRIPTION}" maxlength="255" placeholder="这里输入描述" title="描述" style="width:98%;"/></td>
 							</tr>
 							<tr>
@@ -46,14 +55,6 @@
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">是否高发:</td>
 								<td><input type="number" name="ISHIGHINCIDENCE" id="ISHIGHINCIDENCE" value="${pd.ISHIGHINCIDENCE}" maxlength="32" placeholder="这里输入是否高发" title="是否高发" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">创建记录员工id:</td>
-								<td><input type="text" name="CREATEBY" id="CREATEBY" value="${pd.CREATEBY}" maxlength="255" placeholder="这里输入创建记录员工id" title="创建记录员工id" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">创建记录时间:</td>
-								<td><input class="span10 date-picker" name="CREATEON" id="CREATEON" value="${pd.CREATEON}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="创建记录时间" title="创建记录时间" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">

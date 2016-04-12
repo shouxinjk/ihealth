@@ -23,13 +23,12 @@
 			</div>
 		</td>
 		<td style="width:85%;" valign="top" >
-			<iframe name="treeFrame" id="treeFrame" frameborder="0" src="<%=basePath%>/disease/list.do" style="margin:0 auto;width:100%;height:100%;"></iframe>
+			<iframe name="treeFrame" id="treeFrame" frameborder="0" src="<%=basePath%>/disease/list.do?DISEASECATEGORY_ID=${'' == DISEASECATEGORY_ID?'0':DISEASECATEGORY_ID}&currentPage=${null == pd.dnowPage || '' == pd.dnowPage?'1':pd.dnowPage}" style="margin:0 auto;width:100%;height:100%;"></iframe>
 		</td>
 	</tr>
 </table>
 		
 <script type="text/javascript">
-alert(1)
 		$(top.hangge());
 		var zTree;
 		$(document).ready(function(){

@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,9 @@ import com.shouxin.entity.Page;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
+
+import net.sf.json.JSONArray;
+
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
 
@@ -102,16 +106,49 @@ public class DiseaseCategoryController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
+		String DISEASECATEGORY_ID = null == pd.get("DISEASECATEGORY_ID")?"":pd.get("DISEASECATEGORY_ID").toString();
+		if(null != pd.get("id") && !"".equals(pd.get("id").toString())){
+			DISEASECATEGORY_ID = pd.get("id").toString();
+		}
+		pd.put("DISEASECATEGORY_ID", DISEASECATEGORY_ID);					//上级ID
+		logBefore(logger, pd.get("TAGCATEGORY_ID")+"列表department");
 		page.setPd(pd);
 		List<PageData>	varList = diseasecategoryService.list(page);	//列出DiseaseCategory列表
 		mv.setViewName("admin/diseasecategory/diseasecategory_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
+		mv.addObject("DISEASECATEGORY_ID", DISEASECATEGORY_ID);		
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
 	}
 	
-	
+	/***
+	 * 显示所有DISEASECATEGORY tree
+	 * @param model
+	 * @param TAGATEGORY_ID
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/listAllDiseaseCategoryTree")
+	public ModelAndView listDiseaseCategory(Model model,String DISEASECATEGORY_ID) throws Exception{
+		
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		try{
+			JSONArray arr = JSONArray.fromObject(diseasecategoryService.listAllDiseaseCategoryTree("0"));
+			String json = arr.toString();
+			logBefore(logger, json+"列表DISEASECATEGORY=======");
+			json = json.replaceAll("DISEASECATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subDiseaseCategory", "nodes").replaceAll("hasDiseaseCategory", "checked").replaceAll("treeUrl", "url");
+			model.addAttribute("zTreeNodes", json);
+			mv.addObject("DISEASECATEGORY_ID",DISEASECATEGORY_ID);
+			mv.addObject("pd", pd);	
+			mv.setViewName("admin/diseasecategory/diseasecategory_ztree");
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		return mv;
+	}
 	
 	
 	/**去新增页面
@@ -123,8 +160,13 @@ public class DiseaseCategoryController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		String DISEASECATEGORY_ID = null == pd.get("DISEASECATEGORY_ID")?"":pd.get("DISEASECATEGORY_ID").toString();
+		pd.put("DISEASECATEGORY_ID", DISEASECATEGORY_ID);	
+		logBefore(logger, pd.get("DISEASECATEGORY_ID")+"标签分类DISEASECATEGORY_ID===============");
+		mv.addObject("pds",diseasecategoryService.findById(pd));
 		mv.setViewName("admin/diseasecategory/diseasecategory_edit");
 		mv.addObject("msg", "save");
+		mv.addObject("DISEASECATEGORY_ID",DISEASECATEGORY_ID);
 		mv.addObject("pd", pd);
 		return mv;
 	}	
@@ -138,10 +180,14 @@ public class DiseaseCategoryController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		String DISEASECATEGORY_ID = pd.getString("DISEASECATEGORY_ID");
 		pd = diseasecategoryService.findById(pd);	//根据ID读取
+		mv.addObject("pd", pd);
+		pd.put("DISEASECATEGORY_ID", pd.get("PARENT_ID").toString());
+		mv.addObject("pds",diseasecategoryService.findById(pd));
 		mv.setViewName("admin/diseasecategory/diseasecategory_edit");
 		mv.addObject("msg", "edit");
-		mv.addObject("pd", pd);
+		pd.put("DISEASECATEGORY_ID", DISEASECATEGORY_ID);
 		return mv;
 	}	
 	

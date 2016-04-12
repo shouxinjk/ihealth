@@ -68,9 +68,6 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">名称</th>
 									<th class="center">描述</th>
-									<th class="center">创建记录员工id</th>
-									<th class="center">创建记录时间</th>
-									<th class="center">上级列表id</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -86,11 +83,8 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.DISEASECATEGORY_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'>${var.NAME}</td>
+											<td class='center'><a href="javascript:goSondict('${var.DISEASECATEGORY_ID }')"><i class="ace-icon fa fa-share bigger-100"></i>&nbsp;${var.NAME}</a></td>
 											<td class='center'>${var.DESCRIPTION}</td>
-											<td class='center'>${var.CREATEBY}</td>
-											<td class='center'>${var.CREATEON}</td>
-											<td class='center'>${var.PARENT_ID}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
@@ -159,7 +153,7 @@
 							<tr>
 								<td style="vertical-align:top;">
 									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-sm btn-success" onclick="add();">新增</a>
+									<a class="btn btn-sm btn-success" onclick="add('${DISEASECATEGORY_ID}');">新增</a>
 									</c:if>
 									<c:if test="${QX.del == 1 }">
 									<a class="btn btn-sm btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
@@ -256,13 +250,20 @@
 			});
 		});
 		
+		
+		//去此ID下子级列表
+		function goSondict(DISEASECATEGORY_ID){
+			top.jzts();
+			window.location.href="<%=basePath%>diseasecategory/list.do?id="+DISEASECATEGORY_ID;
+		};
+		
 		//新增
-		function add(){
+		function add(DISEASECATEGORY_ID){
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>diseasecategory/goAdd.do';
+			 diag.URL = '<%=basePath%>diseasecategory/goAdd.do?DISEASECATEGORY_ID='+DISEASECATEGORY_ID;
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件

@@ -26,9 +26,10 @@
 		<typeAlias type="com.shouxin.entity.exam.ExamSolution" alias="ExamSolution"/>
 		<typeAlias type="com.shouxin.entity.admin.DiseaseCategory" alias="DiseaseCategory"/>
 		<typeAlias type="com.shouxin.entity.admin.Disease" alias="Disease"/>
+		<typeAlias type="com.shouxin.entity.admin.Tag" alias="Tag"/>
+		<typeAlias type="com.shouxin.entity.admin.TagCategory" alias="TagCategory"/>
 		<typeAlias type="com.shouxin.entity.checkup.CheckupPackage" alias="CheckupPackage"/>
 		<typeAlias type="com.shouxin.entity.checkup.CheckupItem" alias="CheckupItem"/>
-		<typeAlias type="com.shouxin.util.PageData" alias="pd"/>
 		<!-- 分页 -->
 		<typeAlias type="com.shouxin.entity.Page" alias="Page"/>
 	</typeAliases>

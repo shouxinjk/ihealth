@@ -70,6 +70,13 @@ public interface DiseaseCategoryManager{
 	 */
 	public List<DiseaseCategory> listAllDiseaseCategory(String parentID) throws Exception;
 	
-	
+
+	/**
+	 * 获取所有数据并填充每条数据的子级列表(递归处理)
+	 * @param parentID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DiseaseCategory> listAllDiseaseCategoryTree(String parentID) throws Exception;
 }
 

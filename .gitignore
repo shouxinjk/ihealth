@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /eclipse/
 /data/
 /tmp/
@@ -6,4 +7,6 @@
 .project
 /modules/
 /precompiled/
+=======
+>>>>>>> bfdab7b85bbbc776f91a5b332cc00544542f0965
 /target/

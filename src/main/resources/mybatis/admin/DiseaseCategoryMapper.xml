@@ -88,10 +88,6 @@
 		<include refid="tableName"></include>
 		set 
 			NAME = #{NAME},
-			DESCRIPTION = #{DESCRIPTION},
-			CREATEBY = #{CREATEBY},
-			CREATEON = #{CREATEON},
-			PARENT_ID = #{PARENT_ID},
 		DISEASECATEGORY_ID = DISEASECATEGORY_ID
 		where 
 		DISEASECATEGORY_ID = #{DISEASECATEGORY_ID}
@@ -113,7 +109,10 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 1=1
+		where 1=1 
+		<if test="pd.DISEASECATEGORY_ID!= null and pd.DISEASECATEGORY_ID != ''"><!-- 检索 -->
+		and PARENT_ID = #{pd.DISEASECATEGORY_ID}
+		</if>
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(

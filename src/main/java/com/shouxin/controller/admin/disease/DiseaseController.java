@@ -58,6 +58,7 @@ public class DiseaseController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("DISEASE_ID", this.get32UUID());	//主键
+		logBefore(logger, pd.get("DISEASECATEGORY_ID")+"疾病分类id++++++++++++");
 		diseaseService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -112,15 +113,29 @@ public class DiseaseController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
+		String DISEASECATEGORY_ID = null == pd.get("DISEASECATEGORY_ID")?"":pd.get("DISEASECATEGORY_ID").toString();
+		if(null != pd.get("id") && !"".equals(pd.get("id").toString())){
+			DISEASECATEGORY_ID = pd.get("id").toString();
+		}
+		pd.put("DISEASECATEGORY_ID", DISEASECATEGORY_ID);	
+		logBefore(logger, DISEASECATEGORY_ID+"列表DiseaseCategory=======");
 		page.setPd(pd);
 		List<PageData>	varList = diseaseService.list(page);	//列出Disease列表
 		mv.setViewName("admin/disease/disease_list");
 		mv.addObject("varList", varList);
+		mv.addObject("DISEASECATEGORY_ID", DISEASECATEGORY_ID);
 		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
 	}
 	
+	/**
+	 * 展示DiseaseCategory所有tree列表
+	 * @param model
+	 * @param DISEASECATEGORY_ID
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/listAllDiseasecategory")
 	public ModelAndView listDiseaseCategory(Model model,String DISEASECATEGORY_ID) throws Exception{
 		
@@ -128,9 +143,10 @@ public class DiseaseController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try{
-			JSONArray arr = JSONArray.fromObject(diseasecategoryService.listAllDiseaseCategory("0"));
+			JSONArray arr = JSONArray.fromObject(diseasecategoryService.listSubDiseaseCategoryByParentId("0"));
 			String json = arr.toString();
-			json = json.replaceAll("DISEASECATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subDiseasegory", "nodes").replaceAll("hasDiseasegory", "checked").replaceAll("treeurl", "url");
+			logBefore(logger, json+"列表DiseaseCategory=======");
+			json = json.replaceAll("DISEASECATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subDiseaseCategory", "nodes").replaceAll("hasDiseaseCategory", "checked").replaceAll("treeUrl", "url");
 			model.addAttribute("zTreeNodes", json);
 			mv.addObject("DISEASECATEGORY_ID",DISEASECATEGORY_ID);
 			mv.addObject("pd", pd);	
@@ -139,7 +155,6 @@ public class DiseaseController extends BaseController {
 			logger.error(e.toString(), e);
 		}
 		return mv;
-		
 	}
 	
 	/**去新增页面
@@ -151,8 +166,13 @@ public class DiseaseController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		String DISEASECATEGORY_ID = null == pd.get("DISEASECATEGORY_ID")?"":pd.get("DISEASECATEGORY_ID").toString();
+		pd.put("DISEASECATEGORY_ID", DISEASECATEGORY_ID);	
+		logBefore(logger, pd.get("DISEASECATEGORY_ID")+"标签分类TAGCATEGORY_ID===============");
+		mv.addObject("pds",diseasecategoryService.findById(pd));
 		mv.setViewName("admin/disease/disease_edit");
 		mv.addObject("msg", "save");
+		mv.addObject("DISEASECATEGORY_ID",DISEASECATEGORY_ID);
 		mv.addObject("pd", pd);
 		return mv;
 	}	
@@ -166,9 +186,14 @@ public class DiseaseController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd = diseaseService.findById(pd);	//根据ID读取
+		String DISEASECATEGORY_ID = null == pd.get("DISEASECATEGORY_ID")?"":pd.get("DISEASECATEGORY_ID").toString();
+		pd.put("DISEASECATEGORY_ID", DISEASECATEGORY_ID);	
+		logBefore(logger, pd.get("DISEASECATEGORY_ID")+"标签分类TAGCATEGORY111===============");
+		mv.addObject("pds",diseasecategoryService.findById(pd));
 		mv.setViewName("admin/disease/disease_edit");
 		mv.addObject("msg", "edit");
+		pd = diseaseService.findById(pd);//根据ID读取
+		mv.addObject("DISEASECATEGORY_ID",DISEASECATEGORY_ID);
 		mv.addObject("pd", pd);
 		return mv;
 	}	
