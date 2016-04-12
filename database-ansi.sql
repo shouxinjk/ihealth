@@ -182,10 +182,6 @@ INSERT INTO `sys_fhsms` VALUES ('e5376b1bd54b489cb7f2203632bd74ec', '管理员好', 
 INSERT INTO `sys_fhsms` VALUES ('e613ac0fcc454f32895a70b747bf4fb5', '你也好', '2', 'admin', 'san', '2016-01-25 16:27:54', '2', 'ce8dc3b15afb40f28090f8b8e13f078d');
 INSERT INTO `sys_fhsms` VALUES ('f25e00cfafe741a3a05e3839b66dc7aa', '你好', '2', 'san', 'admin', '2016-01-25 16:26:44', '1', '920b20dafdfb4c09b560884eb277c51d');
 
--- ----------------------------
--- Table structure for sys_menu
--- ----------------------------
-DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu` (
   `MENU_ID` int(11) NOT NULL,
   `MENU_NAME` varchar(255) DEFAULT NULL,
@@ -198,50 +194,44 @@ CREATE TABLE `sys_menu` (
   PRIMARY KEY (`MENU_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of sys_menu
--- ----------------------------
-INSERT INTO `sys_menu` VALUES ('1', '系统管理', '#', '0', '1', 'menu-icon fa fa-desktop blue', '2', '1');
-INSERT INTO `sys_menu` VALUES ('2', '权限管理', '#', '1', '1', 'menu-icon fa fa-lock black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('6', '信息管理', '#', '0', '5', 'menu-icon fa fa-credit-card green', '2', '1');
-INSERT INTO `sys_menu` VALUES ('7', '图片管理', 'pictures/list.do', '6', '1', 'menu-icon fa fa-folder-o pink', '2', '1');
-INSERT INTO `sys_menu` VALUES ('8', '性能监控', 'druid/index.html', '9', '1', 'menu-icon fa fa-tachometer red', '1', '1');
-INSERT INTO `sys_menu` VALUES ('9', '系统工具', '#', '0', '3', 'menu-icon fa fa-cog black', '2', '1');
-INSERT INTO `sys_menu` VALUES ('10', '接口测试', 'tool/interfaceTest.do', '9', '2', 'menu-icon fa fa-exchange green', '1', '1');
-INSERT INTO `sys_menu` VALUES ('11', '发送邮件', 'tool/goSendEmail.do', '9', '3', 'menu-icon fa fa-envelope-o green', '1', '1');
-INSERT INTO `sys_menu` VALUES ('12', '置二维码', 'tool/goTwoDimensionCode.do', '9', '4', 'menu-icon fa fa-barcode green', '1', '1');
-INSERT INTO `sys_menu` VALUES ('14', '地图工具', 'tool/map.do', '9', '6', 'menu-icon fa fa-globe black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('15', '微信管理', '#', '0', '4', 'menu-icon fa fa-comments purple', '2', '1');
-INSERT INTO `sys_menu` VALUES ('16', '文本回复', 'textmsg/list.do', '15', '2', 'menu-icon fa fa-comment green', '2', '1');
-INSERT INTO `sys_menu` VALUES ('17', '应用命令', 'command/list.do', '15', '4', 'menu-icon fa fa-comment grey', '2', '1');
-INSERT INTO `sys_menu` VALUES ('18', '图文回复', 'imgmsg/list.do', '15', '3', 'menu-icon fa fa-comment pink', '2', '1');
-INSERT INTO `sys_menu` VALUES ('19', '关注回复', 'textmsg/goSubscribe.do', '15', '1', 'menu-icon fa fa-comment orange', '2', '1');
-INSERT INTO `sys_menu` VALUES ('20', '在线管理', 'onlinemanager/list.do', '1', '6', 'menu-icon fa fa-laptop green', '1', '1');
-INSERT INTO `sys_menu` VALUES ('21', '打印测试', 'tool/printTest.do', '9', '7', 'menu-icon fa fa-hdd-o grey', '1', '1');
-INSERT INTO `sys_menu` VALUES ('22', '一级菜单', '#', '0', '6', 'menu-icon fa fa-fire orange', '2', '1');
-INSERT INTO `sys_menu` VALUES ('23', '二级菜单', '#', '22', '1', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('24', '三级菜单', '#', '23', '1', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('30', '四级菜单', '#', '24', '1', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('31', '五级菜单1', '#', '30', '1', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('32', '五级菜单2', '#', '30', '2', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('33', '六级菜单', '#', '31', '1', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('34', '六级菜单2', 'login_default.do', '31', '2', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('35', '四级菜单2', 'login_default.do', '24', '2', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('36', '角色(基础权限)', 'role.do', '2', '1', 'menu-icon fa fa-key orange', '1', '1');
-INSERT INTO `sys_menu` VALUES ('37', '按钮权限', 'buttonrights/list.do', '2', '2', 'menu-icon fa fa-key green', '1', '1');
-INSERT INTO `sys_menu` VALUES ('38', '菜单管理', 'menu/listAllMenu.do', '1', '3', 'menu-icon fa fa-folder-open-o brown', '1', '1');
-INSERT INTO `sys_menu` VALUES ('39', '按钮管理', 'fhbutton/list.do', '1', '2', 'menu-icon fa fa-download orange', '1', '1');
-INSERT INTO `sys_menu` VALUES ('40', '用户管理', '#', '0', '2', 'menu-icon fa fa-users blue', '2', '1');
-INSERT INTO `sys_menu` VALUES ('41', '系统用户', 'user/listUsers.do', '40', '1', 'menu-icon fa fa-users green', '1', '1');
-INSERT INTO `sys_menu` VALUES ('42', '会员管理', 'happuser/listUsers.do', '40', '2', 'menu-icon fa fa-users orange', '1', '1');
-INSERT INTO `sys_menu` VALUES ('43', '数据字典', 'dictionaries/listAllDict.do?DICTIONARIES_ID=0', '1', '4', 'menu-icon fa fa-book purple', '1', '1');
-INSERT INTO `sys_menu` VALUES ('44', '代码生成', 'createCode/list.do', '9', '0', 'menu-icon fa fa-cogs brown', '1', '1');
-INSERT INTO `sys_menu` VALUES ('45', '七级菜单1', '#', '33', '1', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('46', '七级菜单2', '#', '33', '2', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('47', '八级菜单', 'login_default.do', '45', '1', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('48', '图表报表', ' tool/fusionchartsdemo.do', '9', '5', 'menu-icon fa fa-bar-chart-o black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('49', '组织机构', 'department/listAllDepartment.do?DEPARTMENT_ID=0', '1', '5', 'menu-icon fa fa-users blue', '1', '1');
-INSERT INTO `sys_menu` VALUES ('50', '站内信', 'fhsms/list.do', '6', '2', 'menu-icon fa fa-envelope green', '1', '1');
+/*Data for the table `sys_menu` */
+
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (1,'系统管理','#','0','1','menu-icon fa fa-desktop blue','2',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (2,'权限管理','#','1','1','menu-icon fa fa-lock black','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (6,'信息管理','#','0','5','menu-icon fa fa-credit-card green','2',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (7,'图片管理','pictures/list.do','6','1','menu-icon fa fa-folder-o pink','2',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (8,'性能监控','druid/index.html','9','1','menu-icon fa fa-tachometer red','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (9,'系统工具','#','0','3','menu-icon fa fa-cog black','2',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (10,'接口测试','tool/interfaceTest.do','9','2','menu-icon fa fa-exchange green','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (11,'发送邮件','tool/goSendEmail.do','9','3','menu-icon fa fa-envelope-o green','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (12,'置二维码','tool/goTwoDimensionCode.do','9','4','menu-icon fa fa-barcode green','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (14,'地图工具','tool/map.do','9','6','menu-icon fa fa-globe black','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (15,'微信管理','#','0','4','menu-icon fa fa-comments purple','2',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (16,'文本回复','textmsg/list.do','15','2','menu-icon fa fa-comment green','2',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (17,'应用命令','command/list.do','15','4','menu-icon fa fa-comment grey','2',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (18,'图文回复','imgmsg/list.do','15','3','menu-icon fa fa-comment pink','2',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (19,'关注回复','textmsg/goSubscribe.do','15','1','menu-icon fa fa-comment orange','2',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (20,'在线管理','onlinemanager/list.do','1','6','menu-icon fa fa-laptop green','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (21,'打印测试','tool/printTest.do','9','7','menu-icon fa fa-hdd-o grey','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (22,'一级菜单','#','0','6','menu-icon fa fa-fire orange','2',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (23,'二级菜单','#','22','1','menu-icon fa fa-leaf black','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (34,'六级菜单2','login_default.do','31','2','menu-icon fa fa-leaf black','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (35,'四级菜单2','login_default.do','24','2','menu-icon fa fa-leaf black','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (36,'角色(基础权限)','role.do','2','1','menu-icon fa fa-key orange','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (37,'按钮权限','buttonrights/list.do','2','2','menu-icon fa fa-key green','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (38,'菜单管理','menu/listAllMenu.do','1','3','menu-icon fa fa-folder-open-o brown','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (39,'按钮管理','fhbutton/list.do','1','2','menu-icon fa fa-download orange','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (40,'用户管理','#','0','2','menu-icon fa fa-users blue','2',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (41,'系统用户','user/listUsers.do','40','1','menu-icon fa fa-users green','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (42,'会员管理','happuser/listUsers.do','40','2','menu-icon fa fa-users orange','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (43,'数据字典','dictionaries/listAllDict.do?DICTIONARIES_ID=0','1','4','menu-icon fa fa-book purple','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (44,'代码生成','createCode/list.do','9','0','menu-icon fa fa-cogs brown','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (47,'八级菜单','login_default.do','45','1','menu-icon fa fa-leaf black','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (48,'图表报表',' tool/fusionchartsdemo.do','9','5','menu-icon fa fa-bar-chart-o black','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (49,'组织机构','department/listAllDepartment.do?DEPARTMENT_ID=0','1','5','menu-icon fa fa-users blue','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (50,'站内信','fhsms/list.do','6','2','menu-icon fa fa-envelope green','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (51,'文章信息管理','article/list.do','6','1','menu-icon fa fa-leaf black','1',1);
+insert  into `sys_menu`(`MENU_ID`,`MENU_NAME`,`MENU_URL`,`PARENT_ID`,`MENU_ORDER`,`MENU_ICON`,`MENU_TYPE`,`MENU_STATE`) values (72,'体检套餐管理','checkuppackage/listAll.do','6','2','menu-icon fa fa-leaf black','1',1);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -310,31 +300,38 @@ INSERT INTO `sys_role_fhbutton` VALUES ('f627982cc9d4479dbc03af726dc6ac58', 'de9
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
-  `USER_ID` varchar(100) NOT NULL,
-  `USERNAME` varchar(255) DEFAULT NULL,
-  `PASSWORD` varchar(255) DEFAULT NULL,
-  `NAME` varchar(255) DEFAULT NULL,
-  `RIGHTS` varchar(255) DEFAULT NULL,
-  `ROLE_ID` varchar(100) DEFAULT NULL,
-  `LAST_LOGIN` varchar(255) DEFAULT NULL,
-  `IP` varchar(15) DEFAULT NULL,
-  `STATUS` varchar(32) DEFAULT NULL,
+  `USER_ID` varchar(100) NOT NULL COMMENT '用户id',
+  `USERNAME` varchar(255) DEFAULT NULL COMMENT '用户名',
+  `PASSWORD` varchar(255) DEFAULT NULL COMMENT '密码',
+  `NAME` varchar(255) DEFAULT NULL COMMENT '姓名',
+  `RIGHTS` varchar(255) DEFAULT NULL COMMENT '权限',
+  `ROLE_ID` varchar(100) DEFAULT NULL COMMENT '角色id',
+  `LAST_LOGIN` varchar(255) DEFAULT NULL COMMENT '最后登录时间',
+  `IP` varchar(15) DEFAULT NULL COMMENT '用户登录ip地址',
+  `STATUS` varchar(32) DEFAULT NULL COMMENT '状态',
   `BZ` varchar(255) DEFAULT NULL,
-  `SKIN` varchar(100) DEFAULT NULL,
-  `EMAIL` varchar(32) DEFAULT NULL,
+  `SKIN` varchar(100) DEFAULT NULL COMMENT '皮肤',
+  `EMAIL` varchar(32) DEFAULT NULL COMMENT '电子邮件',
   `NUMBER` varchar(100) DEFAULT NULL,
-  `PHONE` varchar(32) DEFAULT NULL,
+  `PHONE` varchar(32) DEFAULT NULL COMMENT '电话',
+  `OPENID` varchar(255) DEFAULT NULL COMMENT '对应微信OPENID',
+  `ALIAS` varchar(255) DEFAULT NULL COMMENT '昵称',
+  `BIRTHDAY` varchar(255) DEFAULT NULL COMMENT '生日',
+  `SEX` varchar(255) DEFAULT NULL COMMENT '性别',
+  `BIRTHPLACE` varchar(255) DEFAULT NULL COMMENT '出生地',
+  `LIVEPLACE` varchar(255) DEFAULT NULL COMMENT '居住地',
+  `MARRIAGESTATUS` varchar(255) DEFAULT NULL COMMENT '婚姻状态',
+  `CAREER` varchar(255) DEFAULT NULL COMMENT '职业',
+  `DEGREE` varchar(255) DEFAULT NULL COMMENT '学历',
+  `AVATAR` varchar(255) DEFAULT NULL COMMENT '用户图像',
+  `HEIGHT` int(11) DEFAULT NULL COMMENT '身高',
+  `WEIGHT` int(11) DEFAULT NULL COMMENT '体重',
   PRIMARY KEY (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of sys_user
--- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'de41b7fb99201d8334c23c014db35ecd92df81bc', '系统管理员', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2016-01-27 23:45:53', '127.0.0.1', '0', '最高统治者', 'default', 'QQ313596790@main.com', '001', '18788888888');
-INSERT INTO `sys_user` VALUES ('69177258a06e4927b4639ab1684c3320', 'san', '47c4a8dc64ac2f0bb46bbd8813b037c9718f9349', '三', '', '3264c8e83d0248bb9e3ea6195b4c0216', '2016-01-25 16:25:36', '192.168.1.102', '0', '111', 'default', '978336446@qq.com', '333', '13562202556');
-INSERT INTO `sys_user` VALUES ('9991f4d7782a4ccfb8a65bd96ea7aafa', 'lisi', '2612ade71c1e48cd7150b5f4df152faa699cedfe', '李四', '', '3264c8e83d0248bb9e3ea6195b4c0216', '2016-01-06 01:24:26', '127.0.0.1', '0', '小李', 'default', '313596790@qq.com', '1102', '13566233663');
-INSERT INTO `sys_user` VALUES ('e29149962e944589bb7da23ad18ddeed', 'zhangsan', 'c2da1419caf053885c492e10ebde421581cdc03f', '张三', '', '3264c8e83d0248bb9e3ea6195b4c0216', '', '', '0', '小张', 'default', 'zhangsan@www.com', '1101', '2147483647');
+/*Data for the table `sys_user` */
 
+insert  into `sys_user`(`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS`,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`,`OPENID`,`ALIAS`,`BIRTHDAY`,`SEX`,`BIRTHPLACE`,`LIVEPLACE`,`MARRIAGESTATUS`,`CAREER`,`DEGREE`,`AVATAR`,`HEIGHT`,`WEIGHT`) values ('1','admin','de41b7fb99201d8334c23c014db35ecd92df81bc','系统管理员','1133671055321055258374707980945218933803269864762743594642571294','1','2016-04-10 22:38:14','0:0:0:0:0:0:0:1','0','最高统治者',NULL,'QQ313596790@main.com','001','18788888888',NULL,'系统管理员',NULL,'男','成都','成都','未婚','高级架构师','本科','img/logo.jpg',188,50),('69177258a06e4927b4639ab1684c3320','san','47c4a8dc64ac2f0bb46bbd8813b037c9718f9349','三','3264c8e83d0248bb9e3ea6195b4c0216','1','2016-04-10 21:12:04','0:0:0:0:0:0:0:1','0','111',NULL,'978336446@qq.com','333','13562202556',NULL,'测试用户',NULL,'男','成都','成都','已婚','程序员','专科','img/logo.jpg',188,60),('9991f4d7782a4ccfb8a65bd96ea7aafa','lisi','2612ade71c1e48cd7150b5f4df152faa699cedfe','李四','3264c8e83d0248bb9e3ea6195b4c0216','1','2016-01-06 01:24:26','127.0.0.1','0','小李',NULL,'313596790@qq.com','1102','13566233663',NULL,'李',NULL,'男','上海','上海','未婚','销售','博士','img/logo.jpg',198,67),('d28812dffc7b4c91924dd73c8487a86c','admin123','c9f55b944bbd496ff462196310dcb383586b4a5e','默默','','3264c8e83d0248bb9e3ea6195b4c0216','','','0','要嘿嘿嘿么','default','828777292@qq.com','1001','13567899876',NULL,'双黑狗','1992-08-20','男','成都','成都','未婚','程序员','大壮','image/logo.jpg',189,89),('e29149962e944589bb7da23ad18ddeed','zhangsan','c2da1419caf053885c492e10ebde421581cdc03f','张三','3264c8e83d0248bb9e3ea6195b4c0216','0',NULL,NULL,NULL,'校长',NULL,'zhangsan@www.com','1101','2147483647',NULL,'张',NULL,'男','北京','北京','未婚','个体','小学','img/logo.jpg',178,56);
 -- ----------------------------
 -- Table structure for tb_pictures
 -- ----------------------------
@@ -465,3 +462,211 @@ CREATE TABLE `TB_TAGCATEGORY` (
 		`ISEXCLUSIVE` varchar(255) DEFAULT NULL COMMENT '该分类下的标签是否互斥',
   		PRIMARY KEY (`TAGCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `TB_MEDICALEXAMITEM`
+-- ----------------------------
+DROP TABLE IF EXISTS `TB_MEDICALEXAMITEM`;
+CREATE TABLE `TB_MEDICALEXAMITEM` (
+ 		`MEDICALEXAMITEM_ID` varchar(100) NOT NULL,
+		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+		`PRICE` int(11) NOT NULL COMMENT '价格',
+		`PRICE2` int(11) NOT NULL COMMENT '建议价格',
+		`TIPS` varchar(255) DEFAULT NULL COMMENT '检查项目提示',
+		`STATUS` varchar(255) DEFAULT NULL COMMENT '状态',
+		`CREATEBY` int(11) NOT NULL COMMENT '创建记录员工id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+		`MEDICALCENTER_ID` varchar(100) NOT NULL,
+  		PRIMARY KEY (`MEDICALEXAMITEM_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `TB_MEDICALCENTER`
+-- ----------------------------
+DROP TABLE IF EXISTS `TB_MEDICALCENTER`;
+CREATE TABLE `TB_MEDICALCENTER` (
+ 		`MEDICALCENTER_ID` varchar(100) NOT NULL,
+		`STATUS` varchar(255) DEFAULT NULL COMMENT '状态',
+		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+		`LOCATION` varchar(255) DEFAULT NULL COMMENT '地址描述',
+		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '体检中心介绍',
+		`LOGOURL` varchar(255) DEFAULT NULL COMMENT 'logo图片url',
+		`CREATEBY` int(11) NOT NULL COMMENT '创建该记录用户id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+  		PRIMARY KEY (`MEDICALCENTER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `TB_MEDICALCENERADMIN`
+-- ----------------------------
+DROP TABLE IF EXISTS `TB_MEDICALCENERADMIN`;
+CREATE TABLE `TB_MEDICALCENERADMIN` (
+ 		`MEDICALCENERADMIN_ID` varchar(100) NOT NULL,
+		`DEPARTMENT` varchar(255) DEFAULT NULL COMMENT '所属部门',
+		`TITLE` varchar(255) DEFAULT NULL COMMENT '职位 ',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录的员工id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建记录的时间',
+		`MEDICALCENTER_ID` varchar(255) DEFAULT NULL COMMENT '所属体检中心id',
+  		PRIMARY KEY (`MEDICALCENERADMIN_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `EXAM_EXAMFREQUENCY`
+-- ----------------------------
+DROP TABLE IF EXISTS `EXAM_EXAMFREQUENCY`;
+CREATE TABLE `EXAM_EXAMFREQUENCY` (
+ 		`EXAMFREQUENCY_ID` varchar(100) NOT NULL,
+		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+		`EXPRESSION` varchar(255) DEFAULT NULL COMMENT 'CRON表达式，定义检查的间隔频率',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工的id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录的时间',
+  		PRIMARY KEY (`EXAMFREQUENCY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `EXAM_EXAMITEM`
+-- ----------------------------
+DROP TABLE IF EXISTS `EXAM_EXAMITEM`;
+CREATE TABLE `EXAM_EXAMITEM` (
+ 		`EXAMITEM_ID` varchar(100) NOT NULL,
+		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+		`EXAMCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+		`EXAMITEM_PARENT_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+		 PRIMARY KEY (`EXAMITEM_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `EXAM_EXAMCATEGORY`
+-- ----------------------------
+DROP TABLE IF EXISTS `EXAM_EXAMCATEGORY`;
+CREATE TABLE `EXAM_EXAMCATEGORY` (
+ 		`EXAMCATEGORY_ID` varchar(100) NOT NULL,
+		`NAME` varchar(255) DEFAULT NULL COMMENT '检查项目分类名称',
+		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+  		PRIMARY KEY (`EXAMCATEGORY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `EXAM_EXAMGUIDELINE`
+-- ----------------------------
+DROP TABLE IF EXISTS `EXAM_EXAMGUIDELINE`;
+CREATE TABLE `EXAM_EXAMGUIDELINE` (
+ 		`EXAMGUIDELINE_ID` varchar(100) NOT NULL,
+		`ORIGINATE` varchar(255) DEFAULT NULL COMMENT '来源',
+		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '指南详细描述',
+		`CONCERNEDFACTORS` varchar(255) DEFAULT NULL COMMENT '关注因素描述',
+		`HIGHRISKDEFINE` varchar(255) DEFAULT NULL COMMENT '高危人群识别',
+		`HIGHRISKEXPRESSION` varchar(255) DEFAULT NULL COMMENT '高危人群识别脚本',
+		`LOWRISKDEFINE` varchar(255) DEFAULT NULL COMMENT '普通人群识别',
+		`LOWRISKEXPRESSION` varchar(255) DEFAULT NULL COMMENT '普通人群识别脚本',
+		`STATUS` varchar(255) DEFAULT NULL COMMENT '状态',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+  		PRIMARY KEY (`EXAMGUIDELINE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `EXAM_EXAMSOLUTION`
+-- ----------------------------
+DROP TABLE IF EXISTS `EXAM_EXAMSOLUTION`;
+CREATE TABLE `EXAM_EXAMSOLUTION` (
+ 		`EXAMSOLUTION_ID` varchar(100) NOT NULL,
+		`SUBGROUP` varchar(255) DEFAULT NULL COMMENT '检查手段分组标记',
+		`RISKTYPE` varchar(255) DEFAULT NULL COMMENT '干预手段对应风险',
+		`STARTAGE` int(11) NOT NULL COMMENT '开始检查年龄',
+		`ENDAGE` varchar(255) DEFAULT NULL COMMENT '结束检查年龄',
+		`FEATURES` varchar(255) DEFAULT NULL COMMENT '医学检查手段',
+		`EXAMGUIDELINE_ID` varchar(100) NOT NULL,
+		`EXAMITEM_ID` varchar(100) NOT NULL,
+		`EXAMFREQUENCY_ID` varchar(100) NOT NULL,
+		
+  		PRIMARY KEY (`EXAMSOLUTION_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ADMIN_DISEASECATEGORY`
+-- ----------------------------
+DROP TABLE IF EXISTS `ADMIN_DISEASECATEGORY`;
+CREATE TABLE `ADMIN_DISEASECATEGORY` (
+ 		`DISEASECATEGORY_ID` varchar(100) NOT NULL,
+		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建记录时间',
+		`PARENT_ID` varchar(32) DEFAULT NULL COMMENT '父级列表id',
+  		PRIMARY KEY (`DISEASECATEGORY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `ADMIN_DISEASE`
+-- ----------------------------
+DROP TABLE IF EXISTS `ADMIN_DISEASE`;
+CREATE TABLE `ADMIN_DISEASE` (
+ 		`DISEASE_ID` varchar(100) NOT NULL,
+		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+		`ISINHERITABLE` int(11) NOT NULL COMMENT '是否遗传倾向',
+		`ISHIGHINCIDENCE` int(11) NOT NULL COMMENT '是否高发',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建记录时间',
+		`DISEASECATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '疾病分类外键',
+  		PRIMARY KEY (`DISEASE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tb_checkupitem` (
+  `CHECKUPITEM_ID` varchar(100) NOT NULL,
+  `SUBGROUP` varchar(255) DEFAULT NULL COMMENT '检查项目分组',
+  `NAME` varchar(255) DEFAULT NULL COMMENT '检查项目名称',
+  `FEATURES` varchar(255) DEFAULT NULL COMMENT '特性',
+  `FREQUENCY` varchar(255) DEFAULT NULL COMMENT '检查频率',
+  `STATUS` varchar(255) DEFAULT NULL COMMENT '状态',
+  `ORIGINATE` varchar(255) DEFAULT NULL COMMENT '指南来源',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '详细描述',
+  `GENERATEDTIME` datetime DEFAULT NULL COMMENT '该记录生成时间',
+  `WORKER` varchar(255) DEFAULT NULL COMMENT '用于产生该记录的标记',
+  `REVISION` int(11) NOT NULL COMMENT '版本',
+  `SYSFLAG` varchar(255) DEFAULT NULL COMMENT '系统标记',
+  `CHECKUPPACKAGE_ID` varchar(100) DEFAULT NULL COMMENT '体检套餐外键',
+  `USER_ID` varchar(100) DEFAULT NULL COMMENT '用户表外键',
+  PRIMARY KEY (`CHECKUPITEM_ID`),
+  KEY `CHECKUPPACKAGE_ID` (`CHECKUPPACKAGE_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  CONSTRAINT `tb_checkupitem_ibfk_1` FOREIGN KEY (`CHECKUPPACKAGE_ID`) REFERENCES `tb_checkuppackage` (`CHECKUPPACKAGE_ID`),
+  CONSTRAINT `tb_checkupitem_ibfk_2` FOREIGN KEY (`USER_ID`) REFERENCES `sys_user` (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `tb_checkupitem` */
+
+insert  into `tb_checkupitem`(`CHECKUPITEM_ID`,`SUBGROUP`,`NAME`,`FEATURES`,`FREQUENCY`,`STATUS`,`ORIGINATE`,`DESCRIPTION`,`GENERATEDTIME`,`WORKER`,`REVISION`,`SYSFLAG`,`CHECKUPPACKAGE_ID`,`USER_ID`) values ('101','CT','胸部检查','经济,全面','每年一次','已选中','美国加州','胸部检查癌细胞变异','2016-04-10 22:29:46','admin',1,'amdin','1001','1'),('102','X光','肺部检查','经济','每年一次','已选中','加拿大','吸烟20年,致癌细胞变异','2016-04-04 22:31:12','admin',1,'admin','1002','1');
+
+/*Table structure for table `tb_checkuppackage` */
+
+CREATE TABLE `tb_checkuppackage` (
+  `CHECKUPPACKAGE_ID` varchar(100) NOT NULL,
+  `WORKER` varchar(255) DEFAULT NULL COMMENT '生成该记录的标记',
+  `GENERATEDTIME` datetime DEFAULT NULL COMMENT '该记录生成时间',
+  `EFFECTIVEFROM` datetime DEFAULT NULL COMMENT '开始生效时间',
+  `EXPIREON` datetime DEFAULT NULL COMMENT '失效时间',
+  `STATUS` varchar(255) DEFAULT NULL COMMENT '状态',
+  `REVISION` varchar(255) DEFAULT NULL COMMENT '版本',
+  `SYSFLAG` varchar(255) DEFAULT NULL COMMENT '系统标记',
+  `USER_ID` varchar(100) DEFAULT NULL COMMENT '用户表外键',
+  PRIMARY KEY (`CHECKUPPACKAGE_ID`),
+  KEY `USER_ID` (`USER_ID`),
+  CONSTRAINT `tb_checkuppackage_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `sys_user` (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `tb_checkuppackage` */
+
+insert  into `tb_checkuppackage`(`CHECKUPPACKAGE_ID`,`WORKER`,`GENERATEDTIME`,`EFFECTIVEFROM`,`EXPIREON`,`STATUS`,`REVISION`,`SYSFLAG`,`USER_ID`) values ('1001','套餐1','2016-04-10 22:26:42','2016-04-10 22:26:44','2016-04-10 22:26:46','已选中','1','admin','1'),('1002','套餐2','2016-04-11 22:27:25','2016-04-12 22:27:28','2016-04-12 22:27:33','未选中','1','amin','69177258a06e4927b4639ab1684c3320'),('1003','套餐3','2016-04-11 14:51:51','2016-04-11 14:51:57','2016-04-11 14:52:05','已选中','1','admin','69177258a06e4927b4639ab1684c3320');
+
+
+

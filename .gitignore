@@ -1,0 +1,9 @@
+/eclipse/
+/data/
+/tmp/
+/.settings/
+.classpath
+.project
+/modules/
+/precompiled/
+/target/
