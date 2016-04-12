@@ -127,9 +127,8 @@
 	           	/code.do 					= anon
 	           	/login_login	 			= anon
 	           	/app**/** 					= anon
-	           	/user/rest/**				= anon
-	           	/rest**/**					= anon
 	           	/rest/**					= anon
+	           	/rest**/**					= anon	           	
 	           	/**							= authc
 				</value>
 			</property>
