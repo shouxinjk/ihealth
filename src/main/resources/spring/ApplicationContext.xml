@@ -128,8 +128,8 @@
 	           	/login_login	 			= anon
 	           	/app**/** 					= anon
 	           	/rest/**					= anon
-	           	/rest**/**					= anon	           	        	
-	           	/**							= anon
+	           	/rest**/**					= anon	           	
+	           	/**							= authc
 				</value>
 			</property>
 		</bean>
