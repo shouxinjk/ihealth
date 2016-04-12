@@ -310,6 +310,28 @@
 		});
 	}
 	
+	//判断电话号码是否存在
+	function hasPhone(){
+		var USERNAME = $.trim($("#PHONE").val());
+		$.ajax({
+			type: "POST",
+			url: '<%=basePath%>user/hasPhone.do',
+	    	data: {PHONE:PHONE,tm:new Date().getTime()},
+			dataType:'json',
+			cache: false,
+			success: function(data){
+				 if("success" == data.result){
+					$("#userForm").submit();
+					$("#zhongxin").hide();
+					$("#zhongxin2").show();
+				 }else{
+					$("#loginname").css("background-color","#D16E6C");
+					setTimeout("$('#loginname').val('此手机号码已存在!')",500);
+				 }
+			}
+		});
+	}
+	
 	//判断邮箱是否存在
 	function hasE(USERNAME){
 		var EMAIL = $.trim($("#EMAIL").val());

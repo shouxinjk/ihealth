@@ -96,6 +96,11 @@ public class UserService implements UserManager{
 		return (PageData)dao.findForObject("UserMapper.findByUE", pd);
 	}
 	
+	public PageData findByPhone(PageData pd) throws Exception {
+		
+		return (PageData) dao.findForObject("UserMapper.findByPhone", pd);
+	}
+	
 	/**通过编号获取数据
 	 * @param pd
 	 * @return
@@ -162,5 +167,7 @@ public class UserService implements UserManager{
 	public PageData getUserCount(String value)throws Exception{
 		return (PageData)dao.findForObject("UserMapper.getUserCount", value);
 	}
+
+	
 	
 }

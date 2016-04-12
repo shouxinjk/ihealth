@@ -40,6 +40,8 @@ public interface UserManager {
 	 */
 	public PageData findByUsername(PageData pd)throws Exception;
 	
+	public PageData findByPhone(PageData pd)throws Exception;
+	
 	/**列出某角色下的所有用户
 	 * @param pd
 	 * @return

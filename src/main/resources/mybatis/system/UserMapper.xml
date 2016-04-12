@@ -152,6 +152,17 @@
 			USERNAME = #{USERNAME}
 	</select>
 	
+	<!-- 通过Phone获取数据 -->
+	<select id="findByPhone" parameterType="pd" resultType="pd" >
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where 
+			PHONE = #{PHONE}
+	</select>
+	
+	
 	<!-- 存入IP -->
 	<update id="saveIP" parameterType="pd" >
 		update 
