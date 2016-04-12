@@ -19,7 +19,7 @@
 		<typeAlias type="com.shouxin.entity.medical.MedicalCenerAdmin" alias="MedicalCenerAdmin"/>
 		<typeAlias type="com.shouxin.entity.medical.MedicalCenter" alias="MedicalCenter"/>
 		<typeAlias type="com.shouxin.entity.medical.MedicalExamItem" alias="MedicalExamItem"/>
-		<typeAlias type="com.shouxin.entity.exam.ExamCotegory" alias="ExamCategory"/>
+		<typeAlias type="com.shouxin.entity.exam.ExamCategory" alias="ExamCategory"/>
 		<typeAlias type="com.shouxin.entity.exam.ExamFrequency" alias="ExamFrequency"/>
 		<typeAlias type="com.shouxin.entity.exam.ExamGuideline" alias="ExamGuideline"/>
 		<typeAlias type="com.shouxin.entity.exam.ExamItem" alias="ExamItem"/>

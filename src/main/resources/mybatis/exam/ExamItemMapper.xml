@@ -23,6 +23,7 @@
 			<result column="NAME" property="NAME"/>
 			<result column="CREATEBY" property="CREATEBY"/>
 			<result column="CREATEON" property="CREATEON"/>
+			<result column="PARENT_ID" property="PARENT_ID"/>
 		</association>
 	</resultMap> 
 	

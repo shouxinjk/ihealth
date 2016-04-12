@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ExamCategoryMapper">
-	
-	 <resultMap type="ExamCategory" id="examCategoryResultMap">
+
+	<resultMap type="ExamCategory" id="examCategoryResultMap">
 		<id column="EXAMCATEGORY_ID" property="EXAMCATEGORY_ID" />
 		<result column="DESCRIPTION" property="DESCRIPTION"/>
 		<result column="NAME" property="NAME"/>
 		<result column="CREATEBY" property="CREATEBY"/>
 		<result column="CREATEON" property="CREATEON"/>
+		<result column="PARENT_ID" property="PARENT_ID"/>
 	</resultMap>
 	
-	<resultMap type="ExamCategory" id="examCategoryAndExamItemResultMap">
-		<id column="EXAMCATEGORY_ID" property="EXAMCATEGORY_ID" />
-		<result column="DESCRIPTION" property="DESCRIPTION"/>
-		<result column="NAME" property="NAME"/>
-		<result column="CREATEBY" property="CREATEBY"/>
-		<result column="CREATEON" property="CREATEON"/>
-		<collection property="examItems" ofType="ExamItem">
-			<id column="EXAMITEM_ID" property="EXAMITEM_ID" />
-			<result column="NAME" property="NAME"/>
-			<result column="DESCRIPTION" property="DESCRIPTION"/>
-			<result column="CREATEBY" property="CREATEBY"/>
-			<result column="CREATEON" property="CREATEON"/>
-		</collection>
-	</resultMap> 
 	
 	<!--表名 -->
 	<sql id="tableName">
@@ -36,6 +23,7 @@
 		DESCRIPTION,	
 		CREATEBY,	
 		CREATEON,	
+		PARENT_ID,	
 		EXAMCATEGORY_ID
 	</sql>
 	
@@ -45,6 +33,7 @@
 		#{DESCRIPTION},	
 		#{CREATEBY},	
 		#{CREATEON},	
+		#{PARENT_ID},	
 		#{EXAMCATEGORY_ID}
 	</sql>
 	
@@ -76,6 +65,7 @@
 			DESCRIPTION = #{DESCRIPTION},
 			CREATEBY = #{CREATEBY},
 			CREATEON = #{CREATEON},
+			PARENT_ID = #{PARENT_ID},
 		EXAMCATEGORY_ID = EXAMCATEGORY_ID
 		where 
 		EXAMCATEGORY_ID = #{EXAMCATEGORY_ID}
@@ -97,7 +87,10 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 1=1
+		where 1=1 
+		<if test="pd.EXAMCATEGORY_ID!= null and pd.EXAMCATEGORY_ID != ''"><!-- 检索 -->
+		and PARENT_ID = #{pd.EXAMCATEGORY_ID}
+		</if>
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -108,6 +101,15 @@
 				-->
 				)
 		</if>
+	</select>
+	
+	<!-- 通过id获取其所有子级列表 -->
+	<select id="listSubExamCategoryByID" parameterType="java.lang.String" resultMap="examCategoryResultMap">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include> 
+		where PARENT_ID=#{parentID} order by name
 	</select>
 	
 	<!-- 列表(全部) -->

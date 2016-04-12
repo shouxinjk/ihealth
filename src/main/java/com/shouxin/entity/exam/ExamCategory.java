@@ -3,15 +3,20 @@ package com.shouxin.entity.exam;
 import java.util.Date;
 import java.util.List;
 
-public class ExamCotegory {
+public class ExamCategory {
 
 	private String EXAMCATEGORY_ID;// varchar(100) NOT NULL,
 	private String NAME;// varchar(255) DEFAULT NULL COMMENT '检查项目分类名称',
 	private String DESCRIPTION;// varchar(255) DEFAULT NULL COMMENT '描述',
 	private String CREATEBY;// varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
 	private Date CREATEON;// varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+	private String PARENT_ID;// 父级列表id
+	private String treeUrl;
+	private String target;
+	private List<ExamCategory> subExamCategory;
+	private ExamCategory examCategory;
+	private boolean hasExamCategory = false;
 	private List<ExamItem> examItems;
-	private ExamCotegory parent;
 
 	public String getEXAMCATEGORY_ID() {
 		return EXAMCATEGORY_ID;
@@ -61,12 +66,52 @@ public class ExamCotegory {
 		this.examItems = examItems;
 	}
 
-	public ExamCotegory getParent() {
-		return parent;
+	public String getPARENT_ID() {
+		return PARENT_ID;
 	}
 
-	public void setParent(ExamCotegory parent) {
-		this.parent = parent;
+	public void setPARENT_ID(String pARENT_ID) {
+		PARENT_ID = pARENT_ID;
+	}
+
+	public String getTreeUrl() {
+		return treeUrl;
+	}
+
+	public void setTreeUrl(String treeUrl) {
+		this.treeUrl = treeUrl;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public List<ExamCategory> getSubExamCategory() {
+		return subExamCategory;
+	}
+
+	public void setSubExamCategory(List<ExamCategory> subExamCategory) {
+		this.subExamCategory = subExamCategory;
+	}
+
+	public ExamCategory getExamCategory() {
+		return examCategory;
+	}
+
+	public void setExamCategory(ExamCategory examCategory) {
+		this.examCategory = examCategory;
+	}
+
+	public boolean isHasExamCategory() {
+		return hasExamCategory;
+	}
+
+	public void setHasExamCategory(boolean hasExamCategory) {
+		this.hasExamCategory = hasExamCategory;
 	}
 
 }

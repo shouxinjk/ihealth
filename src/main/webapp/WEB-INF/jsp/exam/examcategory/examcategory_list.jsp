@@ -68,8 +68,6 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">检查项目分类名称</th>
 									<th class="center">描述</th>
-									<th class="center">创建该记录员工id</th>
-									<th class="center">创建该记录时间</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -85,10 +83,8 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.EXAMCATEGORY_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'>${var.NAME}</td>
+											<td class='center'><a href="javascript:goSondict('${var.EXAMCATEGORY}')"><i class="ace-icon fa fa-share bigger-100"></i>&nbsp;${var.NAME}</a></td>
 											<td class='center'>${var.DESCRIPTION}</td>
-											<td class='center'>${var.CREATEBY}</td>
-											<td class='center'>${var.CREATEON}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
@@ -253,6 +249,12 @@
 				});
 			});
 		});
+		
+		//去此ID下子级列表
+		function goSondict(EXAMCATEGORY_ID){
+			top.jzts();
+			window.location.href="<%=basePath%>examcategory/list.do?EXAMCATEGORY_ID="+EXAMCATEGORY_ID;
+		};
 		
 		//新增
 		function add(){

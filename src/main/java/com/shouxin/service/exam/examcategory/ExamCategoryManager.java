@@ -2,12 +2,13 @@ package com.shouxin.service.exam.examcategory;
 
 import java.util.List;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.exam.ExamCategory;
 import com.shouxin.util.PageData;
 
 /** 
  * 说明： 医学检查分类接口
  * 创建人：shouxin
- * 创建时间：2016-04-07
+ * 创建时间：2016-04-12
  * @version
  */
 public interface ExamCategoryManager{
@@ -54,5 +55,22 @@ public interface ExamCategoryManager{
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
 	
+	/**
+	 * 通过父级id获取其所有子级列表
+	 * @param parentID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ExamCategory> listSubExamCategoryByParentID(String parentID) throws Exception;
+	
+	/**
+	 * 获取所有数据并填充每条数据的子级列表(递归处理)
+	 * @param parentID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ExamCategory> listAllExamCategory(String parentID) throws Exception;
+	
 }
 
+ 

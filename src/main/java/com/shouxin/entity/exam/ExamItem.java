@@ -11,7 +11,7 @@ public class ExamItem {
 	private String CREATEBY;// '创建该记录员工id',
 	private Date CREATEON;// '创建该记录时间',
 	private List<ExamSolution> solutions;
-	private ExamCotegory cotegory;
+	private ExamCategory cotegory;
 
 	public String getEXAMITEM_ID() {
 		return EXAMITEM_ID;
@@ -61,11 +61,11 @@ public class ExamItem {
 		this.solutions = solutions;
 	}
 
-	public ExamCotegory getCotegory() {
+	public ExamCategory getCotegory() {
 		return cotegory;
 	}
 
-	public void setCotegory(ExamCotegory cotegory) {
+	public void setCotegory(ExamCategory cotegory) {
 		this.cotegory = cotegory;
 	}
 

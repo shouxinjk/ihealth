@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +22,16 @@ import com.shouxin.entity.Page;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
+
+import net.sf.json.JSONArray;
+
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.service.exam.examcategory.ExamCategoryManager;
 
 /** 
  * 说明：医学检查分类
  * 创建人：shouxin
- * 创建时间：2016-04-07
+ * 创建时间：2016-04-12
  */
 @Controller
 @RequestMapping(value="/examcategory")
@@ -102,6 +106,12 @@ public class ExamCategoryController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
+		String EXAMCATEGORY_ID = null == pd.get("EXAMCATEGORY_ID")?"":pd.get("EXAMCATEGORY_ID").toString();
+		if(null != pd.get("id") && !"".equals(pd.get("id").toString())){
+			EXAMCATEGORY_ID = pd.get("id").toString();
+		}
+		pd.put("EXAMCATEGORY_ID", EXAMCATEGORY_ID);					//上级ID
+		logBefore(logger, pd.get("EXAMCATEGORY_ID")+"列表EXAMCATEGORY_ID");
 		page.setPd(pd);
 		List<PageData>	varList = examcategoryService.list(page);	//列出ExamCategory列表
 		mv.setViewName("exam/examcategory/examcategory_list");
@@ -110,6 +120,32 @@ public class ExamCategoryController extends BaseController {
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
 	}
+	
+	/**
+	 * 显示列表ztree
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/listAllExamCategory")
+	public ModelAndView listAllDepartment(Model model,String EXAMCATEGORY_ID)throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		try{
+			JSONArray arr = JSONArray.fromObject(examcategoryService.listAllExamCategory("0"));
+			String json = arr.toString();
+			logBefore(logger, json+"列表depa=======");
+			json = json.replaceAll("EXAMCATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subExamCategory", "nodes").replaceAll("hasExamCategory", "checked").replaceAll("treeurl", "url");
+			model.addAttribute("zTreeNodes", json);
+			mv.addObject("EXAMCATEGORY_ID",EXAMCATEGORY_ID);
+			mv.addObject("pd", pd);	
+			mv.setViewName("exam/examcategory/examcategory_ztree");
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	
 	
 	/**去新增页面
 	 * @param
@@ -185,6 +221,7 @@ public class ExamCategoryController extends BaseController {
 		titles.add("描述");	//2
 		titles.add("创建该记录员工id");	//3
 		titles.add("创建该记录时间");	//4
+		titles.add("父级id");	//5
 		dataMap.put("titles", titles);
 		List<PageData> varOList = examcategoryService.listAll(pd);
 		List<PageData> varList = new ArrayList<PageData>();
@@ -194,6 +231,7 @@ public class ExamCategoryController extends BaseController {
 			vpd.put("var2", varOList.get(i).getString("DESCRIPTION"));	//2
 			vpd.put("var3", varOList.get(i).getString("CREATEBY"));	//3
 			vpd.put("var4", varOList.get(i).getString("CREATEON"));	//4
+			vpd.put("var5", varOList.get(i).getString("PARENT_ID"));	//5
 			varList.add(vpd);
 		}
 		dataMap.put("varList", varList);

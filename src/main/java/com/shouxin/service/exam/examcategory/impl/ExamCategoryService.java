@@ -5,13 +5,14 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.exam.ExamCategory;
 import com.shouxin.util.PageData;
 import com.shouxin.service.exam.examcategory.ExamCategoryManager;
 
 /** 
  * 说明： 医学检查分类
  * 创建人：shouxin
- * 创建时间：2016-04-07
+ * 创建时间：2016-04-12
  * @version
  */
 @Service("examcategoryService")
@@ -24,7 +25,7 @@ public class ExamCategoryService implements ExamCategoryManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	
+	//@Override
 	public void save(PageData pd)throws Exception{
 		dao.save("ExamCategoryMapper.save", pd);
 	}
@@ -33,7 +34,7 @@ public class ExamCategoryService implements ExamCategoryManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	
+	//@Override
 	public void delete(PageData pd)throws Exception{
 		dao.delete("ExamCategoryMapper.delete", pd);
 	}
@@ -42,7 +43,7 @@ public class ExamCategoryService implements ExamCategoryManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	
+	//@Override
 	public void edit(PageData pd)throws Exception{
 		dao.update("ExamCategoryMapper.edit", pd);
 	}
@@ -51,7 +52,7 @@ public class ExamCategoryService implements ExamCategoryManager{
 	 * @param page
 	 * @throws Exception
 	 */
-	
+	//@Override
 	@SuppressWarnings("unchecked")
 	public List<PageData> list(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("ExamCategoryMapper.datalistPage", page);
@@ -61,7 +62,7 @@ public class ExamCategoryService implements ExamCategoryManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	
+	//@Override
 	@SuppressWarnings("unchecked")
 	public List<PageData> listAll(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("ExamCategoryMapper.listAll", pd);
@@ -71,7 +72,7 @@ public class ExamCategoryService implements ExamCategoryManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	
+	//@Override
 	public PageData findById(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("ExamCategoryMapper.findById", pd);
 	}
@@ -80,9 +81,25 @@ public class ExamCategoryService implements ExamCategoryManager{
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
 	 */
-	
+	//@Override
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("ExamCategoryMapper.deleteAll", ArrayDATA_IDS);
+	}
+
+	public List<ExamCategory> listSubExamCategoryByParentID(String parentID) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<ExamCategory>) dao.findForList("ExamCategoryMapper.listSubExamCategoryByID", parentID);
+	}
+
+	public List<ExamCategory> listAllExamCategory(String parentID) throws Exception {
+		// TODO Auto-generated method stub
+		List<ExamCategory> examCategory = this.listSubExamCategoryByParentID(parentID);
+		for (ExamCategory cate : examCategory) {
+			cate.setTreeUrl("");
+			cate.setTarget("treeFrame");
+			cate.setSubExamCategory(this.listSubExamCategoryByParentID(cate.getEXAMCATEGORY_ID()));
+		}
+		return examCategory;
 	}
 	
 }
