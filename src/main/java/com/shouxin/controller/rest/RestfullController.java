@@ -1,17 +1,21 @@
 package com.shouxin.controller.rest;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shouxin.controller.base.BaseController;
+import com.shouxin.entity.checkup.CheckupPackage;
+import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
 import com.shouxin.service.system.user.UserManager;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.PageData;
@@ -30,6 +34,8 @@ public class RestfullController extends BaseController {
 	
 	@Resource(name="userService")
 	private UserManager userService;
+	@Resource(name="checkuppackageService")
+	private CheckupPackageManager checkuppackageService;
 	
 	/**
 	 * 用户注册，通过手机号码
@@ -183,7 +189,7 @@ public class RestfullController extends BaseController {
 		pds.put("DEGREE", degree);
 		
 		//判断用户ID是否存在
-		if(null == userId){
+		if(null == userId || "".equals(userId)){
 			msg = "error";
 		}else{
 			logger.debug("执行根据ID更新用户数据");
@@ -199,4 +205,89 @@ public class RestfullController extends BaseController {
 	
 	
 	//通过用户ID获取体检套餐信息的接口
+	@RequestMapping(value="/findCheckPackage/{userId}",method = RequestMethod.POST)
+	@ResponseBody
+	public Object findCheckPackage(@PathVariable("userId") String userId) throws Exception{
+		logger.debug("判断用户ID是否为空:" + userId);
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String msg = null;
+		if(null == userId || "".equals(userId)){
+			msg="error";
+		}else{
+			logger.debug("执行根据用户ID查询体检套餐的方法");
+			List<CheckupPackage> checkList =  this.checkuppackageService.listAllById(userId);
+			logger.debug(checkList);
+			msg = "success";
+			map.put("data", checkList);
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	//通过userID获取体检项目
+	
+	
+	/**
+	 * 通过用户ID获取用户信息
+	 * 本机地址url:http://localhost:8080/ihealth/rest/findUserById
+	 * @param {"userId":"1"}
+	 * @return 当ID不为空，返回的参数列表为：
+	 * {
+		    "result": "success",
+		    "data": {
+		        "NUMBER": "001",
+		        "RIGHTS": "1133671055321055258374707980945218933803269864762743594642571294",
+		        "IP": "0:0:0:0:0:0:0:1",
+		        "PHONE": "18788888888",
+		        "ALIAS": "系统管理员",
+		        "SEX": "男",
+		        "USER_ID": "1",
+		        "MARRIAGESTATUS": "未婚",
+		        "LAST_LOGIN": "2016-04-12 14:55:19",
+		        "EMAIL": "QQ313596790@main.com",
+		        "HEIGHT": 188,
+		        "BIRTHPLACE": "成都",
+		        "NAME": "系统管理员",
+		        "CAREER": "高级架构师",
+		        "STATUS": "0",
+		        "PASSWORD": "de41b7fb99201d8334c23c014db35ecd92df81bc",
+		        "BZ": "最高统治者",
+		        "USERNAME": "admin",
+		        "ROLE_ID": "1",
+		        "DEGREE": "本科",
+		        "LIVEPLACE": "成都",
+		        "AVATAR": "img/logo.jpg",
+		        "WEIGHT": 50
+		    }
+		}
+	 * 当ID为空时：返回的参数为：
+	 * 	{"result": "error"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findUserById",method=RequestMethod.POST)
+	@ResponseBody
+	public Object findUserById(@RequestBody String u) throws Exception{
+		logBefore(logger,"根据用户ID获取用户信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String userId =(String) jasonObject.get("userId");
+		pd.put("USER_ID", userId);
+		if(null == userId || "".equals(userId)){
+			msg = "error";
+		}else{
+			PageData data = this.userService.findById(pd);
+			if (data!=null) {
+				msg = "success";
+				map.put("data", data);
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
 }
