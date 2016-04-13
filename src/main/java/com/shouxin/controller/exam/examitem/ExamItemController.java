@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,9 @@ import com.shouxin.entity.Page;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
+
+import net.sf.json.JSONArray;
+
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.service.exam.examitem.ExamItemManager;
 
@@ -102,12 +106,43 @@ public class ExamItemController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
+		String EXAMCATEGORY_ID = null == pd.get("EXAMCATEGORY_ID")?"":pd.get("EXAMCATEGORY_ID").toString();
+		if(null != pd.get("id") && !"".equals(pd.get("id").toString())){
+			EXAMCATEGORY_ID = pd.get("id").toString();
+		}
+		pd.put("EXAMCATEGORY_ID", EXAMCATEGORY_ID);
 		page.setPd(pd);
 		List<PageData>	varList = examitemService.list(page);	//列出ExamItem列表
 		mv.setViewName("exam/examitem/examitem_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
+		mv.addObject("EXAMCATEGORY_ID",EXAMCATEGORY_ID);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	
+	/**
+	 * 显示列表ztree
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/listAllExamCategory")
+	public ModelAndView listAllDepartment(Model model,String EXAMCATEGORY_ID)throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		try{
+			JSONArray arr = JSONArray.fromObject(examitemService.listAllExamCategory("0"));
+			String json = arr.toString();
+			logBefore(logger, json+"列表depa=======");
+			json = json.replaceAll("EXAMCATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subExamCategory", "nodes").replaceAll("hasExamCategory", "checked").replaceAll("treeUrl", "url");
+			model.addAttribute("zTreeNodes", json);
+			mv.addObject("EXAMCATEGORY_ID",EXAMCATEGORY_ID);
+			mv.addObject("pd", pd);	
+			mv.setViewName("exam/examitem/examitem_ztree");
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
 		return mv;
 	}
 	
@@ -120,8 +155,13 @@ public class ExamItemController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		String EXAMCATEGORY_ID = null == pd.get("EXAMCATEGORY_ID")?"":pd.get("EXAMCATEGORY_ID").toString();
+		pd.put("EXAMCATEGORY_ID", EXAMCATEGORY_ID);	
+		logBefore(logger, pd.get("EXAMCATEGORY_ID")+"标签分类TAGCATEGORY_ID===============");
+		mv.addObject("pds",examitemService.findExamCategoryById(pd));
 		mv.setViewName("exam/examitem/examitem_edit");
 		mv.addObject("msg", "save");
+		mv.addObject("EXAMCATEGORY_ID",EXAMCATEGORY_ID);
 		mv.addObject("pd", pd);
 		return mv;
 	}	
@@ -135,9 +175,15 @@ public class ExamItemController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		String EXAMCATEGORY_ID = null == pd.get("EXAMCATEGORY_ID")?"":pd.get("EXAMCATEGORY_ID").toString();
+		pd.put("EXAMCATEGORY_ID", EXAMCATEGORY_ID);	
+		logBefore(logger, pd.get("EXAMCATEGORY_ID")+"标签分类TAGCATEGORY111===============");
+		logBefore(logger, examitemService.findExamCategoryById(pd)+"标签分类TAGCATEGORY===============");
+		mv.addObject("pds",examitemService.findExamCategoryById(pd));
 		pd = examitemService.findById(pd);	//根据ID读取
 		mv.setViewName("exam/examitem/examitem_edit");
 		mv.addObject("msg", "edit");
+		mv.addObject("EXAMCATEGORY_ID",EXAMCATEGORY_ID);
 		mv.addObject("pd", pd);
 		return mv;
 	}	

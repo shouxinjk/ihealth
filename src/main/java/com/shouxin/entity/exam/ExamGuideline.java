@@ -15,7 +15,18 @@ public class ExamGuideline {
 	private String LOWRISKDEFINE; // varchar(255) DEFAULT NULL COMMENT '普通人群识别',
 	private String LOWRISKEXPRESSION;// varchar(255) DEFAULT NULL COMMENT
 										// '普通人群识别脚本',
-	private String STATUS;// varchar(255) DEFAULT NULL COMMENT '状态',
+//	private String STATUS;// varchar(255) DEFAULT NULL COMMENT '状态',
+	public enum STATUS{
+		NEW("新建"),
+		DOCTOREXAMIN("医生已审核"),
+		OPERATIONSUPPLEMENT("运维已补充"),
+		OPERATIONEXAMINE("运维已审核"),
+		PUBLISH("已发布"),
+		EXPIRED("已失效");
+		private STATUS(String value){
+			this.valueOf(value);
+		}
+	}
 	private String CREATEBY;// varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
 	private Date CREATEON;// varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
 	private List<ExamSolution> solutions;
@@ -84,13 +95,6 @@ public class ExamGuideline {
 		LOWRISKEXPRESSION = lOWRISKEXPRESSION;
 	}
 
-	public String getSTATUS() {
-		return STATUS;
-	}
-
-	public void setSTATUS(String sTATUS) {
-		STATUS = sTATUS;
-	}
 
 	public String getCREATEBY() {
 		return CREATEBY;

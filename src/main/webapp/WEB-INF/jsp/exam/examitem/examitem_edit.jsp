@@ -29,8 +29,17 @@
 					
 					<form action="examitem/${msg }.do" name="Form" id="Form" method="post">
 						<input type="hidden" name="EXAMITEM_ID" id="EXAMITEM_ID" value="${pd.EXAMITEM_ID}"/>
+						<input type="hidden" name="EXAMCATEGORY_ID" id="EXAMCATEGORY_ID" value="${EXAMCATEGORY_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
+							<tr>
+								<td style="width:79px;text-align: right;padding-top: 13px;">上级:</td>
+								<td>
+									<div class="col-xs-4 label label-lg label-light arrowed-in arrowed-right">
+										<b>${null == pds.NAME ?'(无) 此部门为顶级':pds.NAME}</b>
+									</div>
+								</td>
+							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">名称:</td>
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入名称" title="名称" style="width:98%;"/></td>
@@ -38,14 +47,6 @@
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">描述:</td>
 								<td><input type="text" name="DESCRIPTION" id="DESCRIPTION" value="${pd.DESCRIPTION}" maxlength="255" placeholder="这里输入描述" title="描述" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">创建该记录员工id:</td>
-								<td><input type="text" name="CREATEBY" id="CREATEBY" value="${pd.CREATEBY}" maxlength="255" placeholder="这里输入创建该记录员工id" title="创建该记录员工id" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">创建该记录时间:</td>
-								<td><input class="span10 date-picker" name="CREATEON" id="CREATEON" value="${pd.CREATEON}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="创建该记录时间" title="创建该记录时间" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">
@@ -104,26 +105,6 @@
 		            time:2
 		        });
 				$("#DESCRIPTION").focus();
-			return false;
-			}
-			if($("#CREATEBY").val()==""){
-				$("#CREATEBY").tips({
-					side:3,
-		            msg:'请输入创建该记录员工id',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEBY").focus();
-			return false;
-			}
-			if($("#CREATEON").val()==""){
-				$("#CREATEON").tips({
-					side:3,
-		            msg:'请输入创建该记录时间',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEON").focus();
 			return false;
 			}
 			$("#Form").submit();

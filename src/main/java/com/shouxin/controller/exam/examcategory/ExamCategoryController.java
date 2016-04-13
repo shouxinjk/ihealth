@@ -117,6 +117,7 @@ public class ExamCategoryController extends BaseController {
 		mv.setViewName("exam/examcategory/examcategory_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
+		mv.addObject("EXAMCATEGORY_ID",EXAMCATEGORY_ID);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
 	}
@@ -135,7 +136,7 @@ public class ExamCategoryController extends BaseController {
 			JSONArray arr = JSONArray.fromObject(examcategoryService.listAllExamCategory("0"));
 			String json = arr.toString();
 			logBefore(logger, json+"列表depa=======");
-			json = json.replaceAll("EXAMCATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subExamCategory", "nodes").replaceAll("hasExamCategory", "checked").replaceAll("treeurl", "url");
+			json = json.replaceAll("EXAMCATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subExamCategory", "nodes").replaceAll("hasExamCategory", "checked").replaceAll("treeUrl", "url");
 			model.addAttribute("zTreeNodes", json);
 			mv.addObject("EXAMCATEGORY_ID",EXAMCATEGORY_ID);
 			mv.addObject("pd", pd);	
@@ -156,9 +157,14 @@ public class ExamCategoryController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		String EXAMCATEGORY_ID = null == pd.get("EXAMCATEGORY_ID")?"":pd.get("EXAMCATEGORY_ID").toString();
+		pd.put("EXAMCATEGORY_ID", EXAMCATEGORY_ID);					//上级ID
+		logBefore(logger, pd.get("EXAMCATEGORY_ID")+"列表id");
+		logBefore(logger, examcategoryService.findById(pd)+"列表id examcategory");
+		mv.addObject("pds",examcategoryService.findById(pd));		//传入上级所有信息
+		mv.addObject("EXAMCATEGORY_ID", EXAMCATEGORY_ID);
 		mv.setViewName("exam/examcategory/examcategory_edit");
 		mv.addObject("msg", "save");
-		mv.addObject("pd", pd);
 		return mv;
 	}	
 	
@@ -171,10 +177,14 @@ public class ExamCategoryController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		String EXAMCATEGORY_ID = pd.getString("EXAMCATEGORY_ID");
 		pd = examcategoryService.findById(pd);	//根据ID读取
+		mv.addObject("pd", pd);
+		pd.put("DEPARTMENT_ID",pd.get("PARENT_ID").toString());			//用作上级信息
+		mv.addObject("pds",examcategoryService.findById(pd));	
+		pd.put("EXAMCATEGORY_ID", EXAMCATEGORY_ID);
 		mv.setViewName("exam/examcategory/examcategory_edit");
 		mv.addObject("msg", "edit");
-		mv.addObject("pd", pd);
 		return mv;
 	}	
 	

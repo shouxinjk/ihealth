@@ -186,15 +186,15 @@ public class DiseaseController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd = diseaseService.findById(pd);//根据ID读取
+		mv.addObject("pd", pd);
 		String DISEASECATEGORY_ID = null == pd.get("DISEASECATEGORY_ID")?"":pd.get("DISEASECATEGORY_ID").toString();
 		pd.put("DISEASECATEGORY_ID", DISEASECATEGORY_ID);	
 		logBefore(logger, pd.get("DISEASECATEGORY_ID")+"标签分类TAGCATEGORY111===============");
 		mv.addObject("pds",diseasecategoryService.findById(pd));
+		mv.addObject("DISEASECATEGORY_ID",DISEASECATEGORY_ID);
 		mv.setViewName("admin/disease/disease_edit");
 		mv.addObject("msg", "edit");
-		pd = diseaseService.findById(pd);//根据ID读取
-		mv.addObject("DISEASECATEGORY_ID",DISEASECATEGORY_ID);
-		mv.addObject("pd", pd);
 		return mv;
 	}	
 	

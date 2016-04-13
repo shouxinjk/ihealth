@@ -2,6 +2,7 @@ package com.shouxin.service.exam.examitem;
 
 import java.util.List;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.exam.ExamCategory;
 import com.shouxin.util.PageData;
 
 /** 
@@ -53,6 +54,21 @@ public interface ExamItemManager{
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
+	
+	
+	/**
+	 * 获取所有数据（递归子列表）
+	 * @param parentID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ExamCategory> listAllExamCategory(String parentID) throws Exception;
+	
+	/**通过id获取ExamCategory数据
+	 * @param pd
+	 * @throws Exception
+	 */
+	public PageData findExamCategoryById(PageData pd)throws Exception;
 	
 }
 

@@ -68,8 +68,6 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">名称</th>
 									<th class="center">描述</th>
-									<th class="center">创建该记录员工id</th>
-									<th class="center">创建该记录时间</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -87,15 +85,13 @@
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.DESCRIPTION}</td>
-											<td class='center'>${var.CREATEBY}</td>
-											<td class='center'>${var.CREATEON}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
 													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMITEM_ID}');">
+													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMITEM_ID}','${EXAMCATEGORY_ID}');">
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 													</a>
 													</c:if>
@@ -114,7 +110,7 @@
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 															<c:if test="${QX.edit == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="edit('${var.EXAMITEM_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
+																<a style="cursor:pointer;" onclick="edit('${var.EXAMITEM_ID}','${EXAMCATEGORY_ID} ');" class="tooltip-success" data-rel="tooltip" title="修改">
 																	<span class="green">
 																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																	</span>
@@ -157,7 +153,7 @@
 							<tr>
 								<td style="vertical-align:top;">
 									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-sm btn-success" onclick="add();">新增</a>
+									<a class="btn btn-sm btn-success" onclick="add('${EXAMCATEGORY_ID}');">新增</a>
 									</c:if>
 									<c:if test="${QX.del == 1 }">
 									<a class="btn btn-sm btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
@@ -255,12 +251,12 @@
 		});
 		
 		//新增
-		function add(){
+		function add(EXAMCATEGORY_ID){
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>examitem/goAdd.do';
+			 diag.URL = '<%=basePath%>examitem/goAdd.do?EXAMCATEGORY_ID='+EXAMCATEGORY_ID;
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
@@ -291,12 +287,12 @@
 		}
 		
 		//修改
-		function edit(Id){
+		function edit(Id,EXAMCATEGORY_ID){
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>examitem/goEdit.do?EXAMITEM_ID='+Id;
+			 diag.URL = '<%=basePath%>examitem/goEdit.do?EXAMITEM_ID='+Id+'&EXAMCATEGORY_ID='+EXAMCATEGORY_ID;
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
