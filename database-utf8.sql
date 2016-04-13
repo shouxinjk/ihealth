@@ -733,8 +733,6 @@ CREATE TABLE `ADMIN_TAGCATEGORY` (
   		PRIMARY KEY (`TAGCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---test merge difference---
-
 
 -- ----------------------------
 -- Table structure for `TB_ARTICLE`
