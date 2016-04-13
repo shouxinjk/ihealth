@@ -83,7 +83,7 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.EXAMCATEGORY_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'><a href="javascript:goSondict('${var.EXAMCATEGORY}')"><i class="ace-icon fa fa-share bigger-100"></i>&nbsp;${var.NAME}</a></td>
+											<td class='center'><a href="javascript:goSondict('${var.EXAMCATEGORY_ID}')"><i class="ace-icon fa fa-share bigger-100"></i>&nbsp;${var.NAME}</a></td>
 											<td class='center'>${var.DESCRIPTION}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
@@ -153,7 +153,7 @@
 							<tr>
 								<td style="vertical-align:top;">
 									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-sm btn-success" onclick="add();">新增</a>
+									<a class="btn btn-sm btn-success" onclick="add('${EXAMCATEGORY_ID}');">新增</a>
 									</c:if>
 									<c:if test="${QX.del == 1 }">
 									<a class="btn btn-sm btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
@@ -257,12 +257,13 @@
 		};
 		
 		//新增
-		function add(){
+		function add(EXAMCATEGORY_ID){
+			alert(EXAMCATEGORY_ID);
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>examcategory/goAdd.do';
+			 diag.URL = '<%=basePath%>examcategory/goAdd.do?EXAMCATEGORY_ID='+EXAMCATEGORY_ID;
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件

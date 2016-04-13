@@ -30,7 +30,7 @@
 					<form action="tagcategory/${msg }.do" name="Form" id="Form" method="post">
 						<input type="hidden" name="TAGCATEGORY_ID" id="TAGCATEGORY_ID" value="${pd.TAGCATEGORY_ID}"/>
 						<input type="hidden" name="PARENT_ID" id="PARENT_ID" value="${null == pd.PARENT_ID ? TAGATEGGORY_ID:pd.TAGCATEGORY_ID}"/>
-						<input type="hidden" name=""/>
+						
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>

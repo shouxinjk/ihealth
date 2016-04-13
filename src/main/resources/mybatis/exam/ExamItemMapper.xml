@@ -67,15 +67,34 @@
 		#{CREATEON},	
 		#{EXAMITEM_ID}
 	</sql>
+	<!-- 字段 -->
+	<sql id="Field1">
+		NAME,	
+		DESCRIPTION,	
+		CREATEBY,	
+		CREATEON,	
+		EXAMITEM_ID,
+		EXAMCATEGORY_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue1">
+		#{NAME},	
+		#{DESCRIPTION},	
+		#{CREATEBY},	
+		#{CREATEON},	
+		#{EXAMITEM_ID},
+		#{EXAMCATEGORY_ID}
+	</sql>
 	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
 		insert into 
 	<include refid="tableName"></include>
 		(
-	<include refid="Field"></include>
+	<include refid="Field1"></include>
 		) values (
-	<include refid="FieldValue"></include>
+	<include refid="FieldValue1"></include>
 		)
 	</insert>
 	
@@ -94,8 +113,6 @@
 		set 
 			NAME = #{NAME},
 			DESCRIPTION = #{DESCRIPTION},
-			CREATEBY = #{CREATEBY},
-			CREATEON = #{CREATEON},
 		EXAMITEM_ID = EXAMITEM_ID
 		where 
 		EXAMITEM_ID = #{EXAMITEM_ID}
@@ -117,7 +134,10 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 1=1
+		where 1=1 
+		<if test="pd.EXAMCATEGORY_ID!= null and pd.EXAMCATEGORY_ID != ''"><!-- 检索 -->
+		and EXAMCATEGORY_ID = #{pd.EXAMCATEGORY_ID}
+		</if>
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(

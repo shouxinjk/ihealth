@@ -106,13 +106,19 @@ public class TagCategoryService implements TagCategoryManager{
 		List<TagCategory> TagCategory = this.listSubTagCategoryByParentId(parentID);
 		for (TagCategory cate : TagCategory) {
 			List<TagCategory> tag = this.listAllTagCategory(cate.getTAGCATEGORY_ID());
-			cate.setTreeUrl("tag/list.do?TAGCATEGORY_ID="+cate.getTAGCATEGORY_ID());
-			cate.setTarget("treeFrame");
+			for (TagCategory tagCategory2 : tag) {
+				tagCategory2.setTreeUrl("tag/list.do?TAGCATEGORY_ID="+tagCategory2.getTAGCATEGORY_ID());
+				tagCategory2.setTarget("treeFrame");
+			}
 			cate.setSubTagCategory(tag);
 		}
 		return TagCategory;
 	}
-
+	/**
+	 * 获取所有数据并通过递归获取所有子级列表
+	 * @param parentID
+	 * @return
+	 */
 	public List<TagCategory> listAllTagCategoryTree(String parentID) throws Exception {
 		List<TagCategory> TagCategory = this.listSubTagCategoryByParentId(parentID);
 		for (TagCategory cate : TagCategory) {

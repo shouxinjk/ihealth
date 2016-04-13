@@ -95,7 +95,7 @@ public class ExamCategoryService implements ExamCategoryManager{
 		// TODO Auto-generated method stub
 		List<ExamCategory> examCategory = this.listSubExamCategoryByParentID(parentID);
 		for (ExamCategory cate : examCategory) {
-			cate.setTreeUrl("");
+			cate.setTreeUrl("examcategory/list.do?EXAMCATEGORY_ID="+cate.getEXAMCATEGORY_ID());
 			cate.setTarget("treeFrame");
 			cate.setSubExamCategory(this.listSubExamCategoryByParentID(cate.getEXAMCATEGORY_ID()));
 		}

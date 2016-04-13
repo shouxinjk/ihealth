@@ -6,7 +6,14 @@ public class ExamSolution {
 
 	private String EXAMSOLUTION_ID;/// varchar(100) NOT NULL,
 	private String SUBGROUP;// varchar(255) DEFAULT NULL COMMENT '检查手段分组标记',
-	private String RISKTYPE;// varchar(255) DEFAULT NULL COMMENT '干预手段对应风险',
+//	private String RISKTYPE;// varchar(255) DEFAULT NULL COMMENT '干预手段对应风险',
+	public enum RISKTYPE{
+		DANGER("高危"),
+		ORDINARY("普通");
+		private RISKTYPE(String value){
+			this.valueOf(value);
+		}
+	}
 	private int STARTAGE; // int(11) NOT NULL COMMENT '开始检查年龄',
 	private int ENDAGE;// varchar(255) DEFAULT NULL COMMENT '结束检查年龄',
 	private String FEATURES;// varchar(255) DEFAULT NULL COMMENT '医学检查手段',
@@ -32,13 +39,13 @@ public class ExamSolution {
 		SUBGROUP = sUBGROUP;
 	}
 
-	public String getRISKTYPE() {
-		return RISKTYPE;
-	}
-
-	public void setRISKTYPE(String rISKTYPE) {
-		RISKTYPE = rISKTYPE;
-	}
+//	public String getRISKTYPE() {
+//		return RISKTYPE;
+//	}
+//
+//	public void setRISKTYPE(String rISKTYPE) {
+//		RISKTYPE = rISKTYPE;
+//	}
 
 	public int getSTARTAGE() {
 		return STARTAGE;
@@ -103,7 +110,5 @@ public class ExamSolution {
 	public void setFrequency(ExamFrequency frequency) {
 		this.frequency = frequency;
 	}
-
-	
 
 }

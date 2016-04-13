@@ -5,7 +5,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.exam.ExamCategory;
 import com.shouxin.util.PageData;
+import com.shouxin.service.exam.examcategory.ExamCategoryManager;
 import com.shouxin.service.exam.examitem.ExamItemManager;
 
 /** 
@@ -19,6 +21,8 @@ public class ExamItemService implements ExamItemManager{
 
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
+	@Resource(name="examcategoryService")
+	private ExamCategoryManager examcategoryService;
 	
 	/**新增
 	 * @param pd
@@ -77,6 +81,37 @@ public class ExamItemService implements ExamItemManager{
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("ExamItemMapper.deleteAll", ArrayDATA_IDS);
 	}
+	
+	/**
+	 * 获取所有数据（递归子列表）
+	 * @param parentID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ExamCategory> listAllExamCategory(String parentID) throws Exception {
+		// TODO Auto-generated method stub
+		List<ExamCategory> examCategory = examcategoryService.listSubExamCategoryByParentID(parentID);
+		for (ExamCategory cate : examCategory) {
+			List<ExamCategory> examCategory2 = examcategoryService.listSubExamCategoryByParentID(cate.getEXAMCATEGORY_ID());
+			for (ExamCategory exam : examCategory2) {
+				exam.setTarget("treeFrame");
+				exam.setTreeUrl("examitem/list.do?EXAMCATEGORY_ID="+exam.getEXAMCATEGORY_ID());
+			}
+			cate.setSubExamCategory(examCategory2);
+			
+		}
+		return examCategory;
+	}
+	/**通过id获取ExamCategory数据
+	 * @param pd
+	 * @throws Exception
+	 */
+	public PageData findExamCategoryById(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return examcategoryService.findById(pd);
+	}
+	
+	
 	
 }
 
