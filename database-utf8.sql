@@ -237,7 +237,10 @@ INSERT INTO `sys_menu` VALUES (73, '标签管理', 'tag/listAllTagCategory.do', 
 INSERT INTO `sys_menu` VALUES (74, '标签分类管理', 'tagcategory/listAllTagCategoryTree.do?TAGCATEGORY_ID=0', '6', '4', 'menu-icon fa fa-envelope green', '1', '1');
 INSERT INTO `sys_menu` VALUES (75, '疾病管理', 'disease/listAllDiseasecategory.do', '6', '5', 'menu-icon fa fa-envelope green', '1', '1');
 INSERT INTO `sys_menu` VALUES (76, '疾病分类管理', 'diseasecategory/listAllDiseaseCategoryTree.do?DISEASECATEGORY=0', '6', '6', 'menu-icon fa fa-envelope green', '1', '1');
-
+INSERT INTO `sys_menu` VALUES ('158', '医学检查分类管理', 'examcategory/listAllExamCategory.do?EXAMCATEGORY_ID=0', '6', '9', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('179', '医学检查项目管理', 'examitem/listAllExamCategory.do', '6', '10', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('200', '指南管理', '#', '6', '11', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('221', '指南规则管理', '#', '6', '12', 'menu-icon fa fa-leaf black', '1', '1');
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
@@ -521,82 +524,84 @@ CREATE TABLE `TB_MEDICALCENERADMIN` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for `EXAM_EXAMFREQUENCY`
+-- Table structure for exam_examfrequency
 -- ----------------------------
-DROP TABLE IF EXISTS `EXAM_EXAMFREQUENCY`;
-CREATE TABLE `EXAM_EXAMFREQUENCY` (
- 		`EXAMFREQUENCY_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-		`EXPRESSION` varchar(255) DEFAULT NULL COMMENT 'CRON表达式，定义检查的间隔频率',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工的id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录的时间',
-  		PRIMARY KEY (`EXAMFREQUENCY_ID`)
+DROP TABLE IF EXISTS `exam_examfrequency`;
+CREATE TABLE `exam_examfrequency` (
+  `EXAMFREQUENCY_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+  `EXPRESSION` varchar(255) DEFAULT NULL COMMENT 'CRON表达式，定义检查的间隔频率',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工的id',
+  `CREATEON` date DEFAULT NULL COMMENT '创建该记录的时间',
+  PRIMARY KEY (`EXAMFREQUENCY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for `EXAM_EXAMITEM`
+-- Table structure for exam_examitem
 -- ----------------------------
-DROP TABLE IF EXISTS `EXAM_EXAMITEM`;
-CREATE TABLE `EXAM_EXAMITEM` (
- 		`EXAMITEM_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
-		`EXAMCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
-		`EXAMITEM_PARENT_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
-		 PRIMARY KEY (`EXAMITEM_ID`)
+DROP TABLE IF EXISTS `exam_examitem`;
+CREATE TABLE `exam_examitem` (
+  `EXAMITEM_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
+  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
+  `EXAMCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+  `EXAMITEM_PARENT_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+  PRIMARY KEY (`EXAMITEM_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- ----------------------------
--- Table structure for `EXAM_EXAMCATEGORY`
+-- Table structure for exam_examcategory
 -- ----------------------------
-DROP TABLE IF EXISTS `EXAM_EXAMCATEGORY`;
-CREATE TABLE `EXAM_EXAMCATEGORY` (
- 		`EXAMCATEGORY_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '检查项目分类名称',
-		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
-  		PRIMARY KEY (`EXAMCATEGORY_ID`)
+DROP TABLE IF EXISTS `exam_examcategory`;
+CREATE TABLE `exam_examcategory` (
+  `EXAMCATEGORY_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '检查项目分类名称',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
+  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
+  `PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父级id',
+  PRIMARY KEY (`EXAMCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for `EXAM_EXAMGUIDELINE`
+-- Table structure for exam_examguideline
 -- ----------------------------
-DROP TABLE IF EXISTS `EXAM_EXAMGUIDELINE`;
-CREATE TABLE `EXAM_EXAMGUIDELINE` (
- 		`EXAMGUIDELINE_ID` varchar(100) NOT NULL,
-		`ORIGINATE` varchar(255) DEFAULT NULL COMMENT '来源',
-		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '指南详细描述',
-		`CONCERNEDFACTORS` varchar(255) DEFAULT NULL COMMENT '关注因素描述',
-		`HIGHRISKDEFINE` varchar(255) DEFAULT NULL COMMENT '高危人群识别',
-		`HIGHRISKEXPRESSION` varchar(255) DEFAULT NULL COMMENT '高危人群识别脚本',
-		`LOWRISKDEFINE` varchar(255) DEFAULT NULL COMMENT '普通人群识别',
-		`LOWRISKEXPRESSION` varchar(255) DEFAULT NULL COMMENT '普通人群识别脚本',
-		`STATUS` varchar(255) DEFAULT NULL COMMENT '状态',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
-  		PRIMARY KEY (`EXAMGUIDELINE_ID`)
+DROP TABLE IF EXISTS `exam_examguideline`;
+CREATE TABLE `exam_examguideline` (
+  `EXAMGUIDELINE_ID` varchar(100) NOT NULL,
+  `ORIGINATE` varchar(255) DEFAULT NULL COMMENT '来源',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '指南详细描述',
+  `CONCERNEDFACTORS` varchar(255) DEFAULT NULL COMMENT '关注因素描述',
+  `HIGHRISKDEFINE` varchar(255) DEFAULT NULL COMMENT '高危人群识别',
+  `HIGHRISKEXPRESSION` varchar(255) DEFAULT NULL COMMENT '高危人群识别脚本',
+  `LOWRISKDEFINE` varchar(255) DEFAULT NULL COMMENT '普通人群识别',
+  `LOWRISKEXPRESSION` varchar(255) DEFAULT NULL COMMENT '普通人群识别脚本',
+  `STATUS` int(255) DEFAULT NULL COMMENT '状态',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
+  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
+  `DISEASE_ID` varchar(32) DEFAULT NULL,
+  `NAME` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`EXAMGUIDELINE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for `EXAM_EXAMSOLUTION`
+-- Table structure for exam_examsolution
 -- ----------------------------
-DROP TABLE IF EXISTS `EXAM_EXAMSOLUTION`;
-CREATE TABLE `EXAM_EXAMSOLUTION` (
- 		`EXAMSOLUTION_ID` varchar(100) NOT NULL,
-		`SUBGROUP` varchar(255) DEFAULT NULL COMMENT '检查手段分组标记',
-		`RISKTYPE` varchar(255) DEFAULT NULL COMMENT '干预手段对应风险',
-		`STARTAGE` int(11) NOT NULL COMMENT '开始检查年龄',
-		`ENDAGE` varchar(255) DEFAULT NULL COMMENT '结束检查年龄',
-		`FEATURES` varchar(255) DEFAULT NULL COMMENT '医学检查手段',
-		`EXAMGUIDELINE_ID` varchar(100) NOT NULL,
-		`EXAMITEM_ID` varchar(100) NOT NULL,
-		`EXAMFREQUENCY_ID` varchar(100) NOT NULL,
-		
-  		PRIMARY KEY (`EXAMSOLUTION_ID`)
+DROP TABLE IF EXISTS `exam_examsolution`;
+CREATE TABLE `exam_examsolution` (
+  `EXAMSOLUTION_ID` varchar(100) NOT NULL,
+  `SUBGROUP` varchar(255) DEFAULT NULL COMMENT '检查手段分组标记',
+  `RISKTYPE` int(255) DEFAULT NULL COMMENT '干预手段对应风险',
+  `STARTAGE` int(11) NOT NULL COMMENT '开始检查年龄',
+  `ENDAGE` varchar(255) DEFAULT NULL COMMENT '结束检查年龄',
+  `FEATURES` varchar(255) DEFAULT NULL COMMENT '医学检查手段',
+  `EXAMGUIDELINE_ID` varchar(100) NOT NULL,
+  `EXAMITEM_ID` varchar(100) NOT NULL,
+  `EXAMFREQUENCY_ID` varchar(100) NOT NULL,
+  PRIMARY KEY (`EXAMSOLUTION_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -708,7 +713,7 @@ CREATE TABLE `ADMIN_DISEASE` (
 -- Table structure for `TAG_TAG`
 -- ----------------------------
 DROP TABLE IF EXISTS `ADMIN_TAG`;
-CREATE TABLE `TAG_TAG` (
+CREATE TABLE `ADMIN_TAG` (
  		`TAG_ID` varchar(100) NOT NULL,
 		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
 		`EXPRESSION` varchar(255) DEFAULT NULL COMMENT '表达式',
