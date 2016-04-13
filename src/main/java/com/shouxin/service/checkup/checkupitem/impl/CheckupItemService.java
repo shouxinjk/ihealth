@@ -88,10 +88,20 @@ public class CheckupItemService implements CheckupItemManager{
 
 	/**
 	 * 查询所有
+	 * 根据checkpackageID查询所有体检项目
 	 */
 	@SuppressWarnings("unchecked")
 	public List<CheckupItem> findAllById(String id) throws Exception {
 		return (List<CheckupItem>) dao.findForList("CheckupItemMapper.findAllById", id);
+	}
+
+	/**
+	 * 根据userID获取体检项目
+	 */
+	@SuppressWarnings("unchecked")
+	public List<CheckupItem> findAllByUserId(String id) throws Exception {
+		
+		return (List<CheckupItem>) dao.findForList("CheckupItemMapper.findAllByUserId", id);
 	}
 	
 }

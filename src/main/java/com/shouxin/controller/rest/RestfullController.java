@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shouxin.controller.base.BaseController;
+import com.shouxin.entity.checkup.CheckupItem;
 import com.shouxin.entity.checkup.CheckupPackage;
+import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
 import com.shouxin.service.system.user.UserManager;
 import com.shouxin.util.AppUtil;
@@ -36,6 +38,8 @@ public class RestfullController extends BaseController {
 	private UserManager userService;
 	@Resource(name="checkuppackageService")
 	private CheckupPackageManager checkuppackageService;
+	@Resource(name="checkupitemService")
+	private CheckupItemManager checkupitemService;
 	
 	/**
 	 * 用户注册，通过手机号码
@@ -226,8 +230,63 @@ public class RestfullController extends BaseController {
 		return AppUtil.returnObject(new PageData(), map);
 	}
 	
-	//通过userID获取体检项目
 	
+	/**
+	 * 本机url：http://localhost:8080/ihealth/rest/findCheckItems
+	 * @param {"userId":"1"}
+	 * @return 当userID不为空，并且数据库中存在这个ID、返回以下数据，需要注意的是，一个用户有多个体检项目，需要循环取值
+	 * {
+		    "result": "success",
+		    "data": [
+		        {
+		            "users": {
+		                "page": {"totalPage": 0,"totalResult": 0, "currentPage": 0,"pageStr": "","showCount": 10, "currentResult": 0,"entityOrField": false,"pd": {}},
+		                "username": "zhangsan",
+		                "sex": "男",
+		            },
+		            "name": "肺部检查",
+		            "status": "已选中",
+		            "description": "吸烟20年,致癌细胞变异",
+		            "originate": "加拿大",
+		            "subgroup": "X光",
+		            "features": null,
+		            "revision": 1,
+		            "sysflag": "admin",
+		            "worker": "admin",
+		            "generatedtime": "2016-04-04 22:31:12.0",
+		            "frequency": "每年一次",
+		            "checkupitem_ID": "102",
+		            "checkupPackage": null
+		        }
+		    ]
+		}
+	 * 当用户ID为空时返回一下数据{"result": "error"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findCheckItems",method=RequestMethod.POST)
+	@ResponseBody
+	public Object findCheckItems(@RequestBody String u) throws Exception{
+		logBefore(logger,"根据用户ID获取用户信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String userId =(String) jasonObject.get("userId");
+		pd.put("USER_ID", userId);
+		if(userId == null || "".equals(userId)){
+			msg = "error";
+		}else{
+			 List<CheckupItem> checkupItems = this.checkupitemService.findAllByUserId(userId);
+			if (checkupItems!=null) {
+				msg = "success";
+				map.put("data", checkupItems);
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
 	
 	/**
 	 * 通过用户ID获取用户信息
