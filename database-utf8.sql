@@ -742,8 +742,8 @@ CREATE TABLE `ADMIN_TAGCATEGORY` (
 -- ----------------------------
 -- Table structure for `TB_ARTICLE`
 -- ----------------------------
-DROP TABLE IF EXISTS `ADMIN_ARTICLE`;
-CREATE TABLE `ADMIN_ARTICLE` (
+DROP TABLE IF EXISTS `TB_ARTICLE`;
+CREATE TABLE `TB_ARTICLE` (
  		`ARTICLE_ID` varchar(100) NOT NULL,
 		`TITLE` varchar(255) DEFAULT NULL COMMENT '标题',
 		`AUTHOR` varchar(255) DEFAULT NULL COMMENT '作者',
