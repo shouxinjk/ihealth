@@ -4,7 +4,7 @@
 	
 	<!--表名 -->
 	<sql id="tableName">
-		ADMIN_ARTICLE
+		TB_ARTICLE
 	</sql>
 	
 	<!-- 字段 -->

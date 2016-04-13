@@ -25,10 +25,9 @@ import com.shouxin.util.Jurisdiction;
 import com.shouxin.service.admin.article.ArticleManager;
 
 /** 
- * 说明：推送文章信息
+ * 说明：文章信息管理
  * 创建人：shouxin
- * 创建时间：2016-04-07
- * 
+ * 创建时间：2016-04-13
  */
 @Controller
 @RequestMapping(value="/article")
