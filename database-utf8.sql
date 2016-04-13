@@ -732,3 +732,21 @@ CREATE TABLE `ADMIN_TAGCATEGORY` (
 		`PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父级id',
   		PRIMARY KEY (`TAGCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `TB_ARTICLE`
+-- ----------------------------
+DROP TABLE IF EXISTS `TB_ARTICLE`;
+CREATE TABLE `TB_ARTICLE` (
+ 		`ARTICLE_ID` varchar(100) NOT NULL,
+		`TITLE` varchar(255) DEFAULT NULL COMMENT '标题',
+		`AUTHOR` varchar(255) DEFAULT NULL COMMENT '作者',
+		`LOGOURL` varchar(255) DEFAULT NULL COMMENT '照片url',
+		`URL` varchar(255) DEFAULT NULL COMMENT '内容url',
+		`SUMMARY` varchar(255) DEFAULT NULL COMMENT '摘要',
+		`PUBLISHTIME` varchar(32) DEFAULT NULL COMMENT '发布时间',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
+		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建记录时间',
+  		PRIMARY KEY (`ARTICLE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

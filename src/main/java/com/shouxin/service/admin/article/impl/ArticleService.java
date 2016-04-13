@@ -9,9 +9,9 @@ import com.shouxin.util.PageData;
 import com.shouxin.service.admin.article.ArticleManager;
 
 /** 
- * 说明： 推送文章信息
+ * 说明： 文章信息管理
  * 创建人：shouxin
- * 创建时间：2016-04-07
+ * 创建时间：2016-04-13
  * @version
  */
 @Service("articleService")
@@ -24,7 +24,7 @@ public class ArticleService implements ArticleManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	
+	//@Override
 	public void save(PageData pd)throws Exception{
 		dao.save("ArticleMapper.save", pd);
 	}
@@ -33,7 +33,7 @@ public class ArticleService implements ArticleManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	
+	//@Override
 	public void delete(PageData pd)throws Exception{
 		dao.delete("ArticleMapper.delete", pd);
 	}
@@ -42,7 +42,7 @@ public class ArticleService implements ArticleManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	
+	//@Override
 	public void edit(PageData pd)throws Exception{
 		dao.update("ArticleMapper.edit", pd);
 	}
@@ -51,7 +51,7 @@ public class ArticleService implements ArticleManager{
 	 * @param page
 	 * @throws Exception
 	 */
-	
+	//@Override
 	@SuppressWarnings("unchecked")
 	public List<PageData> list(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("ArticleMapper.datalistPage", page);
@@ -61,7 +61,7 @@ public class ArticleService implements ArticleManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	
+	//@Override
 	@SuppressWarnings("unchecked")
 	public List<PageData> listAll(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("ArticleMapper.listAll", pd);
@@ -71,7 +71,7 @@ public class ArticleService implements ArticleManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	
+	//@Override
 	public PageData findById(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("ArticleMapper.findById", pd);
 	}
@@ -80,7 +80,7 @@ public class ArticleService implements ArticleManager{
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
 	 */
-	
+	//@Override
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("ArticleMapper.deleteAll", ArrayDATA_IDS);
 	}

@@ -5,9 +5,9 @@ import com.shouxin.entity.Page;
 import com.shouxin.util.PageData;
 
 /** 
- * 说明： 推送文章信息接口
+ * 说明： 文章信息管理接口
  * 创建人：shouxin
- * 创建时间：2016-04-07
+ * 创建时间：2016-04-13
  * @version
  */
 public interface ArticleManager{
