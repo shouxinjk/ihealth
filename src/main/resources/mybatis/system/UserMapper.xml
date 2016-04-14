@@ -277,8 +277,15 @@
 			<include refid="Field"></include>
 		from 
 			<include refid="tableName"></include>
-		where 
-			USER_ID = #{USER_ID}
+		<where>
+			<if test="USER_ID != null and USER_ID != ''">
+				and USER_ID = #{USER_ID}
+			</if>
+			<if test="OPENID != null and OPENID != ''">
+				and OPENID = #{OPENID}
+			</if>
+		</where>
+			
 	</select>
 	
 	<!-- 新增用户 -->

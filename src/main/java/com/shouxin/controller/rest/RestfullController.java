@@ -209,22 +209,48 @@ public class RestfullController extends BaseController {
 	
 	
 	//通过用户ID获取体检套餐信息的接口
-	@RequestMapping(value="/findCheckPackage/{userId}",method = RequestMethod.POST)
+	/**
+	 * url:http://localhost:8080/ihealth/rest/findCheckPackage
+	 * 通过用户ID获取体检套餐信息
+	 * @param {"userId":"用户ID"}
+	 * @return 当用户ID不为空时，返回：
+	 * {
+		    "result": "success",
+		    "data": {
+		        "REVISION": "版本",
+		        "STATUS": "状态",
+		        "GENERATEDTIME": 该记录生成时间,
+		        "EFFECTIVEFROM": 开始生效时间,
+		        "EXPIREON": 失效时间,
+		        "WORKER": "生成该记录的标记",
+		        "CHECKUPPACKAGE_ID": "1001",
+		        "SYSFLAG": "系统标记"
+		    }
+		}
+		
+		当用户ID为空时，返回：{ "result": "error"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/findCheckPackage",method = RequestMethod.POST)
 	@ResponseBody
-	public Object findCheckPackage(@PathVariable("userId") String userId) throws Exception{
-		logger.debug("判断用户ID是否为空:" + userId);
+	public Object findCheckPackage(@RequestBody String u) throws Exception{
+		logBefore(logger,"根据用户ID获取体检套餐信息");
 		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		String msg = null;
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String userId =(String) jasonObject.get("userId");
+		pd.put("USER_ID", userId);
 		if(null == userId || "".equals(userId)){
-			msg="error";
+			msg = "error";
 		}else{
-			logger.debug("执行根据用户ID查询体检套餐的方法");
-			List<CheckupPackage> checkList =  this.checkuppackageService.listAllById(userId);
-			logger.debug(checkList);
-			msg = "success";
-			map.put("data", checkList);
+			PageData data = this.checkuppackageService.findById(pd);
+			if (data!=null) {
+				msg = "success";
+				map.put("data", data);
+			}
 		}
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
@@ -232,6 +258,7 @@ public class RestfullController extends BaseController {
 	
 	
 	/**
+	 * 根据userID 获取体检项目
 	 * 本机url：http://localhost:8080/ihealth/rest/findCheckItems
 	 * @param {"userId":"1"}
 	 * @return 当userID不为空，并且数据库中存在这个ID、返回以下数据，需要注意的是，一个用户有多个体检项目，需要循环取值
@@ -239,24 +266,32 @@ public class RestfullController extends BaseController {
 		    "result": "success",
 		    "data": [
 		        {
-		            "users": {
-		                "page": {"totalPage": 0,"totalResult": 0, "currentPage": 0,"pageStr": "","showCount": 10, "currentResult": 0,"entityOrField": false,"pd": {}},
-		                "username": "zhangsan",
-		                "sex": "男",
-		            },
-		            "name": "肺部检查",
-		            "status": "已选中",
-		            "description": "吸烟20年,致癌细胞变异",
-		            "originate": "加拿大",
-		            "subgroup": "X光",
-		            "features": null,
-		            "revision": 1,
-		            "sysflag": "admin",
-		            "worker": "admin",
-		            "generatedtime": "2016-04-04 22:31:12.0",
-		            "frequency": "每年一次",
-		            "checkupitem_ID": "102",
-		            "checkupPackage": null
+		            "REVISION": 1,
+		            "STATUS": "已选中",
+		            "DESCRIPTION": "胸部检查癌细胞变异",
+		            "GENERATEDTIME": 1460298586000,
+		            "FREQUENCY": "每年一次",
+		            "ORIGINATE": "美国加州",
+		            "WORKER": "admin",
+		            "SUBGROUP": "CT",
+		            "SYSFLAG": "amdin",
+		            "NAME": "胸部检查",
+		            "FEATURES": "经济,全面",
+		            "CHECKUPITEM_ID": "101"
+		        },
+		        {
+		            "REVISION": 1,
+		            "STATUS": "已选中",
+		            "DESCRIPTION": "吸烟20年,致癌细胞变异",
+		            "GENERATEDTIME": 1459780272000,
+		            "FREQUENCY": "每年一次",
+		            "ORIGINATE": "加拿大",
+		            "WORKER": "admin",
+		            "SUBGROUP": "X光",
+		            "SYSFLAG": "admin",
+		            "NAME": "肺部检查",
+		            "FEATURES": "经济",
+		            "CHECKUPITEM_ID": "102"
 		        }
 		    ]
 		}
@@ -266,7 +301,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value="findCheckItems",method=RequestMethod.POST)
 	@ResponseBody
 	public Object findCheckItems(@RequestBody String u) throws Exception{
-		logBefore(logger,"根据用户ID获取用户信息");
+		logBefore(logger,"根据用户ID获取体检项目信息");
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		String msg = null;
 		PageData pd = new PageData();
@@ -278,10 +313,10 @@ public class RestfullController extends BaseController {
 		if(userId == null || "".equals(userId)){
 			msg = "error";
 		}else{
-			 List<CheckupItem> checkupItems = this.checkupitemService.findAllByUserId(userId);
-			if (checkupItems!=null) {
+			 List<PageData> pageDate = this.checkupitemService.listAll(pd);
+			if (pageDate!=null) {
 				msg = "success";
-				map.put("data", checkupItems);
+				map.put("data", pageDate);
 			}
 		}
 		map.put("result", msg);
@@ -338,6 +373,69 @@ public class RestfullController extends BaseController {
 		String userId =(String) jasonObject.get("userId");
 		pd.put("USER_ID", userId);
 		if(null == userId || "".equals(userId)){
+			msg = "error";
+		}else{
+			PageData data = this.userService.findById(pd);
+			if (data!=null) {
+				msg = "success";
+				map.put("data", data);
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 根据openId获取用户信息
+	 * url:http://localhost:8080/ihealth/rest/findUserByOpenId
+	 * @param {openid:"openId"}
+	 * @return 当获取openId失败！返回{"result":"error"}
+	 * @return 当获取openId成功！返回值为：
+	 * {
+		    "result": "success",
+		    "data": {
+		        "NUMBER": "001",
+		        "RIGHTS": "1133671055321055258374707980945218933803269864762743594642571294",
+		        "IP": "0:0:0:0:0:0:0:1",
+		        "PHONE": "18788888888",
+		        "ALIAS": "系统管理员",
+		        "SEX": "男",
+		        "USER_ID": "1",
+		        "MARRIAGESTATUS": "未婚",
+		        "LAST_LOGIN": "2016-04-13 16:12:33",
+		        "EMAIL": "QQ313596790@main.com",
+		        "HEIGHT": 188,
+		        "BIRTHPLACE": "成都",
+		        "NAME": "系统管理员",
+		        "CAREER": "高级架构师",
+		        "STATUS": "0",
+		        "OPENID": "wwwsssddd",
+		        "PASSWORD": "de41b7fb99201d8334c23c014db35ecd92df81bc",
+		        "BZ": "最高统治者",
+		        "USERNAME": "admin",
+		        "ROLE_ID": "1",
+		        "DEGREE": "本科",
+		        "LIVEPLACE": "成都",
+		        "AVATAR": "img/logo.jpg",
+		        "WEIGHT": 50
+		    }
+		}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findUserByOpenId",method=RequestMethod.POST)
+	@ResponseBody
+	public Object findUserByOpenId(@RequestBody String u) throws Exception{
+		logBefore(logger,"根据openID获取用户信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String openId =(String) jasonObject.get("openId");
+		pd.put("OPENID", openId);
+		logger.debug("openId为空,获取用户信息失败！");
+		if(null == openId || "".equals(openId)){
 			msg = "error";
 		}else{
 			PageData data = this.userService.findById(pd);
