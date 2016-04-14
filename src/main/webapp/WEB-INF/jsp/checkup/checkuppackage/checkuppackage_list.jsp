@@ -96,7 +96,7 @@
 											<td class='center'>${var.REVISION}</td>
 											<td class='center'>${var.SYSFLAG}</td>
 											<td class="center">
-												<a href="checkupitem//lists/${var.CHECKUPPACKAGE_ID}">详细信息</a>
+												<a href="checkupitem/lists/${var.CHECKUPPACKAGE_ID}">详细信息</a>
 											</td>
 										</tr>
 									

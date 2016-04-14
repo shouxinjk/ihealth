@@ -120,4 +120,27 @@ public interface UserManager {
 	 */
 	public PageData getUserCount(String value)throws Exception;
 	
+	/**
+	 * 根据用户ID查询文章信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findArticlesById(PageData pd)throws Exception;
+	
+	/**
+	 * 根据用户ID获取标签信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findTagById(PageData pd)throws Exception;
+	
+	/**
+	 * 根据用户ID 获取疾病信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findDiseaseById(PageData pd)throws Exception;
 }

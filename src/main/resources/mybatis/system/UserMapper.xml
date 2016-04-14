@@ -113,6 +113,71 @@
 		</if>
 	</select>
 	
+	<!-- 根据用户ID 查询文章推送信息 -->
+	<select id ="findArticlesById" parameterType="pd" resultType="pd">
+		SELECT 
+		  a.* 
+		FROM
+		  admin_tag t 
+		  LEFT JOIN admin_taganduser tu 
+		    ON t.`TAG_ID` = tu.`TAG_ID` 
+		  LEFT JOIN sys_user u 
+		    ON u.`USER_ID` = tu.`USER_ID` 
+		  LEFT JOIN admin_tagandarticle ta 
+		    ON ta.`tag_id` = t.`TAG_ID` 
+		  LEFT JOIN tb_article a 
+		    ON a.`ARTICLE_ID` = ta.`article_id` 
+		<where>
+			<if test="USER_ID != null and USER_ID != ''">
+				and u.USER_ID = #{USER_ID}
+			</if>
+		</where>	
+	</select>
+	
+	<!-- 根据用户ID 获取用户选中的标签 -->
+	<select id="findTagById" resultType="pd" parameterType="pd">
+				SELECT 
+		  t.* 
+		FROM
+		  admin_tag t 
+		  LEFT JOIN admin_taganduser tu 
+		    ON t.`TAG_ID` = tu.`TAG_ID` 
+		  LEFT JOIN sys_user u 
+		    ON u.`USER_ID` = tu.`USER_ID` 
+		  LEFT JOIN admin_tagandarticle ta 
+		    ON ta.`tag_id` = t.`TAG_ID` 
+		  LEFT JOIN tb_article a 
+		    ON a.`ARTICLE_ID` = ta.`article_id` 
+		<where>
+			<if test="USER_ID != null and USER_ID != ''">
+				and u.USER_ID = #{USER_ID}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据用户ID获取疾病信息 -->
+	<select id="findDiseaseById" resultType="pd" parameterType="pd">
+		SELECT 
+		  d.* 
+		FROM
+		  admin_disease d 
+		  LEFT JOIN admin_diseaseanduser du 
+		    ON d.`DISEASE_ID` = du.`DISEASE_ID`
+		  LEFT JOIN sys_user u 
+		    ON u.`USER_ID` = du.`USER_ID` 
+		  LEFT JOIN admin_diseaseanddiseasecategory dd
+		    ON d.`DISEASE_ID` = dd.`DISEASE_ID` 
+		  LEFT JOIN admin_diseasecategory dc
+		    ON dd.`DISEASECATEGORY_ID` = dc.`DISEASECATEGORY_ID`
+		<where>
+			<if test="USER_ID != null and USER_ID != ''">
+				and u.USER_ID = #{USER_ID}
+			</if>
+		</where>
+	</select>
+	
+	
+	
 	<!-- 更新登录时间 -->
 	<update id="updateLastLogin" parameterType="pd" >
 		update
