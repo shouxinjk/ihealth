@@ -256,6 +256,43 @@ public class RestfullController extends BaseController {
 		return AppUtil.returnObject(new PageData(), map);
 	}
 	
+	/**
+	 * 根据体检项目ID修改体检项目的状态信息
+	 * url:http://localhost:8080/ihealth/rest/editCheckItem
+	 * @param {"checkupItemId":"体检项目ID","stauts":"状态信息"}
+	 * @return 修改成功、返回 { "result": "success"}
+	 * 		         修改失败、返回{"result": "error"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="editCheckItem",method=RequestMethod.POST)
+	@ResponseBody
+	public Object editCheckItem(@RequestBody String check) throws Exception{
+		logBefore(logger,"根据体检项目ID获取体检项目信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(check);
+		String checkItemId =(String) jasonObject.get("checkupItemId");
+		String status =(String) jasonObject.get("stauts");
+		pd.put("CHECKUPITEM_ID", checkItemId);
+		//判断体检项目ID是否为空
+		if(checkItemId == null || "".equals(checkItemId)){
+			msg = "error";
+		}else{
+			//先查后改 --根据ID查询体检项目
+			pd = this.checkupitemService.findById(pd);
+			logger.debug("查看体检项目信息"+pd);
+			pd.put("STATUS", status);
+			logger.debug("修改体检项目----------start");
+			this.checkupitemService.edit(pd);
+			msg = "success";
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
 	
 	/**
 	 * 根据userID 获取体检项目
@@ -266,18 +303,18 @@ public class RestfullController extends BaseController {
 		    "result": "success",
 		    "data": [
 		        {
-		            "REVISION": 1,
-		            "STATUS": "已选中",
-		            "DESCRIPTION": "胸部检查癌细胞变异",
-		            "GENERATEDTIME": 1460298586000,
+		            "REVISION": 版本,
+		            "STATUS": "状态，包括：已选中，已删除",
+		            "DESCRIPTION": "详细描述",
+		            "GENERATEDTIME": 该记录生成时间,
 		            "FREQUENCY": "每年一次",
-		            "ORIGINATE": "美国加州",
-		            "WORKER": "admin",
-		            "SUBGROUP": "CT",
-		            "SYSFLAG": "amdin",
-		            "NAME": "胸部检查",
-		            "FEATURES": "经济,全面",
-		            "CHECKUPITEM_ID": "101"
+		            "ORIGINATE": "指南来源",
+		            "WORKER": "用于产生该记录的标记",
+		            "SUBGROUP": "检查项目分组",
+		            "SYSFLAG": "系统标记",
+		            "NAME": "检查项目名称",
+		            "FEATURES": "检查频率，是文字描述",
+		            "CHECKUPITEM_ID": "ID"
 		        },
 		        {
 		            "REVISION": 1,

@@ -143,8 +143,14 @@
 			REVISION = #{REVISION},
 			SYSFLAG = #{SYSFLAG},
 		CHECKUPITEM_ID = CHECKUPITEM_ID
-		where 
-		CHECKUPITEM_ID = #{CHECKUPITEM_ID}
+		<where>
+			<if test="CHECKUPITEM_ID != null and CHECKUPITEM_ID != ''">
+				and CHECKUPITEM_ID = #{CHECKUPITEM_ID}
+			</if>
+			<if test="USER_ID != null and USER_ID != ''">
+				and USER_ID = #{USER_ID}
+			</if>
+		</where>
 	</update>
 	
 	<!-- 通过ID获取数据 -->
