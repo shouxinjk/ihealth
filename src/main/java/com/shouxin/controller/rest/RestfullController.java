@@ -5,28 +5,21 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shouxin.controller.base.BaseController;
-import com.shouxin.entity.checkup.CheckupItem;
-import com.shouxin.entity.checkup.CheckupPackage;
 import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
 import com.shouxin.service.system.user.UserManager;
 import com.shouxin.util.AppUtil;
-import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.PageData;
 import com.shouxin.util.StatusEnum;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /** 
@@ -36,9 +29,11 @@ import net.sf.json.JSONObject;
  * 更新时间：2015年11月3日
  * @version
  */
+@SuppressWarnings("restriction")
 @Controller
 @RequestMapping(value="/rest")
 public class RestfullController extends BaseController {
+	
 	
 	@Resource(name="userService")
 	private UserManager userService;
@@ -288,21 +283,22 @@ public class RestfullController extends BaseController {
 		pd = this.getPageData();
 		//将String类型的数据转换为json
 		JSONObject jasonObject =JSONObject.fromObject(check);
-		String checkItemId =(String) jasonObject.get("checkupItemId");
-		String status =(String) jasonObject.get("stauts");
-		//判断传入的状态是
-		/*如果状态值为 已选中 则改为已删除*/
-		if(status.equals(StatusEnum.ALREADYENABLED.getValue())){
-			status = StatusEnum.HASBEENDELETED.getValue();
-		}else if(status.equals(StatusEnum.HASBEENDELETED.getValue())){
-			/*如果状态值为已删除  则改为已选中*/
-			status = StatusEnum.ALREADYENABLED.getValue();
-		}
-		pd.put("CHECKUPITEM_ID", checkItemId);
+		String checkItemId = jasonObject.get("checkupItemId").toString();
+		String status = jasonObject.get("stauts").toString();
+		
 		//判断体检项目ID是否为空
-		if(checkItemId == null || "".equals(checkItemId)){
+		if(checkItemId == null || "".equals(checkItemId) || status ==null || "".equals(status)){
 			msg = "error";
 		}else{
+			pd.put("CHECKUPITEM_ID", checkItemId);
+			//判断传入的状态是
+			/*如果状态值为 已选中 则改为已删除*/
+			if(status.equals(StatusEnum.ALREADYENABLED.getValue())){
+				status = StatusEnum.HASBEENDELETED.getValue();
+			}else if(status.equals(StatusEnum.HASBEENDELETED.getValue())){
+				/*如果状态值为已删除  则改为已选中*/
+				status = StatusEnum.ALREADYENABLED.getValue();
+			}
 			//先查后改 --根据ID查询体检项目
 			pd = this.checkupitemService.findById(pd);
 			logger.debug("查看体检项目信息"+pd);
@@ -676,4 +672,7 @@ public class RestfullController extends BaseController {
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
+	
+	
+	
 }
