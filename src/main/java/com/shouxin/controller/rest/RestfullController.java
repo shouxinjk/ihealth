@@ -24,6 +24,7 @@ import com.shouxin.service.system.user.UserManager;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.PageData;
+import com.shouxin.util.StatusEnum;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -289,6 +290,14 @@ public class RestfullController extends BaseController {
 		JSONObject jasonObject =JSONObject.fromObject(check);
 		String checkItemId =(String) jasonObject.get("checkupItemId");
 		String status =(String) jasonObject.get("stauts");
+		//判断传入的状态是
+		/*如果状态值为 已选中 则改为已删除*/
+		if(status.equals(StatusEnum.ALREADYENABLED.getValue())){
+			status = StatusEnum.HASBEENDELETED.getValue();
+		}else if(status.equals(StatusEnum.HASBEENDELETED.getValue())){
+			/*如果状态值为已删除  则改为已选中*/
+			status = StatusEnum.ALREADYENABLED.getValue();
+		}
 		pd.put("CHECKUPITEM_ID", checkItemId);
 		//判断体检项目ID是否为空
 		if(checkItemId == null || "".equals(checkItemId)){

@@ -49,19 +49,9 @@
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">摘要:</td>
-								<td><input type="text" name="SUMMARY" id="SUMMARY" value="${pd.SUMMARY}" maxlength="255" placeholder="这里输入摘要" title="摘要" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">发布时间:</td>
-								<td><input class="span10 date-picker" name="PUBLISHTIME" id="PUBLISHTIME" value="${pd.PUBLISHTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="发布时间" title="发布时间" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">创建记录员工id:</td>
-								<td><input type="text" name="CREATEBY" id="CREATEBY" value="${pd.CREATEBY}" maxlength="255" placeholder="这里输入创建记录员工id" title="创建记录员工id" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">创建记录时间:</td>
-								<td><input class="span10 date-picker" name="CREATEON" id="CREATEON" value="${pd.CREATEON}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="创建记录时间" title="创建记录时间" style="width:98%;"/></td>
+								<td>
+									<textarea rows="8" cols="30" maxlength="200" name="SUMMARY" id="SUMMARY"  placeholder="这里输入摘要" title="摘要" style="width:98%;resize:none;">${pd.SUMMARY}</textarea>
+								</td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">
@@ -160,26 +150,6 @@
 		            time:2
 		        });
 				$("#PUBLISHTIME").focus();
-			return false;
-			}
-			if($("#CREATEBY").val()==""){
-				$("#CREATEBY").tips({
-					side:3,
-		            msg:'请输入创建记录员工id',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEBY").focus();
-			return false;
-			}
-			if($("#CREATEON").val()==""){
-				$("#CREATEON").tips({
-					side:3,
-		            msg:'请输入创建记录时间',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEON").focus();
 			return false;
 			}
 			$("#Form").submit();
