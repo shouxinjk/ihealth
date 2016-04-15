@@ -30,6 +30,13 @@ public interface ExamGuideLineManager{
 	 */
 	public void edit(PageData pd)throws Exception;
 	
+	/**
+	 * 修改指南规则
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void editRule(PageData pd) throws Exception;
+	
 	/**列表
 	 * @param page
 	 * @throws Exception

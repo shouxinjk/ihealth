@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Disease;
 import com.shouxin.util.PageData;
 import com.shouxin.service.admin.disease.DiseaseManager;
 
@@ -83,6 +84,14 @@ public class DiseaseService implements DiseaseManager{
 	
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("DiseaseMapper.deleteAll", ArrayDATA_IDS);
+	}
+	/**
+	 * T通过疾病分类id获取疾病信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Disease> listDiseaseByDiseaseCategoryID(String DISEASECATEGORY_ID) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<Disease>) dao.findForList("DiseaseMapper.getDiseaseAndCategoryByID", DISEASECATEGORY_ID);
 	}
 	
 }

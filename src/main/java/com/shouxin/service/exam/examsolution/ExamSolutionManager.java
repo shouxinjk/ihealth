@@ -54,5 +54,20 @@ public interface ExamSolutionManager{
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
 	
+	/**
+	 * 通过指南id获取高危人群检查手段
+	 * @param EXAMGUIDELINEID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listExamSolutionByExamGuidelineID(String EXAMGUIDELINEID)throws Exception ;
+	
+	/**
+	 * 链接检查项目表获取所有数据
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listAllExamSolutionAndExamItem(PageData pd) throws Exception;
+	
 }
 

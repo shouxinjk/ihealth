@@ -12,68 +12,7 @@
 			<result column="CREATEBY" property="createBY"/>
 			<result column="CREATEON" property="createON"/>
 	</resultMap>
-	
-	<resultMap type="ExamSolution" id="ExamSolutionAndItemResultMap">
-			<id column="EXAMSOLUTION_ID" property="EXAMSOLUTION_ID" />
-			<result column="SUBGROUP" property="SUBGROUP"/>
-			<result column="RISKTYPE" property="RISKTYPE"/>
-			<result column="STARTAGE" property="STARTAGE"/>
-			<result column="ENDAGE" property="ENDAGE"/>
-			<result column="FEATURES" property="FEATURES"/>
-			<result column="CREATEBY" property="createBY"/>
-			<result column="CREATEON" property="createON"/>
-			<association property="examItem" column="EXAMITEM_ID" javaType="ExamItem">
-				<id column="EXAMITEM_ID" property="EXAMITEM_ID" />
-				<result column="NAME" property="NAME"/>
-				<result column="DESCRIPTION" property="DESCRIPTION"/>
-				<result column="CREATEBY" property="CREATEBY"/>
-				<result column="CREATEON" property="CREATEON"/>
-		</association>
-	</resultMap>
-	
-	<resultMap type="ExamSolution" id="ExamSolutionAndExamFrequencyResultMap">
-			<id column="EXAMSOLUTION_ID" property="EXAMSOLUTION_ID" />
-			<result column="SUBGROUP" property="SUBGROUP"/>
-			<result column="RISKTYPE" property="RISKTYPE"/>
-			<result column="STARTAGE" property="STARTAGE"/>
-			<result column="ENDAGE" property="ENDAGE"/>
-			<result column="FEATURES" property="FEATURES"/>
-			<result column="CREATEBY" property="createBY"/>
-			<result column="CREATEON" property="createON"/>
-			<association property="frequency" column="EXAMFREQUENCY_ID" javaType="ExamFrequency">
-				<id column="EXAMFREQUENCY_ID" property="EXAMFREQUENCY_ID" />
-				<result column="NAME" property="NAME"/>
-				<result column="EXPRESSION" property="EXPRESSION"/>
-				<result column="CREATEBY" property="CREATEBY"/>
-				<result column="CREATEON" property="CREATEON"/>
-		</association>
-	</resultMap>
-	
-	<resultMap type="ExamSolution" id="ExamSolutionAndExamSolutionResultMap">
-			<id column="EXAMSOLUTION_ID" property="EXAMSOLUTION_ID" />
-			<result column="SUBGROUP" property="SUBGROUP"/>
-			<result column="RISKTYPE" property="RISKTYPE"/>
-			<result column="STARTAGE" property="STARTAGE"/>
-			<result column="ENDAGE" property="ENDAGE"/>
-			<result column="FEATURES" property="FEATURES"/>
-			<result column="CREATEBY" property="createBY"/>
-			<result column="CREATEON" property="createON"/>
-			<association property="guideline" column="EXAMGUIDELINE_ID" javaType="ExamGuideline">
-				<id column="EXAMGUIDELINE_ID" property="EXAMGUIDELINE_ID" />
-				<result column="ORIGINATE" property="ORIGINATE"/>
-				<result column="DESCRIPTION" property="DESCRIPTION"/>
-				<result column="CONCERNEDFACTORS" property="CONCERNEDFACTORS"/>
-				<result column="HIGHRISKDEFINE" property="HIGHRISKDEFINE"/>
-				<result column="HIGHRISKEXPRESSION" property="HIGHRISKEXPRESSION"/>
-				<result column="LOWRISKDEFINE" property="LOWRISKDEFINE"/>
-				<result column="LOWRISKEXPRESSION" property="LOWRISKEXPRESSION"/>
-				<result column="STATUS" property="STATUS"/>
-				<result column="CREATEBY" property="CREATEBY"/>
-				<result column="CREATEON" property="CREATEON"/>
-		</association>
-	</resultMap>
-	
-	
+
 	<!--表名 -->
 	<sql id="tableName">
 		EXAM_EXAMSOLUTION
@@ -88,7 +27,8 @@
 		FEATURES,	
 		CREATEBY,	
 		CREATEON,	
-		EXAMSOLUTION_ID
+		EXAMSOLUTION_ID,
+		EXAMGUIDELINE_ID
 	</sql>
 	
 	<!-- 字段值 -->
@@ -100,9 +40,18 @@
 		#{FEATURES},	
 		#{CREATEBY},	
 		#{CREATEON},	
-		#{EXAMSOLUTION_ID}
+		#{EXAMSOLUTION_ID},
+		#{EXAMGUIDELINE_ID}
 	</sql>
 	
+	<!-- 通过检查指南id查询高危人群检查手段 -->
+	<select id="listExamSoluriionByGuideLineID" parameterType="java.lang.String" resultType="pd">
+		select s.EXAMSOLUTION_ID AS EXAMSOLUTION_ID,g.EXAMGUIDELINE_ID AS EXAMGUIDELINE_ID,f.EXAMFREQUENCY_ID AS EXAMFREQUENCY_ID,
+		i.EXAMITEM_ID AS EXAMITEM_ID,i.NAME as INAME,s.FEATURES AS FEATURES,s.STARTAGE STARTAGE,f.NAME AS FNAME,s.RISKTYPE as RISKTYPE from 
+		exam_examsolution s left join exam_examguideline g on 
+		s.EXAMGUIDELINE_ID=g.EXAMGUIDELINE_ID left join exam_examitem i on s.EXAMITEM_ID=i.EXAMITEM_ID left join exam_examfrequency f 
+		on s.EXAMFREQUENCY_ID=f.EXAMFREQUENCY_ID where s.EXAMGUIDELINE_ID=#{EXAMGUIDELINE_ID}
+	</select>
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
 		insert into 
@@ -174,6 +123,14 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
+	</select>
+	
+		<!-- 列表(全部) -->
+	<select id="listAllExamSolutionAndExamItem" parameterType="pd" resultType="pd">
+		select
+		s.EXAMSOLUTION_ID AS EXAMSOLUTION_ID , i.NAME AS INAME
+		from 
+		exam_examsolution s left join exam_examitem i on s.EXAMITEM_ID=i.EXAMITEM_ID 
 	</select>
 	
 	<!-- 批量删除 -->

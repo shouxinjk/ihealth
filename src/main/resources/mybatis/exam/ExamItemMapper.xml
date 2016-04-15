@@ -10,41 +10,6 @@
 		<result column="CREATEON" property="CREATEON"/>
 	</resultMap>
 	
-	
-	 <resultMap type="ExamItem" id="examItemAndExmaCategoryResultMap">
-		<id column="EXAMITEM_ID" property="EXAMITEM_ID" />
-		<result column="NAME" property="NAME"/>
-		<result column="DESCRIPTION" property="DESCRIPTION"/>
-		<result column="CREATEBY" property="CREATEBY"/>
-		<result column="CREATEON" property="CREATEON"/>
-		<association property="category" column="EXAMCATEGORY_ID" javaType="ExamCategory">
-			<id column="EXAMCATEGORY_ID" property="EXAMCATEGORY_ID" />
-			<result column="DESCRIPTION" property="DESCRIPTION"/>
-			<result column="NAME" property="NAME"/>
-			<result column="CREATEBY" property="CREATEBY"/>
-			<result column="CREATEON" property="CREATEON"/>
-			<result column="PARENT_ID" property="PARENT_ID"/>
-		</association>
-	</resultMap> 
-	
-	<resultMap type="ExamItem" id="examItemAndExmaSolutionResultMap">
-		<id column="EXAMITEM_ID" property="EXAMITEM_ID" />
-		<result column="NAME" property="NAME"/>
-		<result column="DESCRIPTION" property="DESCRIPTION"/>
-		<result column="CREATEBY" property="CREATEBY"/>
-		<result column="CREATEON" property="CREATEON"/>
-		<collection property="solutions" ofType="ExamSolution">
-			<id column="EXAMSOLUTION_ID" property="EXAMSOLUTION_ID" />
-			<result column="SUBGROUP" property="SUBGROUP"/>
-			<result column="RISKTYPE" property="RISKTYPE"/>
-			<result column="STARTAGE" property="STARTAGE"/>
-			<result column="ENDAGE" property="ENDAGE"/>
-			<result column="FEATURES" property="FEATURES"/>
-			<result column="CREATEBY" property="createBY"/>
-			<result column="CREATEON" property="createON"/>
-		</collection>
-	</resultMap>
-	
 	<!--表名 -->
 	<sql id="tableName">
 		EXAM_EXAMITEM

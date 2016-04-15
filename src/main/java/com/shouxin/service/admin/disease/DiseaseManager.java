@@ -2,6 +2,7 @@ package com.shouxin.service.admin.disease;
 
 import java.util.List;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Disease;
 import com.shouxin.util.PageData;
 
 /** 
@@ -53,6 +54,8 @@ public interface DiseaseManager{
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
+	
+	public List<Disease> listDiseaseByDiseaseCategoryID(String DISEASECATEGORY_ID)throws Exception;
 	
 }
 

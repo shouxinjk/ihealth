@@ -84,6 +84,18 @@ public class ExamSolutionService implements ExamSolutionManager{
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("ExamSolutionMapper.deleteAll", ArrayDATA_IDS);
 	}
+	@SuppressWarnings("unchecked")
+	public List<PageData> listExamSolutionByExamGuidelineID(String EXAMGUIDELINEID)throws Exception {
+		return (List<PageData>) dao.findForList("ExamSolutionMapper.listExamSoluriionByGuideLineID", EXAMGUIDELINEID);
+	}
 	
+	/**
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllExamSolutionAndExamItem(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("ExamSolutionMapper.listAllExamSolutionAndExamItem", null);
+	}
 }
 

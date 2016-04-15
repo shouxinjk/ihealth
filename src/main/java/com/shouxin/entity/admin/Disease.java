@@ -10,10 +10,16 @@ public class Disease {
 	private int ISHIGHINCIDENCE; // int(11) NOT NULL COMMENT '是否高发',
 	private String CREATEBY; // varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
 	private Date CREATEON; // varchar(32) DEFAULT NULL COMMENT '创建记录时间',
-	
+	private String DISEASECATEGORY_ID;
 
+	public String getDISEASECATEGORY_ID() {
+		return DISEASECATEGORY_ID;
+	}
 
-	
+	public void setDISEASECATEGORY_ID(String dISEASECATEGORY_ID) {
+		DISEASECATEGORY_ID = dISEASECATEGORY_ID;
+	}
+
 	public String getDISEASE_ID() {
 		return DISEASE_ID;
 	}
@@ -69,7 +75,5 @@ public class Disease {
 	public void setCREATEON(Date cREATEON) {
 		CREATEON = cREATEON;
 	}
-
-
 
 }

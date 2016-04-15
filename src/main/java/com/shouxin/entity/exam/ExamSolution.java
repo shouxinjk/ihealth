@@ -4,23 +4,50 @@ import java.util.Date;
 
 public class ExamSolution {
 
-	private String EXAMSOLUTION_ID;/// varchar(100) NOT NULL,
-	private String SUBGROUP;// varchar(255) DEFAULT NULL COMMENT '检查手段分组标记',
-//	private String RISKTYPE;// varchar(255) DEFAULT NULL COMMENT '干预手段对应风险',
-	public enum RISKTYPE{
-		DANGER("高危"),
-		ORDINARY("普通");
-		private RISKTYPE(String value){
-			this.valueOf(value);
-		}
+	private String EXAMSOLUTION_ID;//
+	private String NAME;
+	private String SUBGROUP;// '检查手段分组标记',
+	private int RISKTYPE;// '干预手段对应风险',
+	private int STARTAGE; // '开始检查年龄',
+	private int ENDAGE;// '结束检查年龄',
+	private String FEATURES;// '医学检查手段',
+	private String createBY;// 创建记录用户id
+	private Date createON;// 创建记录时间
+	private String EXAMGUIDELINE_ID; // 医学体检指南外键id
+	private String EXAMITEM_ID;
+
+	public String getNAME() {
+		return NAME;
 	}
-	private int STARTAGE; // int(11) NOT NULL COMMENT '开始检查年龄',
-	private int ENDAGE;// varchar(255) DEFAULT NULL COMMENT '结束检查年龄',
-	private String FEATURES;// varchar(255) DEFAULT NULL COMMENT '医学检查手段',
-	private String createBY;//
-	private Date createON;//
-	private ExamGuideline guideline;
-	private ExamItem examItem;
+
+	public void setNAME(String nAME) {
+		NAME = nAME;
+	}
+
+	public String getEXAMITEM_ID() {
+		return EXAMITEM_ID;
+	}
+
+	public void setEXAMITEM_ID(String eXAMITEM_ID) {
+		EXAMITEM_ID = eXAMITEM_ID;
+	}
+
+	public int getRISKTYPE() {
+		return RISKTYPE;
+	}
+
+	public String getEXAMGUIDELINE_ID() {
+		return EXAMGUIDELINE_ID;
+	}
+
+	public void setEXAMGUIDELINE_ID(String eXAMGUIDELINE_ID) {
+		EXAMGUIDELINE_ID = eXAMGUIDELINE_ID;
+	}
+
+	public void setRISKTYPE(int rISKTYPE) {
+		RISKTYPE = rISKTYPE;
+	}
+
 	private ExamFrequency frequency;
 
 	public String getEXAMSOLUTION_ID() {
@@ -39,13 +66,13 @@ public class ExamSolution {
 		SUBGROUP = sUBGROUP;
 	}
 
-//	public String getRISKTYPE() {
-//		return RISKTYPE;
-//	}
-//
-//	public void setRISKTYPE(String rISKTYPE) {
-//		RISKTYPE = rISKTYPE;
-//	}
+	// public String getRISKTYPE() {
+	// return RISKTYPE;
+	// }
+	//
+	// public void setRISKTYPE(String rISKTYPE) {
+	// RISKTYPE = rISKTYPE;
+	// }
 
 	public int getSTARTAGE() {
 		return STARTAGE;
@@ -85,22 +112,6 @@ public class ExamSolution {
 
 	public void setCreateON(Date createON) {
 		this.createON = createON;
-	}
-
-	public ExamGuideline getGuideline() {
-		return guideline;
-	}
-
-	public void setGuideline(ExamGuideline guideline) {
-		this.guideline = guideline;
-	}
-
-	public ExamItem getExamItem() {
-		return examItem;
-	}
-
-	public void setExamItem(ExamItem examItem) {
-		this.examItem = examItem;
 	}
 
 	public ExamFrequency getFrequency() {
