@@ -101,6 +101,13 @@ public interface UserManager {
 	 */
 	public void deleteU(PageData pd)throws Exception;
 	
+	/**
+	 * 根据用户关联关系表中的useranduser_id删除用户关联
+	 * @param pd useranduser_id
+	 * @throws Exception
+	 */
+	public void deleteRelationUser(PageData pd)throws Exception;
+	
 	/**批量删除用户
 	 * @param USER_IDS
 	 * @throws Exception
@@ -143,4 +150,20 @@ public interface UserManager {
 	 * @throws Exception
 	 */
 	public List<PageData> findDiseaseById(PageData pd)throws Exception;
+	
+	/**
+	 * 通过传入的用户ID  获取关联的用户信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findUsersById(PageData pd)throws Exception;
+	
+	
+	/**
+	 * 新增关联用户
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveRelationUser(PageData pd)throws Exception;
 }

@@ -755,3 +755,22 @@ CREATE TABLE `TB_ARTICLE` (
 		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建记录时间',
   		PRIMARY KEY (`ARTICLE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `admin_tagandarticle` (
+  `id` varchar(32) NOT NULL,
+  `tag_id` varchar(32) DEFAULT NULL,
+  `article_id` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `sys_useranduser` (
+  `useranduser_id` varchar(32) NOT NULL,
+  `user_id_one` varchar(32) DEFAULT NULL,
+  `user_id_two` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`useranduser_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

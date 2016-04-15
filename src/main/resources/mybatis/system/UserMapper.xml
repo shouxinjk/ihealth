@@ -40,6 +40,24 @@
 		SYS_ROLE
 	</sql>
 	
+	<!-- 用户关联关系表 -->
+	<sql id="useranduser">
+		SYS_USERANDUSER
+	</sql>
+	<!-- 用户关联关系表的字段 -->
+	<sql id="userAttribute">
+		useranduser_id,
+		user_id_one,
+		user_id_two
+	</sql>
+	
+	<!-- 用户关联关系表的值 -->
+	<sql id="userValue">
+		#{useranduser_id},
+		#{user_id_one},
+		#{user_id_two}
+	</sql>
+	
 	<!-- 字段 -->
 	<sql id="Field">
 		USER_ID,
@@ -101,20 +119,17 @@
 	</sql>
 	
 	<!-- 根据用户ID查询所有的关联用户 -->
-	<select id="findUserAndUser" parameterType="pd" resultType="pd">
+	<select id="findUserCastUser" parameterType="pd" resultType="pd">
 		SELECT 
-		  u.* 
+		  u.*,uu.useranduser_id
 		FROM
 		  sys_user u,
 		  sys_useranduser uu 
 		WHERE u.`USER_ID` = uu.`user_id_two` 
-		  AND uu.`user_id_one` = 1 
-		  <where>
-		  	<if test="USER_ID != null and USER_ID !=''">
-		  		and u.`USER_ID` = uu.`user_id_two`
-		  	</if>
-		  </where>
+		  AND uu.`user_id_one` = #{user_id_one}
 	</select>
+	
+	
 	
 	
 	<!-- 判断用户名和密码 -->
@@ -379,6 +394,15 @@
 		)
 	</insert>
 	
+	<!-- 新增关联用户 -->
+	<insert id="saveRelationUser" parameterType="pd" >
+		insert into <include refid="useranduser"></include> (
+			<include refid="userAttribute"></include>
+		) values (
+			<include refid="userValue"></include>
+		)
+	</insert>
+	
 	<!-- 修改 -->
 	<update id="editU" parameterType="pd" >
 		update  <include refid="tableName"></include>
@@ -397,7 +421,8 @@
 				DEGREE					= #{DEGREE},
 				AVATAR					= #{AVATAR},
 				HEIGHT					= #{HEIGHT},
-				WEIGHT					= #{WEIGHT}
+				WEIGHT					= #{WEIGHT},
+				SEX						= #{SEX}
 			<if test="PASSWORD != null and PASSWORD != ''">
 				,PASSWORD				= #{PASSWORD}
 			</if>
@@ -410,6 +435,13 @@
 		delete from <include refid="tableName"></include>
 		where 
 			USER_ID = #{USER_ID}
+	</delete>
+	
+	<delete id="deleteRelationUser" parameterType="pd" flushCache="false">
+		DELETE 
+		FROM
+		  sys_useranduser 
+		WHERE sys_useranduser.`useranduser_id` = #{useranduser_id}
 	</delete>
 	
 	<!-- 批量删除用户 -->

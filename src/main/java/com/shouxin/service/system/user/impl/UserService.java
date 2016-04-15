@@ -189,6 +189,25 @@ public class UserService implements UserManager{
 		return (List<PageData>) dao.findForList("UserMapper.findDiseaseById", pd);
 	}
 
-	
-	
+	/**
+	 * 根据用户ID  获取所有的关联用户信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> findUsersById(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("UserMapper.findUserCastUser", pd);
+	}
+
+	/**
+	 * 根据用户关联关系表中的useranduser_id删除用户关联
+	 */
+	public void deleteRelationUser(PageData pd) throws Exception {
+		dao.delete("UserMapper.deleteRelationUser", pd);
+	}
+
+	/**
+	 * 新增关联用户
+	 */
+	public void saveRelationUser(PageData pd) throws Exception {
+		dao.save("UserMapper.saveRelationUser", pd);
+	}
 }

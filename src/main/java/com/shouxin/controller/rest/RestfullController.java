@@ -673,6 +673,214 @@ public class RestfullController extends BaseController {
 		return AppUtil.returnObject(new PageData(), map);
 	}
 	
+	/**
+	 * 通过用户ID 获取关联的用户信息
+	 * url:http://localhost:8080/ihealth/rest/findUsersById
+	 * type:post
+	 * @param {"userId":"用户ID"}
+	 * @return 当传入的userId为null或为''时 返回数据为{ "result": "error"}
+	 * 当根据userID查询出的数据为null时  返回{ "result": "no"}
+	 * 当查询出数据时、返回一条或多条数据，取值需要循环：
+	 * {
+		    "result": "success",
+		    "data": [
+		        {
+		            "NUMBER": "用户编号",
+		            "RIGHTS": "权限",
+		            "IP": "0:0:0:0:0:0:0:1",
+		            "PHONE": "电话",
+		            "ALIAS": "昵称",
+		            "SEX": "男",
+		            "USER_ID": "ID",
+		            "MARRIAGESTATUS": "婚姻状况",
+		            "LAST_LOGIN": "最后登录时间",
+		            "EMAIL": "邮箱",
+		            "HEIGHT": 身高,
+		            "BIRTHPLACE": "出生地",
+		            "NAME": "姓名",
+		            "CAREER": "职业",
+		            "STATUS": "状态",
+		            "PASSWORD": "密码",
+		            "BZ": "111",
+		            "USERNAME": "用户名",
+		            "ROLE_ID": "角色id",
+		            "DEGREE": "专业",
+		            "LIVEPLACE": "生活地",
+		            "AVATAR": "头像地址",
+		            "WEIGHT": 体重
+		        },
+		        {
+		            "RIGHTS": "",
+		            "PHONE": "13567899876",
+		            "ALIAS": "双黑狗",
+		            "SEX": "男",
+		            "USER_ID": "d28812dffc7b4c91924dd73c8487a86c",
+		            "LAST_LOGIN": "",
+		            "EMAIL": "828777292@qq.com",
+		            "STATUS": "0",
+		            "BZ": "要嘿嘿嘿么",
+		            "USERNAME": "admin123",
+		            "ROLE_ID": "3264c8e83d0248bb9e3ea6195b4c0216",
+		            "SKIN": "default",
+		            "LIVEPLACE": "成都",
+		            "AVATAR": "image/logo.jpg",
+		            "WEIGHT": 89,
+		            "BIRTHDAY": "1992-08-20",
+		            "NUMBER": "1001",
+		            "IP": "",
+		            "MARRIAGESTATUS": "未婚",
+		            "HEIGHT": 189,
+		            "BIRTHPLACE": "成都",
+		            "NAME": "默默",
+		            "CAREER": "程序员",
+		            "PASSWORD": "c9f55b944bbd496ff462196310dcb383586b4a5e",
+		            "DEGREE": "大壮"
+		        }
+		    ]
+		}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findUsersById",method=RequestMethod.POST)
+	@ResponseBody
+	public Object findUsersById(@RequestBody String u) throws Exception{
+		logBefore(logger,"根据userId获取关联的用户信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String userId = jasonObject.get("userId").toString();
+		if(null == userId || "".equals(userId)){
+			msg = "error";
+		}else{
+			pd.put("user_id_one", userId);
+			List<PageData> data = this.userService.findUsersById(pd);
+			if (data!=null && data.size()>0) {
+				msg = "success";
+				map.put("data", data);
+			}else{
+				msg = "no";
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+
+	/**
+	 * 根据关联关系表中的ID主键 删除关联用户
+	 * url:http://localhost:8080/ihealth/rest/deleteRelationUser
+	 * type:post
+	 * @param {"useranduser_id":"值为：根据前面根据userId查询出来的useranduser_id"}
+	 * @return 删除成功返回:{"result": "success"}
+	 * 当传入的参数useranduser_id 为null或""时,返回值为{"result" = "null"}
+	 * 当程序报错时 返回值为{"result" = "error"}
+	 */
+	@RequestMapping(value="deleteRelationUser",method=RequestMethod.POST)
+	@ResponseBody
+	public Object deleteRelationUser(@RequestBody String u){
+		logBefore(logger,"根据用户关系表中的主键 ID(useranduser_id)删除关联的用户信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String useranduser_id = jasonObject.get("useranduser_id").toString();
+		if(useranduser_id == null || useranduser_id == ""){
+			msg = "null";
+		}else{
+			pd.put("useranduser_id", useranduser_id);
+			try {
+				this.userService.deleteRelationUser(pd);
+				msg = "success";
+			} catch (Exception e) {
+				msg = "error";
+				logger.debug("删除用户关联关系失败！");
+				e.printStackTrace();
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
 	
 	
+	/**
+	 * 根据userId 添加关联用户
+	 * url:http://localhost:8080/ihealth/rest/saveRelationUser
+	 * @param {"userId":"当前登录的用户ID(主ID)","name":"姓名","sex":"性别","marriageStatus":"婚姻","birthday":"生日","height":"身高","weight":"体重","birthPlace":"出生地", "livePlace":"常住地","career":"职业","degree":"学历",}
+	 * @return
+	 * 	当新增用户信息失败时！跟新增关联用户关系失败时！返回{"result":"error"}
+	 * 	当新增关联关系成功时！返回{"result":"success"}
+	 */
+	@RequestMapping(value="saveRelationUser",method=RequestMethod.POST)
+	@ResponseBody
+	public Object saveRelationUser(@RequestBody String u){
+		/*
+		 * 分析：当用户点击新增关联用户按钮时：获取当前登录的用户ID userId 跳转页面到新增
+		 * (执行新增用户的操作) 同时保存 生成的 ID
+		 * 将获取到的userID   和  新增用户的 userID  存入sys_useranduser表中 并生成 ID属性
+		 * 当新增用户成功时！
+		 * 
+		 */
+		logBefore(logger,"根据用户关系表中的主键 ID(useranduser_id)删除关联的用户信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String userId = jasonObject.get("userId").toString();
+		
+		String name = jasonObject.get("name").toString();
+		String sex = jasonObject.get("sex").toString();
+		String marriageStatus = jasonObject.get("marriageStatus").toString();
+		String birthday = jasonObject.get("birthday").toString();
+		String height = jasonObject.get("height").toString();
+		String weight = jasonObject.get("weight").toString();
+		String birthPlace =  jasonObject.get("birthPlace").toString();
+		String livePlace =  jasonObject.get("livePlace").toString();
+		String career =  jasonObject.get("career").toString();
+		String degree =  jasonObject.get("degree").toString();
+		
+		String uuid = this.get32UUID();//新增关联用户的ID
+		
+		String useranduser_id = this.get32UUID();
+		
+		pd.put("USER_ID", uuid);
+		pd.put("NAME", name);
+		pd.put("SEX", sex);
+		pd.put("MARRIAGESTATUS", marriageStatus);
+		pd.put("BIRTHDAY", birthday);
+		pd.put("HEIGHT", Integer.parseInt(height));
+		pd.put("WEIGHT", Integer.parseInt(weight));
+		pd.put("BIRTHPLACE", birthPlace);
+		pd.put("LIVEPLACE", livePlace);
+		pd.put("CAREER", career);
+		pd.put("DEGREE", degree);
+		
+		if (pd!=null  || pd.size()>0) {
+			try {
+				//新增用户
+				this.userService.saveU(pd);
+				if (userId != null || userId != "") {
+					//执行关联信息的添加
+					try {
+						pd.put("useranduser_id", useranduser_id);
+						pd.put("user_id_one", userId);
+						pd.put("user_id_two", uuid);
+						this.userService.saveRelationUser(pd);
+						msg = "success";
+					} catch (Exception e) {
+						msg = "error";
+					}
+				}
+			} catch (Exception e) {
+				msg = "error";
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
 }
