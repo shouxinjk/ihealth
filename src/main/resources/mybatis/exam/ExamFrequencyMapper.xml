@@ -10,24 +10,6 @@
 				<result column="CREATEON" property="CREATEON"/>
 	</resultMap>
 	
-	<resultMap type="ExamFrequency" id="ExamFrequencyAndExamSolutionResultMap">
-				<id column="EXAMFREQUENCY_ID" property="EXAMFREQUENCY_ID" />
-				<result column="NAME" property="NAME"/>
-				<result column="EXPRESSION" property="EXPRESSION"/>
-				<result column="CREATEBY" property="CREATEBY"/>
-				<result column="CREATEON" property="CREATEON"/>
-				<collection property="solutions" ofType="ExamSolution">
-					<id column="EXAMSOLUTION_ID" property="EXAMSOLUTION_ID" />
-					<result column="SUBGROUP" property="SUBGROUP"/>
-					<result column="RISKTYPE" property="RISKTYPE"/>
-					<result column="STARTAGE" property="STARTAGE"/>
-					<result column="ENDAGE" property="ENDAGE"/>
-					<result column="FEATURES" property="FEATURES"/>
-					<result column="CREATEBY" property="createBY"/>
-					<result column="CREATEON" property="createON"/>
-				</collection>
-	</resultMap>
-	
 	<!--表名 -->
 	<sql id="tableName">
 		EXAM_EXAMFREQUENCY

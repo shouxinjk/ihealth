@@ -10,24 +10,9 @@
 		<result column="ISHIGHINCIDENCE" property="ISHIGHINCIDENCE"/>
 		<result column="CREATEBY" property="CREATEBY"/>
 		<result column="CREATEON" property="CREATEON"/>
+		<result column="DISEASECATEGORY_ID" property="DISEASECATEGORY_ID"/>
 	</resultMap>
-	
-	<resultMap type="Disease" id="DiseaseAndDiseaseCategoryReultMap">
-		<id column="DISEASE_ID" property="DISEASE_ID" />
-		<result column="NAME" property="NAME"/>
-		<result column="DESCRIPTION" property="DESCRIPTION"/>
-		<result column="ISINHERITABLE" property="ISINHERITABLE"/>
-		<result column="ISHIGHINCIDENCE" property="ISHIGHINCIDENCE"/>
-		<result column="CREATEBY" property="CREATEBY"/>
-		<result column="CREATEON" property="CREATEON"/>
-		<association property="diseaseCategory" column="DISEASECATEGORY_ID" javaType="DiseaseCategory">
-				<id column="DISEASECATEGORY_ID" property="DISEASECATEGORY_ID" />
-				<result column="NAME" property="NAME"/>
-				<result column="DESCRIPTION" property="DESCRIPTION"/>
-				<result column="CREATEBY" property="CREATEBY"/>
-				<result column="CREATEON" property="CREATEON"/>
-		</association>
-	</resultMap>
+
 	
 	<!--疾病表名 -->
 	<sql id="tableName">
@@ -86,11 +71,12 @@
 	</sql>
 	
 	<!-- 通过疾病分类id获取疾病信息 -->
-	<select id="getDiseaseAndCategoryByID" parameterType="java.lang.String" resultMap="DiseaseAndDiseaseCategoryReultMap">
+	<select id="getDiseaseAndCategoryByID" parameterType="java.lang.String" resultMap="DiseaseReultMap">
 		select 
-		from <include refid="tableName"></include> d
-		left join <include refid="categoryTableName"></include> c
-		on d.DISEASEGORY_ID=C.DISEASEGORY_ID where c.DISEASEGORY_ID=#{id}
+		d.NAME as NAME,d.DISEASE_ID as DISEASE_ID,c.DISEASECATEGORY_ID as DISEASECATEGORY_ID
+		from admin_disease d
+		left join admin_diseasecategory c
+		on d.DISEASECATEGORY_ID=C.DISEASECATEGORY_ID where c.DISEASECATEGORY_ID=#{id}
 	</select>
 	
 	<!-- 新增-->

@@ -12,35 +12,11 @@
 		<result column="LOWRISKDEFINE" property="LOWRISKDEFINE"/>
 		<result column="LOWRISKEXPRESSION" property="LOWRISKEXPRESSION"/>
 		<result column="STATUS" property="STATUS"/>
+		<result column="DISEASE_ID" property="DISEASE_ID"/>
 		<result column="CREATEBY" property="CREATEBY"/>
 		<result column="CREATEON" property="CREATEON"/>
 	</resultMap>
-	
-	<resultMap type="ExamGuideLine" id="ExamGuideLineAndSolutionResultMap">
-		<id column="EXAMGUIDELINE_ID" property="EXAMGUIDELINE_ID" />
-		<result column="ORIGINATE" property="ORIGINATE"/>
-		<result column="DESCRIPTION" property="DESCRIPTION"/>
-		<result column="CONCERNEDFACTORS" property="CONCERNEDFACTORS"/>
-		<result column="HIGHRISKDEFINE" property="HIGHRISKDEFINE"/>
-		<result column="HIGHRISKEXPRESSION" property="HIGHRISKEXPRESSION"/>
-		<result column="LOWRISKDEFINE" property="LOWRISKDEFINE"/>
-		<result column="LOWRISKEXPRESSION" property="LOWRISKEXPRESSION"/>
-		<result column="STATUS" property="STATUS"/>
-		<result column="CREATEBY" property="CREATEBY"/>
-		<result column="CREATEON" property="CREATEON"/>
-		<collection property="solutions" ofType="ExamSolution">
-			<id column="EXAMSOLUTION_ID" property="EXAMSOLUTION_ID" />
-			<result column="SUBGROUP" property="SUBGROUP"/>
-			<result column="RISKTYPE" property="RISKTYPE"/>
-			<result column="STARTAGE" property="STARTAGE"/>
-			<result column="ENDAGE" property="ENDAGE"/>
-			<result column="FEATURES" property="FEATURES"/>
-			<result column="CREATEBY" property="createBY"/>
-			<result column="CREATEON" property="createON"/>
-		</collection>
-	</resultMap>
-	
-	
+
 	
 	<!--表名 -->
 	<sql id="tableName">
@@ -49,6 +25,7 @@
 	
 	<!-- 字段 -->
 	<sql id="Field">
+		NAME,
 		ORIGINATE,	
 		DESCRIPTION,	
 		CONCERNEDFACTORS,	
@@ -59,11 +36,13 @@
 		STATUS,	
 		CREATEBY,	
 		CREATEON,	
-		EXAMGUIDELINE_ID
+		EXAMGUIDELINE_ID,
+		DISEASE_ID
 	</sql>
 	
 	<!-- 字段值 -->
 	<sql id="FieldValue">
+		#{NAME},
 		#{ORIGINATE},	
 		#{DESCRIPTION},	
 		#{CONCERNEDFACTORS},	
@@ -74,7 +53,8 @@
 		#{STATUS},	
 		#{CREATEBY},	
 		#{CREATEON},	
-		#{EXAMGUIDELINE_ID}
+		#{EXAMGUIDELINE_ID},
+		#{DISEASE_ID}
 	</sql>
 	
 	<!-- 新增-->
@@ -82,9 +62,33 @@
 		insert into 
 	<include refid="tableName"></include>
 		(
-	<include refid="Field"></include>
+		NAME,
+		ORIGINATE,	
+		DESCRIPTION,	
+		CONCERNEDFACTORS,	
+		HIGHRISKDEFINE,	
+		HIGHRISKEXPRESSION,	
+		LOWRISKDEFINE,	
+		LOWRISKEXPRESSION,	
+		STATUS,	
+		CREATEBY,	
+		CREATEON,	
+		EXAMGUIDELINE_ID,
+		DISEASE_ID
 		) values (
-	<include refid="FieldValue"></include>
+		#{NAME},
+		#{ORIGINATE},	
+		#{DESCRIPTION},	
+		#{CONCERNEDFACTORS},	
+		#{HIGHRISKDEFINE},	
+		#{HIGHRISKEXPRESSION},	
+		#{LOWRISKDEFINE},	
+		#{LOWRISKEXPRESSION},	
+		#{STATUS},	
+		#{CREATEBY},	
+		#{CREATEON},	
+		#{EXAMGUIDELINE_ID},
+		#{DISEASE_ID}
 		)
 	</insert>
 	
@@ -101,22 +105,29 @@
 		update
 		<include refid="tableName"></include>
 		set 
-			ORIGINATE = #{ORIGINATE},
-			DESCRIPTION = #{DESCRIPTION},
+			NAME = #{NAME},
 			CONCERNEDFACTORS = #{CONCERNEDFACTORS},
 			HIGHRISKDEFINE = #{HIGHRISKDEFINE},
-			HIGHRISKEXPRESSION = #{HIGHRISKEXPRESSION},
 			LOWRISKDEFINE = #{LOWRISKDEFINE},
-			LOWRISKEXPRESSION = #{LOWRISKEXPRESSION},
-			STATUS = #{STATUS},
-			CREATEBY = #{CREATEBY},
-			CREATEON = #{CREATEON},
+			DISEASE_ID = #{DISEASE_ID},
 		EXAMGUIDELINE_ID = EXAMGUIDELINE_ID
 		where 
 		EXAMGUIDELINE_ID = #{EXAMGUIDELINE_ID}
 	</update>
 	
-	<!-- 通过ID获取数据 -->
+	<!-- 修改指南规则 -->
+	<update id="editRule" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			HIGHRISKEXPRESSION = #{HIGHRISKEXPRESSION},
+			LOWRISKEXPRESSION = #{LOWRISKEXPRESSION},
+		EXAMGUIDELINE_ID = EXAMGUIDELINE_ID
+		where 
+		EXAMGUIDELINE_ID = #{EXAMGUIDELINE_ID}
+	</update>
+	
+	<!-- 通过ID获取数据
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
 		<include refid="Field"></include>
@@ -125,14 +136,56 @@
 		where 
 			EXAMGUIDELINE_ID = #{EXAMGUIDELINE_ID}
 	</select>
+	 -->
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select g.EXAMGUIDELINE_ID as EXAMGUIDELINE_ID,g.NAME as GNAME,c.NAME as CNAME,
+		c.DISEASECATEGORY_ID AS DISEASECATEGORY_ID,D.DISEASE_ID as DISEASE_ID,d.NAME as DNAME,
+		g.CONCERNEDFACTORS as CONCERNEDFACTORS,g.DESCRIPTION as DESCRIPTION,i.NAME as INAME,s.FEATURES 
+		as FEATURES,g.DISEASE_ID,g.HIGHRISKDEFINE as HIGHRISKDEFINE,g.HIGHRISKEXPRESSION as HIGHRISKEXPRESSION,
+		g.LOWRISKDEFINE as LOWRISKDEFINE, g.LOWRISKEXPRESSION as LOWRISKEXPRESSION,
+		c.DISEASECATEGORY_ID as DISEASECATEGORY_ID from  
+		exam_examguideline g left join exam_examsolution s on g.EXAMGUIDELINE_ID=s.EXAMGUIDELINE_ID  
+		left join admin_disease d on g.DISEASE_ID=d.DISEASE_ID  
+		left join admin_diseasecategory c on d.DISEASECATEGORY_ID=c.DISEASECATEGORY_ID 
+		left join exam_examitem i on s.EXAMITEM_ID = i.EXAMITEM_ID 
+		 where 1=1
+		and 
+			g.EXAMGUIDELINE_ID = #{EXAMGUIDELINE_ID} GROUP BY g.NAME
+	</select>
 	
-	<!-- 列表 -->
+	
+	
+	<!-- 列表 
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
 		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''">关键词检索
+			and
+				(
+					根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				
+				)
+		</if>
+	</select>
+	-->
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select g.EXAMGUIDELINE_ID AS EXAMGUIDELINE_ID,g.NAME AS GNAME,g.ORIGINATE as ORIGINATE,c.NAME 
+		as CNAME,d.NAME as DNAME,g.CONCERNEDFACTORS as CONCERNEDFACTORS
+		 ,g.DESCRIPTION as DESCRIPTION,i.NAME as INAME,s.FEATURES as FEATURES,g.HIGHRISKDEFINE as HIGHRISKDEFINE,
+		 g.HIGHRISKEXPRESSION as HIGHRISKEXPRESSION from 
+		exam_examguideline g left join exam_examsolution s on g.EXAMGUIDELINE_ID=s.EXAMGUIDELINE_ID 
+		left join admin_disease d on g.DISEASE_ID=d.DISEASE_ID 
+		left join admin_diseasecategory c on d.DISEASECATEGORY_ID=c.DISEASECATEGORY_ID 
+		left join exam_examitem i on s.EXAMITEM_ID = i.EXAMITEM_ID
+		 where 1=1
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -143,6 +196,7 @@
 				-->
 				)
 		</if>
+		 GROUP BY g.NAME
 	</select>
 	
 	<!-- 列表(全部) -->

@@ -10,7 +10,6 @@ public class ExamItem {
 	private String DESCRIPTION;// '描述',
 	private String CREATEBY;// '创建该记录员工id',
 	private Date CREATEON;// '创建该记录时间',
-	private List<ExamSolution> solutions;
 	private ExamCategory cotegory;
 
 	public String getEXAMITEM_ID() {
@@ -51,14 +50,6 @@ public class ExamItem {
 
 	public void setCREATEON(Date cREATEON) {
 		CREATEON = cREATEON;
-	}
-
-	public List<ExamSolution> getSolutions() {
-		return solutions;
-	}
-
-	public void setSolutions(List<ExamSolution> solutions) {
-		this.solutions = solutions;
 	}
 
 	public ExamCategory getCotegory() {

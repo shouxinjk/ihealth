@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,11 +21,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Disease;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import com.shouxin.util.Jurisdiction;
+import com.shouxin.service.admin.disease.DiseaseManager;
+import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
+import com.shouxin.service.exam.examfrequency.ExamFrequencyManager;
 import com.shouxin.service.exam.examguideline.ExamGuideLineManager;
+import com.shouxin.service.exam.examsolution.ExamSolutionManager;
 
 /** 
  * 说明：医学体检指南
@@ -36,7 +48,14 @@ public class ExamGuideLineController extends BaseController {
 	String menuUrl = "examguideline/list.do"; //菜单地址(权限用)
 	@Resource(name="examguidelineService")
 	private ExamGuideLineManager examguidelineService;
-	
+	@Resource(name="diseaseService")
+	private DiseaseManager diseaseService;
+	@Resource(name="diseasecategoryService")
+	private DiseaseCategoryManager diseasecategoryService;
+	@Resource(name="examsolutionService")
+	private ExamSolutionManager examsolutionService;
+	@Resource(name="examfrequencyService")
+	private ExamFrequencyManager examfrequencyService;
 	/**保存
 	 * @param
 	 * @throws Exception
@@ -55,6 +74,7 @@ public class ExamGuideLineController extends BaseController {
 		return mv;
 	}
 	
+	
 	/**删除
 	 * @param out
 	 * @throws Exception
@@ -70,6 +90,7 @@ public class ExamGuideLineController extends BaseController {
 		out.close();
 	}
 	
+	
 	/**修改
 	 * @param
 	 * @throws Exception
@@ -81,7 +102,25 @@ public class ExamGuideLineController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		logBefore(logger, pd.get("DISEASE_ID").toString()+"修改table");
 		examguidelineService.edit(pd);
+		mv.addObject("msg","success");
+		mv.setViewName("save_result");
+		return mv;
+	}
+	
+	/**指南规则修改
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/editRule")
+	public ModelAndView editRule() throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改ExamGuideLine");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		examguidelineService.editRule(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -111,6 +150,30 @@ public class ExamGuideLineController extends BaseController {
 		return mv;
 	}
 	
+	/**指南规则列表
+	 * @param page
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/listRule")
+	public ModelAndView listRule(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表ExamGuideLine");
+		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		page.setPd(pd);
+		List<PageData>	varList = examguidelineService.list(page);	//列出ExamGuideLine列表
+		mv.setViewName("exam/examguideline/examguidelinerule_list");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	
 	/**去新增页面
 	 * @param
 	 * @throws Exception
@@ -120,9 +183,19 @@ public class ExamGuideLineController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		List<PageData> pds = diseasecategoryService.listAll(pd);//查询出所有的疾分类
+		List<PageData> varDisList = diseaseService.listAll(pd);//查询出所有疾病
+		List<PageData> varSouAndItem = examsolutionService.listAllExamSolutionAndExamItem(pd);//查询所有的检查手段
+		List<PageData> varFreqList = examfrequencyService.listAll(pd);//查询所有 的检查频率
+		List<PageData> varSouList = examsolutionService.listExamSolutionByExamGuidelineID(pd.getString("EXAMGUIDELINE_ID"));//查询属于这个指南的检查手段
 		mv.setViewName("exam/examguideline/examguideline_edit");
 		mv.addObject("msg", "save");
 		mv.addObject("pd", pd);
+		mv.addObject("pds",pds);
+		mv.addObject("varDisList",varDisList);
+		mv.addObject("varItemList",varSouAndItem);
+		mv.addObject("varFreqList",varFreqList);
+		mv.addObject("varSouList",varSouList);
 		return mv;
 	}	
 	
@@ -134,13 +207,58 @@ public class ExamGuideLineController extends BaseController {
 	public ModelAndView goEdit()throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
+		logBefore(logger, pd.get("EXAMGUIDELINE_ID")+"列表EXAM  ==== exanmmID");
 		pd = this.getPageData();
 		pd = examguidelineService.findById(pd);	//根据ID读取
+		logBefore(logger, pd+"列表EXAM  ==== exanmm");
+		List<PageData> pds = diseasecategoryService.listAll(pd);//查询出所有的疾分类
+		List<PageData> varDisList = diseaseService.listAll(pd);//查询出所有疾病
+		List<PageData> varSouAndItem = examsolutionService.listAllExamSolutionAndExamItem(pd);//查询所有的检查手段
+		List<PageData> varFreqList = examfrequencyService.listAll(pd);//查询所有检查频率
+		List<PageData> varSouList = examsolutionService.listExamSolutionByExamGuidelineID(pd.get("EXAMGUIDELINE_ID").toString());
+		logBefore(logger, pds.get(1).get("DISEASECATEGORY_ID")+"列表EXAM  ==== DISEASE");
+		logBefore(logger, varSouList+"列表EXAM  ==== DISEASE_ID");
 		mv.setViewName("exam/examguideline/examguideline_edit");
 		mv.addObject("msg", "edit");
 		mv.addObject("pd", pd);
+		mv.addObject("pds",pds);
+		mv.addObject("varDisList",varDisList);
+		mv.addObject("varSouList",varSouList);
+		mv.addObject("varItemList",varSouAndItem);
+		mv.addObject("varFreqList",varFreqList);
 		return mv;
 	}	
+	
+	 /**去指南规则修改页面
+		 * @param
+		 * @throws Exception
+		 */
+		@RequestMapping(value="/goEditRule")
+		public ModelAndView goEditRule()throws Exception{
+			ModelAndView mv = this.getModelAndView();
+			PageData pd = new PageData();
+			logBefore(logger, pd.get("EXAMGUIDELINE_ID")+"列表EXAM  ==== exanmmID");
+			pd = this.getPageData();
+			pd = examguidelineService.findById(pd);	//根据ID读取
+			mv.setViewName("exam/examguideline/examguidelinerule_edit");
+			mv.addObject("msg", "editRule");
+			mv.addObject("pd", pd);
+			return mv;
+		}	
+	
+	@RequestMapping(value="/refreshDisease")
+	public void refreshDisease(HttpServletRequest req,HttpServletResponse resp,String DISEASECATEGORY_ID) throws Exception{
+		List<Disease> diseases = diseaseService.listDiseaseByDiseaseCategoryID(DISEASECATEGORY_ID);
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/json;charset=utf-8");
+		req.setAttribute("diseases", diseases);
+		JSONArray json = JSONArray.fromObject(diseases);
+		logBefore(logger, json+"列表disease == json");
+		PrintWriter pw = null;
+		pw=resp.getWriter();
+		pw.print(json);
+		pw.close();
+	}
 	
 	 /**批量删除
 	 * @param
@@ -167,6 +285,7 @@ public class ExamGuideLineController extends BaseController {
 		map.put("list", pdList);
 		return AppUtil.returnObject(pd, map);
 	}
+	
 	
 	 /**导出到excel
 	 * @param
