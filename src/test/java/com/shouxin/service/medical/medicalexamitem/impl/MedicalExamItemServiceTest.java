@@ -28,14 +28,6 @@ public class MedicalExamItemServiceTest extends BaseController {
 	@Resource
 	private MedicalExamItemManager medicalexamitemService;
 
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
 	public void testListExamItemAndCenter() throws Exception {
 		System.out.println(11);

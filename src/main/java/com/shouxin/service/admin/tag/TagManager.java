@@ -54,11 +54,30 @@ public interface TagManager{
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
 	
+	/**
+	 * 批量增加用户所属的标签
+	 * @throws Exception
+	 */
+	public void addAll(PageData pd) throws Exception;
+	
 	/**通过标签分类id获取标签数据
 	 * @param pd
 	 * @throws Exception
 	 */
 	public List<PageData> findAllByTagCategoryId(PageData pd)throws Exception;
 	
+	/**
+	 * 删除用户所属的标签信息
+	 * @throws Exception
+	 */
+	public void deleteTagByUserID(PageData pd) throws Exception;
+	
+	/**
+	 * 根据用户id获取属于这个用户的标签信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listTagByUserID(PageData pd)throws Exception;
 }
 

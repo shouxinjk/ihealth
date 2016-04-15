@@ -94,5 +94,65 @@ public class DiseaseService implements DiseaseManager{
 		return (List<Disease>) dao.findForList("DiseaseMapper.getDiseaseAndCategoryByID", DISEASECATEGORY_ID);
 	}
 	
+	/**
+	 * 查询所有家族疾病
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllIsInheritable(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("DiseaseMapper.listAllisInheritable", pd);
+	}
+
+	/**
+	 * 查询所有关注疾病
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllIsHighIncidence(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("DiseaseMapper.listAllisHighIncidence", pd);
+	}
+	
+	/**
+	 * 为这个用户添加疾病信息
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveUserAndDisease(PageData pd) throws Exception{
+		dao.save("DiseaseMapper.userSaveDisease", pd);
+	}
+	
+	/**
+	 * 删除这个用户的所有疾病信息
+	 */
+	public void deleteDiseaseByUserID(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		dao.delete("DiseaseMapper.deleteDiseaseByUserID", pd);
+	}
+	/**
+	 * 查询该用户下的所有疾病信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllByUserID(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("DiseaseMapper.listDiseaseByUserID", pd);
+	}
+	
+	/**
+	 * 查询该用户下的所有家族疾病信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllByUserIDIsInherItable(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("DiseaseMapper.listDiseaseByUserIDIsInherItable", pd);
+	}
+	/**
+	 * 查询该用户下的所有关注信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllByUserIDIsHighIncaidence(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("DiseaseMapper.listDiseaeByUserIDIsHighIncaidence", pd);
+	};
+	
 }
 

@@ -94,17 +94,17 @@
 		from 
 		<include refid="tableName"></include>
 		where 
-			TAGCATEGORY_ID = #{TAGCATEGORY_ID}
+			TAG_ID = #{TAG_ID}
 	</select>
 	
 		<!-- 通过tagCategoryID获取tag数据 -->
 	<select id="findALLByTagCategoryId" parameterType="pd" resultType="pd">
 		select 
-		<include refid="Field"></include>
+		<include refid="Field1"></include>
 		from 
 		<include refid="tableName"></include>
 		where 
-			TAG_ID = #{TAG_ID}
+			TAGCATEGORY_ID = #{TAGCATEGORY_ID}
 	</select>
 	
 	<!-- 列表 -->
@@ -136,6 +136,34 @@
 		from 
 		<include refid="tableName"></include>
 	</select>
+	
+	<!-- 新增属于用户的标签-->
+	<insert id="userSaveTag" parameterType="pd">
+		insert into 
+		admin_userandtag
+		(
+		id,user_id,tag_id
+		) values
+          (
+		#{ID},#{USER_ID},#{TAG_ID}
+		)
+		
+	</insert>
+	
+	<!-- 删除属于这个用户的标签信息 -->
+	<delete id="deleteTagByUserID" parameterType="pd">
+		delete from
+		admin_userandtag
+		where user_id=#{USER_ID}
+	</delete>
+	
+		<!-- 通过用户id获取tag数据 -->
+	<select id="findALLByUserID" parameterType="pd" resultType="pd">
+		select 
+		t.TAG_ID AS TAG_ID,t.NAME AS NAME,t.TAGCATEGORY_ID AS TAGCATEGORY_ID,t.EXPRESSION AS EXPRESSION
+		 from admin_tag t,admin_userandtag ut where t.TAG_ID=ut.tag_id and ut.user_id=#{USER_ID}
+	</select>
+	
 	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">

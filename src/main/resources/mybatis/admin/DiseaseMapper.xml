@@ -4,164 +4,232 @@
 
 	<resultMap type="Disease" id="DiseaseReultMap">
 		<id column="DISEASE_ID" property="DISEASE_ID" />
-		<result column="NAME" property="NAME"/>
-		<result column="DESCRIPTION" property="DESCRIPTION"/>
-		<result column="ISINHERITABLE" property="ISINHERITABLE"/>
-		<result column="ISHIGHINCIDENCE" property="ISHIGHINCIDENCE"/>
-		<result column="CREATEBY" property="CREATEBY"/>
-		<result column="CREATEON" property="CREATEON"/>
-		<result column="DISEASECATEGORY_ID" property="DISEASECATEGORY_ID"/>
+		<result column="NAME" property="NAME" />
+		<result column="DESCRIPTION" property="DESCRIPTION" />
+		<result column="ISINHERITABLE" property="ISINHERITABLE" />
+		<result column="ISHIGHINCIDENCE" property="ISHIGHINCIDENCE" />
+		<result column="CREATEBY" property="CREATEBY" />
+		<result column="CREATEON" property="CREATEON" />
+		<result column="DISEASECATEGORY_ID" property="DISEASECATEGORY_ID" />
 	</resultMap>
 
-	
+
 	<!--疾病表名 -->
 	<sql id="tableName">
 		ADMIN_DISEASE
 	</sql>
-	
+
 	<!--疾病分类表名 -->
 	<sql id="categoryTableName">
 		ADMIN_DISEASECATEGORY
 	</sql>
-	
+
 	<!-- 字段 -->
 	<sql id="Field">
-		NAME,	
-		DESCRIPTION,	
-		ISINHERITABLE,	
-		ISHIGHINCIDENCE,	
-		CREATEBY,	
-		CREATEON,	
+		NAME,
+		DESCRIPTION,
+		ISINHERITABLE,
+		ISHIGHINCIDENCE,
+		CREATEBY,
+		CREATEON,
 		DISEASE_ID
 	</sql>
-	
+
 	<!-- 字段值 -->
 	<sql id="FieldValue">
-		#{NAME},	
-		#{DESCRIPTION},	
-		#{ISINHERITABLE},	
-		#{ISHIGHINCIDENCE},	
-		#{CREATEBY},	
-		#{CREATEON},	
+		#{NAME},
+		#{DESCRIPTION},
+		#{ISINHERITABLE},
+		#{ISHIGHINCIDENCE},
+		#{CREATEBY},
+		#{CREATEON},
 		#{DISEASE_ID}
 	</sql>
-	
+
 	<!-- 字段 -->
 	<sql id="Field1">
-		NAME,	
-		DESCRIPTION,	
-		ISINHERITABLE,	
-		ISHIGHINCIDENCE,	
-		CREATEBY,	
-		CREATEON,	
+		NAME,
+		DESCRIPTION,
+		ISINHERITABLE,
+		ISHIGHINCIDENCE,
+		CREATEBY,
+		CREATEON,
 		DISEASE_ID,
 		DISEASECATEGORY_ID
 	</sql>
-	
+
 	<!-- 字段值 -->
 	<sql id="FieldValue1">
-		#{NAME},	
-		#{DESCRIPTION},	
-		#{ISINHERITABLE},	
-		#{ISHIGHINCIDENCE},	
-		#{CREATEBY},	
-		#{CREATEON},	
+		#{NAME},
+		#{DESCRIPTION},
+		#{ISINHERITABLE},
+		#{ISHIGHINCIDENCE},
+		#{CREATEBY},
+		#{CREATEON},
 		#{DISEASE_ID},
 		#{DISEASECATEGORY_ID}
 	</sql>
-	
+
 	<!-- 通过疾病分类id获取疾病信息 -->
-	<select id="getDiseaseAndCategoryByID" parameterType="java.lang.String" resultMap="DiseaseReultMap">
-		select 
-		d.NAME as NAME,d.DISEASE_ID as DISEASE_ID,c.DISEASECATEGORY_ID as DISEASECATEGORY_ID
-		from admin_disease d
-		left join admin_diseasecategory c
-		on d.DISEASECATEGORY_ID=C.DISEASECATEGORY_ID where c.DISEASECATEGORY_ID=#{id}
+	<select id="getDiseaseAndCategoryByID" parameterType="java.lang.String"
+		resultMap="DiseaseReultMap">
+		select
+		d.NAME as NAME,d.DISEASE_ID as
+		DISEASE_ID,c.DISEASECATEGORY_ID as
+		DISEASECATEGORY_ID
+		from admin_disease
+		d
+		left join admin_diseasecategory
+		c
+		on
+		d.DISEASECATEGORY_ID=C.DISEASECATEGORY_ID where
+		c.DISEASECATEGORY_ID=#{id}
 	</select>
-	
-	<!-- 新增-->
+
+	<!-- 新增 -->
 	<insert id="save" parameterType="pd">
-		insert into 
-	<include refid="tableName"></include>
+		insert into
+		<include refid="tableName"></include>
 		(
-	<include refid="Field1"></include>
+		<include refid="Field1"></include>
 		) values (
-	<include refid="FieldValue1"></include>
+		<include refid="FieldValue1"></include>
 		)
 	</insert>
-	
-	<!-- 删除-->
+
+	<!-- 删除 -->
 	<delete id="delete" parameterType="pd">
 		delete from
 		<include refid="tableName"></include>
-		where 
-			DISEASE_ID = #{DISEASE_ID}
+		where
+		DISEASE_ID = #{DISEASE_ID}
 	</delete>
-	
+
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
 		update
 		<include refid="tableName"></include>
-		set 
-			NAME = #{NAME},
-			DESCRIPTION = #{DESCRIPTION},
-			ISINHERITABLE = #{ISINHERITABLE},
-			ISHIGHINCIDENCE = #{ISHIGHINCIDENCE},
-		DISEASE_ID = DISEASE_ID
-		where 
+		set
+		NAME = #{NAME},
+		DESCRIPTION = #{DESCRIPTION},
+		ISINHERITABLE =
+		#{ISINHERITABLE},
+		ISHIGHINCIDENCE = #{ISHIGHINCIDENCE},
+		DISEASE_ID =
+		DISEASE_ID
+		where
 		DISEASE_ID = #{DISEASE_ID}
 	</update>
-	
+
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
-		select 
+		select
 		<include refid="Field"></include>
-		from 
+		from
 		<include refid="tableName"></include>
-		where 
-			DISEASE_ID = #{DISEASE_ID}
+		where
+		DISEASE_ID = #{DISEASE_ID}
 	</select>
-	
+
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
 		<include refid="Field1"></include>
-		from 
+		from
 		<include refid="tableName"></include>
-		where 1=1 
+		where 1=1
 		<if test="pd.DISEASECATEGORY_ID!= null and pd.DISEASECATEGORY_ID != ''"><!-- 检索 -->
-		and DISEASECATEGORY_ID = #{pd.DISEASECATEGORY_ID}
+			and DISEASECATEGORY_ID = #{pd.DISEASECATEGORY_ID}
 		</if>
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
-				(
-				
-					NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-					 or 
-					DESCRIPTION LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
-				
-				)
+			(
+
+			NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			DESCRIPTION
+			LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+
+			)
 		</if>
 	</select>
-	
+
 	<!-- 列表(全部) -->
 	<select id="listAll" parameterType="pd" resultType="pd">
 		select
-		<include refid="Field"></include>
-		from 
+		<include refid="Field1"></include>
+		from
 		<include refid="tableName"></include>
 	</select>
+
+	<!-- 家族疾病列表 -->
+
+	<select id="listAllisInheritable" parameterType="pd" resultType="pd">
+		select NAME, DESCRIPTION, ISINHERITABLE, ISHIGHINCIDENCE, CREATEBY,
+		CREATEON, DISEASE_ID, DISEASECATEGORY_ID from ADMIN_DISEASE where
+		ISINHERITABLE ='1'
+	</select>
+
+	<!-- 关注疾病列表 -->
+	<select id="listAllisHighIncidence" parameterType="pd"
+		resultType="pd">
+		select NAME, DESCRIPTION, ISINHERITABLE, ISHIGHINCIDENCE,
+		CREATEBY, CREATEON, DISEASE_ID, DISEASECATEGORY_ID from ADMIN_DISEASE
+		where ISHIGHINCIDENCE = 1
+	</select>
+
+	<!-- 查询该用户下的所有疾病 -->
+	<select id="listDiseaseByUserID" parameterType="pd" resultType="pd">
+		SELECT d.* from admin_disease d ,admin_useranddisease ud where
+		d.DISEASE_ID = ud.disease_id
+	</select>
+
+	<!-- 查询该用户下的所有遗传疾病 -->
+	<select id="listDiseaseByUserIDIsInherItable" parameterType="pd"
+		resultType="pd">
+		SELECT d.* from admin_disease d ,admin_useranddisease ud
+		where d.DISEASE_ID = ud.disease_id and ISINHERITABLE=1
+	</select>
 	
+	<!-- 查询该用户下的所有关注疾病 -->
+	<select id="listDiseaeByUserIDIsHighIncaidence" parameterType="pd"
+		resultType="pd">
+		SELECT d.* from admin_disease d ,admin_useranddisease ud
+		where d.DISEASE_ID = ud.disease_id and ISHIGHINCIDENCE=1
+	</select>
+
+
+	<!-- 新增属于用户的疾病信息 -->
+	<insert id="userSaveDisease" parameterType="pd">
+		insert into
+		admin_useranddisease
+		(
+		id,user_id,disease_id
+		) values
+		(
+		#{ID},#{USER_ID},#{DISEASE_ID}
+		)
+
+	</insert>
+
+	<!-- 删除属于这个用户的标签信息 -->
+	<delete id="deleteDiseaseByUserID" parameterType="pd">
+		delete from
+		admin_useranddisease
+		where user_id=#{USER_ID}
+	</delete>
+
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
 		delete from
 		<include refid="tableName"></include>
-		where 
-			DISEASE_ID in
-		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
-                 #{item}
+		where
+		DISEASE_ID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
 		</foreach>
 	</delete>
-	
+
 	<!-- shouxin -->
 </mapper>

@@ -43,6 +43,60 @@ public interface DiseaseManager{
 	 */
 	public List<PageData> listAll(PageData pd)throws Exception;
 	
+	/**
+	 * 查询所有家族疾病信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listAllIsInheritable(PageData pd) throws Exception;
+	
+	/**
+	 * 查询所有关注疾病
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listAllIsHighIncidence(PageData pd) throws Exception;
+	
+	/**
+	 * 查询该用户下的所有疾病信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listAllByUserID(PageData pd)throws Exception;
+	
+	/**
+	 * 查询该用户下的所有家族疾病信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listAllByUserIDIsInherItable(PageData pd)throws Exception;
+	
+	/**
+	 * 查询该用户下的所有关注疾病信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listAllByUserIDIsHighIncaidence(PageData pd)throws Exception;
+	
+	
+	/**
+	 * 为这个用户添加疾病信息
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveUserAndDisease(PageData pd) throws Exception;
+	
+	/**
+	 * 删除这个用户的所有的疾病信息
+	 * @throws Exception
+	 */
+	public void deleteDiseaseByUserID(PageData pd) throws Exception;
+	
 	/**通过id获取数据
 	 * @param pd
 	 * @throws Exception
