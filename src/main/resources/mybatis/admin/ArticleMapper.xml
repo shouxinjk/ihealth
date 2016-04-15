@@ -76,8 +76,14 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 
-			ARTICLE_ID = #{ARTICLE_ID}
+		<where>
+			<if test="ARTICLE_ID != null and ARTICLE_ID != ''">
+				and ARTICLE_ID = #{ARTICLE_ID}
+			</if>
+			<if test="USER_ID != null and USER_ID != ''">
+				and USER_ID = #{USER_ID}
+			</if>
+		</where>
 	</select>
 	
 	<!-- 列表 -->

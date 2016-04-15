@@ -89,8 +89,14 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 
-			CHECKUPPACKAGE_ID = #{CHECKUPPACKAGE_ID}
+		<where>
+			<if test="CHECKUPPACKAGE_ID != null and CHECKUPPACKAGE_ID != ''">
+				and CHECKUPPACKAGE_ID = #{CHECKUPPACKAGE_ID}
+			</if>
+			<if test="USER_ID != null and USER_ID != ''">
+				and USER_ID = #{USER_ID}
+			</if>
+		</where>
 	</select>
 	
 	

@@ -83,6 +83,17 @@
 		#{CHECKUPITEM_ID}
 	</sql>
 	
+	<!-- 根据userID获取体检项目 -->
+	<select id="findAllByUserId" parameterType="int" resultMap="resultItemsForUsers">
+		SELECT 
+		  * 
+		FROM
+		  tb_checkupitem ci 
+		  LEFT JOIN sys_user u 
+		    ON ci.`USER_ID` = u.`USER_ID` 
+		    WHERE ci.`USER_ID` = #{u.USER_ID}
+	</select>
+	
 	<!-- 通过checkupPackageId获取数据 -->
 	<select id="findAllById" parameterType="int" resultMap="resultItemsForUsers">
 		SELECT 
@@ -132,8 +143,14 @@
 			REVISION = #{REVISION},
 			SYSFLAG = #{SYSFLAG},
 		CHECKUPITEM_ID = CHECKUPITEM_ID
-		where 
-		CHECKUPITEM_ID = #{CHECKUPITEM_ID}
+		<where>
+			<if test="CHECKUPITEM_ID != null and CHECKUPITEM_ID != ''">
+				and CHECKUPITEM_ID = #{CHECKUPITEM_ID}
+			</if>
+			<if test="USER_ID != null and USER_ID != ''">
+				and USER_ID = #{USER_ID}
+			</if>
+		</where>
 	</update>
 	
 	<!-- 通过ID获取数据 -->
@@ -142,8 +159,17 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 
-			CHECKUPITEM_ID = #{CHECKUPITEM_ID}
+		<where>
+			<if test="CHECKUPITEM_ID != null and CHECKUPITEM_ID != ''">
+				and CHECKUPITEM_ID = #{CHECKUPITEM_ID}
+			</if>
+			<if test="USER_ID != null and USER_ID != ''">
+				and USER_ID = #{USER_ID}
+			</if>
+			<if test="CHECKUPPACKAGE_ID != null and CHECKUPPACKAGE_ID != ''">
+				and CHECKUPPACKAGE_ID = #{CHECKUPPACKAGE_ID}
+			</if>
+		</where>
 	</select>
 	
 	<!-- 列表 -->
@@ -171,6 +197,17 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
+		<where>
+			<if test="CHECKUPITEM_ID != null and CHECKUPITEM_ID != ''">
+				and CHECKUPITEM_ID = #{CHECKUPITEM_ID}
+			</if>
+			<if test="USER_ID != null and USER_ID != ''">
+				and USER_ID = #{USER_ID}
+			</if>
+			<if test="CHECKUPPACKAGE_ID != null and CHECKUPPACKAGE_ID != ''">
+				and CHECKUPPACKAGE_ID = #{CHECKUPPACKAGE_ID}
+			</if>
+		</where>
 	</select>
 	
 	<!-- 批量删除 -->

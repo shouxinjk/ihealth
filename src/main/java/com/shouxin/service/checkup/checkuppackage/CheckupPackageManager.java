@@ -55,6 +55,13 @@ public interface CheckupPackageManager{
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
 	
+	/**
+	 * 根据用户ID获取体检套餐信息 多个体检套餐
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	public List<CheckupPackage> listAllById(String id)throws Exception;
+	
 }
 

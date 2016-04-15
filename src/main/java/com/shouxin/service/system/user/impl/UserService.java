@@ -168,6 +168,27 @@ public class UserService implements UserManager{
 		return (PageData)dao.findForObject("UserMapper.getUserCount", value);
 	}
 
+	/**
+	 * 根据用户ID查询文章信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> findArticlesById(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("UserMapper.findArticlesById", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findTagById(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("UserMapper.findTagById", pd);
+	}
+
+	/**
+	 * 根据用户ID 获取疾病信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> findDiseaseById(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("UserMapper.findDiseaseById", pd);
+	}
+
 	
 	
 }

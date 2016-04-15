@@ -232,7 +232,7 @@ insert  into `sys_menu` values (48,'图表报表',' tool/fusionchartsdemo.do','9
 insert  into `sys_menu` values (49,'组织机构','department/listAllDepartment.do?DEPARTMENT_ID=0','1','5','menu-icon fa fa-users blue','1',1);
 insert  into `sys_menu` values (50,'站内信','fhsms/list.do','6','2','menu-icon fa fa-envelope green','1',1);
 insert  into `sys_menu` values (51,'文章信息管理','article/list.do','6','1','menu-icon fa fa-leaf black','1',1);
-insert  into `sys_menu` values (72,'体检套餐管理','checkuppackage/listAll.do','6','2','menu-icon fa fa-leaf black','1',1);
+insert  into `sys_menu` values (72,'体检套餐管理','checkuppackage/list.do','6','2','menu-icon fa fa-leaf black','1',1);
 INSERT INTO `sys_menu` VALUES (73, '标签管理', 'tag/listAllTagCategory.do', '6', '3', 'menu-icon fa fa-envelope green', '1', '1');
 INSERT INTO `sys_menu` VALUES (74, '标签分类管理', 'tagcategory/listAllTagCategoryTree.do?TAGCATEGORY_ID=0', '6', '4', 'menu-icon fa fa-envelope green', '1', '1');
 INSERT INTO `sys_menu` VALUES (75, '疾病管理', 'disease/listAllDiseasecategory.do', '6', '5', 'menu-icon fa fa-envelope green', '1', '1');

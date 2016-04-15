@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shouxin.controller.base.BaseController;
+import com.shouxin.entity.checkup.CheckupItem;
 import com.shouxin.entity.checkup.CheckupPackage;
+import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
 import com.shouxin.service.system.user.UserManager;
 import com.shouxin.util.AppUtil;
@@ -23,7 +25,8 @@ import com.shouxin.util.PageData;
 import net.sf.json.JSONObject;
 
 /** 
- * 类名称：UserController
+ * 类名称：RestfullController
+ * 提供微信端网页访问的接口
  * 创建人：shouxin
  * 更新时间：2015年11月3日
  * @version
@@ -36,10 +39,13 @@ public class RestfullController extends BaseController {
 	private UserManager userService;
 	@Resource(name="checkuppackageService")
 	private CheckupPackageManager checkuppackageService;
+	@Resource(name="checkupitemService")
+	private CheckupItemManager checkupitemService;
 	
 	/**
 	 * 用户注册，通过手机号码
 	 * url : rest/register
+	 * type:post
 	 * @param {phone:"xx",openid:"xxx"} 
 	 * @return 
 	 * 当手号码不存在时，执行新增用户并返回用户信息{"result": "success","data": {"OPENID": "OPENID","PHONE": "电话","USER_ID": "USER_ID","ROLE_ID": "用户权限"}}
@@ -115,6 +121,7 @@ public class RestfullController extends BaseController {
 	/**
 	 * 根据ID更新用户信息
 	 * URL：rest/updateUser
+	 * type:post
 	 * ID不为空 返回结果，和用户信息：
 	 * {
 		    "result": "suceess",
@@ -205,33 +212,170 @@ public class RestfullController extends BaseController {
 	
 	
 	//通过用户ID获取体检套餐信息的接口
-	@RequestMapping(value="/findCheckPackage/{userId}",method = RequestMethod.POST)
+	/**
+	 * url:http://localhost:8080/ihealth/rest/findCheckPackage
+	 * type:post
+	 * 通过用户ID获取体检套餐信息
+	 * @param {"userId":"用户ID"}
+	 * @return 当用户ID不为空时，返回：
+	 * {
+		    "result": "success",
+		    "data": {
+		        "REVISION": "版本",
+		        "STATUS": "状态",
+		        "GENERATEDTIME": 该记录生成时间,
+		        "EFFECTIVEFROM": 开始生效时间,
+		        "EXPIREON": 失效时间,
+		        "WORKER": "生成该记录的标记",
+		        "CHECKUPPACKAGE_ID": "1001",
+		        "SYSFLAG": "系统标记"
+		    }
+		}
+		
+		当用户ID为空时，返回：{ "result": "error"}
+		当根据userID查询出的数据为null时  返回{ "result": "no"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/findCheckPackage",method = RequestMethod.POST)
 	@ResponseBody
-	public Object findCheckPackage(@PathVariable("userId") String userId) throws Exception{
-		logger.debug("判断用户ID是否为空:" + userId);
+	public Object findCheckPackage(@RequestBody String u) throws Exception{
+		logBefore(logger,"根据用户ID获取体检套餐信息");
 		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		String msg = null;
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String userId =(String) jasonObject.get("userId");
+		pd.put("USER_ID", userId);
 		if(null == userId || "".equals(userId)){
-			msg="error";
+			msg = "error";
 		}else{
-			logger.debug("执行根据用户ID查询体检套餐的方法");
-			List<CheckupPackage> checkList =  this.checkuppackageService.listAllById(userId);
-			logger.debug(checkList);
-			msg = "success";
-			map.put("data", checkList);
+			PageData data = this.checkuppackageService.findById(pd);
+			if (data!=null && data.size()>0) {
+				msg = "success";
+				map.put("data", data);
+			}else{
+				msg = "no";
+			}
 		}
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
 	
-	//通过userID获取体检项目
+	/**
+	 * url:http://localhost:8080/ihealth/rest/editCheckItem
+	 * type:post
+	 * 根据体检项目ID修改体检项目的状态信息
+	 * @param {"checkupItemId":"体检项目ID","stauts":"状态信息"}
+	 * @return 修改成功、返回 { "result": "success"}
+	 * 		         修改失败、返回{"result": "error"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="editCheckItem",method=RequestMethod.POST)
+	@ResponseBody
+	public Object editCheckItem(@RequestBody String check) throws Exception{
+		logBefore(logger,"根据体检项目ID获取体检项目信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(check);
+		String checkItemId =(String) jasonObject.get("checkupItemId");
+		String status =(String) jasonObject.get("stauts");
+		pd.put("CHECKUPITEM_ID", checkItemId);
+		//判断体检项目ID是否为空
+		if(checkItemId == null || "".equals(checkItemId)){
+			msg = "error";
+		}else{
+			//先查后改 --根据ID查询体检项目
+			pd = this.checkupitemService.findById(pd);
+			logger.debug("查看体检项目信息"+pd);
+			pd.put("STATUS", status);
+			logger.debug("修改体检项目----------start");
+			this.checkupitemService.edit(pd);
+			msg = "success";
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
 	
+	
+	/**
+	 * 根据userID 获取体检项目
+	 * 本机url：http://localhost:8080/ihealth/rest/findCheckItems
+	 * type:post
+	 * @param {"userId":"1"}
+	 * @return 当userID不为空，并且数据库中存在这个ID、返回以下数据，需要注意的是，一个用户有多个体检项目，需要循环取值
+	 * {
+		    "result": "success",
+		    "data": [
+		        {
+		            "REVISION": 版本,
+		            "STATUS": "状态，包括：已选中，已删除",
+		            "DESCRIPTION": "详细描述",
+		            "GENERATEDTIME": 该记录生成时间,
+		            "FREQUENCY": "每年一次",
+		            "ORIGINATE": "指南来源",
+		            "WORKER": "用于产生该记录的标记",
+		            "SUBGROUP": "检查项目分组",
+		            "SYSFLAG": "系统标记",
+		            "NAME": "检查项目名称",
+		            "FEATURES": "检查频率，是文字描述",
+		            "CHECKUPITEM_ID": "ID"
+		        },
+		        {
+		            "REVISION": 1,
+		            "STATUS": "已选中",
+		            "DESCRIPTION": "吸烟20年,致癌细胞变异",
+		            "GENERATEDTIME": 1459780272000,
+		            "FREQUENCY": "每年一次",
+		            "ORIGINATE": "加拿大",
+		            "WORKER": "admin",
+		            "SUBGROUP": "X光",
+		            "SYSFLAG": "admin",
+		            "NAME": "肺部检查",
+		            "FEATURES": "经济",
+		            "CHECKUPITEM_ID": "102"
+		        }
+		    ]
+		}
+	 * 当用户ID为空时返回一下数据{"result": "error"}
+	 * 当根据userID查询出的数据为null时  返回{ "result": "no"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findCheckItems",method=RequestMethod.POST)
+	@ResponseBody
+	public Object findCheckItems(@RequestBody String u) throws Exception{
+		logBefore(logger,"根据用户ID获取体检项目信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String userId =(String) jasonObject.get("userId");
+		pd.put("USER_ID", userId);
+		if(userId == null || "".equals(userId)){
+			msg = "error";
+		}else{
+			 List<PageData> pageDate = this.checkupitemService.listAll(pd);
+			if (pageDate!=null && pageDate.size()>0) {
+				msg = "success";
+				map.put("data", pageDate);
+			}else{
+				msg = "no";
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
 	
 	/**
 	 * 通过用户ID获取用户信息
 	 * 本机地址url:http://localhost:8080/ihealth/rest/findUserById
+	 * type:post
 	 * @param {"userId":"1"}
 	 * @return 当ID不为空，返回的参数列表为：
 	 * {
@@ -262,8 +406,8 @@ public class RestfullController extends BaseController {
 		        "WEIGHT": 50
 		    }
 		}
-	 * 当ID为空时：返回的参数为：
-	 * 	{"result": "error"}
+	 * 当userID为空时：返回的参数为：{"result": "error"}
+	 * 当根据userID查询出的数据为null时  返回{ "result": "no"}
 	 * @throws Exception
 	 */
 	@RequestMapping(value="findUserById",method=RequestMethod.POST)
@@ -282,9 +426,237 @@ public class RestfullController extends BaseController {
 			msg = "error";
 		}else{
 			PageData data = this.userService.findById(pd);
-			if (data!=null) {
+			if (data!=null && data.size()>0) {
 				msg = "success";
 				map.put("data", data);
+			}else{
+				msg = "no";
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 根据openId获取用户信息
+	 * url:http://localhost:8080/ihealth/rest/findUserByOpenId
+	 * type:post
+	 * @param {openid:"openId"}
+	 * 当根据openId查询出的数据为null时  返回{ "result": "no"}
+	 * @return 当获取openId失败！返回{"result":"error"}
+	 * @return 当获取openId成功！返回值为：
+	 * {
+		    "result": "success",
+		    "data": {
+		        "NUMBER": "001",
+		        "RIGHTS": "1133671055321055258374707980945218933803269864762743594642571294",
+		        "IP": "0:0:0:0:0:0:0:1",
+		        "PHONE": "18788888888",
+		        "ALIAS": "系统管理员",
+		        "SEX": "男",
+		        "USER_ID": "1",
+		        "MARRIAGESTATUS": "未婚",
+		        "LAST_LOGIN": "2016-04-13 16:12:33",
+		        "EMAIL": "QQ313596790@main.com",
+		        "HEIGHT": 188,
+		        "BIRTHPLACE": "成都",
+		        "NAME": "系统管理员",
+		        "CAREER": "高级架构师",
+		        "STATUS": "0",
+		        "OPENID": "wwwsssddd",
+		        "PASSWORD": "de41b7fb99201d8334c23c014db35ecd92df81bc",
+		        "BZ": "最高统治者",
+		        "USERNAME": "admin",
+		        "ROLE_ID": "1",
+		        "DEGREE": "本科",
+		        "LIVEPLACE": "成都",
+		        "AVATAR": "img/logo.jpg",
+		        "WEIGHT": 50
+		    }
+		}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findUserByOpenId",method=RequestMethod.POST)
+	@ResponseBody
+	public Object findUserByOpenId(@RequestBody String u) throws Exception{
+		logBefore(logger,"根据openID获取用户信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String openId =(String) jasonObject.get("openId");
+		pd.put("OPENID", openId);
+		logger.debug("openId为空,获取用户信息失败！");
+		if(null == openId || "".equals(openId)){
+			msg = "error";
+		}else{
+			PageData data = this.userService.findById(pd);
+			if (data!=null && data.size()>0) {
+				msg = "success";
+				map.put("data", data);
+			}else{
+				msg = "no";
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	//根据用户ID  获取文章信息
+	/**
+	 * 根据用户ID  获取文章信息
+	 * url:http://localhost:8080/ihealth/rest/findArticleByUserId
+	 * type:post
+	 * @param {"userId":"1"}
+	 * @return 用户ID不为空 返回：
+	 * {
+		    "result": "success",
+		    "data": [
+		        {
+		            "LOGOURL": 照片url
+		            "PUBLISHTIME": 发布时间
+		            "SUMMARY": "摘要",
+		            "CREATEBY": "创建记录员工id",
+		            "TITLE": "标题",
+		            "ARTICLE_ID": "ID",
+		            "AUTHOR": "作者",
+		            "CREATEON": 创建记录时间
+		            "URL": 内容url
+		        }
+		    ]
+		}
+		
+		当userID为空： 返回{ "result": "error"}
+		当根据userID查询出的数据为null时  返回{ "result": "no"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findArticleByUserId",method=RequestMethod.POST)
+	@ResponseBody
+	public Object findArticleByUserId(@RequestBody String u) throws Exception{
+		logBefore(logger,"根据userId获取用户信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String userId =(String) jasonObject.get("userId");
+		pd.put("USER_ID", userId);
+		logger.debug("userId为空,获取文章信息！");
+		if(null == userId || "".equals(userId)){
+			msg = "error";
+		}else{
+			List<PageData> data = this.userService.findArticlesById(pd);
+			if (data!=null && data.size()>0) {
+				msg = "success";
+				map.put("data", data);
+			}else{
+				msg = "no";
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 根据用户ID  获取标签信息
+	 * url:http://localhost:8080/ihealth/rest/findTagByUserId
+	 * type:post
+	 * @param {"userId":"1"}
+	 * @return 用户ID不为空 返回：
+	 *{
+		    "result": "success",
+		    "data": [
+		        {
+		            "CREATEBY": "创建用户ID",
+		            "TAG_ID": "ID",
+		            "CREATEON": "创建时间",
+		            "EXPRESSION": "表达式",
+		            "NAME": "标签名"
+		        }
+		    ]
+		}
+		当userID为空： 返回{ "result": "error"}
+		当根据userID查询出的数据为null时  返回{ "result": "no"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findTagByUserId",method=RequestMethod.POST)
+	@ResponseBody
+	public Object findTagByUserId(@RequestBody String u) throws Exception{
+		logBefore(logger,"根据userId获取标签信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String userId =(String) jasonObject.get("userId");
+		pd.put("USER_ID", userId);
+		logger.debug("userId为空,获取标签信息！");
+		if(null == userId || "".equals(userId)){
+			msg = "error";
+		}else{
+			List<PageData> data = this.userService.findTagById(pd);
+			if (data!=null && data.size()>0) {
+				msg = "success";
+				map.put("data", data);
+			}else{
+				msg = "no";
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 根据用户ID  获取疾病信息
+	 * url:http://localhost:8080/ihealth/rest/findDiseaseById
+	 * type:post
+	 * @param {"userId":"1"}
+	 * @return 用户ID不为空 返回：
+	 *{
+		    "result": "success",
+		    "data": [
+		        {
+		            "CREATEBY": "创建记录员工id",
+		            "DESCRIPTION": "描述",
+		            "ISINHERITABLE": 是否遗传倾向,
+		            "DISEASECATEGORY_ID": "疾病分类ID",
+		            "ISHIGHINCIDENCE": 是否高发,
+		            "DISEASE_ID": "ID",
+		            "CREATEON": "创建记录时间",
+		            "NAME": "名称"
+		        }
+		    ]
+		}
+		当userID为空： 返回{ "result": "error"}
+		当根据userID查询出的数据为null时  返回{ "result": "no"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findDiseaseById",method=RequestMethod.POST)
+	@ResponseBody
+	public Object findDiseaseById(@RequestBody String u) throws Exception{
+		logBefore(logger,"根据userId获取疾病信息");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		//将String类型的数据转换为json
+		JSONObject jasonObject =JSONObject.fromObject(u);
+		String userId =(String) jasonObject.get("userId");
+		pd.put("USER_ID", userId);
+		logger.debug("userId为空,获取疾病信息！");
+		if(null == userId || "".equals(userId)){
+			msg = "error";
+		}else{
+			List<PageData> data = this.userService.findDiseaseById(pd);
+			if (data!=null && data.size()>0) {
+				msg = "success";
+				map.put("data", data);
+			}else{
+				msg = "no";
 			}
 		}
 		map.put("result", msg);
