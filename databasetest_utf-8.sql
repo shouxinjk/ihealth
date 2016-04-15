@@ -55,3 +55,42 @@ INSERT INTO `admin_tagcategory` VALUES ('cf9e046a210c41ccbb052bef74fed3b9', '身
 INSERT INTO `admin_tagcategory` VALUES ('d816537d8a2747d5ba27927da72048a7', '身体', '身体不适', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '2');
 INSERT INTO `admin_tagcategory` VALUES ('fca5e4866f8547f49242896f08f22d0b', '哈哈1', '哈哈', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', 'fcf66e9df13845ec9647409b4e20b1ed');
 INSERT INTO `admin_tagcategory` VALUES ('fcf66e9df13845ec9647409b4e20b1ed', '哈哈', '哈哈', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '0');
+
+
+-- ----------------------------
+-- Table structure for admin_useranddisease
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_useranddisease`;
+CREATE TABLE `admin_useranddisease` (
+  `id` varchar(32) NOT NULL,
+  `user_id` varchar(32) DEFAULT NULL,
+  `disease_id` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_useranddisease
+-- ----------------------------
+INSERT INTO `admin_useranddisease` VALUES ('1', '1', '1');
+
+
+-- ----------------------------
+-- Table structure for admin_userandtag
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_userandtag`;
+CREATE TABLE `admin_userandtag` (
+  `id` varchar(32) NOT NULL,
+  `user_id` varchar(32) DEFAULT NULL,
+  `tag_id` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_userandtag
+-- ----------------------------
+INSERT INTO `admin_userandtag` VALUES ('1', '1', '1');
+INSERT INTO `admin_userandtag` VALUES ('2', '1', '11');
+INSERT INTO `admin_userandtag` VALUES ('37f93db4cf204ffbbc017a84ca5f1bda', '3', '6');
+INSERT INTO `admin_userandtag` VALUES ('5', '1', '1');
+INSERT INTO `admin_userandtag` VALUES ('777301004d9e4c2e93415e9522d366c0', '3', '5');
+INSERT INTO `admin_userandtag` VALUES ('8c213e89768e4f8c805bc8f3cdca2a5e', '3', '4');
