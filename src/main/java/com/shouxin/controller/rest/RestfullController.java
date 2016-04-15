@@ -283,8 +283,8 @@ public class RestfullController extends BaseController {
 		pd = this.getPageData();
 		//将String类型的数据转换为json
 		JSONObject jasonObject =JSONObject.fromObject(check);
-		String checkItemId =(String) jasonObject.get("checkupItemId");
-		String status =(String) jasonObject.get("stauts");
+		String checkItemId = jasonObject.get("checkupItemId").toString();
+		String status = jasonObject.get("stauts").toString();
 		
 		//判断体检项目ID是否为空
 		if(checkItemId == null || "".equals(checkItemId) || status ==null || "".equals(status)){

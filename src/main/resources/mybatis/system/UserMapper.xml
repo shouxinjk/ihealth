@@ -100,6 +100,23 @@
 		#{WEIGHT}
 	</sql>
 	
+	<!-- 根据用户ID查询所有的关联用户 -->
+	<select id="findUserAndUser" parameterType="pd" resultType="pd">
+		SELECT 
+		  u.* 
+		FROM
+		  sys_user u,
+		  sys_useranduser uu 
+		WHERE u.`USER_ID` = uu.`user_id_two` 
+		  AND uu.`user_id_one` = 1 
+		  <where>
+		  	<if test="USER_ID != null and USER_ID !=''">
+		  		and u.`USER_ID` = uu.`user_id_two`
+		  	</if>
+		  </where>
+	</select>
+	
+	
 	<!-- 判断用户名和密码 -->
 	<select id="getUserInfo" parameterType="pd" resultType="pd">
 		select <include refid="Field"></include> from
