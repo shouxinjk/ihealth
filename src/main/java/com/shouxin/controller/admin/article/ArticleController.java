@@ -49,6 +49,9 @@ public class ArticleController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("ARTICLE_ID", this.get32UUID());	//主键
+		pd.put("PUBLISHTIME", new Date()); //发布时间
+		pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
+		pd.put("CREATEON", new Date());//改记录创建时间
 		articleService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -81,6 +84,7 @@ public class ArticleController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd.put("PUBLISHTIME", new Date()); //发布时间
 		articleService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");

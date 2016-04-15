@@ -1,5 +1,7 @@
 package com.shouxin.entity.system;
 
+import java.util.List;
+
 import com.shouxin.entity.Page;
 
 /**
@@ -46,6 +48,21 @@ public class User {
 	private Role role;			//角色对象
 	private Page page;			//分页对象
 	
+	private User parentUser;	//父关联
+	private List<User> childrenUser;	//子关联
+	
+	public User getParentUser() {
+		return parentUser;
+	}
+	public void setParentUser(User parentUser) {
+		this.parentUser = parentUser;
+	}
+	public List<User> getChildrenUser() {
+		return childrenUser;
+	}
+	public void setChildrenUser(List<User> childrenUser) {
+		this.childrenUser = childrenUser;
+	}
 	public String getSKIN() {
 		return SKIN;
 	}
