@@ -294,7 +294,6 @@
 		
 		//修改
 		function edit(Id){
-			alert(Id)
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;

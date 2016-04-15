@@ -54,5 +54,11 @@ public interface TagManager{
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
 	
+	/**通过标签分类id获取标签数据
+	 * @param pd
+	 * @throws Exception
+	 */
+	public List<PageData> findAllByTagCategoryId(PageData pd)throws Exception;
+	
 }
 

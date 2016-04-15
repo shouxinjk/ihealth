@@ -10,22 +10,6 @@
 		<result column="CREATEON" property="CREATEON"/>
 	</resultMap>
 	
-	<resultMap type="Tag" id="TagAndTagCategoryResultMap">
-		<id column="TAG_ID" property="TAG_ID" />
-		<result column="NAME" property="NAME"/>
-		<result column="EXPRESSION" property="EXPRESSION"/>
-		<result column="CREATEBY" property="CREATEBY"/>
-		<result column="CREATEON" property="CREATEON"/>
-		<association property="tagCategory" column="TAGCATEGORY_ID" javaType="TagCategory">
-				<id column="TAGCATEGORY_ID" property="TAGCATEGORY_ID" />
-				<result column="NAME" property="NAME"/>
-				<result column="MATETYPE" property="MATETYPE"/>
-				<result column="ISEXCLUSIVE" property="ISEXCLUSIVE"/>
-				<result column="CREATEBY" property="CREATEBY"/>
-				<result column="CREATEON" property="CREATEON"/>
-				<result column="PARENT_ID" property="PARENT_ID"/>
-		</association>
-	</resultMap>
 	
 	<!--表名 -->
 	<sql id="tableName">
@@ -105,6 +89,16 @@
 	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			TAGCATEGORY_ID = #{TAGCATEGORY_ID}
+	</select>
+	
+		<!-- 通过tagCategoryID获取tag数据 -->
+	<select id="findALLByTagCategoryId" parameterType="pd" resultType="pd">
 		select 
 		<include refid="Field"></include>
 		from 

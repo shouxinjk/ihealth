@@ -21,28 +21,49 @@
 <!-- /section:basics/navbar.layout -->
 <div class="main-container" id="main-container">
 	<!-- /section:basics/sidebar -->
-	<div class="main-content">
+	<div class="main-content"> 
 		<div class="main-content-inner">
 			<div class="page-content">
 				<div class="row">
 					<div class="col-xs-12">
 					
-					<form action="diseasecategory/${msg }.do" name="Form" id="Form" method="post">
-						<input type="hidden" name="DISEASECATEGORY_ID" id="DISEASECATEGORY_ID" value="${pd.DISEASECATEGORY_ID}"/>
-						<input type="hidden" name="PARENT_ID" id="PARENT_ID" value="${null == pd.PARENT_ID ? DISEASECATEGORY_ID:pd.DISEASECATEGORY_ID}"/>
+					<form action="examguideline/${msg }.do" name="Form" id="Form" method="post">
+						<input type="hidden" name="EXAMGUIDELINE_ID" id="EXAMGUIDELINE_ID" value="${pd.EXAMGUIDELINE_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:79px;text-align: right;padding-top: 13px;">上级:</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">指南名称:</td>
+								<td><input type="text" name="NAME" id="NAME" value="${pd.GNAME}" readonly="readonly" maxlength="255" placeholder="这里输入指南名称" title="指南名称" style="width:98%;"/></td>
+							</tr>
+							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">关注因素:</td>
 								<td>
-									<div class="col-xs-4 label label-lg label-light arrowed-in arrowed-right">
-										<b>${null == pds.NAME ?'(无) 此部门为顶级':pds.NAME}</b>
-									</div>
+									<textarea rows="5" cols="10" name="CONCERNEDFACTORS" id="CONCERNEDFACTORS" readonly="readonly"  placeholder="这里输入关注因素描述" title="关注因素描述" style="width:98%;">${pd.CONCERNEDFACTORS}</textarea>
 								</td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">名称:</td>
-								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入名称" title="名称" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">高危人群界定方法:</td>
+								<td>
+									<textarea rows="3" cols="10" name="HIGHRISKDEFINE" id="HIGHRISKDEFINE" readonly="readonly" placeholder="这里输入高危人群识别脚本" title="高危人群识别脚本" style="width:98%;">${pd.HIGHRISKDEFINE}</textarea>
+								</td>
+							</tr>
+							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">高危人群界定规则:</td>
+								<td>
+									<textarea rows="3" cols="10" name="HIGHRISKEXPRESSION" id="HIGHRISKEXPRESSION" placeholder="这里输入高危人群识别脚本" title="高危人群识别脚本" style="width:98%;">${pd.HIGHRISKEXPRESSION}</textarea>
+								</td>
+							</tr>
+							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">普通热群界定方法:</td>
+								<td>
+									<textarea rows="3" cols="10" name="LOWRISKDEFINE" id="LOWRISKDEFINE" readonly="readonly" placeholder="这里输入普通人群识别脚本" title="普通人群识别脚本" style="width:98%;">${pd.LOWRISKDEFINE}</textarea>
+								</td>
+							</tr>
+							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">普通热群界定规则:</td>
+								<td>
+									<textarea rows="3" cols="10" name="LOWRISKEXPRESSION" id="LOWRISKEXPRESSION" placeholder="这里输入普通人群识别脚本" title="普通人群识别脚本" style="width:98%;">${pd.LOWRISKEXPRESSION}</textarea>
+								</td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">
@@ -52,11 +73,8 @@
 							</tr>
 						</table>
 						</div>
-						
 						<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><br/><img src="static/images/jiazai.gif" /><br/><h4 class="lighter block green">提交中...</h4></div>
-						
 					</form>
-	
 					<div id="zhongxin2" class="center" style="display:none"><img src="static/images/jzx.gif" style="width: 50px;" /><br/><h4 class="lighter block green"></h4></div>
 					</div>
 					<!-- /.col -->
@@ -81,19 +99,30 @@
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 		<script type="text/javascript">
 		$(top.hangge());
+		
 		//保存
 		function save(){
-			if($("#NAME").val()==""){
-				$("#NAME").tips({
+			alert(1)
+			if($("#HIGHRISKEXPRESSION").val()==""){
+				$("#HIGHRISKEXPRESSION").tips({
 					side:3,
-		            msg:'请输入名称',
+		            msg:'请输入高危人群识别脚本',
 		            bg:'#AE81FF',
 		            time:2
 		        });
-				$("#NAME").focus();
+				$("#HIGHRISKEXPRESSION").focus();
 			return false;
 			}
-			alert($("#PARENT_ID").val());
+			if($("#LOWRISKEXPRESSION").val()==""){
+				$("#LOWRISKEXPRESSION").tips({
+					side:3,
+		            msg:'请输入普通人群识别脚本',
+		            bg:'#AE81FF',
+		            time:2
+		        });
+				$("#LOWRISKEXPRESSION").focus();
+			return false;
+			}
 			$("#Form").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();

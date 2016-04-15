@@ -105,16 +105,6 @@
 				$("#NAME").focus();
 			return false;
 			}
-			if($("#DESCRIPTION").val()==""){
-				$("#DESCRIPTION").tips({
-					side:3,
-		            msg:'请输入描述',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#DESCRIPTION").focus();
-			return false;
-			}
 			if($("#ISINHERITABLE").val()==""){
 				$("#ISINHERITABLE").tips({
 					side:3,
@@ -133,26 +123,6 @@
 		            time:2
 		        });
 				$("#ISHIGHINCIDENCE").focus();
-			return false;
-			}
-			if($("#CREATEBY").val()==""){
-				$("#CREATEBY").tips({
-					side:3,
-		            msg:'请输入创建记录员工id',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEBY").focus();
-			return false;
-			}
-			if($("#CREATEON").val()==""){
-				$("#CREATEON").tips({
-					side:3,
-		            msg:'请输入创建记录时间',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEON").focus();
 			return false;
 			}
 			$("#Form").submit();

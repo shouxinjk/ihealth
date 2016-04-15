@@ -292,7 +292,6 @@
 		
 		//修改
 		function edit(Id,DISEASECATEGORY_ID){
-			alert(DISEASECATEGORY_ID)
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;

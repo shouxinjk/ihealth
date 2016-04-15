@@ -84,6 +84,12 @@ public class TagService implements TagManager{
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("TagMapper.deleteAll", ArrayDATA_IDS);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findAllByTagCategoryId(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("TagMapper.findAllByTagCategoryId", pd);
+	}
 	
 }
 
