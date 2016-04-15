@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +22,10 @@ import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
 import com.shouxin.service.system.user.UserManager;
 import com.shouxin.util.AppUtil;
+import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.PageData;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /** 
@@ -41,6 +45,7 @@ public class RestfullController extends BaseController {
 	private CheckupPackageManager checkuppackageService;
 	@Resource(name="checkupitemService")
 	private CheckupItemManager checkupitemService;
+	
 	
 	/**
 	 * 用户注册，通过手机号码
