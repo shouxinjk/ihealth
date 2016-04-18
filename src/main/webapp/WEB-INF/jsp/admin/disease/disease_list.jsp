@@ -44,14 +44,6 @@
 								</td>
 								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart"  value="" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="开始日期"/></td>
 								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginEnd" name="lastLoginEnd"  value="" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期" title="结束日期"/></td>
-								<td style="vertical-align:top;padding-left:2px;">
-								 	<select class="chosen-select form-control" name="name" id="id" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
-									<option value=""></option>
-									<option value="">全部</option>
-									<option value="">1</option>
-									<option value="">2</option>
-								  	</select>
-								</td>
 								<c:if test="${QX.cha == 1 }">
 								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 								</c:if>
@@ -68,8 +60,8 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">疾病名称</th>
 									<th class="center">疾病症状说明</th>
-									<th class="center">疾病发病情况</th>
-									<th class="center">疾病诊断及预后</th>
+									<th class="center">是否遗传</th>
+									<th class="center">是否高发</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -87,8 +79,22 @@
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.DESCRIPTION}</td>
-											<td class='center'>${var.ISINHERITABLE}</td>
-											<td class='center'>${var.ISHIGHINCIDENCE}</td>
+											<td class='center'>
+												<c:if test="${var.ISINHERITABLE eq 1}">
+													是
+												</c:if>
+												<c:if test="${var.ISINHERITABLE eq 0 }">
+													否
+												</c:if>
+											</td>
+											<td class='center'>
+												<c:if test="${var.ISHIGHINCIDENCE eq 1}">
+													是
+												</c:if>
+												<c:if test="${var.ISHIGHINCIDENCE eq 0 }">
+													否
+												</c:if>
+											</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

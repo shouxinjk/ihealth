@@ -90,7 +90,7 @@
 											<td class='center'>${var.CNAME}</td>
 											<td class='center'>${var.DNAME}</td>
 											<td class='center'>${var.CONCERNEDFACTORS}</td>
-											<td class='center'>${var.DESCRIPTION}</td>
+											<td class='center'>${var.HIGHRISKDEFINE}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

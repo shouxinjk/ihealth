@@ -25,8 +25,6 @@
 		STARTAGE,	
 		ENDAGE,	
 		FEATURES,	
-		CREATEBY,	
-		CREATEON,	
 		EXAMSOLUTION_ID,
 		EXAMGUIDELINE_ID
 	</sql>
@@ -38,8 +36,6 @@
 		#{STARTAGE},	
 		#{ENDAGE},	
 		#{FEATURES},	
-		#{CREATEBY},	
-		#{CREATEON},	
 		#{EXAMSOLUTION_ID},
 		#{EXAMGUIDELINE_ID}
 	</sql>
@@ -57,9 +53,21 @@
 		insert into 
 	<include refid="tableName"></include>
 		(
-	<include refid="Field"></include>
+		RISKTYPE,	
+		STARTAGE,	
+		FEATURES,	
+		EXAMSOLUTION_ID,
+		EXAMGUIDELINE_ID,
+		EXAMITEM_ID,
+		EXAMFREQUENCY_ID
 		) values (
-	<include refid="FieldValue"></include>
+		#{RISKTYPE},	
+		#{STARTAGE},	
+		#{FEATURES},	
+		#{EXAMSOLUTION_ID},
+		#{EXAMGUIDELINE_ID},
+		#{EXAMITEM_ID},
+		#{EXAMFREQUENCY_ID}
 		)
 	</insert>
 	
@@ -87,6 +95,7 @@
 		where 
 		EXAMSOLUTION_ID = #{EXAMSOLUTION_ID}
 	</update>
+	
 	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
@@ -128,9 +137,8 @@
 		<!-- 列表(全部) -->
 	<select id="listAllExamSolutionAndExamItem" parameterType="pd" resultType="pd">
 		select
-		s.EXAMSOLUTION_ID AS EXAMSOLUTION_ID , i.NAME AS INAME
-		from 
-		exam_examsolution s left join exam_examitem i on s.EXAMITEM_ID=i.EXAMITEM_ID 
+		 i.NAME AS INAME,i.EXAMITEM_ID AS EXAMITEM_ID
+		from exam_examitem i
 	</select>
 	
 	<!-- 批量删除 -->
