@@ -17,7 +17,10 @@ import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
 import com.shouxin.service.system.user.UserManager;
 import com.shouxin.util.AppUtil;
+import com.shouxin.util.DegreeEnum;
+import com.shouxin.util.MarriageStatusEnum;
 import com.shouxin.util.PageData;
+import com.shouxin.util.SexEnum;
 import com.shouxin.util.StatusEnum;
 
 import net.sf.json.JSONObject;
@@ -55,29 +58,29 @@ public class RestfullController extends BaseController {
 		    "result": "existence",
 		    "data": {
 		        "NUMBER": "编号",
-		        "RIGHTS": "3264c8e83d0248bb9e3ea6195b4c0216",
-		        "IP": "127.0.0.1",
-		        "PHONE": "17787287288",
-		        "ALIAS": "小黑",
-		        "SEX": "男",
-		        "USER_ID": "9991f4d7782a4ccfb8a65bd96ea7aafa",
-		        "MARRIAGESTATUS": "婚姻",
-		        "LAST_LOGIN": "2016-01-06 01:24:26",
-		        "EMAIL": "909999000@qq.com",
-		        "HEIGHT": 177,
-		        "BIRTHPLACE": "上海",
+		        "RIGHTS": "权限",
+		        "IP": "IP地址",
+		        "PHONE": "电话",
+		        "ALIAS": "昵称",
+		        "SEX": "性别",
+		        "USER_ID": "ID",
+		        "MARRIAGESTATUS": "婚姻状况",
+		        "LAST_LOGIN": "最后登录时间",
+		        "EMAIL": "邮箱地址",
+		        "HEIGHT": 身高,
+		        "BIRTHPLACE": "出生地",
 		        "NAME": "姓名",
 		        "CAREER": "职业",
 		        "STATUS": "0",
-		        "OPENID": "啊说三道四说撒",
-		        "PASSWORD": "2612ade71c1e48cd7150b5f4df152faa699cedfe",
+		        "OPENID": "openId",
+		        "PASSWORD": "密码",
 		        "BZ": "333",
-		        "USERNAME": "xiaohei",
+		        "USERNAME": "用户名",
 		        "DEGREE": "学历",
 		        "LIVEPLACE": "常住地",
-		        "AVATAR": "img/llls.jpg",
-		        "WEIGHT": 156,
-		        "BIRTHDAY": "1995-09-09"
+		        "AVATAR": "头像地址",
+		        "WEIGHT": 体重,
+		        "BIRTHDAY": "生日"
 		    }
 		}
 	 */
@@ -127,30 +130,30 @@ public class RestfullController extends BaseController {
 	 * {
 		    "result": "suceess",
 		    "data": {
-		        "NUMBER": "9009",
-		        "RIGHTS": "3264c8e83d0248bb9e3ea6195b4c0216",
-		        "IP": "127.0.0.1",
-		        "PHONE": "17787287288",
-		        "ALIAS": "小黑",
-		        "SEX": "男",
-		        "USER_ID": "9991f4d7782a4ccfb8a65bd96ea7aafa",
-		        "MARRIAGESTATUS": "婚姻",
-		        "LAST_LOGIN": "2016-01-06 01:24:26",
-		        "EMAIL": "909999000@qq.com",
-		        "HEIGHT": 177,
-		        "BIRTHPLACE": "上海",
+		        "NUMBER": "编号",
+		        "RIGHTS": "权限",
+		        "IP": "IP地址",
+		        "PHONE": "电话",
+		        "ALIAS": "昵称",
+		        "SEX": "性别",
+		        "USER_ID": "ID",
+		        "MARRIAGESTATUS": "婚姻状况",
+		        "LAST_LOGIN": "最后登录时间",
+		        "EMAIL": "邮箱地址",
+		        "HEIGHT": 身高,
+		        "BIRTHPLACE": "出生地",
 		        "NAME": "姓名",
 		        "CAREER": "职业",
 		        "STATUS": "0",
-		        "OPENID": "啊说三道四说撒",
-		        "PASSWORD": "2612ade71c1e48cd7150b5f4df152faa699cedfe",
+		        "OPENID": "openId",
+		        "PASSWORD": "密码",
 		        "BZ": "333",
-		        "USERNAME": "xiaohei",
+		        "USERNAME": "用户名",
 		        "DEGREE": "学历",
 		        "LIVEPLACE": "常住地",
-		        "AVATAR": "img/llls.jpg",
-		        "WEIGHT": 156,
-		        "BIRTHDAY": "1995-09-09"
+		        "AVATAR": "头像地址",
+		        "WEIGHT": 体重,
+		        "BIRTHDAY": "生日"
 		    }
 		}	
 	 * ID为空： {"result":"error"}
@@ -184,6 +187,21 @@ public class RestfullController extends BaseController {
 		
 		pd.put("USER_ID", userId);
 		PageData pds = this.userService.findById(pd);
+		
+		//判断性别
+		if(sex.equals(SexEnum.BOY.getValue())){
+			sex = SexEnum.BOY.getValue();
+		}else if(sex.equals(SexEnum.GIRL.getValue())){
+			sex = SexEnum.GIRL.getValue();
+		}else{
+			sex= SexEnum.BOY.getValue();
+		}
+		
+		//判断婚姻状态  传入下拉列表中的value 1 未婚 2 已婚 3 同居 4 离异 5寡居
+		marriageStatus = MarriageStatusEnum.getNameByIndex(Integer.parseInt(marriageStatus));
+		
+		//判断学历
+		degree = DegreeEnum.getNameByIndex(Integer.parseInt(degree));
 		
 		pds.put("NAME", name);
 		pds.put("SEX", sex);
@@ -293,11 +311,11 @@ public class RestfullController extends BaseController {
 			pd.put("CHECKUPITEM_ID", checkItemId);
 			//判断传入的状态是
 			/*如果状态值为 已选中 则改为已删除*/
-			if(status.equals(StatusEnum.ALREADYENABLED.getValue())){
-				status = StatusEnum.HASBEENDELETED.getValue();
-			}else if(status.equals(StatusEnum.HASBEENDELETED.getValue())){
+			if(status.equals(StatusEnum.ALREADYENABLED.getName())){
+				status = StatusEnum.HASBEENDELETED.getName();
+			}else if(status.equals(StatusEnum.HASBEENDELETED.getName())){
 				/*如果状态值为已删除  则改为已选中*/
-				status = StatusEnum.ALREADYENABLED.getValue();
+				status = StatusEnum.ALREADYENABLED.getName();
 			}
 			//先查后改 --根据ID查询体检项目
 			pd = this.checkupitemService.findById(pd);
@@ -334,20 +352,6 @@ public class RestfullController extends BaseController {
 		            "NAME": "检查项目名称",
 		            "FEATURES": "检查频率，是文字描述",
 		            "CHECKUPITEM_ID": "ID"
-		        },
-		        {
-		            "REVISION": 1,
-		            "STATUS": "已选中",
-		            "DESCRIPTION": "吸烟20年,致癌细胞变异",
-		            "GENERATEDTIME": 1459780272000,
-		            "FREQUENCY": "每年一次",
-		            "ORIGINATE": "加拿大",
-		            "WORKER": "admin",
-		            "SUBGROUP": "X光",
-		            "SYSFLAG": "admin",
-		            "NAME": "肺部检查",
-		            "FEATURES": "经济",
-		            "CHECKUPITEM_ID": "102"
 		        }
 		    ]
 		}
@@ -391,29 +395,30 @@ public class RestfullController extends BaseController {
 	 * {
 		    "result": "success",
 		    "data": {
-		        "NUMBER": "001",
-		        "RIGHTS": "1133671055321055258374707980945218933803269864762743594642571294",
-		        "IP": "0:0:0:0:0:0:0:1",
-		        "PHONE": "18788888888",
-		        "ALIAS": "系统管理员",
-		        "SEX": "男",
-		        "USER_ID": "1",
-		        "MARRIAGESTATUS": "未婚",
-		        "LAST_LOGIN": "2016-04-12 14:55:19",
-		        "EMAIL": "QQ313596790@main.com",
-		        "HEIGHT": 188,
-		        "BIRTHPLACE": "成都",
-		        "NAME": "系统管理员",
-		        "CAREER": "高级架构师",
-		        "STATUS": "0",
-		        "PASSWORD": "de41b7fb99201d8334c23c014db35ecd92df81bc",
-		        "BZ": "最高统治者",
-		        "USERNAME": "admin",
-		        "ROLE_ID": "1",
-		        "DEGREE": "本科",
-		        "LIVEPLACE": "成都",
-		        "AVATAR": "img/logo.jpg",
-		        "WEIGHT": 50
+		        "NUMBER": "编号",
+		        "RIGHTS": "权限",
+		        "IP": "IP地址",
+		        "PHONE": "电话",
+		        "ALIAS": "昵称",
+		        "SEX": "性别",
+		        "USER_ID": "ID",
+		        "MARRIAGESTATUS": "婚姻状况",
+		        "LAST_LOGIN": "最后登录时间",
+		        "EMAIL": "邮箱地址",
+		        "HEIGHT": 身高,
+		        "BIRTHPLACE": "出生地",
+		        "NAME": "姓名",
+		        "CAREER": "职业",
+		        "STATUS": "用户状态",
+		        "OPENID": "openId",
+		        "PASSWORD": "密码",
+		        "BZ": "333",
+		        "USERNAME": "用户名",
+		        "DEGREE": "学历",
+		        "LIVEPLACE": "常住地",
+		        "AVATAR": "头像地址",
+		        "WEIGHT": 体重,
+		        "BIRTHDAY": "生日"
 		    }
 		}
 	 * 当userID为空时：返回的参数为：{"result": "error"}
@@ -458,30 +463,30 @@ public class RestfullController extends BaseController {
 	 * {
 		    "result": "success",
 		    "data": {
-		        "NUMBER": "001",
-		        "RIGHTS": "1133671055321055258374707980945218933803269864762743594642571294",
-		        "IP": "0:0:0:0:0:0:0:1",
-		        "PHONE": "18788888888",
-		        "ALIAS": "系统管理员",
-		        "SEX": "男",
-		        "USER_ID": "1",
-		        "MARRIAGESTATUS": "未婚",
-		        "LAST_LOGIN": "2016-04-13 16:12:33",
-		        "EMAIL": "QQ313596790@main.com",
-		        "HEIGHT": 188,
-		        "BIRTHPLACE": "成都",
-		        "NAME": "系统管理员",
-		        "CAREER": "高级架构师",
-		        "STATUS": "0",
-		        "OPENID": "wwwsssddd",
-		        "PASSWORD": "de41b7fb99201d8334c23c014db35ecd92df81bc",
-		        "BZ": "最高统治者",
-		        "USERNAME": "admin",
-		        "ROLE_ID": "1",
-		        "DEGREE": "本科",
-		        "LIVEPLACE": "成都",
-		        "AVATAR": "img/logo.jpg",
-		        "WEIGHT": 50
+		        "NUMBER": "编号",
+		        "RIGHTS": "权限",
+		        "IP": "IP地址",
+		        "PHONE": "电话",
+		        "ALIAS": "昵称",
+		        "SEX": "性别",
+		        "USER_ID": "ID",
+		        "MARRIAGESTATUS": "婚姻状况",
+		        "LAST_LOGIN": "最后登录时间",
+		        "EMAIL": "邮箱地址",
+		        "HEIGHT": 身高,
+		        "BIRTHPLACE": "出生地",
+		        "NAME": "姓名",
+		        "CAREER": "职业",
+		        "STATUS": "用户状态",
+		        "OPENID": "openId",
+		        "PASSWORD": "密码",
+		        "BZ": "333",
+		        "USERNAME": "用户名",
+		        "DEGREE": "学历",
+		        "LIVEPLACE": "常住地",
+		        "AVATAR": "头像地址",
+		        "WEIGHT": 体重,
+		        "BIRTHDAY": "生日"
 		    }
 		}
 	 * @throws Exception
@@ -685,57 +690,31 @@ public class RestfullController extends BaseController {
 		    "result": "success",
 		    "data": [
 		        {
-		            "NUMBER": "用户编号",
-		            "RIGHTS": "权限",
-		            "IP": "0:0:0:0:0:0:0:1",
-		            "PHONE": "电话",
-		            "ALIAS": "昵称",
-		            "SEX": "男",
-		            "USER_ID": "ID",
-		            "MARRIAGESTATUS": "婚姻状况",
-		            "LAST_LOGIN": "最后登录时间",
-		            "EMAIL": "邮箱",
-		            "HEIGHT": 身高,
-		            "BIRTHPLACE": "出生地",
-		            "NAME": "姓名",
-		            "CAREER": "职业",
-		            "STATUS": "状态",
-		            "PASSWORD": "密码",
-		            "BZ": "111",
-		            "USERNAME": "用户名",
-		            "ROLE_ID": "角色id",
-		            "DEGREE": "专业",
-		            "LIVEPLACE": "生活地",
-		            "AVATAR": "头像地址",
-		            "WEIGHT": 体重
-		        },
-		        {
-		            "RIGHTS": "",
-		            "PHONE": "13567899876",
-		            "ALIAS": "双黑狗",
-		            "SEX": "男",
-		            "USER_ID": "d28812dffc7b4c91924dd73c8487a86c",
-		            "LAST_LOGIN": "",
-		            "EMAIL": "828777292@qq.com",
-		            "STATUS": "0",
-		            "BZ": "要嘿嘿嘿么",
-		            "USERNAME": "admin123",
-		            "ROLE_ID": "3264c8e83d0248bb9e3ea6195b4c0216",
-		            "SKIN": "default",
-		            "LIVEPLACE": "成都",
-		            "AVATAR": "image/logo.jpg",
-		            "WEIGHT": 89,
-		            "BIRTHDAY": "1992-08-20",
-		            "NUMBER": "1001",
-		            "IP": "",
-		            "MARRIAGESTATUS": "未婚",
-		            "HEIGHT": 189,
-		            "BIRTHPLACE": "成都",
-		            "NAME": "默默",
-		            "CAREER": "程序员",
-		            "PASSWORD": "c9f55b944bbd496ff462196310dcb383586b4a5e",
-		            "DEGREE": "大壮"
-		        }
+		           "NUMBER": "编号",
+			        "RIGHTS": "权限",
+			        "IP": "IP地址",
+			        "PHONE": "电话",
+			        "ALIAS": "昵称",
+			        "SEX": "性别",
+			        "USER_ID": "ID",
+			        "MARRIAGESTATUS": "婚姻状况",
+			        "LAST_LOGIN": "最后登录时间",
+			        "EMAIL": "邮箱地址",
+			        "HEIGHT": 身高,
+			        "BIRTHPLACE": "出生地",
+			        "NAME": "姓名",
+			        "CAREER": "职业",
+			        "STATUS": "用户状态",
+			        "OPENID": "openId",
+			        "PASSWORD": "密码",
+			        "BZ": "333",
+			        "USERNAME": "用户名",
+			        "DEGREE": "学历",
+			        "LIVEPLACE": "常住地",
+			        "AVATAR": "头像地址",
+			        "WEIGHT": 体重,
+			        "BIRTHDAY": "生日"	
+		      }
 		    ]
 		}
 	 * @throws Exception
@@ -814,6 +793,7 @@ public class RestfullController extends BaseController {
 	 * 	当新增用户信息失败时！跟新增关联用户关系失败时！返回{"result":"error"}
 	 * 	当新增关联关系成功时！返回{"result":"success"}
 	 */
+	@SuppressWarnings({ "static-access", "static-access" })
 	@RequestMapping(value="saveRelationUser",method=RequestMethod.POST)
 	@ResponseBody
 	public Object saveRelationUser(@RequestBody String u){
@@ -821,7 +801,6 @@ public class RestfullController extends BaseController {
 		 * 分析：当用户点击新增关联用户按钮时：获取当前登录的用户ID userId 跳转页面到新增
 		 * (执行新增用户的操作) 同时保存 生成的 ID
 		 * 将获取到的userID   和  新增用户的 userID  存入sys_useranduser表中 并生成 ID属性
-		 * 当新增用户成功时！
 		 * 
 		 */
 		logBefore(logger,"根据用户关系表中的主键 ID(useranduser_id)删除关联的用户信息");
@@ -835,6 +814,7 @@ public class RestfullController extends BaseController {
 		
 		String name = jasonObject.get("name").toString();
 		String sex = jasonObject.get("sex").toString();
+		//婚姻状态，传入下拉列表中的value 1 未婚 2 已婚 3 同居 4 离异 5寡居
 		String marriageStatus = jasonObject.get("marriageStatus").toString();
 		String birthday = jasonObject.get("birthday").toString();
 		String height = jasonObject.get("height").toString();
@@ -847,6 +827,21 @@ public class RestfullController extends BaseController {
 		String uuid = this.get32UUID();//新增关联用户的ID
 		
 		String useranduser_id = this.get32UUID();
+		
+		if(sex.equals(SexEnum.BOY.getValue())){
+			sex = SexEnum.BOY.getValue();
+		}else if(sex.equals(SexEnum.GIRL.getValue())){
+			sex = SexEnum.GIRL.getValue();
+		}else{
+			sex= SexEnum.BOY.getValue();
+		}
+		
+		//判断婚姻状态  传入下拉列表中的value 1 未婚 2 已婚 3 同居 4 离异 5寡居
+		marriageStatus = MarriageStatusEnum.getNameByIndex(Integer.parseInt(marriageStatus));
+		
+		//判断学历
+		degree = DegreeEnum.getNameByIndex(Integer.parseInt(degree));
+		
 		
 		pd.put("USER_ID", uuid);
 		pd.put("NAME", name);
