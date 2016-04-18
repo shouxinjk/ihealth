@@ -1,26 +1,73 @@
 package com.shouxin.util;
 
-/**
- * 体检项目状态信息的枚举类
- * @author sks
- * ALREADYENABLED 已选中
- * HASBEENDELETED 已删除
- *
- */
 public enum StatusEnum {
-	ALREADYENABLED("已选中"),HASBEENDELETED("已删除");
 	
-	private String value;
+	NEW("新建",1),
+	DOCTOREXAMIN("医生已审核",2),
+	OPERATIONSUPPLEMENT("运维已补充",3),
+	OPERATIONEXAMINE("运维已审核",4),
+	PUBLISH("已发布",5),
+	EXPIRED("已失效",6),
+	//体检项目表
+	ALREADYENABLED("已选中",7),HASBEENDELETED("已删除",8),
+	//用户表
+	DISABLE("禁用",9),ENABLE("启用",10),
+	//体检套餐表
+	HASBEENGENERATED("已生成",11),ALREADYSELECTED("已选定",12),GENERATIONIN("生成中",13);
 	
-	private StatusEnum(String value){
-		this.value = value;
+	
+	private String name;
+	private int index;
+	
+	private StatusEnum(String name,int index){
+		this.name = name;
+		this.index = index;
+	}
+	
+	/**
+	 * 根据枚举name值获取index
+	 * @param name
+	 * @return
+	 */
+	public int getIndexByName(String name){
+		for(StatusEnum statu : StatusEnum.values()){
+			if(statu.getName().equals(name)){
+				return statu.getIndex();
+			}
+		}
+		return 0;
+	}
+	
+	/**
+	 * 根据枚举index值获name
+	 * @param index
+	 * @return
+	 */
+	public String getNameByIndex(int index){
+		for(StatusEnum statu:StatusEnum.values()){
+			if(statu.getIndex()==index){
+				return statu.getName();
+			}
+		}
+		return null;
 	}
 
-	public String getValue() {
-		return value;
+	public String getName() {
+		return name;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
+	
+
 }
