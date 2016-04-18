@@ -50,11 +50,37 @@
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">是否遗传倾向:</td>
-								<td><input type="number" name="ISINHERITABLE" id="ISINHERITABLE" value="${pd.ISINHERITABLE}" maxlength="32" placeholder="这里输入是否遗传倾向" title="是否遗传倾向" style="width:98%;"/></td>
+								<td>
+									<c:if test="${ pd.ISINHERITABLE eq 1}">
+										<label><input type="radio" name="ISINHERITABLE" value="1" checked="checked"/><span>是</span></label>
+										<label><input type="radio" name="ISINHERITABLE" value="0"/><span>否</span></label>
+									</c:if>
+									<c:if test="${ pd.ISINHERITABLE eq 0}">
+										<label><input type="radio" name="ISINHERITABLE" value="1"/><span>是</span></label>
+										<label><input type="radio" name="ISINHERITABLE" value="0" checked="checked"/><span>否</span></label>
+									</c:if>
+									<c:if test="${ pd.ISINHERITABLE eq null}">
+										<label><input type="radio" name="ISINHERITABLE" value="1"/><span>是</span></label>
+										<label><input type="radio" name="ISINHERITABLE" value="0" checked="checked"/><span>否</span></label>
+									</c:if>
+								</td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">是否高发:</td>
-								<td><input type="number" name="ISHIGHINCIDENCE" id="ISHIGHINCIDENCE" value="${pd.ISHIGHINCIDENCE}" maxlength="32" placeholder="这里输入是否高发" title="是否高发" style="width:98%;"/></td>
+								<td>
+									<c:if test="${pd.ISHIGHINCIDENCE eq 1}">
+										<label><input type="radio" name="ISHIGHINCIDENCE" value="1" checked="checked"/><span>是</span></label>
+										<label><input type="radio" name="ISHIGHINCIDENCE" value="0"/><span>否</span></label>
+									</c:if>
+									<c:if test="${pd.ISHIGHINCIDENCE eq 0}">
+										<label><input type="radio" name="ISHIGHINCIDENCE" value="1"/><span>是</span></label>
+										<label><input type="radio" name="ISHIGHINCIDENCE" value="0" checked="checked"/><span>否</span></label>
+									</c:if>
+									<c:if test="${pd.ISHIGHINCIDENCE eq null}">
+										<label><input type="radio" name="ISHIGHINCIDENCE" value="1" checked="checked"/><span>是</span></label>
+										<label><input type="radio" name="ISHIGHINCIDENCE" value="0" /><span>否</span></label>
+									</c:if>
+								</td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">
@@ -76,7 +102,7 @@
 				<!-- /.row -->
 			</div>
 			<!-- /.page-content -->
-		</div>
+ 		</div>
 	</div>
 	<!-- /.main-content -->
 </div>

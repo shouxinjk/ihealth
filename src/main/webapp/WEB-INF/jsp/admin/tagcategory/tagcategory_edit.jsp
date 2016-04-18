@@ -50,6 +50,23 @@
 								<td><input type="text" name="MATETYPE" id="MATETYPE" value="${null == pds.MATETYPE ?pd.MATETYPE:pds.MATETYPE}" maxlength="255" placeholder="这里输入标签特性" title="标签分类特性" style="width:98%;"/></td>
 							</tr>
 							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">是否互斥:</td>
+								<td>
+									<c:if test="${pd.ISEXCLUSIVE eq 1 }">
+										<label><input type="radio" name="ISEXCLUSIVE" value="1" checked="checked"/><span>是</span></label>
+										<label><input type="radio" name="ISEXCLUSIVE" value="0"/><span>否</span></label>
+									</c:if>
+									<c:if test="${pd.ISEXCLUSIVE eq 0 }">
+										<label><input type="radio" name="ISEXCLUSIVE" value="1"/><span>是</span></label>
+										<label><input type="radio" name="ISEXCLUSIVE" value="0"  checked="checked"/><span>否</span></label>
+									</c:if>
+									<c:if test="${pd.ISEXCLUSIVE eq null }">
+										<label><input type="radio" name="ISEXCLUSIVE" value="1" checked="checked"/><span>是</span></label>
+										<label><input type="radio" name="ISEXCLUSIVE" value="0"/><span>否</span></label>
+									</c:if>
+								</td>
+							</tr>
+							<tr>
 								<td style="text-align: center;" colspan="10">
 									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
 									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
@@ -118,28 +135,6 @@
 				$("#ISEXCLUSIVE").focus();
 			return false;
 			}
-			if($("#CREATEBY").val()==""){
-				$("#CREATEBY").tips({
-					side:3,
-		            msg:'请输入用户id',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEBY").focus();
-			return false;
-			}
-			if($("#CREATEON").val()==""){
-				$("#CREATEON").tips({
-					side:3,
-		            msg:'请输入时间',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEON").focus();
-			return false;
-			}
-			alert($("#PARENT_ID").val());
-				
 			$("#Form").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();

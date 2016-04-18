@@ -16,6 +16,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,9 +62,8 @@ public class ExamGuideLineController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/save")
-	public ModelAndView save() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"新增ExamGuideLine");
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
+	public ModelAndView save(String NAME) throws Exception{
+		logBefore(logger,NAME+"新增ExamGuideLine");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
@@ -228,6 +228,14 @@ public class ExamGuideLineController extends BaseController {
 		mv.addObject("varFreqList",varFreqList);
 		return mv;
 	}	
+	
+	@RequestMapping(value="/addSou")
+	public void addSou(HttpServletRequest req,HttpServletResponse resp) throws Exception{
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		pd.put("EXAMSOLUTION_ID", this.get32UUID());	//主键
+		examsolutionService.save(pd);
+	}
 	
 	 /**去指南规则修改页面
 		 * @param

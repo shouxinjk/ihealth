@@ -90,6 +90,8 @@
 		<include refid="tableName"></include>
 		set 
 			NAME = #{NAME},
+			ISEXCLUSIVE = #{ISEXCLUSIVE},
+			MATETYPE = #{MATETYPE},
 		TAGCATEGORY_ID = TAGCATEGORY_ID
 		where 
 		TAGCATEGORY_ID = #{TAGCATEGORY_ID}

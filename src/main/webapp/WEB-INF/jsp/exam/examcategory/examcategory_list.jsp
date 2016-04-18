@@ -258,7 +258,6 @@
 		
 		//新增
 		function add(EXAMCATEGORY_ID){
-			alert(EXAMCATEGORY_ID);
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
