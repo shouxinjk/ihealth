@@ -24,6 +24,7 @@ import com.shouxin.entity.Page;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
+import com.shouxin.util.StringUtil;
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.service.admin.article.ArticleManager;
 
@@ -232,8 +233,10 @@ public class ArticleController extends BaseController {
 		//获取前段页面传入的多个标签的ID 并按,拆分
 		String tagIds = pd.getString("tagIds");
 		logger.debug("多个标签的ID为："+tagIds);
+		
+
 		//按,进行拆分  保存数据到数据库中
-		String[] tags = tagIds.split(",");
+		String[] tags = StringUtil.StrList(tagIds);
 		for (int i = 0; i < tags.length; i++) {
 			pd.put("id", this.get32UUID());
 			pd.put("tag_id", tags[i]);
@@ -243,7 +246,7 @@ public class ArticleController extends BaseController {
 		//获取当前选中的疾病的ID
 		String diseaseId = pd.getString("diseaseId");
 		logger.debug("多个疾病的ID为:" + diseaseId);
-		String[] diseases = diseaseId.split(",");
+		String[] diseases = StringUtil.StrList(diseaseId);
 		for (int i = 0; i < diseases.length; i++) {
 			pd.put("diseaseandarticle_id", this.get32UUID());
 			pd.put("article_id", articleId);
