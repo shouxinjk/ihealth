@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -101,7 +103,7 @@ public class TagController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/list")
-	public ModelAndView list(Page page) throws Exception{
+	public ModelAndView list(Page page,HttpServletResponse res) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表Tag");
 		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		ModelAndView mv = this.getModelAndView();

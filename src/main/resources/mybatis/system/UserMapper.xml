@@ -151,10 +151,10 @@
 		  a.* 
 		FROM
 		  admin_tag t 
-		  LEFT JOIN admin_taganduser tu 
-		    ON t.`TAG_ID` = tu.`TAG_ID` 
+		  LEFT JOIN admin_userandtag ut 
+		    ON t.`TAG_ID` = ut.`tag_id` 
 		  LEFT JOIN sys_user u 
-		    ON u.`USER_ID` = tu.`USER_ID` 
+		    ON u.`USER_ID` = ut.`user_id` 
 		  LEFT JOIN admin_tagandarticle ta 
 		    ON ta.`tag_id` = t.`TAG_ID` 
 		  LEFT JOIN tb_article a 
@@ -172,10 +172,10 @@
 		  t.* 
 		FROM
 		  admin_tag t 
-		  LEFT JOIN admin_taganduser tu 
-		    ON t.`TAG_ID` = tu.`TAG_ID` 
+		  LEFT JOIN admin_userandtag ut 
+		    ON t.`TAG_ID` = ut.`tag_id` 
 		  LEFT JOIN sys_user u 
-		    ON u.`USER_ID` = tu.`USER_ID` 
+		    ON u.`USER_ID` = ut.`user_id` 
 		  LEFT JOIN admin_tagandarticle ta 
 		    ON ta.`tag_id` = t.`TAG_ID` 
 		  LEFT JOIN tb_article a 

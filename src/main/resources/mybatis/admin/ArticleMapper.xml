@@ -7,6 +7,38 @@
 		TB_ARTICLE
 	</sql>
 	
+	<sql id="tagAndArticle">
+		admin_tagandarticle
+	</sql>
+	
+	<sql id="diseaseAndArticle">
+		admin_diseaseandarticle
+	</sql>
+	
+	<sql id="tagAndArticleAttribute">
+		id,
+		tag_id,
+		article_id
+	</sql>
+	
+	<sql id="tagAndArticleAttributeValue">
+		#{id},
+		#{tag_id},
+		#{article_id}
+	</sql>
+	
+	<sql id="diseaseAndArticleAttribute">
+		diseaseandarticle_id,
+		article_id,
+		disease_id
+	</sql>
+	
+	<sql id="diseaseAndArticleAttributeValue">
+		#{diseaseandarticle_id},
+		#{article_id},
+		#{disease_id}
+	</sql>
+	
 	<!-- 字段 -->
 	<sql id="Field">
 		TITLE,	
@@ -32,6 +64,29 @@
 		#{CREATEON},	
 		#{ARTICLE_ID}
 	</sql>
+	
+	<!-- 录入文章时，向admin_tagandarticle表新增信息 -->
+	<insert id="saveTagAndArticle" parameterType="pd">
+		insert into 
+		<include refid="tagAndArticle"></include>
+		(
+		<include refid="tagAndArticleAttribute"></include>
+		) values (
+		<include refid="tagAndArticleAttributeValue"></include>
+		)
+	</insert>
+	
+	
+	<!-- 录入文章时，向admin_diseaseandarticle表新增信息 -->
+	<insert id="saveDiseaseAndArticle" parameterType="pd">
+		insert into 
+		<include refid="diseaseAndArticle"></include>
+		(
+		<include refid="diseaseAndArticleAttribute"></include>
+		) values (
+		<include refid="diseaseAndArticleAttributeValue"></include>
+		)
+	</insert>
 	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">

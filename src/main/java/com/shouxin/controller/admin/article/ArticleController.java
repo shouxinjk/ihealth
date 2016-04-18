@@ -14,8 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.alibaba.druid.stat.TableStat.Mode;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
 import com.shouxin.util.AppUtil;
@@ -125,7 +128,7 @@ public class ArticleController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		mv.setViewName("admin/article/article_edit");
-		mv.addObject("msg", "save");
+		mv.addObject("msg", "saveRelations");
 		mv.addObject("pd", pd);
 		return mv;
 	}	
@@ -211,6 +214,50 @@ public class ArticleController extends BaseController {
 		dataMap.put("varList", varList);
 		ObjectExcelView erv = new ObjectExcelView();
 		mv = new ModelAndView(erv,dataMap);
+		return mv;
+	}
+	
+	//新增文章时，添加标签和疾病信息跟 文章的关系
+	@RequestMapping(value="/saveRelations",method = RequestMethod.POST)
+	public ModelAndView saveRelations() throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"新增Article");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		//生成 新增文章信息的ID
+		String articleId = this.get32UUID();
+		
+		//获取前段页面传入的多个标签的ID 并按,拆分
+		String tagIds = pd.getString("tagIds");
+		logger.debug("多个标签的ID为："+tagIds);
+		//按,进行拆分  保存数据到数据库中
+		String[] tags = tagIds.split(",");
+		for (int i = 0; i < tags.length; i++) {
+			pd.put("id", this.get32UUID());
+			pd.put("tag_id", tags[i]);
+			pd.put("article_id", articleId);
+			this.articleService.saveTagAndArticle(pd);
+		}
+		//获取当前选中的疾病的ID
+		String diseaseId = pd.getString("diseaseId");
+		logger.debug("多个疾病的ID为:" + diseaseId);
+		String[] diseases = diseaseId.split(",");
+		for (int i = 0; i < diseases.length; i++) {
+			pd.put("diseaseandarticle_id", this.get32UUID());
+			pd.put("article_id", articleId);
+			pd.put("disease_id", diseases[i]);
+			this.articleService.saveDiseaseAndArticle(pd);
+		}
+		
+		pd.put("ARTICLE_ID", articleId);	//主键
+		pd.put("PUBLISHTIME", new Date()); //发布时间
+		pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
+		pd.put("CREATEON", new Date());//改记录创建时间
+		articleService.save(pd);
+		mv.addObject("msg","success");
+		mv.setViewName("save_result");
 		return mv;
 	}
 	

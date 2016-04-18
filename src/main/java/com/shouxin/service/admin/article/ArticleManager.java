@@ -54,5 +54,19 @@ public interface ArticleManager{
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
 	
+	/**
+	 * 新增标签跟文章的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveTagAndArticle(PageData pd)throws Exception;
+	
+	/**
+	 * 新增疾病跟文章的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveDiseaseAndArticle(PageData pd)throws Exception;
+	
 }
 
