@@ -16,7 +16,7 @@ public class DiseaseCategory {
 	private boolean hasDiseaseCategory = false;
 	private String treeUrl;
 	private String PARENT_ID;
-
+	
 	@Override
 	public String toString() {
 		return "DiseaseCategory [DISEASECATEGORY_ID=" + DISEASECATEGORY_ID + ", NAME=" + NAME + ", DESCRIPTION="

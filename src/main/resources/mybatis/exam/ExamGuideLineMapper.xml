@@ -115,6 +115,17 @@
 		EXAMGUIDELINE_ID = #{EXAMGUIDELINE_ID}
 	</update>
 	
+	
+	<!-- 修改状态 -->
+	<update id="auditing" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			STATUS = #{STATUS}
+		where 
+		EXAMGUIDELINE_ID = #{EXAMGUIDELINE_ID}
+	</update>
+	
 	<!-- 修改指南规则 -->
 	<update id="editRule" parameterType="pd">
 		update
@@ -122,6 +133,7 @@
 		set 
 			HIGHRISKEXPRESSION = #{HIGHRISKEXPRESSION},
 			LOWRISKEXPRESSION = #{LOWRISKEXPRESSION},
+			STATUS = #{STATUS},
 		EXAMGUIDELINE_ID = EXAMGUIDELINE_ID
 		where 
 		EXAMGUIDELINE_ID = #{EXAMGUIDELINE_ID}
@@ -177,7 +189,7 @@
 	-->
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
-		select g.EXAMGUIDELINE_ID AS EXAMGUIDELINE_ID,g.NAME AS GNAME,g.ORIGINATE as ORIGINATE,c.NAME 
+		select g.STATUS AS STATUS,g.EXAMGUIDELINE_ID AS EXAMGUIDELINE_ID,g.NAME AS GNAME,g.ORIGINATE as ORIGINATE,c.NAME 
 		as CNAME,d.NAME as DNAME,g.CONCERNEDFACTORS as CONCERNEDFACTORS
 		 ,g.DESCRIPTION as DESCRIPTION,i.NAME as INAME,s.FEATURES as FEATURES,g.HIGHRISKDEFINE as HIGHRISKDEFINE,
 		 g.HIGHRISKEXPRESSION as HIGHRISKEXPRESSION from 
@@ -185,7 +197,7 @@
 		left join admin_disease d on g.DISEASE_ID=d.DISEASE_ID 
 		left join admin_diseasecategory c on d.DISEASECATEGORY_ID=c.DISEASECATEGORY_ID 
 		left join exam_examitem i on s.EXAMITEM_ID = i.EXAMITEM_ID
-		 where 1=1
+		 where 1=1 
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(

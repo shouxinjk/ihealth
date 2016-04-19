@@ -9,8 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +24,20 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.druid.stat.TableStat.Mode;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.DiseaseCategory;
+import com.shouxin.entity.admin.Tag;
+import com.shouxin.entity.admin.TagCategory;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
 import com.shouxin.util.StringUtil;
+
+import net.sf.json.JSONArray;
+
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.service.admin.article.ArticleManager;
+import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
+import com.shouxin.service.admin.tagcategory.TagCategoryManager;
 
 /** 
  * 说明：文章信息管理
@@ -40,6 +51,14 @@ public class ArticleController extends BaseController {
 	String menuUrl = "article/list.do"; //菜单地址(权限用)
 	@Resource(name="articleService")
 	private ArticleManager articleService;
+
+	@Resource(name="tagcategoryService")
+	private TagCategoryManager tagcategoryService;
+	
+	
+
+	@Resource(name="diseasecategoryService")
+	private DiseaseCategoryManager diseasecategoryService;
 	
 	/**保存
 	 * @param
@@ -119,15 +138,39 @@ public class ArticleController extends BaseController {
 		return mv;
 	}
 	
+	
 	/**去新增页面
 	 * @param
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/goAdd")
-	public ModelAndView goAdd()throws Exception{
+	public ModelAndView goAdd(Model model,String TAGATEGORY_ID)throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		/**
+		 * 需求： 当用户点击新增按钮时，跳转到新增页面并获取所有的标签分类下的标签信息
+		 * 
+		 */
+		try{
+			List<TagCategory> list = this.tagcategoryService.findTagsList();
+			
+			List<DiseaseCategory> disList = this.diseasecategoryService.findAllDiseases();
+			
+			String jsons = JSONArray.fromObject(disList).toString();
+			
+			String json = JSONArray.fromObject(list).toString();
+			logger.debug(json + "-------------------------------------------------");
+			json = json.replaceAll("TAG_ID", "id").replaceAll("NAME", "name").replaceAll("tags", "nodes").replaceAll("hasTagCategory", "checked").replaceAll("treeUrl", "url");
+			
+			jsons = jsons.replaceAll("DISEASE_ID", "id").replaceAll("NAME", "name").replaceAll("diseases", "nodes").replaceAll("hasTagCategory", "checked").replaceAll("treeUrl", "url");
+			
+			model.addAttribute("zTreeNodes", json);
+			model.addAttribute("zTreeNodess", jsons);
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		
 		mv.setViewName("admin/article/article_edit");
 		mv.addObject("msg", "saveRelations");
 		mv.addObject("pd", pd);

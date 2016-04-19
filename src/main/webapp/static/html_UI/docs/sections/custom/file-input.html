@@ -1,5 +1,7 @@
 <section>
-	<h1 class="blue" data-id="#custom/file-input"><i class="ace-icon fa fa-desktop grey"></i> File Input</h1>
+	<h1 class="blue" data-id="#custom/file-input">
+		<i class="ace-icon fa fa-desktop grey"></i> File Input
+	</h1>
 
 	<div class="hr hr-double hr32"></div>
 
@@ -7,53 +9,58 @@
 	<div class="help-content">
 		<h3 class="info-title smaller">1. Custom File Input</h3>
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				A simple file input control which styles browsers default input and adds some extra features
-			</li>
-			<li>
-				If you want advanced functionality, you should consider using <a href="#plugins/misc.dropzone" class="help-more">dropzone.js</a> or other library.
-			</li>
-			
-			<li>
-			Basic usage is:
-<pre data-language="html">
+			<ul class="info-list list-unstyled">
+				<li>A simple file input control which styles browsers default
+					input and adds some extra features</li>
+				<li>If you want advanced functionality, you should consider
+					using <a href="#plugins/misc.dropzone" class="help-more">dropzone.js</a>
+					or other library.
+				</li>
+
+				<li>Basic usage is: <pre data-language="html">
  <input type="file" name="myfile" id="my-file-input" />
-</pre>
-<pre data-language="javascript">
+</pre> <pre data-language="javascript">
  $('#my-file-input').ace_file_input();
 </pre>
-			</li>
- 		 </ul>
+				</li>
+			</ul>
 		</div>
-		
+
 		<h3 class="info-title smaller">2. Options</h3>
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				You can use one of the following options:
-				<ol>
-					<li><code>style</code> default=false. If you set it to <b>well</b>, the large style will be displayed</li>
-					<li><code>no_file</code> the text to show when no file is selected</li>
-					<li><code>no_icon</code> the icon to show when no file is selected</li>
-					<li><code>btn_choose</code> button text when no file is selected</li>
-					<li><code>btn_change</code> button text when a file is selected</li>
-					<li><code>icon_remove</code> icon to use for remove(reset) button</li>
-					<li><code>droppable</code> default=false. set <b>true</b> to enable drag & drop</li>
-					<li><code>thumbnail</code> <b>small</b>, <b>large</b> or <b>fit</b>. Used when <b>style</b> options is <b>well</b></li>
-					<li class="space-6"></li>
-					<li><code>allowExt</code> a list of allowed extensions (whitelist)</li>
-					<li><code>denyExt</code> a list of denied extensions (blacklist)</li>
-					<li><code>allowMime</code> a list of allowed mime types (whitelist)</li>
-					<li><code>denyMime</code> a list of denied mime types (blacklist)</li>
-					<li><code>maxSize</code> maximum file size allowed in bytes</li>
-				</ol>
-				The above allow/deny options, trigger <code>file.error.ace</code> event when an invalid file is selected.
-				<br />
-				Please refer to "File Filtering" section for more info.
-				<Br />
-				
-<pre data-language="javascript">
+			<ul class="info-list list-unstyled">
+				<li>You can use one of the following options:
+					<ol>
+						<li><code>style</code> default=false. If you set it to <b>well</b>,
+							the large style will be displayed</li>
+						<li><code>no_file</code> the text to show when no file is
+							selected</li>
+						<li><code>no_icon</code> the icon to show when no file is
+							selected</li>
+						<li><code>btn_choose</code> button text when no file is
+							selected</li>
+						<li><code>btn_change</code> button text when a file is
+							selected</li>
+						<li><code>icon_remove</code> icon to use for remove(reset)
+							button</li>
+						<li><code>droppable</code> default=false. set <b>true</b> to
+							enable drag & drop</li>
+						<li><code>thumbnail</code> <b>small</b>, <b>large</b> or <b>fit</b>.
+							Used when <b>style</b> options is <b>well</b></li>
+						<li class="space-6"></li>
+						<li><code>allowExt</code> a list of allowed extensions
+							(whitelist)</li>
+						<li><code>denyExt</code> a list of denied extensions
+							(blacklist)</li>
+						<li><code>allowMime</code> a list of allowed mime types
+							(whitelist)</li>
+						<li><code>denyMime</code> a list of denied mime types
+							(blacklist)</li>
+						<li><code>maxSize</code> maximum file size allowed in bytes</li>
+					</ol> The above allow/deny options, trigger <code>file.error.ace</code>
+					event when an invalid file is selected. <br /> Please refer to
+					"File Filtering" section for more info. <Br /> <pre
+						data-language="javascript">
 $('#my-file-input').ace_file_input({
     style: 'well',
     no_file: 'Click to choose or drag & drop',
@@ -69,39 +76,32 @@ $('#my-file-input2').ace_file_input({
     denyExt:  ['exe', 'php']
 });
 </pre>
-			</li>
- 		 </ul>
+				</li>
+			</ul>
 		</div>
-			
+
 		<h3 class="info-title smaller">3. Callbacks</h3>
 		<div class="info-section">
-		<ul class="info-list list-unstyled">
-			<li>
-				There are 3 callback option
-			</li>
-			
-			<li>
-				<code>before_change</code> callback is called when user selects/drops files
-				and before files are displayed.
-				<br />
-				Inside it you can return:
-				<ol>
-					<li>a modified file list</li>
-					<li><code>true</code> and all files will be kept</li>
-					<li><code>false</code> and no files will be kept</li>
-					<li><code>-1</code> and no files will be kept and input will be reset</li>
-				</ol>
-				<br />
-				Also it accepts following arguments:
-				<ol>
-					<li>
-					  <code>files</code> a list of selected/dropped files which is a FileList in modern browsers
-					  and a string (filename) array for older browsers
-					</li>
-					<li><code>dropped</code> whether files have been dropped or selected</li>
-				</ol>
-				<br />
-<pre data-language="javascript">
+			<ul class="info-list list-unstyled">
+				<li>There are 3 callback option</li>
+
+				<li><code>before_change</code> callback is called when user
+					selects/drops files and before files are displayed. <br /> Inside
+					it you can return:
+					<ol>
+						<li>a modified file list</li>
+						<li><code>true</code> and all files will be kept</li>
+						<li><code>false</code> and no files will be kept</li>
+						<li><code>-1</code> and no files will be kept and input will
+							be reset</li>
+					</ol> <br /> Also it accepts following arguments:
+					<ol>
+						<li><code>files</code> a list of selected/dropped files which
+							is a FileList in modern browsers and a string (filename) array
+							for older browsers</li>
+						<li><code>dropped</code> whether files have been dropped or
+							selected</li>
+					</ol> <br /> <pre data-language="javascript">
 $('#my-file-input').ace_file_input({
   ...
   ,
@@ -141,12 +141,11 @@ $('#my-file-input').ace_file_input({
     //or
     return -1;//all are invalid, reset input
  }
- </pre>
-			</li>
-			
-			<li>
-				<b>before_remove</b> can be used to disable resetting file input, for example during a file upload session:
-<pre data-language="javascript">
+ </pre></li>
+
+				<li><b>before_remove</b> can be used to disable resetting file
+					input, for example during a file upload session: <pre
+						data-language="javascript">
  $('#my-file-input').ace_file_input({
     ...
 	,
@@ -155,12 +154,11 @@ $('#my-file-input').ace_file_input({
       return true;
     }
  });
- </pre>
-			</li>
-			
-			<li>
-				If <b>preview_error</b> is defined, it will be called in case there's an error when building preview of image files:
-<pre data-language="javascript">
+ </pre></li>
+
+				<li>If <b>preview_error</b> is defined, it will be called in
+					case there's an error when building preview of image files: <pre
+						data-language="javascript">
 $('#my-file-input').ace_file_input({
     ...,
     preview_error : function(filename, error_code) {
@@ -181,55 +179,52 @@ $('#my-file-input').ace_file_input({
    }
 });
  </pre>
-			</li>
+				</li>
 
- 		 </ul>
+			</ul>
 		</div>
 
 
 
-		<h3 class="info-title smaller" data-id="#custom/file-input.filter">4. File Filtering</h3>
+		<h3 class="info-title smaller" data-id="#custom/file-input.filter">4.
+			File Filtering</h3>
 		<!-- #section:custom/file-input.filter -->
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				As mentioned in previous sections, you can use the following options and callbacks to filter
-				the list of selected files:
-				<ol>
-					<li><code>allowExt</code></li>
-					<li><code>denyExt</code></li>
-					<li><code>allowMime</code></li>
-					<li><code>denyMime</code></li>
-					<li><code>maxSize</code></li>
-					<li><code>before_change</code></li>
-				</ol>
-			</li>
-			
-			<li>
-				Please note that when you select a file using file dialog,
-				browser's file input element cannot be modified. It can only be reset (emptied).
-				<br />
-				For example if you specify <code>allowExt</code> option
-				to select only image files, but user selects none-image files as well,
-				the browser keeps all selected files but Ace file input shows image files only.
-			</li>
-			
-			<li>
-				When user selects an invalid file <code>file.error.ace</code> event is triggered which
-				has some info about the error.
-			</li>
-			
-			<li>
-				If you call <code>preventDefault</code> on event object, the file control will be reset and becomes empty.
-				<br />
-				Otherwise, file control won't be reset and browser keeps all selected files.
-				<br />
-				However, Ace file input displays valid files and the 
-				<code>$('#my-file-input').data('ace_input_files')</code> returns valid files only.
-			</li>
-			
-			<li>
-<pre data-language="html">
+			<ul class="info-list list-unstyled">
+				<li>As mentioned in previous sections, you can use the
+					following options and callbacks to filter the list of selected
+					files:
+					<ol>
+						<li><code>allowExt</code></li>
+						<li><code>denyExt</code></li>
+						<li><code>allowMime</code></li>
+						<li><code>denyMime</code></li>
+						<li><code>maxSize</code></li>
+						<li><code>before_change</code></li>
+					</ol>
+				</li>
+
+				<li>Please note that when you select a file using file dialog,
+					browser's file input element cannot be modified. It can only be
+					reset (emptied). <br /> For example if you specify <code>allowExt</code>
+					option to select only image files, but user selects none-image
+					files as well, the browser keeps all selected files but Ace file
+					input shows image files only.
+				</li>
+
+				<li>When user selects an invalid file <code>file.error.ace</code>
+					event is triggered which has some info about the error.
+				</li>
+
+				<li>If you call <code>preventDefault</code> on event object,
+					the file control will be reset and becomes empty. <br />
+					Otherwise, file control won't be reset and browser keeps all
+					selected files. <br /> However, Ace file input displays valid
+					files and the <code>$('#my-file-input').data('ace_input_files')</code>
+					returns valid files only.
+				</li>
+
+				<li><pre data-language="html">
  $('#my-file-input').ace_file_input({
     'allowExt': ['jpg', 'jpeg', 'png']
  })
@@ -252,145 +247,113 @@ $('#my-file-input').ace_file_input({
 	event.preventDefault();
 	//it will reset (empty) file input, i.e. no files selected
  }); 
-</pre>
-			</li>
-			
-			<li>
-				There is also <code>before_change</code> callback.
-				Please see previous section for more info.
-			</li>
-			
- 		 </ul>
+</pre></li>
+
+				<li>There is also <code>before_change</code> callback. Please
+					see previous section for more info.
+				</li>
+
+			</ul>
 		</div>
 		<!-- /section:custom/file-input.filter -->
-		
 
-		
+
+
 		<h3 class="info-title smaller">5. Functions</h3>
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				The following functions are available for file input control.
-			</li>
-			<li>
-				<code>show_file_list</code> takes a list of file names and shows them inside the control:
-<pre data-language="javascript">
+			<ul class="info-list list-unstyled">
+				<li>The following functions are available for file input
+					control.</li>
+				<li><code>show_file_list</code> takes a list of file names and
+					shows them inside the control: <pre data-language="javascript">
 $('#my-input').ace_file_input('show_file_list', ['file1.txt']);
-</pre>
-				For example, you may want to edit a file input
-				which has user's previous selection.
-				
-				<div class="alert alert-info">
-					From version 1.3.2 you can also preview images inside file input control.
-				</div>
-<pre data-language="javascript">
+</pre> For example, you may want to edit a file input which has user's
+					previous selection.
+
+					<div class="alert alert-info">From version 1.3.2 you can also
+						preview images inside file input control.</div> <pre
+						data-language="javascript">
 $('#my-input')
 .ace_file_input('show_file_list', [
     {type: 'image', name: 'name of image', path: 'http://path/to/image/for/preview'},
     {type: 'file', name: 'hello.txt'}
 ]);
 //type can be 'image', 'video', 'audio', 'file'
-</pre>
-				
-			</li>
-			<li>
-				<code>update_settings</code> to update options:
-<pre data-language="javascript">
+</pre></li>
+				<li><code>update_settings</code> to update options: <pre
+						data-language="javascript">
 $('#my-input').ace_file_input('update_settings', {
    allowExt: ['pdf', 'doc', 'docx']
 });
-</pre>
-			</li>
-			<li>
-				<code>files</code> returns list of selected files:
-<pre data-language="javascript">
+</pre></li>
+				<li><code>files</code> returns list of selected files: <pre
+						data-language="javascript">
 var files = $('#my-input').ace_file_input('files');
 //is similar to:
 var files = $('#my-input').data('ace_input_files');
-</pre>
-			</li>
-			<li>
-				<code>method</code> returns method used by user which is 'select' or 'drop':
-<pre data-language="javascript">
+</pre></li>
+				<li><code>method</code> returns method used by user which is
+					'select' or 'drop': <pre data-language="javascript">
 var method = $('#my-input').ace_file_input('method');
 //is similar to:
 var method = $('#my-input').data('ace_input_method');
-</pre>
-			</li>
-			<li>
-				<code>disable</code> disables file input:
-<pre data-language="javascript">
+</pre></li>
+				<li><code>disable</code> disables file input: <pre
+						data-language="javascript">
 $('#my-input').ace_file_input('disable');
-</pre>
-			</li>
-			<li>
-				<code>enable</code> enables file input:
-<pre data-language="javascript">
+</pre></li>
+				<li><code>enable</code> enables file input: <pre
+						data-language="javascript">
 $('#my-input').ace_file_input('enable');
-</pre>
-			</li>
-			
-			<li>
-				<code>enable_reset</code> takes an argument and enables/disables reset button:
-<pre data-language="javascript">
+</pre></li>
+
+				<li><code>enable_reset</code> takes an argument and
+					enables/disables reset button: <pre data-language="javascript">
 $('#my-input').ace_file_input('enable_reset', false);
 $('#my-input').ace_file_input('enable_reset', true);
-</pre>
-			</li>
-			
-			<li>
-				<code>reset_input</code> resets file input:
-<pre data-language="javascript">
+</pre></li>
+
+				<li><code>reset_input</code> resets file input: <pre
+						data-language="javascript">
 $('#my-input').ace_file_input('reset_input');
-</pre>
-			</li>
-			<li>
-				<code>reset_input_ui</code> resets file input's UI only:
-<pre data-language="javascript">
+</pre></li>
+				<li><code>reset_input_ui</code> resets file input's UI only: <pre
+						data-language="javascript">
 $('#my-input').ace_file_input('reset_input_ui');
-</pre>
-			Suppose you have a form with a reset button.
-			<br />
-			When you hit "reset", file input field will be reset, but Ace file input's UI won't be reset.
-			<br />
-			You should do this on your own:
-<pre data-language="javascript">
+</pre> Suppose you have a form with a reset button. <br /> When you hit
+					"reset", file input field will be reset, but Ace file input's UI
+					won't be reset. <br /> You should do this on your own: <pre
+						data-language="javascript">
 $('#my-form').on('reset', function(e) {
     $('#my-input').ace_file_input('reset_input_ui');
 });
-</pre>
-			</li>
-			<li>
-				<code>reset_input_field</code> resets file input field
-			</li>
-			
-			
-			<li>
-				<code>loading</code> adds/updates/removes a loading/waiting overlay for example during a file upload:
-<pre data-language="javascript">
+</pre></li>
+				<li><code>reset_input_field</code> resets file input field</li>
+
+
+				<li><code>loading</code> adds/updates/removes a loading/waiting
+					overlay for example during a file upload: <pre
+						data-language="javascript">
  $('#my-input').ace_file_input('loading' , true);//adds overlay
  $('#my-input').ace_file_input('loading' , false);//removes overlay
  $('#my-input').ace_file_input('loading' , ' custom content inside overlay such as a progressbar ');
-</pre>
-			</li>
- 		 </ul>
+</pre></li>
+			</ul>
 		</div>
 
-		
+
 		<h3 class="info-title smaller">6. Events</h3>
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				If you use file filter options and user selects or drops an invalid file, a
-				<code>file.error.ace</code> event is triggered with some info about invalid files.
-				<br />
-				You can find more info about it in the <b>File Filtering</b> section.
-			</li>
-			
-			<li>
-				You can also add a <b>change</b> event listener to the file input and it will be triggered
-				when files are selected or dropped:
-<pre data-language="javascript">
+			<ul class="info-list list-unstyled">
+				<li>If you use file filter options and user selects or drops an
+					invalid file, a <code>file.error.ace</code> event is triggered with
+					some info about invalid files. <br /> You can find more info about
+					it in the <b>File Filtering</b> section.
+				</li>
+
+				<li>You can also add a <b>change</b> event listener to the file
+					input and it will be triggered when files are selected or dropped:
+					<pre data-language="javascript">
  $('#my-file-input').ace_file_input({
    droppable: true
  })
@@ -399,62 +362,53 @@ $('#my-form').on('reset', function(e) {
     var method = $(this).data('ace_input_method');
  });
 </pre>
-			</li>
- 		 </ul>
+				</li>
+			</ul>
 		</div>
 
 
 		<h3 class="info-title smaller">7. Uploading</h3>
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				If you don't use <b>drag & drop</b> functionality, file upload is done as normal,
-				by submitting the form and browser takes care of it.
-			</li>
-			
-			<li>
-				However when you enable <b>drag & drop</b> feature and user drops some files onto the control,
-				file field is not modified and by submitting form, no files are uploaded.
-			</li>
-			
-			<li>
-				In this case, you should use modern HTML5 features and upload your files using Ajax
-				and <b>FormData</b> object.
-				<br />
-				<a href="https://developer.mozilla.org/en-US/docs/Web/Guide/Using_FormData_Objects">FormData</a>
-			</li>
-			
-			<li>
-				The list of files which should be uploaded is retrieved like this:
-<pre data-language="javascript">
+			<ul class="info-list list-unstyled">
+				<li>If you don't use <b>drag & drop</b> functionality, file
+					upload is done as normal, by submitting the form and browser takes
+					care of it.
+				</li>
+
+				<li>However when you enable <b>drag & drop</b> feature and user
+					drops some files onto the control, file field is not modified and
+					by submitting form, no files are uploaded.
+				</li>
+
+				<li>In this case, you should use modern HTML5 features and
+					upload your files using Ajax and <b>FormData</b> object. <br /> <a
+					href="https://developer.mozilla.org/en-US/docs/Web/Guide/Using_FormData_Objects">FormData</a>
+				</li>
+
+				<li>The list of files which should be uploaded is retrieved
+					like this: <pre data-language="javascript">
 var files = $('#my-file-input').data('ace_input_files');
 </pre>
-			</li>
-			
-			<li>
-				For a working example and more info please see <code>examples/file-upload.html</code>.
-			</li>
-			
-			<li>
-				When using FormData object if you use the following to create your FormData object,
-				browser will include all the files that are selected by user:
-<pre data-language="javascript">
+				</li>
+
+				<li>For a working example and more info please see <code>examples/file-upload.html</code>.
+				</li>
+
+				<li>When using FormData object if you use the following to
+					create your FormData object, browser will include all the files
+					that are selected by user: <pre data-language="javascript">
 var myform = $('#myform');
 var fd = new FormData(myform.get(0));//populate FormData with myform data
-</pre>
-			This way our filtered files are not taken into account.
-			<br />
-			So you can do the following instead:
-<pre data-language="javascript">
+</pre> This way our filtered files are not taken into account. <br /> So you
+					can do the following instead: <pre data-language="javascript">
 var myform = $('#myform');
 var fd = new FormData();//empty FormData object
 $.each(myform.serializeArray(), function(i, item) {
   //add form fields one by one to our FormData 
   fd.append(item.name, item.value);
 });
-</pre>
-	The above does not add file fields to FormData and we should append our files like this:
-<pre data-language="javascript">
+</pre> The above does not add file fields to FormData and we should append our
+					files like this: <pre data-language="javascript">
 myform.find('input[type=file]').each(function(){
   var field_name = $(this).attr('name');
   //for fields with "multiple" file support
@@ -467,9 +421,8 @@ myform.find('input[type=file]').each(function(){
     }
   }
 });
-</pre>
-			Now our FormData object can be submitted using Ajax:
-<pre data-language="javascript">
+</pre> Now our FormData object can be submitted using Ajax: <pre
+						data-language="javascript">
 var deferred = $.ajax({
           url: myform.attr('action'),
          type: myform.attr('method'),
@@ -486,12 +439,11 @@ deferred.done(function(result) {
 });
 </pre>
 
-			</li>
-			
-			<li>
-				For older browsers that don't support <code>FormData</code> object, we can use 
-				an invisible frame to upload our form without leaving or refreshing the page:
-<pre data-language="javascript">
+				</li>
+
+				<li>For older browsers that don't support <code>FormData</code>
+					object, we can use an invisible frame to upload our form without
+					leaving or refreshing the page: <pre data-language="javascript">
 var deferred = new $.Deferred //create a custom deferred object, because there's no ajax here to create it for us
 var temporary_iframe_id = 'temporary-iframe-'+(new Date()).getTime()+'-'+(parseInt(Math.random()*1000));
 var temp_iframe = 
@@ -521,42 +473,35 @@ ie_timeout = setTimeout(function(){
     deferred.reject({'status':'fail', 'message':'Timeout!'});
 } , 30000);
 }
-</pre>
+</pre> And deferred callbacks are similar to ajax example.
+				</li>
 
-			And deferred callbacks are similar to ajax example.
-			</li>
-			
- 		 </ul>
+			</ul>
 		</div>
-		
-		
-		
+
+
+
 		<h3 class="info-title smaller">8. Notes</h3>
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				Please note that validating files inside browser is not secure.
-				<br />
-				You should always check uploaded files in your server side script.
-				<br />
-				A php example inside <code>examples/file-upload.php</code>
-				validates files and	only allows image files.
-			</li>
-			
-			<li>
-				Most modern browsers allow multiple file selection.
-				<br />
-				If you want that, make sure your file input control has <code>multiple</code> attribute
-				and input name has brackets like <code>myfiles[]</code>:
-<pre data-language="html">
+			<ul class="info-list list-unstyled">
+				<li>Please note that validating files inside browser is not
+					secure. <br /> You should always check uploaded files in your
+					server side script. <br /> A php example inside <code>examples/file-upload.php</code>
+					validates files and only allows image files.
+				</li>
+
+				<li>Most modern browsers allow multiple file selection. <br />
+					If you want that, make sure your file input control has <code>multiple</code>
+					attribute and input name has brackets like <code>myfiles[]</code>:
+					<pre data-language="html">
  &lt;input multiple type="file" name="myfiles[]" id="myfiles" /&gt;
 </pre>
-			</li>
- 		 </ul>
+				</li>
+			</ul>
 		</div>
 
 	</div>
-	
+
 	<!-- /section:custom/file-input -->
-	
+
 </section>

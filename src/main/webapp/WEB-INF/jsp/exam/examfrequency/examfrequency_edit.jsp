@@ -40,14 +40,6 @@
 								<td><input type="text" name="EXPRESSION" id="EXPRESSION" value="${pd.EXPRESSION}" maxlength="255" placeholder="这里输入CRON表达式，定义检查的间隔频率" title="CRON表达式，定义检查的间隔频率" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">创建该记录员工的id:</td>
-								<td><input type="text" name="CREATEBY" id="CREATEBY" value="${pd.CREATEBY}" maxlength="255" placeholder="这里输入创建该记录员工的id" title="创建该记录员工的id" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">创建该记录的时间:</td>
-								<td><input class="span10 date-picker" name="CREATEON" id="CREATEON" value="${pd.CREATEON}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="创建该记录的时间" title="创建该记录的时间" style="width:98%;"/></td>
-							</tr>
-							<tr>
 								<td style="text-align: center;" colspan="10">
 									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
 									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
@@ -104,26 +96,6 @@
 		            time:2
 		        });
 				$("#EXPRESSION").focus();
-			return false;
-			}
-			if($("#CREATEBY").val()==""){
-				$("#CREATEBY").tips({
-					side:3,
-		            msg:'请输入创建该记录员工的id',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEBY").focus();
-			return false;
-			}
-			if($("#CREATEON").val()==""){
-				$("#CREATEON").tips({
-					side:3,
-		            msg:'请输入创建该记录的时间',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEON").focus();
 			return false;
 			}
 			$("#Form").submit();

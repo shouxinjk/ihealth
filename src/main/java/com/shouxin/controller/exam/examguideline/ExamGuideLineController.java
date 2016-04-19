@@ -26,6 +26,7 @@ import com.shouxin.entity.admin.Disease;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
+import com.shouxin.util.StatusEnum;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -90,6 +91,21 @@ public class ExamGuideLineController extends BaseController {
 		out.close();
 	}
 	
+	/**医生审核
+	 * @param out
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/auditing")
+	public void auditing(PrintWriter out) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"审核ExamGuideLine");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		examguidelineService.auditing(pd);
+		out.write("success");
+		out.close();
+	}
+	
 	
 	/**修改
 	 * @param
@@ -143,6 +159,10 @@ public class ExamGuideLineController extends BaseController {
 		}
 		page.setPd(pd);
 		List<PageData>	varList = examguidelineService.list(page);	//列出ExamGuideLine列表
+		logBefore(logger,StatusEnum.getNameByIndex(1)+"enum+++++++++++");
+		for (PageData p : varList) {
+			p.put("STATUS", StatusEnum.getNameByIndex(Integer.parseInt(p.get("STATUS").toString())));
+		}
 		mv.setViewName("exam/examguideline/examguideline_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -167,6 +187,9 @@ public class ExamGuideLineController extends BaseController {
 		}
 		page.setPd(pd);
 		List<PageData>	varList = examguidelineService.list(page);	//列出ExamGuideLine列表
+		for (PageData p : varList) {
+			p.put("STATUS", StatusEnum.getNameByIndex(Integer.parseInt(p.get("STATUS").toString())));
+		}
 		mv.setViewName("exam/examguideline/examguidelinerule_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -230,11 +253,38 @@ public class ExamGuideLineController extends BaseController {
 	}	
 	
 	@RequestMapping(value="/addSou")
-	public void addSou(HttpServletRequest req,HttpServletResponse resp) throws Exception{
+	public void addSou(HttpServletResponse resp) throws Exception{
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("EXAMSOLUTION_ID", this.get32UUID());	//主键
 		examsolutionService.save(pd);
+		List<PageData> varSouList = examsolutionService.listExamSolutionByExamGuidelineID(pd.get("EXAMGUIDELINE_ID").toString());
+		JSONArray array = JSONArray.fromObject(varSouList);
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/html;charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.println(array);
+		out.close();
+	}
+	
+	/**
+	 * 删除检查手段
+	 * @param resp
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/delSou")
+	public void delSou(HttpServletResponse resp) throws Exception{
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		examsolutionService.delete(pd);
+		List<PageData> varSouList = examsolutionService.listExamSolutionByExamGuidelineID(pd.get("EXAMGUIDELINE_ID").toString());
+		JSONArray array = JSONArray.fromObject(varSouList);
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/html;charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.println(array);
+		out.close();
+		
 	}
 	
 	 /**去指南规则修改页面

@@ -1,5 +1,7 @@
 <section>
-	<h1 class="blue" data-id="#custom/inline-editable"><i class="ace-icon fa fa-desktop grey"></i> Inline Editable Addons</h1>
+	<h1 class="blue" data-id="#custom/inline-editable">
+		<i class="ace-icon fa fa-desktop grey"></i> Inline Editable Addons
+	</h1>
 
 	<div class="hr hr-double hr32"></div>
 
@@ -8,45 +10,41 @@
 	<div class="help-content">
 		<h3 class="info-title smaller">Overview</h3>
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				Based on <a href="#plugins/misc.inline-editable">Inline editable</a> plugin,
-				five additional editables have been defined which you can use by including
-				the following scripts:
-<pre data-language="html">
+			<ul class="info-list list-unstyled">
+				<li>Based on <a href="#plugins/misc.inline-editable">Inline
+						editable</a> plugin, five additional editables have been defined which
+					you can use by including the following scripts: <pre
+						data-language="html">
  &lt;script src="dist/js/x-editable/bootstrap-editable.min.js" /&gt;
  &lt;script src="dist/js/x-editable/ace-editable.min.js" /&gt;
 </pre>
-			</li>
- 		 </ul>
+				</li>
+			</ul>
 		</div>
-		
-		
-		<h3 class="info-title smaller" data-id="#custom/inline-editable.image">Image editable</h3>
+
+
+		<h3 class="info-title smaller" data-id="#custom/inline-editable.image">Image
+			editable</h3>
 		<!-- #section:custom/inline-editable.image -->
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				Image editable is based on <a href="#custom/file-input" class="help-more">custom file input</a>
-			</li>
-		 
-			<li>
-				You should do some extra work for uploading the image.
-				<br />
-				A working example is available at <code>examples/profile-update.html</code>.
-				<br />
-				The backend (server side) code is written in PHP at <code>examples/file-upload.php</code>.
-			</li>
-			
-			<li>
-				Inside <code>image</code> parapmeter which takes custom file input options,
-				there is also <code>on_error</code> and <code>on_success</code> callbacks that are called
-				when an invalid file is selected or if files are successfully selected.
-			</li>
-			
-			<li>
-				An example of image editable's usage:
-<pre data-language="javascript">
+			<ul class="info-list list-unstyled">
+				<li>Image editable is based on <a href="#custom/file-input"
+					class="help-more">custom file input</a>
+				</li>
+
+				<li>You should do some extra work for uploading the image. <br />
+					A working example is available at <code>examples/profile-update.html</code>.
+					<br /> The backend (server side) code is written in PHP at <code>examples/file-upload.php</code>.
+				</li>
+
+				<li>Inside <code>image</code> parapmeter which takes custom
+					file input options, there is also <code>on_error</code> and <code>on_success</code>
+					callbacks that are called when an invalid file is selected or if
+					files are successfully selected.
+				</li>
+
+				<li>An example of image editable's usage: <pre
+						data-language="javascript">
 //first let's add a fake appendChild for Image element for browsers that have a problem with this
 //because it seems that editable plugin calls appendChild, and it causes errors on IE at unpredicted points
 try {
@@ -89,11 +87,11 @@ $('#avatar').editable({
   }
 });
 </pre>
-			</li>
-			
-			<li>
-				If you want the editable image displayed in edit mode at first, you can use something like this:
-<pre data-language="javascript">
+				</li>
+
+				<li>If you want the editable image displayed in edit mode at
+					first, you can use something like this: <pre
+						data-language="javascript">
 $('#avatar').editable('show').on('hidden', function(e, reason) {
   if(reason == 'onblur') {
      $('#avatar').editable('show');
@@ -102,23 +100,22 @@ $('#avatar').editable('show').on('hidden', function(e, reason) {
   $('#avatar').off('hidden');
 })
 </pre>
-			</li>
- 		 </ul>
+				</li>
+			</ul>
 		</div>
 		<!-- /section:custom/inline-editable.image -->
 
-		
-		<h3 class="info-title smaller" data-id="#custom/inline-editable.slider">Slider</h3>
+
+		<h3 class="info-title smaller"
+			data-id="#custom/inline-editable.slider">Slider</h3>
 		<!-- #section:custom/inline-editable.slider -->
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				For this addon 
-				<a href="#plugins/jquery.slider" class="help-more">jQuery UI</a>
-				is required and should be included first
-			</li>
-			<li>
-<pre data-language="javascript">
+			<ul class="info-list list-unstyled">
+				<li>For this addon <a href="#plugins/jquery.slider"
+					class="help-more">jQuery UI</a> is required and should be included
+					first
+				</li>
+				<li><pre data-language="javascript">
 $('#element').editable({
    type : 'slider',
    name : 'element-name',
@@ -138,28 +135,26 @@ $('#element').editable({
       alert(parseInt(newValue));
    }
 });
-</pre>
-			</li>
-			
-			<li>
-				Using <code>nativeUI</code> option will switch to browser's built-in range control if available
-			</li>
- 		 </ul>
+</pre></li>
+
+				<li>Using <code>nativeUI</code> option will switch to browser's
+					built-in range control if available
+				</li>
+			</ul>
 		</div>
 		<!-- /section:custom/inline-editable.slider -->
-		
-		
-		<h3 class="info-title smaller" data-id="#custom/inline-editable.spinner">Spinner</h3>
+
+
+		<h3 class="info-title smaller"
+			data-id="#custom/inline-editable.spinner">Spinner</h3>
 		<!-- #section:custom/inline-editable.spinner -->
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				For this addon,
-				<a href="#plugins/fuelux.spinner" class="help-more">FuelUX spinner</a>
-				is required and should be included first
-			</li>
-			<li>
-<pre data-language="javascript">
+			<ul class="info-list list-unstyled">
+				<li>For this addon, <a href="#plugins/fuelux.spinner"
+					class="help-more">FuelUX spinner</a> is required and should be
+					included first
+				</li>
+				<li><pre data-language="javascript">
 $('#element').editable({
    type: 'spinner',
    name: 'element-name',
@@ -173,28 +168,27 @@ $('#element').editable({
 	 //,nativeUI: true //this will use browser's built-in number input if available
    }
 });
-</pre>
-			</li>
-			
-			<li>
-				Using <code>nativeUI</code> option will switch to browser's built-in number input if available
-			</li>
- 		 </ul>
+</pre></li>
+
+				<li>Using <code>nativeUI</code> option will switch to browser's
+					built-in number input if available
+				</li>
+			</ul>
 		</div>
 		<!-- /section:custom/inline-editable.spinner -->
-		
-		
-		
-		<h3 class="info-title smaller" data-id="#custom/inline-editable.wysiwyg">Wysiwyg</h3>
+
+
+
+		<h3 class="info-title smaller"
+			data-id="#custom/inline-editable.wysiwyg">Wysiwyg</h3>
 		<!-- #section:custom/inline-editable.wysiwyg -->
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				For this addon <a href="#plugins/editor.wysiwyg" class="help-more">Wysiwyg plugin</a>
-				is required and should be included first
-			</li>
-			<li>
-<pre data-language="javascript">
+			<ul class="info-list list-unstyled">
+				<li>For this addon <a href="#plugins/editor.wysiwyg"
+					class="help-more">Wysiwyg plugin</a> is required and should be
+					included first
+				</li>
+				<li><pre data-language="javascript">
 $('#element').editable({
    mode: 'inline',
    type: 'wysiwyg',
@@ -209,31 +203,25 @@ $('#element').editable({
   success: function(response, newValue) {
   }
 });
-</pre>
-			</li>
- 		 </ul>
+</pre></li>
+			</ul>
 		</div>
 		<!-- /section:custom/inline-editable.wysiwyg -->
-		
-		
-		
-		
+
+
+
+
 		<h3 class="info-title smaller" data-id="#custom/inline-editable.date">Date</h3>
 		<!-- #section:custom/inline-editable.date -->
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>
-				Latest version of inline editable plugin does not support date picker
-			</li>
-			<li>
-				I added a custom one which requires
-				<a href="#plugins/date-time.datepicker" class="help-more">date picker</a>
-				and it should be included first.
-				<br />
-				The type name is <code>adate</code>
-			</li>
-			<li>
-<pre data-language="javascript">
+			<ul class="info-list list-unstyled">
+				<li>Latest version of inline editable plugin does not support
+					date picker</li>
+				<li>I added a custom one which requires <a
+					href="#plugins/date-time.datepicker" class="help-more">date
+						picker</a> and it should be included first. <br /> The type name is <code>adate</code>
+				</li>
+				<li><pre data-language="javascript">
 $('#element').editable({
   type: 'adate',
   
@@ -246,18 +234,17 @@ $('#element').editable({
      //,nativeUI: true //this will use browser's built-in date picker if available
   }
 })
-</pre>
-			</li>
-			
-			<li>
-				Using <code>nativeUI</code> option will switch to browser's built-in date picker if available
-			</li>
- 		 </ul>
+</pre></li>
+
+				<li>Using <code>nativeUI</code> option will switch to browser's
+					built-in date picker if available
+				</li>
+			</ul>
 		</div>
 		<!-- /section:custom/inline-editable.date -->
-		
+
 
 	</div>
 	<!-- /section:custom/inline-editable -->
-	
+
 </section>

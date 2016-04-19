@@ -10,6 +10,7 @@ public class Tag {
 	private String CREATEBY;// varchar(255) DEFAULT NULL COMMENT '用户id',
 	private Date CREATEON;// varchar(32) DEFAULT NULL COMMENT '时间',
 	private TagCategory tagCategory;
+	private String PARENT_ID;
 
 	public String getTAG_ID() {
 		return TAG_ID;
@@ -57,6 +58,14 @@ public class Tag {
 
 	public void setTagCategory(TagCategory tagCategory) {
 		this.tagCategory = tagCategory;
+	}
+
+	public String getPARENT_ID() {
+		return PARENT_ID;
+	}
+
+	public void setPARENT_ID(String pARENT_ID) {
+		PARENT_ID = pARENT_ID;
 	}
 
 }

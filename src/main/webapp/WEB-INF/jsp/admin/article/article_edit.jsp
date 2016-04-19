@@ -1,83 +1,169 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-	<base href="<%=basePath%>">
-	<!-- 下拉框 -->
-	<link rel="stylesheet" href="static/ace/css/chosen.css" />
-	<!-- jsp文件头和头部 -->
-	<%@ include file="../../system/index/top.jsp"%>
-	<!-- 日期框 -->
-	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+<head>
+<base href="<%=basePath%>">
+<!-- 下拉框 -->
+<link rel="stylesheet" href="static/ace/css/chosen.css" />
+<!-- jsp文件头和头部 -->
+<%@ include file="../../system/index/top.jsp"%>
+<!-- 日期框 -->
+<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+
+<script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
+<link type="text/css" rel="stylesheet"
+	href="plugins/zTree/2.6/zTreeStyle.css" />
+<script type="text/javascript"
+	src="plugins/zTree/2.6/jquery.ztree-2.6.min.js"></script>
 </head>
 <body class="no-skin">
-<!-- /section:basics/navbar.layout -->
-<div class="main-container" id="main-container">
-	<!-- /section:basics/sidebar -->
-	<div class="main-content">
-		<div class="main-content-inner">
-			<div class="page-content">
-				<div class="row">
-					<div class="col-xs-12">
-					
-					<form action="article/${msg }.do" name="Form" id="Form" method="post">
-						<input type="hidden" name="ARTICLE_ID" id="ARTICLE_ID" value="${pd.ARTICLE_ID}"/>
-						<div id="zhongxin" style="padding-top: 13px;">
-						<table id="table_report" class="table table-striped table-bordered table-hover">
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">标题:</td>
-								<td><input type="text" name="TITLE" id="TITLE" value="${pd.TITLE}" maxlength="255" placeholder="这里输入标题" title="标题" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">作者:</td>
-								<td><input type="text" name="AUTHOR" id="AUTHOR" value="${pd.AUTHOR}" maxlength="255" placeholder="这里输入作者" title="作者" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">照片url:</td>
-								<td><input type="text" name="LOGOURL" id="LOGOURL" value="${pd.LOGOURL}" maxlength="255" placeholder="这里输入照片url" title="照片url" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">内容url:</td>
-								<td><input type="text" name="URL" id="URL" value="${pd.URL}" maxlength="255" placeholder="这里输入内容url" title="内容url" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">摘要:</td>
-								<td>
-									<textarea rows="8" cols="30" maxlength="200" name="SUMMARY" id="SUMMARY"  placeholder="这里输入摘要" title="摘要" style="width:98%;resize:none;">${pd.SUMMARY}</textarea>
-								</td>
-							</tr>
-							<tr>
-								<td style="text-align: center;" colspan="10">
-									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
-								</td>
-							</tr>
-						</table>
+	<!-- /section:basics/navbar.layout -->
+	<div class="main-container" id="main-container">
+		<!-- /section:basics/sidebar -->
+		<div class="main-content">
+			<div class="main-content-inner">
+				<div class="page-content">
+					<div class="row">
+					<div>
+						<div style="width:48%; float:left;">
+							<ul id="leftTree" class="tree"></ul>
 						</div>
-						
-						<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><br/><img src="static/images/jiazai.gif" /><br/><h4 class="lighter block green">提交中...</h4></div>
-						
-					</form>
-	
-					<div id="zhongxin2" class="center" style="display:none"><img src="static/images/jzx.gif" style="width: 50px;" /><br/><h4 class="lighter block green"></h4></div>
+						<div style="width:48%; float:right;">
+							<ul id="rightTree" class="tree"></ul>
+						</div>
 					</div>
-					<!-- /.col -->
+						
+						<script type="text/javascript">
+							
+							$(top.hangge());
+							var zTree;
+							var zTrees;
+							$(document).ready(function(){
+								var setting = {
+									showLine : true,                  //是否显示节点间的连线  
+								    checkable : true, 
+								};
+								var zn = '${zTreeNodes}';
+								var zTreeNodes = eval(zn);
+								
+								var zns = '${zTreeNodess}';
+								var zTreeNodess = eval(zns);
+								
+								zTree = $("#leftTree").zTree(setting, zTreeNodes);
+								zTrees = $("#rightTree").zTree(setting, zTreeNodess);
+							});
+							   
+						</script>
+						
+						<div class="col-xs-12">
+							<form action="article/${msg }.do" name="Form" id="Form"
+								method="post">
+								<input type="hidden" name="ARTICLE_ID" id="ARTICLE_ID"
+									value="${pd.ARTICLE_ID}" />
+								<div id="zhongxin" style="padding-top: 13px;">
+									<table id="table_report"
+										class="table table-striped table-bordered table-hover">
+										<tr>
+											<td
+												style="width: 75px; text-align: right; padding-top: 13px;">标题:</td>
+											<td><input type="text" name="TITLE" id="TITLE"
+												value="${pd.TITLE}" maxlength="255" placeholder="这里输入标题"
+												title="标题" style="width: 98%;" /></td>
+										</tr>
+										<tr>
+											<td
+												style="width: 75px; text-align: right; padding-top: 13px;">作者:</td>
+											<td><input type="text" name="AUTHOR" id="AUTHOR"
+												value="${pd.AUTHOR}" maxlength="255" placeholder="这里输入作者"
+												title="作者" style="width: 98%;" /></td>
+										</tr>
+										<tr>
+											<td
+												style="width: 75px; text-align: right; padding-top: 13px;">照片url:</td>
+											<td><input type="text" name="LOGOURL" id="LOGOURL"
+												value="${pd.LOGOURL}" maxlength="255"
+												placeholder="这里输入照片url" title="照片url" style="width: 98%;" /></td>
+										</tr>
+										<tr>
+											<td
+												style="width: 75px; text-align: right; padding-top: 13px;">内容url:</td>
+											<td><input type="text" name="URL" id="URL"
+												value="${pd.URL}" maxlength="255" placeholder="这里输入内容url"
+												title="内容url" style="width: 98%;" /></td>
+										</tr>
+										<tr>
+											<td
+												style="width: 75px; text-align: right; padding-top: 13px;">摘要:</td>
+											<td><textarea rows="8" cols="30" maxlength="200"
+													name="SUMMARY" id="SUMMARY" placeholder="这里输入摘要" title="摘要"
+													style="width: 98%; resize: none;">${pd.SUMMARY}</textarea>
+											</td>
+										</tr>
+
+										<tr>
+											<td
+												style="width: 75px; text-align: right; padding-top: 13px;">标签ID:</td>
+											<td><textarea rows="8" cols="30" maxlength="200"
+													name="tagIds" id="tagIds" placeholder="这里输入标签ID"
+													title="标签Id" style="width: 98%; resize: none;"></textarea>
+											</td>
+										</tr>
+
+										<tr>
+											<td
+												style="width: 75px; text-align: right; padding-top: 13px;">疾病ID:</td>
+											<td><textarea rows="8" cols="30" maxlength="200"
+													name="diseaseId" id="diseaseId" placeholder="这里输入疾病ID"
+													title="疾病ID" style="width: 98%; resize: none;"></textarea>
+											</td>
+										</tr>
+
+										<tr>
+											<td style="text-align: center;" colspan="10"><a
+												class="btn btn-mini btn-primary" onclick="save();">保存</a> <a
+												class="btn btn-mini btn-danger"
+												onclick="top.Dialog.close();">取消</a></td>
+										</tr>
+									</table>
+								</div>
+
+								<div id="zhongxin2" class="center" style="display: none">
+									<br />
+									<br />
+									<br />
+									<br />
+									<br />
+									<img src="static/images/jiazai.gif" /><br />
+									<h4 class="lighter block green">提交中...</h4>
+								</div>
+
+							</form>
+
+							<div id="zhongxin2" class="center" style="display: none">
+								<img src="static/images/jzx.gif" style="width: 50px;" /><br />
+								<h4 class="lighter block green"></h4>
+							</div>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
 				</div>
-				<!-- /.row -->
+				<!-- /.page-content -->
 			</div>
-			<!-- /.page-content -->
 		</div>
+		<!-- /.main-content -->
 	</div>
-	<!-- /.main-content -->
-</div>
-<!-- /.main-container -->
+	<!-- /.main-container -->
+
+
 
 
 	<!-- 页面底部js¨ -->
@@ -88,7 +174,7 @@
 	<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 		$(top.hangge());
 		//保存
 		function save(){
@@ -142,16 +228,7 @@
 				$("#SUMMARY").focus();
 			return false;
 			}
-			if($("#PUBLISHTIME").val()==""){
-				$("#PUBLISHTIME").tips({
-					side:3,
-		            msg:'请输入发布时间',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#PUBLISHTIME").focus();
-			return false;
-			}
+			
 			$("#Form").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();

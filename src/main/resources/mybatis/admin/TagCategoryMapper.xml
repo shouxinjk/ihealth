@@ -29,6 +29,20 @@
 		</collection>
 	</resultMap>
 	
+	<resultMap type="TagCategory" id="tagAndTagCategoryResulyMap">
+		<id column="tc_tagcetegory_id" property="TAGCATEGORY_ID" />
+		<result column="tc_name" property="NAME"/>
+		<result column="tc_matetype" property="MATETYPE"/>
+		<result column="tc_isexclusive" property="ISEXCLUSIVE"/>
+		<result column="tc_parent_id" property="PARENT_ID"/>
+		<collection property="tags" ofType="Tag">
+			<id column="t_tag_id" property="TAG_ID" />
+			<result column="t_name" property="NAME"/>
+			<result column="t_expression" property="EXPRESSION"/>
+			<result column="t_parent_id" property="PARENT_ID"/>
+		</collection>
+	</resultMap>
+	
 	<!--表名 -->
 	<sql id="tableName">
 		ADMIN_TAGCATEGORY
@@ -64,6 +78,23 @@
 		<include refid="tableName"></include> 
 		where PARENT_ID=#{parentID} order by name
 	</select>
+	
+	<select id="findTagsList"  resultMap="tagAndTagCategoryResulyMap">
+		SELECT 
+		  tc.`NAME` AS tc_name,
+		  tc.`TAGCATEGORY_ID` AS tc_tagcetegory_id,
+		  tc.`MATETYPE` AS tc_matetype,
+		  tc.`PARENT_ID` AS tc_parent_id,
+		  tc.`ISEXCLUSIVE` AS tc_isexclusive,
+		  t.`EXPRESSION` AS t_expression,
+		  t.`NAME` AS t_name,
+		  t.`TAG_ID` AS t_tag_id,
+		  t.`PARENT_ID` AS t_parent_id
+		FROM
+		  admin_tagcategory tc 
+		  LEFT JOIN admin_tag t 
+		    ON tc.`TAGCATEGORY_ID` = t.`TAGCATEGORY_ID` 	
+	</select>	
 	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">

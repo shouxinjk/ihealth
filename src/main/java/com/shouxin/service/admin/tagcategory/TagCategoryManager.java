@@ -75,6 +75,8 @@ public interface TagCategoryManager{
 	 * @return
 	 */
 	public List<TagCategory> listAllTagCategoryTree(String parentID) throws Exception;
+
 	
+	public List<TagCategory> findTagsList()throws Exception;
 }
 

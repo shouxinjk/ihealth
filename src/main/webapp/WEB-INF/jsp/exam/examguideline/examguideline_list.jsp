@@ -70,7 +70,7 @@
 									<th class="center">疾病类别</th>
 									<th class="center">疾病名称</th>
 									<th class="center">关注因素</th>
-									<th class="center">界定方法</th>
+									<th class="center">状态</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -83,28 +83,35 @@
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
 											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.EXAMGUIDELINE_ID}" class="ace" /><span class="lbl"></span></label>
+												<c:if test="${var.STATUS eq '新建'}">
+													<label class="pos-rel"><input type='checkbox' name='ids' value="${var.EXAMGUIDELINE_ID}" class="ace" /><span class="lbl"></span></label>
+												</c:if>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.GNAME}</td>
 											<td class='center'>${var.CNAME}</td>
 											<td class='center'>${var.DNAME}</td>
 											<td class='center'>${var.CONCERNEDFACTORS}</td>
-											<td class='center'>${var.HIGHRISKDEFINE}</td>
+											<td class='center'>${var.STATUS}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
-													</a>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '新建'}">
+														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
+															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
+														</a>
 													</c:if>
-													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.EXAMGUIDELINE_ID}');">
-														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
-													</a>
+													<c:if test="${QX.del == 1 && var.STATUS eq '新建'}">
+														<a class="btn btn-xs btn-danger" onclick="del('${var.EXAMGUIDELINE_ID}');">
+															<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.del == 1 && var.STATUS eq '新建'}">
+														<a class="btn btn-xs btn-danger" onclick="auditing('${var.EXAMGUIDELINE_ID}');">
+															<i class="ace-icon fa fa-trash-o bigger-120" title="审核"></i>
+														</a>
 													</c:if>
 												</div>
 												<div class="hidden-md hidden-lg">
@@ -263,8 +270,8 @@
 			 diag.Drag=true;
 			 diag.Title ="新增";
 			 diag.URL = '<%=basePath%>examguideline/goAdd.do';
-			 diag.Width = 450;
-			 diag.Height = 355;
+			 diag.Width = 650;
+			 diag.Height = 455;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 if('${page.currentPage}' == '0'){
@@ -292,6 +299,19 @@
 			});
 		}
 		
+		//医生审核
+		function auditing(Id){
+			bootbox.confirm("确定要审核吗?", function(result) {
+				if(result) {
+					top.jzts();
+					var url = "<%=basePath%>examguideline/auditing.do?EXAMGUIDELINE_ID="+Id+"&STATUS=2&tm="+new Date().getTime();
+					$.get(url,function(data){
+						nextPage(${page.currentPage});
+					});
+				}
+			});
+		}
+		
 		//修改
 		function edit(Id){
 			 top.jzts();
@@ -299,8 +319,8 @@
 			 diag.Drag=true;
 			 diag.Title ="编辑";
 			 diag.URL = '<%=basePath%>examguideline/goEdit.do?EXAMGUIDELINE_ID='+Id;
-			 diag.Width = 450;
-			 diag.Height = 355;
+			 diag.Width = 650;
+			 diag.Height = 455;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 nextPage(${page.currentPage});

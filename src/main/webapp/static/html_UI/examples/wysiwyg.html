@@ -1,114 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>Wysiwyg Example</title>
-		
-		<link rel="stylesheet" href="../assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="../assets/css/font-awesome.css" />
-		
-		<!-- fonts -->
-		<link rel="stylesheet" href="../assets/css/ace-fonts.css" />
-		
-		
-		<link rel="stylesheet" href="../assets/css/ace.css" />
-		<!--[if lte IE 9]>
+<head>
+<meta charset="utf-8" />
+<title>Wysiwyg Example</title>
+
+<link rel="stylesheet" href="../assets/css/bootstrap.css" />
+<link rel="stylesheet" href="../assets/css/font-awesome.css" />
+
+<!-- fonts -->
+<link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+
+
+<link rel="stylesheet" href="../assets/css/ace.css" />
+<!--[if lte IE 9]>
 		  <link rel="stylesheet" href="../assets/css/ace-ie.css" />
 		<![endif]-->
-	</head>
+</head>
 
-	<body>
-	 <div class="main-container">
-	   <div class="page-content">
-	 
-		<div class="row">
-			<div class="col-xs-12 col-sm-8 col-sm-offset-2">
-				<h3 class="header blue lighter">
-					Customizing wysiwyg buttons and submitting the form
-				</h3>
+<body>
+	<div class="main-container">
+		<div class="page-content">
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+					<h3 class="header blue lighter">Customizing wysiwyg buttons
+						and submitting the form</h3>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12 col-sm-8 col-sm-offset-2">
-				
-				<!-- the wysiwyg form -->
-				<form method="POST" id="myform" action="wysiwyg.php">
-					<div id="editor" class="wysiwyg-editor"></div>
-					<input type="hidden" name="wysiwyg-value" />
-					
-					<div class="form-actions align-right clearfix">
-						<button type="reset" class="pull-left btn">
-							<i class="ace-icon fa fa-retweet bigger-110"></i>
-							Reset
-						</button>
-						
-						<button type="submit" class="btn btn-primary pull-right">
-							<i class="ace-icon fa fa-check bigger-110"></i>
-							Submit
-						</button>
+			<div class="row">
+				<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+
+					<!-- the wysiwyg form -->
+					<form method="POST" id="myform" action="wysiwyg.php">
+						<div id="editor" class="wysiwyg-editor"></div>
+						<input type="hidden" name="wysiwyg-value" />
+
+						<div class="form-actions align-right clearfix">
+							<button type="reset" class="pull-left btn">
+								<i class="ace-icon fa fa-retweet bigger-110"></i> Reset
+							</button>
+
+							<button type="submit" class="btn btn-primary pull-right">
+								<i class="ace-icon fa fa-check bigger-110"></i> Submit
+							</button>
+						</div>
+					</form>
+
+				</div>
+			</div>
+
+
+			<div id="modal-wysiwyg-editor" class="modal" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="blue bigger">Wysiwyg editor's HTML content</h4>
+						</div>
+
+						<div class="modal-body">
+							<div class="row-fluid">Content can be put inside a hidden
+								input and sent to server</div>
+
+							<div class="space-6"></div>
+
+							<div class="row-fluid">
+								<textarea spellcheck="false" id="wysiwyg-editor-value"></textarea>
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button class="btn btn-sm" data-dismiss="modal">
+								<i class="ace-icon fa fa-times"></i> Cancel
+							</button>
+							<button class="btn btn-sm btn-primary">
+								<i class="ace-icon fa fa-check"></i> OK
+							</button>
+						</div>
+
 					</div>
-				</form>
-				
-			</div>
-		</div>
-		
-		
-		<div id="modal-wysiwyg-editor" class="modal" tabindex="-1">
-		 <div class="modal-dialog">
-		  <div class="modal-content">
-
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="blue bigger">Wysiwyg editor's HTML content</h4>
-			</div>
-			
-			<div class="modal-body">
-				<div class="row-fluid">
-					 Content can be put inside a hidden input and sent to server
-				</div>
-				
-				<div class="space-6"></div>
-				
-				<div class="row-fluid">
-					<textarea spellcheck="false" id="wysiwyg-editor-value"></textarea>
 				</div>
 			</div>
-			
-			<div class="modal-footer">
-				<button class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>
-				<button class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i> OK</button>
-			</div>
 
-		  </div>
-		 </div>
+
 		</div>
+	</div>
 
 
-	   </div>
-	 </div>
-
-
-		<!-- basic scripts -->
-		<!--[if !IE]> -->
-		<script type="text/javascript">
+	<!-- basic scripts -->
+	<!--[if !IE]> -->
+	<script type="text/javascript">
 		 window.jQuery || document.write("<script src='../assets/js/jquery.js'>"+"<"+"/script>");
 		</script>
-		<!-- <![endif]-->
-		<!--[if IE]>
+	<!-- <![endif]-->
+	<!--[if IE]>
 		<script type="text/javascript">
 		 window.jQuery || document.write("<script src='../assets/js/jquery1x.js'>"+"<"+"/script>");
 		</script>
 		<![endif]-->
-		
-		<script src="../assets/js/bootstrap.js"></script>
-		
-		<script src="../assets/js/bootstrap-wysiwyg.js"></script>
-		
-		<!-- ace scripts -->
-		<script src="../assets/js/ace-elements.js"></script>
-		<script src="../assets/js/ace.js"></script>
-		
-		<script type="text/javascript">
+
+	<script src="../assets/js/bootstrap.js"></script>
+
+	<script src="../assets/js/bootstrap-wysiwyg.js"></script>
+
+	<!-- ace scripts -->
+	<script src="../assets/js/ace-elements.js"></script>
+	<script src="../assets/js/ace.js"></script>
+
+	<script type="text/javascript">
 			jQuery(function($) {
 				$('#editor').ace_wysiwyg({
 					toolbar:
@@ -207,5 +207,5 @@
 			});
 		</script>
 
-	</body>
+</body>
 </html>

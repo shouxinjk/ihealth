@@ -29,6 +29,15 @@
 		</collection>
 	</resultMap>
 	
+	<resultMap type="DiseaseCategory" id="diseaseAndDCResultMap">
+		<id column="dc_diseasecategory" property="DISEASECATEGORY_ID" />
+		<result column="dc_name" property="NAME"/>
+		<collection property="diseases" ofType="Disease">
+			<id column="d_disease" property="DISEASE_ID" />
+			<result column="d_name" property="NAME"/>
+		</collection>
+	</resultMap>
+	
 	<!--表名 -->
 	<sql id="tableName">
 		ADMIN_DISEASECATEGORY
@@ -53,6 +62,20 @@
 		#{PARENT_ID},	
 		#{DISEASECATEGORY_ID}
 	</sql>
+	
+	<!-- 获取所有疾病分类  并获取疾病信息 -->
+	<select id="findAllDiseases" resultMap="diseaseAndDCResultMap">
+		SELECT 
+		  dc.`DISEASECATEGORY_ID` AS dc_diseasecategory,
+		  dc.`NAME` AS dc_name,
+		  d.`DISEASE_ID` AS d_disease,
+		  d.`NAME` AS d_name 
+		FROM
+		  admin_diseasecategory dc 
+		  LEFT JOIN admin_disease d 
+		    ON dc.`DISEASECATEGORY_ID` = d.`DISEASECATEGORY_ID` 
+	</select>
+	
 	
 	<!-- 通过id获取子级列表 -->
 	<select id="listSubDiseaseCategorybyParentID" parameterType="java.lang.String" resultMap="diseaseCategoryResultMap">

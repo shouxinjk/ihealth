@@ -10,7 +10,8 @@
 	margin: 0 5px;
 	display: inline-block;
 }
-.dropdown-preview  > .dropdown-menu {
+
+.dropdown-preview>.dropdown-menu {
 	display: block;
 	position: static;
 	margin-bottom: 5px;

@@ -102,7 +102,6 @@
 		
 		//保存
 		function save(){
-			alert(1)
 			if($("#HIGHRISKEXPRESSION").val()==""){
 				$("#HIGHRISKEXPRESSION").tips({
 					side:3,

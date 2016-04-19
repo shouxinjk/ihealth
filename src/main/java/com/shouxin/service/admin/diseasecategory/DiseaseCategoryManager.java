@@ -78,5 +78,8 @@ public interface DiseaseCategoryManager{
 	 * @throws Exception
 	 */
 	public List<DiseaseCategory> listAllDiseaseCategoryTree(String parentID) throws Exception;
+	
+	
+	public List<DiseaseCategory> findAllDiseases() throws Exception;
 }
 

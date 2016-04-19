@@ -49,6 +49,8 @@ public class ExamFrequencyController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("EXAMFREQUENCY_ID", this.get32UUID());	//主键
+		pd.put("CREATEBY", Jurisdiction.getUserId());
+		pd.put("CREATEON", new Date());
 		examfrequencyService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");

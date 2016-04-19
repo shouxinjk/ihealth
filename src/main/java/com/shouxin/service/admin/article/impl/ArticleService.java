@@ -101,6 +101,12 @@ public class ArticleService implements ArticleManager{
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<PageData> findAllTags(PageData pd) throws Exception {
+		
+		return (List<PageData>) dao.findForList("ArticleMapper.findAllTags", pd);
+	}
+
 	
 }
 

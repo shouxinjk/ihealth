@@ -4,45 +4,48 @@
 		<h3 class="info-title smaller" data-id="#pages/login">Login</h3>
 		<!-- #section:pages/login -->
 		<div class="info-section">
-		 <ul class="info-list list-unstyled">
-			<li>			
-			Login page has a more compact structure and generally needs fewer scripts and stylesheets unless
-			you want to include some extra plugins for some form fields.
-			<br />
-			For more info about this please see <a href="#basics/layout.login" class="help-more">Login Layout</a>
-			</li>
-			<li>
-			Basically it consists of three optional widget boxes for login, signup and password sections.
-			</li>
-			<li>
-				You should add <code>.login-layout</code> class to <body>body</code> element:
-<pre data-language="html">
+			<ul class="info-list list-unstyled">
+				<li>Login page has a more compact structure and generally needs
+					fewer scripts and stylesheets unless you want to include some extra
+					plugins for some form fields. <br /> For more info about this
+					please see <a href="#basics/layout.login" class="help-more">Login
+						Layout</a>
+				</li>
+				<li>Basically it consists of three optional widget boxes for
+					login, signup and password sections.</li>
+				<li>You should add <code>.login-layout</code> class to
+					<body>
+						body
+						</code>
+						element:
+						<pre data-language="html">
 &lt;body class="login-layout"&gt;
 or
 &lt;body class="login-layout blur-login"&gt;
 or
 &lt;body class="login-layout light-login"&gt;
-</pre>
-			</li>
-			
-			<li>
-				There are three optional background styles:
-				<ol>
-				  <li><code>.login-layout</code> default login background</li>
-				  <li><code>.login-layout.blur-login</code> blurred image background</li>
-				  <li><code>.login-layout.light-login</code> light login background</li>
-				</ol>
-			</li>
-			
-			<li>
-				The (optionally) three boxes are inside <code>.login-container</code>:
-<pre data-language="html">
+</pre></li>
+
+				<li>There are three optional background styles:
+					<ol>
+						<li><code>.login-layout</code> default login background</li>
+						<li><code>.login-layout.blur-login</code> blurred image
+							background</li>
+						<li><code>.login-layout.light-login</code> light login
+							background</li>
+					</ol>
+				</li>
+
+				<li>The (optionally) three boxes are inside <code>.login-container</code>:
+					<pre data-language="html">
 <div class="login-container">
   <div class="center">
     <!-- page header and text -->
   </div>
-  <div class="space-6"></div><!-- optional space -->
-  <div class="pos-rel"><!-- a position relative container -->
+  <div class="space-6"></div>
+							<!-- optional space -->
+  <div class="pos-rel">
+								<!-- a position relative container -->
      <div class="login-box visible widget-box no-border" id="login-box">
         <!-- login area -->
      </div>
@@ -57,12 +60,11 @@ or
   </div>
 </div>
 </pre>
-			</li>
-			
-			<li>
-				Inside login box, there are the optional social login buttons inside
-				<code>.social-or-login</code> and <code>.social-login</code>  container:
-<pre data-language="html">
+				</li>
+
+				<li>Inside login box, there are the optional social login
+					buttons inside <code>.social-or-login</code> and <code>.social-login</code>
+					container: <pre data-language="html">
 <div class="social-or-login center">
    <span class="bigger-110">Or Login Using</span>
 </div>
@@ -73,12 +75,11 @@ or
    <a class="btn btn-danger"><i class="ace-icon fa fa-google-plus"></i></a>
 </div>
 </pre>
-			</li>
-			
-			<li>
-				The bottom links that are used to move between boxes
-				and are inside <code>.toolbar</code> which have a class only used to color them:
-<pre data-language="html">
+				</li>
+
+				<li>The bottom links that are used to move between boxes and
+					are inside <code>.toolbar</code> which have a class only used to
+					color them: <pre data-language="html">
 <div class="toolbar center">
    <a class="back-to-login-link" data-target='#login-box' href="#">
      <i class="ace-icon fa fa-arrow-left"></i>
@@ -100,17 +101,14 @@ or
     </a>
   </div>
 </div>
-</pre>
-			Each link has a <code>data-target</code> attribute.
-			<br />
-			
+</pre> Each link has a <code>data-target</code> attribute. <br />
 
-			</li>
-			
-			<li>
-				<code>data-target</code> is the selector of target.
-				The following code should also be included in your page for switching between pages:
-<pre data-language="javascript">
+
+				</li>
+
+				<li><code>data-target</code> is the selector of target. The
+					following code should also be included in your page for switching
+					between pages: <pre data-language="javascript">
 jQuery(function($) {
  $(document).on('click', '.toolbar a[data-target]', function(e) {
     e.preventDefault();
@@ -119,12 +117,11 @@ jQuery(function($) {
     $(target).addClass('visible');//show target
  })
 })
-</pre>
-			</li>
-			
-		 </ul>
+</pre></li>
+
+			</ul>
 		</div>
 		<!-- /section:pages/login -->
 	</div>
-	
+
 </section>

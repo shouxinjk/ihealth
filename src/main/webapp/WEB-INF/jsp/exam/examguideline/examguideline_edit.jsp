@@ -41,7 +41,7 @@
 												style="width: 75px; text-align: right; padding-top: 13px;">指南名称:</td>
 											<td><input type="text" name="NAME" id="NAME"
 												value="${pd.GNAME}" maxlength="255" placeholder="这里输入指南名称"
-												title="指南名称" style="width: 98%;" onblur="saveGuideline()"/></td>
+												title="指南名称" style="width: 98%;" /></td>
 										</tr>
 										<tr>
 											<td
@@ -91,62 +91,65 @@
 												<%-- <input type="text" name="HIGHRISKEXPRESSION" id="HIGHRISKEXPRESSION" value="${pd.HIGHRISKEXPRESSION}" maxlength="255" placeholder="这里输入高危人群识别脚本" title="高危人群识别脚本" style="width:98%;"/>
 								 --%></td>
 										</tr>
-										<tr>
-											<td
-												style="width: 75px; text-align: right; padding-top: 13px;">高危人群检查指南:</td>
-											<td>
-												<table border="1" id="GAOWEI"
-													style="width: 100%; line-height: 25px;">
-													<thead>
+										<c:if test="${msg eq 'edit'}">
+											<tr>
+												<td
+													style="width: 75px; text-align: right; padding-top: 13px;">高危人群检查指南:</td>
+												<td>
+													<table border="1" id="GAOWEI"
+														style="width: 100%; line-height: 25px;">
+														<thead>
+															<tr>
+																<th>检查手段</th>
+																<th>开始年龄</th>
+																<th>频率</th>
+																<th><a href="#">+</a></th>
+															</tr>
+														</thead>
+														<tbody id="DANGERTBODY">
+															<c:forEach items="#{varSouList}" var="sou" varStatus="vs">
+																<c:if test="${sou.RISKTYPE eq 0 }">
+																	<tr>
+																		<td>${sou.INAME}(<span>${sou.FEATURES}</span>)<input
+																			type="hidden" value="${sou.EXAMITEM_ID }" /></td>
+																		<td><span>${sou.STARTAGE}</span></td>
+																		<td>${sou.FNAME}<input type="hidden"
+																			value="${sou.EXAMFREQUENCY_ID}"></td>
+																		<td><a onclick="delSou('${sou.EXAMSOLUTION_ID}','DANGERTBODY',0);">删除</a><input type="hidden"
+																			name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID"
+																			value="${sou.EXAMSOLUTION_ID}" /></td>
+																	</tr>
+																</c:if>
+															</c:forEach>
+														</tbody>
 														<tr>
-															<th>检查手段</th>
-															<th>开始年龄</th>
-															<th>频率</th>
-															<th><a href="#">+</a></th>
+															<td><select name="ITEMSELECTG" ID="ITEMSELECTG">
+																	<c:forEach items="${varItemList}" var="item"
+																		varStatus="vas">
+																		<option value="${item.EXAMITEM_ID}">${item.INAME}</option>
+																	</c:forEach>
+															</select> <input type="checkbox" name="FEATURESG" value="经济" />经济
+																<input type="checkbox" name="FEATURESG" value="全面" />全面
+																<input type="checkbox" name="FEATURESG" value="安全" />安全</td>
+															<td><input type="text" id="STARTAGEG"
+																style="width: 30px" /></td>
+															<td><select name="FREQSELECT" id="FREQSELECTG">
+																	<c:forEach items="${varFreqList }" var="freq">
+																		<option value="${freq.EXAMFREQUENCY_ID }">${freq.NAME }</option>
+																	</c:forEach>
+															</select></td>
+															<td><a id="addTableTr"
+																onclick="addTabelg('DANGERTBODY')">增加</a> <input
+																type="hidden" name="EXAMSOLUTION_IDG"
+																id="EXAMSOLUTION_IDG" value="${sou.EXAMSOLUTION_ID}" /></td>
 														</tr>
-													</thead>
-													<tbody id="DANGERTBODY">
-														<c:forEach items="#{varSouList}" var="sou" varStatus="vs">
-															<c:if test="${sou.RISKTYPE eq 0 }">
-																<tr>
-																	<td>${sou.INAME}(<span>${sou.FEATURES}</span>)<input
-																		type="hidden" value="${sou.EXAMITEM_ID }" /></td>
-																	<td><span>${sou.STARTAGE}</span></td>
-																	<td>${sou.FNAME}<input type="hidden"
-																		value="${sou.EXAMFREQUENCY_ID}"></td>
-																	<td><a href="#">删除</a><input type="hidden"
-																		name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID"
-																		value="${sou.EXAMSOLUTION_ID}" /></td>
-																</tr>
-															</c:if>
-														</c:forEach>
-													</tbody>
-													<tr>
-														<td><select name="ITEMSELECTG" ID="ITEMSELECTG">
-																<c:forEach items="${varItemList}" var="item"
-																	varStatus="vas">
-																	<option value="${item.EXAMITEM_ID}">${item.INAME}</option>
-																</c:forEach>
-														</select> <input type="checkbox" name="FEATURESG" value="经济" />经济 <input
-															type="checkbox" name="FEATURESG" value="全面" />全面 <input
-															type="checkbox" name="FEATURESG" value="安全" />安全</td>
-														<td><input type="text" id="STARTAGEG"
-															style="width: 30px" /></td>
-														<td><select name="FREQSELECT" id="FREQSELECTG">
-																<c:forEach items="${varFreqList }" var="freq">
-																	<option value="${freq.EXAMFREQUENCY_ID }">${freq.NAME }</option>
-																</c:forEach>
-														</select></td>
-														<td><a id="addTableTr"
-															onclick="addTabelg('DANGERTBODY')">增加</a> <input
-															type="hidden" name="EXAMSOLUTION_IDG" id="EXAMSOLUTION_IDG"
-															value="${sou.EXAMSOLUTION_ID}" /></td>
-													</tr>
-												</table> <%-- <input type="text" name="LOWRISKDEFINE" id="LOWRISKDEFINE"
+													</table> <%-- <input type="text" name="LOWRISKDEFINE" id="LOWRISKDEFINE"
 												value="${pd.LOWRISKDEFINE}" maxlength="255"
 												placeholder="这里输入普通人群识别" title="普通人群识别" style="width: 98%;" /> --%>
-											</td>
-										</tr>
+												</td>
+											</tr>
+										</c:if>
+
 										<tr>
 											<td
 												style="width: 75px; text-align: right; padding-top: 13px;">普通热群界定方法:</td>
@@ -156,61 +159,64 @@
 												<%-- <input type="text" name="LOWRISKEXPRESSION" id="LOWRISKEXPRESSION" value="${pd.LOWRISKEXPRESSION}" maxlength="255" placeholder="这里输入普通人群识别脚本" title="普通人群识别脚本" style="width:98%;"/>
 								 --%></td>
 										</tr>
-										<tr>
-											<td
-												style="width: 75px; text-align: right; padding-top: 13px;">普通人群检查指南:</td>
-											<td>
-												<table border="1" name="PUTONG" id="PUTONG"
-													style="width: 100%; line-height: 25px;">
-													<thead>
+										<c:if test="${msg eq 'edit' }">
+											<tr>
+												<td
+													style="width: 75px; text-align: right; padding-top: 13px;">普通人群检查指南:</td>
+												<td>
+													<table border="1" name="PUTONG" id="PUTONG"
+														style="width: 100%; line-height: 25px;">
+														<thead>
+															<tr>
+																<th>检查手段</th>
+																<th>开始年龄</th>
+																<th>频率</th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody id="ORDINARYTBODY">
+															<c:forEach items="#{varSouList}" var="sou" varStatus="vs">
+																<c:if test="${sou.RISKTYPE eq 1 }">
+																	<tr>
+																		<td><span>${sou.INAME}(${sou.FEATURES})</span> <input
+																			type="hidden" value="${sou.EXAMITEM_ID }" /></td>
+																		<td><span>${sou.STARTAGE}</span></td>
+																		<td><span>${sou.FNAME}</span> <input
+																			type="hidden" value="${sou.EXAMFREQUENCY_ID}"></td>
+																		<td><a onclick="delSou('${sou.EXAMSOLUTION_ID}','ORDINARYTBODY',1);">删除</a> <input type="hidden"
+																			name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID"
+																			value="${sou.EXAMSOLUTION_ID}" /></td>
+																	</tr>
+																</c:if>
+															</c:forEach>
+														</tbody>
 														<tr>
-															<th>检查手段</th>
-															<th>开始年龄</th>
-															<th>频率</th>
-															<th></th>
+															<td><select name="ITEMSELECT" ID="ITEMSELECT">
+																	<c:forEach items="${varItemList}" var="item"
+																		varStatus="vas">
+																		<option value="${item.EXAMITEM_ID }">${item.INAME}</option>
+																	</c:forEach>
+															</select> <input type="checkbox" name="FEATURES" value="经济" />经济
+																<input type="checkbox" name="FEATURES" value="全面" />全面
+																<input type="checkbox" name="FEATURES" value="安全" />安全</td>
+															<td><input type="text" id="STARTAGE"
+																style="width: 30px" /></td>
+															<td><select name="FREQSELECT" id="FREQSELECT">
+																	<c:forEach items="${varFreqList }" var="freq">
+																		<option value="${freq.EXAMFREQUENCY_ID }">${freq.NAME }</option>
+																	</c:forEach>
+															</select></td>
+															<td><a id="addTableTr"
+																onclick="addTabel('ORDINARYTBODY')">增加</a> <input
+																type="hidden" name="EXAMSOLUTION_ID"
+																id="EXAMSOLUTION_ID" value="${sou.EXAMSOLUTION_ID}" /></td>
 														</tr>
-													</thead>
-													<tbody id="ORDINARYTBODY">
-														<c:forEach items="#{varSouList}" var="sou" varStatus="vs">
-															<c:if test="${sou.RISKTYPE eq 1 }">
-																<tr>
-																	<td><span>${sou.INAME}(${sou.FEATURES})</span> <input
-																		type="hidden" value="${sou.EXAMITEM_ID }" /></td>
-																	<td><span>${sou.STARTAGE}</span></td>
-																	<td><span>${sou.FNAME}</span> <input type="hidden"
-																		value="${sou.EXAMFREQUENCY_ID}"></td>
-																	<td><a href="#">删除</a> <input type="hidden"
-																		name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID"
-																		value="${sou.EXAMSOLUTION_ID}" /></td>
-																</tr>
-															</c:if>
-														</c:forEach>
-													</tbody>
-													<tr>
-														<td><select name="ITEMSELECT" ID="ITEMSELECT">
-																<c:forEach items="${varItemList}" var="item"
-																	varStatus="vas">
-																	<option value="${item.EXAMITEM_ID }">${item.INAME}</option>
-																</c:forEach>
-														</select> <input type="checkbox" name="FEATURES" value="经济" />经济 <input
-															type="checkbox" name="FEATURES" value="全面" />全面 <input
-															type="checkbox" name="FEATURES" value="安全" />安全</td>
-														<td><input type="text" id="STARTAGE"
-															style="width: 30px" /></td>
-														<td><select name="FREQSELECT" id="FREQSELECT">
-																<c:forEach items="${varFreqList }" var="freq">
-																	<option value="${freq.EXAMFREQUENCY_ID }">${freq.NAME }</option>
-																</c:forEach>
-														</select></td>
-														<td><a id="addTableTr"
-															onclick="addTabel('ORDINARYTBODY')">增加</a> <input
-															type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID"
-															value="${sou.EXAMSOLUTION_ID}" /></td>
-													</tr>
-												</table> <%-- <input type="text" name="STATUS" id="STATUS" value="${pd.STATUS}" maxlength="255" placeholder="这里输入状态" title="状态" style="width:98%;"/>
+													</table> <%-- <input type="text" name="STATUS" id="STATUS" value="${pd.STATUS}" maxlength="255" placeholder="这里输入状态" title="状态" style="width:98%;"/>
 								 --%>
-											</td>
-										</tr>
+												</td>
+											</tr>
+										</c:if>
+
 										<tr>
 											<td style="text-align: center;" colspan="10"><a
 												class="btn btn-mini btn-primary" onclick="save();">保存</a> <a
@@ -261,22 +267,27 @@
 				FEATURES+=$(this).val()+","; 
 				}); 
 			var EXAMGUIDELINE_ID = $("#EXAMGUIDELINE_ID").val();
-			alert(EXAMGUIDELINE_ID);
 			var STARTAGE = $("#STARTAGE").val();
 			var FREQSELECT = $("#FREQSELECT").get(0).options[$("#FREQSELECT").get(0).selectedIndex].text;
 			var FREQSELECT_ID = $("#FREQSELECT").get(0).options[$("#FREQSELECT").get(0).selectedIndex].value;
-			$("#"+id).append('<tr>'+
-			'<td><span>'+ITEMSELECT+'('+FEATURES+')</span><input type="hidden" value="'+ITEMSELECT_ID+'"/></td>'+
-			'<td>'+STARTAGE+'</td>'+
-			'<td><span>'+FREQSELECT+'</span><input type="hidden" value="'+FREQSELECT_ID+'"/></td>'+
-			'<td><a href="#" >删除</a></td>'+
-			'</tr>');
 			$.ajax({
 				url:'<%=basePath%>examguideline/addSou.do',
 				type:'post',
 				data:{"FEATURES":FEATURES,"STARTAGE":STARTAGE,"EXAMITEM_ID":ITEMSELECT_ID,"EXAMFREQUENCY_ID":FREQSELECT_ID,"RISKTYPE":1,"EXAMGUIDELINE_ID":EXAMGUIDELINE_ID},
-				success:function(){
-					
+				success:function(data){
+					var json = eval(data);
+					var str = '';
+					for(var i = 0;i<json.length;i++){
+						if(json[i].RISKTYPE==1){
+							str+='<tr>'+
+							'<td>'+json[i].INAME+'(<span>'+json[i].FEATURES+'</span>)<input type="hidden" value="'+json[i].EXAMITEM_ID+'"</td>'+
+							'<td><span>'+json[i].STARTAGE+'</span></td>'+
+							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
+							'<td><a onclick="delSou("'+json[i].EXAMSOLUTION_ID+'");">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
+							'</tr>';
+						}
+					}
+					$("#ORDINARYTBODY").html(str);
 				}
 			});
 		}
@@ -290,25 +301,54 @@
 				FEATURES+=$(this).val()+","; 
 				}); 
 			var EXAMGUIDELINE_ID = $("#EXAMGUIDELINE_ID").val();
-			alert(EXAMGUIDELINE_ID);
 			var STARTAGE = $("#STARTAGEG").val();
 			var NAME = $("#NAME").val();
 			var FREQSELECT = $("#FREQSELECTG").get(0).options[$("#FREQSELECTG").get(0).selectedIndex].text;
 			var FREQSELECT_ID = $("#FREQSELECTG").get(0).options[$("#FREQSELECTG").get(0).selectedIndex].value;
-			$("#"+id).append('<tr>'+
-			'<td><span>'+ITEMSELECT+'('+FEATURES+')</span><input type="hidden" value="'+ITEMSELECT_ID+'"/></td>'+
-			'<td>'+STARTAGE+'</td>'+
-			'<td><span>'+FREQSELECT+'</span><input type="hidden" value="'+FREQSELECT_ID+'"/></td>'+
-			'<td><a href="#" >删除</a></td>'+
-			'</tr>');
-			
 			$.ajax({
 				url:'<%=basePath%>examguideline/addSou.do',
 				type:'post',
-				data:{"FEATURES":FEATURES,"STARTAGE":STARTAGE,"EXAMITEM_ID":ITEMSELECT_ID,"EXAMFREQUENCY_ID":FREQSELECT_ID,"RISKTYPE":0,"EXAMGUIDELINE_ID":EXAMGUIDELINE_ID,},
+				data:{"FEATURES":FEATURES,"STARTAGE":STARTAGE,"EXAMITEM_ID":ITEMSELECT_ID,"EXAMFREQUENCY_ID":FREQSELECT_ID,"RISKTYPE":0,"EXAMGUIDELINE_ID":EXAMGUIDELINE_ID},
 				success:function(data){
+					var json = eval(data);
+					var str = '';
+					for(var i = 0;i<json.length;i++){
+						if(json[i].RISKTYPE==0){
+							str+='<tr>'+
+							'<td>'+json[i].INAME+'(<span>'+json[i].FEATURES+'</span>)<input type="hidden" value="'+json[i].EXAMITEM_ID+'"</td>'+
+							'<td><span>'+json[i].STARTAGE+'</span></td>'+
+							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
+							'<td><a onclick="delSou("'+json[i].EXAMSOLUTION_ID+'");">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
+							'</tr>';
+						}
+					}
+					$("#DANGERTBODY").html(str);
 				}
 			});
+		}
+		
+		function delSou(id,tbodyID,status){
+			var EXAMGUIDELINE_ID = $("#EXAMGUIDELINE_ID").val();
+			$.ajax({
+				url:'<%=basePath%>examguideline/delSou.do',
+				type:"post",
+				data:{"EXAMSOLUTION_ID":id,"EXAMGUIDELINE_ID":EXAMGUIDELINE_ID},
+				success:function(data){
+					var json = eval(data);
+					var str = '';
+					for(var i = 0;i<json.length;i++){
+						if(json[i].RISKTYPE==status){
+							str+='<tr>'+
+							'<td>'+json[i].INAME+'(<span>'+json[i].FEATURES+'</span>)<input type="hidden" value="'+json[i].EXAMITEM_ID+'"</td>'+
+							'<td><span>'+json[i].STARTAGE+'</span></td>'+
+							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
+							'<td><a onclick="delSou("'+json[i].EXAMSOLUTION_ID+'","'+tbodyID+'",'+status+');">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
+							'</tr>';
+						}
+					}
+					$("#"+tbodyID).html(str);
+				}
+			})
 		}
 		//选择疾病分类时提交
 		function diseaseChange(EXAMGUIDELINE_ID){
@@ -330,7 +370,7 @@
 				}
 			});
 		}
-		
+
 		//保存
 		function save() {
 			if ($("#NAME").val() == "") {
@@ -341,66 +381,6 @@
 					time : 2
 				});
 				$("#NAME").focus();
-				return false;
-			}
-			if ($("#DESCRIPTION").val() == "") {
-				$("#DESCRIPTION").tips({
-					side : 3,
-					msg : '请输入指南详细描述',
-					bg : '#AE81FF',
-					time : 2
-				});
-				$("#DESCRIPTION").focus();
-				return false;
-			}
-			if ($("#CONCERNEDFACTORS").val() == "") {
-				$("#CONCERNEDFACTORS").tips({
-					side : 3,
-					msg : '请输入关注因素描述',
-					bg : '#AE81FF',
-					time : 2
-				});
-				$("#CONCERNEDFACTORS").focus();
-				return false;
-			}
-			if ($("#HIGHRISKDEFINE").val() == "") {
-				$("#HIGHRISKDEFINE").tips({
-					side : 3,
-					msg : '请输入高危人群识别',
-					bg : '#AE81FF',
-					time : 2
-				});
-				$("#HIGHRISKDEFINE").focus();
-				return false;
-			}
-			if ($("#HIGHRISKEXPRESSION").val() == "") {
-				$("#HIGHRISKEXPRESSION").tips({
-					side : 3,
-					msg : '请输入高危人群识别脚本',
-					bg : '#AE81FF',
-					time : 2
-				});
-				$("#HIGHRISKEXPRESSION").focus();
-				return false;
-			}
-			if ($("#LOWRISKDEFINE").val() == "") {
-				$("#LOWRISKDEFINE").tips({
-					side : 3,
-					msg : '请输入普通人群识别',
-					bg : '#AE81FF',
-					time : 2
-				});
-				$("#LOWRISKDEFINE").focus();
-				return false;
-			}
-			if ($("#LOWRISKEXPRESSION").val() == "") {
-				$("#LOWRISKEXPRESSION").tips({
-					side : 3,
-					msg : '请输入普通人群识别脚本',
-					bg : '#AE81FF',
-					time : 2
-				});
-				$("#LOWRISKEXPRESSION").focus();
 				return false;
 			}
 

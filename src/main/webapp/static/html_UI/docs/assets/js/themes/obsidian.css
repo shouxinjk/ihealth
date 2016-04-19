@@ -8,17 +8,17 @@
  * @version 1.0
  */
 pre {
-    background: #22282A;
-    word-wrap: break-word;
-    margin: 0px;
-    padding: 10px;
-    color: #F1F2F3;
-    font-size: 14px;
-    margin-bottom: 20px;
+	background: #22282A;
+	word-wrap: break-word;
+	margin: 0px;
+	padding: 10px;
+	color: #F1F2F3;
+	font-size: 14px;
+	margin-bottom: 20px;
 }
 
 pre, code {
-    font-family: 'Monaco', courier, monospace;
+	font-family: 'Monaco', courier, monospace;
 }
 
 pre .comment {
@@ -38,16 +38,15 @@ pre .string, pre .comment.docstring {
 }
 
 pre .string.regexp, pre .support.tag.script, pre .support.tag.style {
-    color: #fff;
+	color: #fff;
 }
-
 
 pre .keyword, pre .selector {
 	color: #93C763;
 }
 
 pre .inherited-class {
-    font-style: italic;
+	font-style: italic;
 }
 
 pre .entity {

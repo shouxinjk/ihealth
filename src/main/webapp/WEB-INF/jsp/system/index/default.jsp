@@ -62,7 +62,7 @@
 						               {
 						                name: '',
 						                type: 'bar',
-						                data: [${pd.userCount},${pd.appUserCount}],
+						                data: ['${pd.userCount}','${pd.appUserCount}'],
 						                itemStyle: {
 						                    normal: {
 						                        color: function(params) {

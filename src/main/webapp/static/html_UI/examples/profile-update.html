@@ -1,70 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>Profile Avatar Update</title>
+<head>
+<meta charset="utf-8" />
+<title>Profile Avatar Update</title>
 
-		<link rel="stylesheet" href="../assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="../assets/css/font-awesome.css" />
-		
-		<!-- fonts -->
-		<link rel="stylesheet" href="../assets/css/ace-fonts.css" />
-		
-		
-		<link rel="stylesheet" href="../assets/css/bootstrap-editable.css" />
-		<link rel="stylesheet" href="../assets/css/jquery.gritter.css" />
-		<link rel="stylesheet" href="../assets/css/ace.css" />
-		<!--[if lte IE 9]>
+<link rel="stylesheet" href="../assets/css/bootstrap.css" />
+<link rel="stylesheet" href="../assets/css/font-awesome.css" />
+
+<!-- fonts -->
+<link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+
+
+<link rel="stylesheet" href="../assets/css/bootstrap-editable.css" />
+<link rel="stylesheet" href="../assets/css/jquery.gritter.css" />
+<link rel="stylesheet" href="../assets/css/ace.css" />
+<!--[if lte IE 9]>
 		  <link rel="stylesheet" href="../assets/css/ace-ie.css" />
 		<![endif]-->
-	</head>
+</head>
 
-	<body>
-	 <div class="main-container">
-	   <div class="page-content">
-	   <div class="row">
+<body>
+	<div class="main-container">
+		<div class="page-content">
+			<div class="row">
 
-		<div class="center" style="width:400px; margin:12px;">
-			<h3 class="header blue smaller lighter">
-				Updating Profile Avatar
-			</h3>
-			
-			<div>
-				<span class="profile-picture">
-					<img data-pk="13" src="../assets/avatars/profile-pic.jpg" alt="Alex's Avatar" class="img-responsive" id="avatar" />
-				</span>
+				<div class="center" style="width: 400px; margin: 12px;">
+					<h3 class="header blue smaller lighter">Updating Profile
+						Avatar</h3>
+
+					<div>
+						<span class="profile-picture"> <img data-pk="13"
+							src="../assets/avatars/profile-pic.jpg" alt="Alex's Avatar"
+							class="img-responsive" id="avatar" />
+						</span>
+					</div>
+				</div>
+
 			</div>
 		</div>
+	</div>
 
-	  </div>
-	  </div>
-	 </div>
-
-		<!-- basic scripts -->
-		<!--[if !IE]> -->
-		<script type="text/javascript">
+	<!-- basic scripts -->
+	<!--[if !IE]> -->
+	<script type="text/javascript">
 		 window.jQuery || document.write("<script src='../assets/js/jquery.js'>"+"<"+"/script>");
 		</script>
-		<!-- <![endif]-->
-		<!--[if IE]>
+	<!-- <![endif]-->
+	<!--[if IE]>
 		<script type="text/javascript">
 		 window.jQuery || document.write("<script src='../assets/js/jquery1x.js'>"+"<"+"/script>");
 		</script>
 		<![endif]-->
-		
-		
-		<script src="../assets/js/bootstrap.js"></script>
-		
-		<script src="../assets/js/x-editable/bootstrap-editable.js"></script>
-		<script src="../assets/js/x-editable/ace-editable.js"></script>
-		<script src="../assets/js/jquery.gritter.js"></script>
 
-		<!-- ace scripts -->
-		<script src="../assets/js/ace-elements.js"></script>
-		<script src="../assets/js/ace.js"></script>
-		
-		
-		<script type="text/javascript">
+
+	<script src="../assets/js/bootstrap.js"></script>
+
+	<script src="../assets/js/x-editable/bootstrap-editable.js"></script>
+	<script src="../assets/js/x-editable/ace-editable.js"></script>
+	<script src="../assets/js/jquery.gritter.js"></script>
+
+	<!-- ace scripts -->
+	<script src="../assets/js/ace-elements.js"></script>
+	<script src="../assets/js/ace.js"></script>
+
+
+	<script type="text/javascript">
 		jQuery(function($) {
 			$.fn.editable.defaults.mode = 'inline';
 			$.fn.editableform.loading = "<div class='editableform-loading'><i class='ace-icon fa fa-spinner fa-spin fa-2x light-blue'></i></div>";
@@ -249,5 +249,5 @@
 		if(location.protocol == 'file:') alert("For uploading to server, you should access this page using 'http' protocal, i.e. via a webserver.");
 		</script>
 
-	</body>
+</body>
 </html>

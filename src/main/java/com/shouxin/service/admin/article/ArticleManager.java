@@ -68,5 +68,7 @@ public interface ArticleManager{
 	 */
 	public void saveDiseaseAndArticle(PageData pd)throws Exception;
 	
+	public List<PageData> findAllTags(PageData pd)throws Exception;
+	
 }
 

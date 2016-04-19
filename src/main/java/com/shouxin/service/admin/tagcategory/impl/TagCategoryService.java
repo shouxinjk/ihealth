@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.admin.DiseaseCategory;
+import com.shouxin.entity.admin.Tag;
 import com.shouxin.entity.admin.TagCategory;
 import com.shouxin.util.PageData;
 import com.shouxin.service.admin.tagcategory.TagCategoryManager;
@@ -122,13 +123,23 @@ public class TagCategoryService implements TagCategoryManager{
 	public List<TagCategory> listAllTagCategoryTree(String parentID) throws Exception {
 		List<TagCategory> TagCategory = this.listSubTagCategoryByParentId(parentID);
 		for (TagCategory cate : TagCategory) {
-			List<TagCategory> tag = this.listAllTagCategory(cate.getTAGCATEGORY_ID());
+			List<TagCategory> tag = this.listAllTagCategoryTree(cate.getTAGCATEGORY_ID());
 			cate.setTreeUrl("tagcategory/list.do?TAGCATEGORY_ID="+cate.getTAGCATEGORY_ID());
 			cate.setTarget("treeFrame");
 			cate.setSubTagCategory(tag);
 		}
 		return TagCategory;
 	}
+
+	/**
+	 * 查询所有标签分类  和 标签信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TagCategory> findTagsList() throws Exception {
+		
+		return (List<TagCategory>) dao.findForList("TagCategoryMapper.findTagsList",null);
+	}
+
 	
 }
 
