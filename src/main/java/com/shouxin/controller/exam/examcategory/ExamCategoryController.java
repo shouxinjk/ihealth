@@ -180,7 +180,7 @@ public class ExamCategoryController extends BaseController {
 		String EXAMCATEGORY_ID = pd.getString("EXAMCATEGORY_ID");
 		pd = examcategoryService.findById(pd);	//根据ID读取
 		mv.addObject("pd", pd);
-		pd.put("DEPARTMENT_ID",pd.get("PARENT_ID").toString());			//用作上级信息
+		pd.put("EXAMCATEGORY_ID",pd.get("PARENT_ID").toString());			//用作上级信息
 		mv.addObject("pds",examcategoryService.findById(pd));	
 		pd.put("EXAMCATEGORY_ID", EXAMCATEGORY_ID);
 		mv.setViewName("exam/examcategory/examcategory_edit");

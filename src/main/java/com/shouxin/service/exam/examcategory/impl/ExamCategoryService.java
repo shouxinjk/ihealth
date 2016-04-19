@@ -97,7 +97,7 @@ public class ExamCategoryService implements ExamCategoryManager{
 		for (ExamCategory cate : examCategory) {
 			cate.setTreeUrl("examcategory/list.do?EXAMCATEGORY_ID="+cate.getEXAMCATEGORY_ID());
 			cate.setTarget("treeFrame");
-			cate.setSubExamCategory(this.listSubExamCategoryByParentID(cate.getEXAMCATEGORY_ID()));
+			cate.setSubExamCategory(this.listAllExamCategory(cate.getEXAMCATEGORY_ID()));
 		}
 		return examCategory;
 	}

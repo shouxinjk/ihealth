@@ -29,7 +29,7 @@ public enum StatusEnum {
 	 * @param name
 	 * @return
 	 */
-	public int getIndexByName(String name){
+	public static int getIndexByName(String name){
 		for(StatusEnum statu : StatusEnum.values()){
 			if(statu.getName().equals(name)){
 				return statu.getIndex();
@@ -43,7 +43,7 @@ public enum StatusEnum {
 	 * @param index
 	 * @return
 	 */
-	public String getNameByIndex(int index){
+	public static String getNameByIndex(int index){
 		for(StatusEnum statu:StatusEnum.values()){
 			if(statu.getIndex()==index){
 				return statu.getName();

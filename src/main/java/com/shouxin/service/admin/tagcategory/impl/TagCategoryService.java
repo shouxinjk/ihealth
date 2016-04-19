@@ -122,7 +122,7 @@ public class TagCategoryService implements TagCategoryManager{
 	public List<TagCategory> listAllTagCategoryTree(String parentID) throws Exception {
 		List<TagCategory> TagCategory = this.listSubTagCategoryByParentId(parentID);
 		for (TagCategory cate : TagCategory) {
-			List<TagCategory> tag = this.listAllTagCategory(cate.getTAGCATEGORY_ID());
+			List<TagCategory> tag = this.listAllTagCategoryTree(cate.getTAGCATEGORY_ID());
 			cate.setTreeUrl("tagcategory/list.do?TAGCATEGORY_ID="+cate.getTAGCATEGORY_ID());
 			cate.setTarget("treeFrame");
 			cate.setSubTagCategory(tag);

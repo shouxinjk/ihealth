@@ -93,7 +93,6 @@
 				$("#NAME").focus();
 			return false;
 			}
-			alert($("#PARENT_ID").val());
 			$("#Form").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();

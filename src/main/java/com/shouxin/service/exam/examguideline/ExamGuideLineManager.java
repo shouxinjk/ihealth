@@ -61,5 +61,11 @@ public interface ExamGuideLineManager{
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
 	
+	/**
+	 * 修改状态
+	 * @throws Exception
+	 */
+	public void auditing(PageData pd) throws Exception;
+	
 }
 

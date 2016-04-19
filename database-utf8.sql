@@ -182,6 +182,9 @@ INSERT INTO `sys_fhsms` VALUES ('e5376b1bd54b489cb7f2203632bd74ec', '管理员�
 INSERT INTO `sys_fhsms` VALUES ('e613ac0fcc454f32895a70b747bf4fb5', '你也好', '2', 'admin', 'san', '2016-01-25 16:27:54', '2', 'ce8dc3b15afb40f28090f8b8e13f078d');
 INSERT INTO `sys_fhsms` VALUES ('f25e00cfafe741a3a05e3839b66dc7aa', '你好', '2', 'san', 'admin', '2016-01-25 16:26:44', '1', '920b20dafdfb4c09b560884eb277c51d');
 
+-- ----------------------------
+-- Table structure for sys_menu
+-- ----------------------------
 DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu` (
   `MENU_ID` int(11) NOT NULL,
@@ -195,52 +198,63 @@ CREATE TABLE `sys_menu` (
   PRIMARY KEY (`MENU_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `sys_menu` */
-
-insert  into `sys_menu` values (1,'系统管理','#','0','1','menu-icon fa fa-desktop blue','2',1);
-insert  into `sys_menu` values (2,'权限管理','#','1','1','menu-icon fa fa-lock black','1',1);
-insert  into `sys_menu` values (6,'信息管理','#','0','5','menu-icon fa fa-credit-card green','2',1);
-insert  into `sys_menu` values (7,'图片管理','pictures/list.do','6','1','menu-icon fa fa-folder-o pink','2',1);
-insert  into `sys_menu` values (8,'性能监控','druid/index.html','9','1','menu-icon fa fa-tachometer red','1',1);
-insert  into `sys_menu` values (9,'系统工具','#','0','3','menu-icon fa fa-cog black','2',1);
-insert  into `sys_menu` values (10,'接口测试','tool/interfaceTest.do','9','2','menu-icon fa fa-exchange green','1',1);
-insert  into `sys_menu` values (11,'发送邮件','tool/goSendEmail.do','9','3','menu-icon fa fa-envelope-o green','1',1);
-insert  into `sys_menu` values (12,'置二维码','tool/goTwoDimensionCode.do','9','4','menu-icon fa fa-barcode green','1',1);
-insert  into `sys_menu` values (14,'地图工具','tool/map.do','9','6','menu-icon fa fa-globe black','1',1);
-insert  into `sys_menu` values (15,'微信管理','#','0','4','menu-icon fa fa-comments purple','2',1);
-insert  into `sys_menu` values (16,'文本回复','textmsg/list.do','15','2','menu-icon fa fa-comment green','2',1);
-insert  into `sys_menu` values (17,'应用命令','command/list.do','15','4','menu-icon fa fa-comment grey','2',1);
-insert  into `sys_menu` values (18,'图文回复','imgmsg/list.do','15','3','menu-icon fa fa-comment pink','2',1);
-insert  into `sys_menu` values (19,'关注回复','textmsg/goSubscribe.do','15','1','menu-icon fa fa-comment orange','2',1);
-insert  into `sys_menu` values (20,'在线管理','onlinemanager/list.do','1','6','menu-icon fa fa-laptop green','1',1);
-insert  into `sys_menu` values (21,'打印测试','tool/printTest.do','9','7','menu-icon fa fa-hdd-o grey','1',1);
-insert  into `sys_menu` values (22,'一级菜单','#','0','6','menu-icon fa fa-fire orange','2',1);
-insert  into `sys_menu` values (23,'二级菜单','#','22','1','menu-icon fa fa-leaf black','1',1);
-insert  into `sys_menu` values (34,'六级菜单2','login_default.do','31','2','menu-icon fa fa-leaf black','1',1);
-insert  into `sys_menu` values (35,'四级菜单2','login_default.do','24','2','menu-icon fa fa-leaf black','1',1);
-insert  into `sys_menu` values (36,'角色(基础权限)','role.do','2','1','menu-icon fa fa-key orange','1',1);
-insert  into `sys_menu` values (37,'按钮权限','buttonrights/list.do','2','2','menu-icon fa fa-key green','1',1);
-insert  into `sys_menu` values (38,'菜单管理','menu/listAllMenu.do','1','3','menu-icon fa fa-folder-open-o brown','1',1);
-insert  into `sys_menu` values (39,'按钮管理','fhbutton/list.do','1','2','menu-icon fa fa-download orange','1',1);
-insert  into `sys_menu` values (40,'用户管理','#','0','2','menu-icon fa fa-users blue','2',1);
-insert  into `sys_menu` values (41,'系统用户','user/listUsers.do','40','1','menu-icon fa fa-users green','1',1);
-insert  into `sys_menu` values (42,'会员管理','happuser/listUsers.do','40','2','menu-icon fa fa-users orange','1',1);
-insert  into `sys_menu` values (43,'数据字典','dictionaries/listAllDict.do?DICTIONARIES_ID=0','1','4','menu-icon fa fa-book purple','1',1);
-insert  into `sys_menu` values (44,'代码生成','createCode/list.do','9','0','menu-icon fa fa-cogs brown','1',1);
-insert  into `sys_menu` values (47,'八级菜单','login_default.do','45','1','menu-icon fa fa-leaf black','1',1);
-insert  into `sys_menu` values (48,'图表报表',' tool/fusionchartsdemo.do','9','5','menu-icon fa fa-bar-chart-o black','1',1);
-insert  into `sys_menu` values (49,'组织机构','department/listAllDepartment.do?DEPARTMENT_ID=0','1','5','menu-icon fa fa-users blue','1',1);
-insert  into `sys_menu` values (50,'站内信','fhsms/list.do','6','2','menu-icon fa fa-envelope green','1',1);
-insert  into `sys_menu` values (51,'文章信息管理','article/list.do','6','1','menu-icon fa fa-leaf black','1',1);
-insert  into `sys_menu` values (72,'体检套餐管理','checkuppackage/list.do','6','2','menu-icon fa fa-leaf black','1',1);
-INSERT INTO `sys_menu` VALUES (73, '标签管理', 'tag/listAllTagCategory.do', '6', '3', 'menu-icon fa fa-envelope green', '1', '1');
-INSERT INTO `sys_menu` VALUES (74, '标签分类管理', 'tagcategory/listAllTagCategoryTree.do?TAGCATEGORY_ID=0', '6', '4', 'menu-icon fa fa-envelope green', '1', '1');
-INSERT INTO `sys_menu` VALUES (75, '疾病管理', 'disease/listAllDiseasecategory.do', '6', '5', 'menu-icon fa fa-envelope green', '1', '1');
-INSERT INTO `sys_menu` VALUES (76, '疾病分类管理', 'diseasecategory/listAllDiseaseCategoryTree.do?DISEASECATEGORY=0', '6', '6', 'menu-icon fa fa-envelope green', '1', '1');
+-- ----------------------------
+-- Records of sys_menu
+-- ----------------------------
+INSERT INTO `sys_menu` VALUES ('1', '系统管理', '#', '0', '1', 'menu-icon fa fa-desktop blue', '2', '1');
+INSERT INTO `sys_menu` VALUES ('2', '权限管理', '#', '1', '1', 'menu-icon fa fa-lock black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('6', '信息管理', '#', '0', '5', 'menu-icon fa fa-credit-card green', '2', '1');
+INSERT INTO `sys_menu` VALUES ('7', '图片管理', 'pictures/list.do', '6', '1', 'menu-icon fa fa-folder-o pink', '2', '1');
+INSERT INTO `sys_menu` VALUES ('8', '性能监控', 'druid/index.html', '9', '1', 'menu-icon fa fa-tachometer red', '1', '1');
+INSERT INTO `sys_menu` VALUES ('9', '系统工具', '#', '0', '3', 'menu-icon fa fa-cog black', '2', '1');
+INSERT INTO `sys_menu` VALUES ('10', '接口测试', 'tool/interfaceTest.do', '9', '2', 'menu-icon fa fa-exchange green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('11', '发送邮件', 'tool/goSendEmail.do', '9', '3', 'menu-icon fa fa-envelope-o green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('12', '置二维码', 'tool/goTwoDimensionCode.do', '9', '4', 'menu-icon fa fa-barcode green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('14', '地图工具', 'tool/map.do', '9', '6', 'menu-icon fa fa-globe black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('15', '微信管理', '#', '0', '4', 'menu-icon fa fa-comments purple', '2', '1');
+INSERT INTO `sys_menu` VALUES ('16', '文本回复', 'textmsg/list.do', '15', '2', 'menu-icon fa fa-comment green', '2', '1');
+INSERT INTO `sys_menu` VALUES ('17', '应用命令', 'command/list.do', '15', '4', 'menu-icon fa fa-comment grey', '2', '1');
+INSERT INTO `sys_menu` VALUES ('18', '图文回复', 'imgmsg/list.do', '15', '3', 'menu-icon fa fa-comment pink', '2', '1');
+INSERT INTO `sys_menu` VALUES ('19', '关注回复', 'textmsg/goSubscribe.do', '15', '1', 'menu-icon fa fa-comment orange', '2', '1');
+INSERT INTO `sys_menu` VALUES ('20', '在线管理', 'onlinemanager/list.do', '1', '6', 'menu-icon fa fa-laptop green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('21', '打印测试', 'tool/printTest.do', '9', '7', 'menu-icon fa fa-hdd-o grey', '1', '1');
+INSERT INTO `sys_menu` VALUES ('22', '一级菜单', '#', '0', '6', 'menu-icon fa fa-fire orange', '2', '1');
+INSERT INTO `sys_menu` VALUES ('23', '二级菜单', '#', '22', '1', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('24', '三级菜单', '#', '23', '1', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('30', '四级菜单', '#', '24', '1', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('31', '五级菜单1', '#', '30', '1', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('32', '五级菜单2', '#', '30', '2', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('33', '六级菜单', '#', '31', '1', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('34', '六级菜单2', 'login_default.do', '31', '2', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('35', '四级菜单2', 'login_default.do', '24', '2', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('36', '角色(基础权限)', 'role.do', '2', '1', 'menu-icon fa fa-key orange', '1', '1');
+INSERT INTO `sys_menu` VALUES ('37', '按钮权限', 'buttonrights/list.do', '2', '2', 'menu-icon fa fa-key green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('38', '菜单管理', 'menu/listAllMenu.do', '1', '3', 'menu-icon fa fa-folder-open-o brown', '1', '1');
+INSERT INTO `sys_menu` VALUES ('39', '按钮管理', 'fhbutton/list.do', '1', '2', 'menu-icon fa fa-download orange', '1', '1');
+INSERT INTO `sys_menu` VALUES ('40', '用户管理', '#', '0', '2', 'menu-icon fa fa-users blue', '2', '1');
+INSERT INTO `sys_menu` VALUES ('41', '系统用户', 'user/listUsers.do', '40', '1', 'menu-icon fa fa-users green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('42', '会员管理', 'happuser/listUsers.do', '40', '2', 'menu-icon fa fa-users orange', '1', '1');
+INSERT INTO `sys_menu` VALUES ('43', '数据字典', 'dictionaries/listAllDict.do?DICTIONARIES_ID=0', '1', '4', 'menu-icon fa fa-book purple', '1', '1');
+INSERT INTO `sys_menu` VALUES ('44', '代码生成', 'createCode/list.do', '9', '0', 'menu-icon fa fa-cogs brown', '1', '1');
+INSERT INTO `sys_menu` VALUES ('45', '七级菜单1', '#', '33', '1', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('46', '七级菜单2', '#', '33', '2', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('47', '八级菜单', 'login_default.do', '45', '1', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('48', '图表报表', ' tool/fusionchartsdemo.do', '9', '5', 'menu-icon fa fa-bar-chart-o black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('49', '组织机构', 'department/listAllDepartment.do?DEPARTMENT_ID=0', '1', '5', 'menu-icon fa fa-users blue', '1', '1');
+INSERT INTO `sys_menu` VALUES ('50', '站内信', 'fhsms/list.do', '6', '2', 'menu-icon fa fa-envelope green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('72', '推送信息管理', 'article/list.do', '6', '3', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('73', '指南管理', 'examguideline/list.do', '6', '4', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('94', '疾病管理', 'disease/listAllDiseasecategory.do', '6', '5', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('95', '标签管理', 'tag/listAllTagCategory.do', '6', '6', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('116', '标签分类管理', 'tagcategory/listAllTagCategoryTree.do?TAGCATEGORY_ID=0', '6', '7', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('137', '疾病分类管理', 'diseasecategory/listAllDiseaseCategoryTree.do?DISEASECATEGORY_ID=0', '6', '8', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('158', '医学检查分类管理', 'examcategory/listAllExamCategory.do?EXAMCATEGORY_ID=0', '6', '9', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('179', '医学检查项目管理', 'examitem/listAllExamCategory.do', '6', '10', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('200', '指南管理', '#', '6', '11', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('221', '指南规则管理', '#', '6', '12', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('221', '指南规则管理', 'examguideline/listRule.do', '6', '12', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('222', '检查频率', 'examfrequency/list.do', '6', '14', 'menu-icon fa fa-leaf black', '1', '1');
+
+
+
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
@@ -459,20 +473,6 @@ INSERT INTO `weixin_textmsg` VALUES ('695cd74779734231928a253107ab0eeb', '吃饭
 INSERT INTO `weixin_textmsg` VALUES ('d4738af7aea74a6ca1a5fb25a98f9acb', '关注', '这里是关注后回复的内容', '2015-05-11 02:12:36', '1', '关注回复');
 
 
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for `TB_TAGCATEGORY`
--- ----------------------------
-DROP TABLE IF EXISTS `TB_TAGCATEGORY`;
-CREATE TABLE `TB_TAGCATEGORY` (
- 		`TAGCATEGORY_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-		`PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父标签ID',
-		`METATYPE` varchar(255) DEFAULT NULL COMMENT '元类型，如“生活方式”',
-		`ISEXCLUSIVE` varchar(255) DEFAULT NULL COMMENT '该分类下的标签是否互斥',
-  		PRIMARY KEY (`TAGCATEGORY_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `TB_MEDICALEXAMITEM`
@@ -523,117 +523,6 @@ CREATE TABLE `TB_MEDICALCENERADMIN` (
   		PRIMARY KEY (`MEDICALCENERADMIN_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for exam_examfrequency
--- ----------------------------
-DROP TABLE IF EXISTS `exam_examfrequency`;
-CREATE TABLE `exam_examfrequency` (
-  `EXAMFREQUENCY_ID` varchar(100) NOT NULL,
-  `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-  `EXPRESSION` varchar(255) DEFAULT NULL COMMENT 'CRON表达式，定义检查的间隔频率',
-  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工的id',
-  `CREATEON` date DEFAULT NULL COMMENT '创建该记录的时间',
-  PRIMARY KEY (`EXAMFREQUENCY_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for exam_examitem
--- ----------------------------
-DROP TABLE IF EXISTS `exam_examitem`;
-CREATE TABLE `exam_examitem` (
-  `EXAMITEM_ID` varchar(100) NOT NULL,
-  `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
-  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
-  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
-  `EXAMCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
-  `EXAMITEM_PARENT_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
-  PRIMARY KEY (`EXAMITEM_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- ----------------------------
--- Table structure for exam_examcategory
--- ----------------------------
-DROP TABLE IF EXISTS `exam_examcategory`;
-CREATE TABLE `exam_examcategory` (
-  `EXAMCATEGORY_ID` varchar(100) NOT NULL,
-  `NAME` varchar(255) DEFAULT NULL COMMENT '检查项目分类名称',
-  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
-  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
-  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
-  `PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父级id',
-  PRIMARY KEY (`EXAMCATEGORY_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for exam_examguideline
--- ----------------------------
-DROP TABLE IF EXISTS `exam_examguideline`;
-CREATE TABLE `exam_examguideline` (
-  `EXAMGUIDELINE_ID` varchar(100) NOT NULL,
-  `ORIGINATE` varchar(255) DEFAULT NULL COMMENT '来源',
-  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '指南详细描述',
-  `CONCERNEDFACTORS` varchar(255) DEFAULT NULL COMMENT '关注因素描述',
-  `HIGHRISKDEFINE` varchar(255) DEFAULT NULL COMMENT '高危人群识别',
-  `HIGHRISKEXPRESSION` varchar(255) DEFAULT NULL COMMENT '高危人群识别脚本',
-  `LOWRISKDEFINE` varchar(255) DEFAULT NULL COMMENT '普通人群识别',
-  `LOWRISKEXPRESSION` varchar(255) DEFAULT NULL COMMENT '普通人群识别脚本',
-  `STATUS` int(255) DEFAULT NULL COMMENT '状态',
-  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
-  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
-  `DISEASE_ID` varchar(32) DEFAULT NULL,
-  `NAME` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`EXAMGUIDELINE_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for exam_examsolution
--- ----------------------------
-DROP TABLE IF EXISTS `exam_examsolution`;
-CREATE TABLE `exam_examsolution` (
-  `EXAMSOLUTION_ID` varchar(100) NOT NULL,
-  `SUBGROUP` varchar(255) DEFAULT NULL COMMENT '检查手段分组标记',
-  `RISKTYPE` int(255) DEFAULT NULL COMMENT '干预手段对应风险',
-  `STARTAGE` int(11) NOT NULL COMMENT '开始检查年龄',
-  `ENDAGE` varchar(255) DEFAULT NULL COMMENT '结束检查年龄',
-  `FEATURES` varchar(255) DEFAULT NULL COMMENT '医学检查手段',
-  `EXAMGUIDELINE_ID` varchar(100) NOT NULL,
-  `EXAMITEM_ID` varchar(100) NOT NULL,
-  `EXAMFREQUENCY_ID` varchar(100) NOT NULL,
-  PRIMARY KEY (`EXAMSOLUTION_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for `ADMIN_DISEASECATEGORY`
--- ----------------------------
-DROP TABLE IF EXISTS `ADMIN_DISEASECATEGORY`;
-CREATE TABLE `ADMIN_DISEASECATEGORY` (
- 		`DISEASECATEGORY_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建记录时间',
-		`PARENT_ID` varchar(32) DEFAULT NULL COMMENT '父级列表id',
-  		PRIMARY KEY (`DISEASECATEGORY_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for `ADMIN_DISEASE`
--- ----------------------------
-DROP TABLE IF EXISTS `ADMIN_DISEASE`;
-CREATE TABLE `ADMIN_DISEASE` (
- 		`DISEASE_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
-		`ISINHERITABLE` int(11) NOT NULL COMMENT '是否遗传倾向',
-		`ISHIGHINCIDENCE` int(11) NOT NULL COMMENT '是否高发',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建记录时间',
-		`DISEASECATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '疾病分类外键',
-  		PRIMARY KEY (`DISEASE_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 --------------------------------------
 ------------    体检项目表          ------------
@@ -677,65 +566,6 @@ CREATE TABLE `tb_checkuppackage` (
   PRIMARY KEY (`CHECKUPPACKAGE_ID`),
   KEY `USER_ID` (`USER_ID`),
   CONSTRAINT `tb_checkuppackage_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `sys_user` (`USER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for `ADMIN_DISEASECATEGORY`
--- ----------------------------
-DROP TABLE IF EXISTS `ADMIN_DISEASECATEGORY`;
-CREATE TABLE `ADMIN_DISEASECATEGORY` (
- 		`DISEASECATEGORY_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
-		`CREATEON` DATE DEFAULT NULL COMMENT '创建记录时间',
-		`PARENT_ID` varchar(32) DEFAULT NULL COMMENT '父级列表id',
-  		PRIMARY KEY (`DISEASECATEGORY_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for `ADMIN_DISEASE`
--- ----------------------------
-DROP TABLE IF EXISTS `ADMIN_DISEASE`;
-CREATE TABLE `ADMIN_DISEASE` (
- 		`DISEASE_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
-		`ISINHERITABLE` int(11) NOT NULL COMMENT '是否遗传倾向',
-		`ISHIGHINCIDENCE` int(11) NOT NULL COMMENT '是否高发',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
-		`CREATEON` DATE DEFAULT NULL COMMENT '创建记录时间',
-		`DISEASECATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '疾病分类外键',
-  		PRIMARY KEY (`DISEASE_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for `TAG_TAG`
--- ----------------------------
-DROP TABLE IF EXISTS `ADMIN_TAG`;
-CREATE TABLE `TAG_TAG` (
- 		`TAG_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-		`EXPRESSION` varchar(255) DEFAULT NULL COMMENT '表达式',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '用户id',
-		`CREATEON` DATE DEFAULT NULL COMMENT '时间',
-		`TAGCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '所属分类id',
-  		PRIMARY KEY (`TAG_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for `ADMIN_TAGCATEGORY`
--- ----------------------------
-DROP TABLE IF EXISTS `ADMIN_TAGCATEGORY`;
-CREATE TABLE `ADMIN_TAGCATEGORY` (
- 		`TAGCATEGORY_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '标签分类名称',
-		`MATETYPE` varchar(255) DEFAULT NULL COMMENT '特性',
-		`ISEXCLUSIVE` int(11) NOT NULL COMMENT '是否多选',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '用户id',
-		`CREATEON` DATE DEFAULT NULL COMMENT '时间',
-		`PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父级id',
-  		PRIMARY KEY (`TAGCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -782,4 +612,256 @@ CREATE TABLE `sys_useranduser` (
   `user_id_two` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`useranduser_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+-- ----------------------------
+-- Table structure for admin_disease
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_disease`;
+CREATE TABLE `admin_disease` (
+  `DISEASE_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+  `ISINHERITABLE` int(11) NOT NULL COMMENT '是否遗传倾向',
+  `ISHIGHINCIDENCE` int(11) NOT NULL COMMENT '是否高发',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
+  `CREATEON` date DEFAULT NULL COMMENT '创建记录时间',
+  `DISEASECATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '疾病分类外键',
+  PRIMARY KEY (`DISEASE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_disease
+-- ----------------------------
+INSERT INTO `admin_disease` VALUES ('1', '禽流感', 'asd', '1', '0', 'aa', '2016-03-29', '4');
+INSERT INTO `admin_disease` VALUES ('2', '感冒', 'asd', '0', '1', 'aa', '2016-03-29', '4');
+INSERT INTO `admin_disease` VALUES ('249ec8837fd243fbbae0de5ca64105f2', 'aSDAsdasd22', 'asdadasd', '0', '1', null, null, 'a2d72567589a4d80a6ec9f795152d373');
+INSERT INTO `admin_disease` VALUES ('3', '肺癌', 'asd', '1', '1', 'aa', '2016-03-29', '3');
+INSERT INTO `admin_disease` VALUES ('4', '血癌', 'asd', '1', '0', 'aa', '2016-03-29', '3');
+
+-- ----------------------------
+-- Table structure for admin_diseasecategory
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_diseasecategory`;
+CREATE TABLE `admin_diseasecategory` (
+  `DISEASECATEGORY_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
+  `CREATEON` date DEFAULT NULL COMMENT '创建记录时间',
+  `PARENT_ID` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`DISEASECATEGORY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_diseasecategory
+-- ----------------------------
+INSERT INTO `admin_diseasecategory` VALUES ('1', '肿瘤', '不好医治', '1', '2016-03-28', '0');
+INSERT INTO `admin_diseasecategory` VALUES ('2', '流感', '易传染', '1', '2016-03-29', '0');
+INSERT INTO `admin_diseasecategory` VALUES ('3', '肺癌', '吸烟过多', '1', '2016-03-30', '1');
+INSERT INTO `admin_diseasecategory` VALUES ('4', '非典', '非典你', '1', '2016-03-29', '2');
+
+-- ----------------------------
+-- Table structure for admin_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_tag`;
+CREATE TABLE `admin_tag` (
+  `TAG_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+  `EXPRESSION` varchar(255) DEFAULT NULL COMMENT '表达式',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '用户id',
+  `CREATEON` date DEFAULT NULL COMMENT '时间',
+  `TAGCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '所属分类id',
+  PRIMARY KEY (`TAG_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_tag
+-- ----------------------------
+INSERT INTO `admin_tag` VALUES ('1', '吸烟', '伤肺a', null, null, '3');
+INSERT INTO `admin_tag` VALUES ('11', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
+INSERT INTO `admin_tag` VALUES ('12', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
+INSERT INTO `admin_tag` VALUES ('2', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
+INSERT INTO `admin_tag` VALUES ('4', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
+INSERT INTO `admin_tag` VALUES ('5', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
+INSERT INTO `admin_tag` VALUES ('6', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
+INSERT INTO `admin_tag` VALUES ('6df68a155ae047bc9e7b91a58c8201b1', '身体5', '身体4', null, null, 'd816537d8a2747d5ba27927da72048a7');
+INSERT INTO `admin_tag` VALUES ('7', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
+-- ----------------------------
+-- Table structure for admin_tagcategory
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_tagcategory`;
+CREATE TABLE `admin_tagcategory` (
+  `TAGCATEGORY_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '标签分类名称',
+  `MATETYPE` varchar(255) DEFAULT NULL COMMENT '特性',
+  `ISEXCLUSIVE` int(11) NOT NULL COMMENT '是否多选',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '用户id',
+  `CREATEON` date DEFAULT NULL COMMENT '时间',
+  `PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父级id',
+  PRIMARY KEY (`TAGCATEGORY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for admin_useranddisease
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_useranddisease`;
+CREATE TABLE `admin_useranddisease` (
+  `id` varchar(32) NOT NULL,
+  `user_id` varchar(32) DEFAULT NULL,
+  `disease_id` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_useranddisease
+-- ----------------------------
+INSERT INTO `admin_useranddisease` VALUES ('1', '1', '1');
+
+-- ----------------------------
+-- Table structure for admin_userandtag
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_userandtag`;
+CREATE TABLE `admin_userandtag` (
+  `id` varchar(32) NOT NULL,
+  `user_id` varchar(32) DEFAULT NULL,
+  `tag_id` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_userandtag
+-- ----------------------------
+INSERT INTO `admin_userandtag` VALUES ('1', '1', '1');
+INSERT INTO `admin_userandtag` VALUES ('2', '1', '11');
+INSERT INTO `admin_userandtag` VALUES ('5', '1', '1');
+
+-- ----------------------------
+-- Table structure for exam_examcategory
+-- ----------------------------
+DROP TABLE IF EXISTS `exam_examcategory`;
+CREATE TABLE `exam_examcategory` (
+  `EXAMCATEGORY_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '检查项目分类名称',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
+  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
+  `PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父级id',
+  PRIMARY KEY (`EXAMCATEGORY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of exam_examcategory
+-- ----------------------------
+INSERT INTO `exam_examcategory` VALUES ('1', '常规检查', '常规检查', 'aa', '2016-03-30', '0');
+INSERT INTO `exam_examcategory` VALUES ('16d4b11354f5472d9199861403dfd02d', 'AsDadsad', 'asdasdsad', null, null, '1ef4420e1e2143bcaf53d92914f777d3');
+INSERT INTO `exam_examcategory` VALUES ('198893447d914f3da869cd42008aa6e9', '手术33', '手术33', null, null, 'cbad9083459243298f29bb1cd1ede53a');
+INSERT INTO `exam_examcategory` VALUES ('1ef4420e1e2143bcaf53d92914f777d3', 'Dasda', 'asdasdas', null, null, '61cb73a6ff5f468c80b534b281681a83');
+INSERT INTO `exam_examcategory` VALUES ('2', '体液检查', '体液检查', 'aa', '2016-03-29', '1');
+INSERT INTO `exam_examcategory` VALUES ('3', '射线检查', '射线检查', 'aa', '2016-03-30', '1');
+INSERT INTO `exam_examcategory` VALUES ('33a32a3c2f0a46c3955afeaef5ae4114', 'dasdasd', 'asdasdasda', null, null, '61cb73a6ff5f468c80b534b281681a83');
+INSERT INTO `exam_examcategory` VALUES ('3d5e69c6517f44ef89b378299f7e5d13', '哈哈1', '哈哈', null, null, 'b878e67cbe0a4d71a84bba277f976bb2');
+INSERT INTO `exam_examcategory` VALUES ('4', '手术检查', '手术检查', 'bb', '2016-03-30', '0');
+INSERT INTO `exam_examcategory` VALUES ('5', '穿刺检查', '穿刺检查', 'bb', '2016-03-29', '4');
+INSERT INTO `exam_examcategory` VALUES ('6', '内窥镜', '内窥镜', 'bb', '2016-03-31', '4');
+
+-- ----------------------------
+-- Table structure for exam_examfrequency
+-- ----------------------------
+DROP TABLE IF EXISTS `exam_examfrequency`;
+CREATE TABLE `exam_examfrequency` (
+  `EXAMFREQUENCY_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+  `EXPRESSION` varchar(255) DEFAULT NULL COMMENT 'CRON表达式，定义检查的间隔频率',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工的id',
+  `CREATEON` date DEFAULT NULL COMMENT '创建该记录的时间',
+  PRIMARY KEY (`EXAMFREQUENCY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of exam_examfrequency
+-- ----------------------------
+INSERT INTO `exam_examfrequency` VALUES ('1', '一年一次', '一年检查一次', 'aa', '2016-03-30');
+
+-- ----------------------------
+-- Table structure for exam_examguideline
+-- ----------------------------
+DROP TABLE IF EXISTS `exam_examguideline`;
+CREATE TABLE `exam_examguideline` (
+  `EXAMGUIDELINE_ID` varchar(100) NOT NULL,
+  `ORIGINATE` varchar(255) DEFAULT NULL COMMENT '来源',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '指南详细描述',
+  `CONCERNEDFACTORS` varchar(255) DEFAULT NULL COMMENT '关注因素描述',
+  `HIGHRISKDEFINE` varchar(255) DEFAULT NULL COMMENT '高危人群识别',
+  `HIGHRISKEXPRESSION` varchar(255) DEFAULT NULL COMMENT '高危人群识别脚本',
+  `LOWRISKDEFINE` varchar(255) DEFAULT NULL COMMENT '普通人群识别',
+  `LOWRISKEXPRESSION` varchar(255) DEFAULT NULL COMMENT '普通人群识别脚本',
+  `STATUS` int(255) DEFAULT '1' COMMENT '状态',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
+  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
+  `DISEASE_ID` varchar(32) DEFAULT NULL,
+  `NAME` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`EXAMGUIDELINE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of exam_examguideline
+-- ----------------------------
+INSERT INTO `exam_examguideline` VALUES ('1', 'AA', 'BBB', '抽烟，酗酒', '高危人群界定方法', '高危人群界定方法脚本2', '普通人群界定方法', '普通人群界定方法脚本22', '1', 'AAA', '2016-04-06', '2', '肿瘤筛查2233');
+INSERT INTO `exam_examguideline` VALUES ('1dc852848c0c4010bd7e508752e19128', null, null, 'ceshi', 'shibie', null, 'shibie', null, '2', null, null, '54adb455afab452cae778f238a4fa9bc', 'ceshi ');
+INSERT INTO `exam_examguideline` VALUES ('2', 'AA', 'AA', 'aaa', 'AA', 'aa', 'aaa', 'aa', '4', 'aa', '2016-03-29', '1', 'aaa');
+INSERT INTO `exam_examguideline` VALUES ('97805f517b8e4925bb7e3f68c341e0b5', null, null, 'aaaa', 'aaa', null, 'aaa', null, '2', null, null, '1', 'aaa');
+
+-- ----------------------------
+-- Table structure for exam_examitem
+-- ----------------------------
+DROP TABLE IF EXISTS `exam_examitem`;
+CREATE TABLE `exam_examitem` (
+  `EXAMITEM_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
+  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
+  `EXAMCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+  `EXAMITEM_PARENT_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
+  PRIMARY KEY (`EXAMITEM_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of exam_examitem
+-- ----------------------------
+INSERT INTO `exam_examitem` VALUES ('1', '体液分析检查一', '体液分析检查一', 'aa', '2016-03-29', '2', null);
+INSERT INTO `exam_examitem` VALUES ('2', '体液分析检查二', '体液分析检查二', 'aa', '2016-03-30', '2', null);
+INSERT INTO `exam_examitem` VALUES ('22be8e012295496faab0d4398db09d81', '体液3', '体液3', null, null, null, null);
+INSERT INTO `exam_examitem` VALUES ('3', '内窥镜一', '内窥镜一', 'aa', '2016-03-29', '6', null);
+INSERT INTO `exam_examitem` VALUES ('4', '内窥镜二', '内窥镜二', 'aa', '2016-03-30', '6', null);
+INSERT INTO `exam_examitem` VALUES ('6af838063a3b42cd9e3bfaab9afc6809', 'DDDD', 'CCCC', null, null, '2', null);
+INSERT INTO `exam_examitem` VALUES ('96a8a8b8a99949fca0b16d83152969f6', 'Asdasdaaaa', 'asdasda', null, null, 'b878e67cbe0a4d71a84bba277f976bb2', null);
+
+-- ----------------------------
+-- Table structure for exam_examsolution
+-- ----------------------------
+DROP TABLE IF EXISTS `exam_examsolution`;
+CREATE TABLE `exam_examsolution` (
+  `EXAMSOLUTION_ID` varchar(100) NOT NULL,
+  `SUBGROUP` varchar(255) DEFAULT NULL COMMENT '检查手段分组标记',
+  `RISKTYPE` int(255) DEFAULT NULL COMMENT '干预手段对应风险',
+  `STARTAGE` int(11) NOT NULL COMMENT '开始检查年龄',
+  `ENDAGE` varchar(255) DEFAULT NULL COMMENT '结束检查年龄',
+  `FEATURES` varchar(255) DEFAULT NULL COMMENT '医学检查手段',
+  `EXAMGUIDELINE_ID` varchar(100) NOT NULL,
+  `EXAMITEM_ID` varchar(100) NOT NULL,
+  `EXAMFREQUENCY_ID` varchar(100) NOT NULL,
+  PRIMARY KEY (`EXAMSOLUTION_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of exam_examsolution
+-- ----------------------------
+INSERT INTO `exam_examsolution` VALUES ('2', 'cccc', '0', '11', 'cc', '经济,全面,安全', '1', '1', '1');
+INSERT INTO `exam_examsolution` VALUES ('3', 'cccc', '0', '11', 'cc', '经济,全面,安全', '1', '1', '1');
+INSERT INTO `exam_examsolution` VALUES ('4', 'bb', '1', '11', 'bb', '经济,全面,安全', '1', '1', '1');
+INSERT INTO `exam_examsolution` VALUES ('5', 'bb', '1', '11', 'bb', '经济,全面,安全', '2', '1', '1');
+
 

@@ -77,10 +77,21 @@ public class ExamGuideLineService implements ExamGuideLineManager{
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("ExamGuideLineMapper.deleteAll", ArrayDATA_IDS);
 	}
-
+	
+	/**
+	 * 修改指南规则
+	 */
 	public void editRule(PageData pd) throws Exception {
 		// TODO Auto-generated method stub
 		dao.update("ExamGuideLineMapper.editRule", pd);
+	}
+	
+	/**
+	 * 修改指南状态
+	 */
+	public void auditing(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		dao.update("ExamGuideLineMapper.auditing", pd);
 	}
 	
 }

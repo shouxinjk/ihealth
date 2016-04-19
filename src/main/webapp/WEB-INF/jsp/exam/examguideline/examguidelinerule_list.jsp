@@ -60,8 +60,7 @@
 									<th class="center">疾病类别</th>
 									<th class="center">疾病名称</th>
 									<th class="center">关注因素</th>
-									<th class="center">界定方法</th>
-									<th class="center">界定规则</th>
+									<th class="center">状态</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -81,17 +80,25 @@
 											<td class='center'>${var.CNAME}</td>
 											<td class='center'>${var.DNAME}</td>
 											<td class='center'>${var.CONCERNEDFACTORS}</td>
-											<td class='center'>${var.HIGHRISKDEFINE}</td>
-											<td class='center'>${var.HIGHRISKEXPRESSION}</td>
+											<td class='center'>${var.STATUS}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
-													</a>
+													<c:if test="${QX.edit == 1&&var.STATUS eq '医生已审核'}">
+														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
+															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
+														</a>
+														<a class="btn btn-xs btn-success" title="运维补充" onclick="auditing('${var.EXAMGUIDELINE_ID}','3');">
+															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="运维补充"></i>
+														</a>
+														
+													</c:if>
+													<c:if test="${QX.edit == 1&& var.STATUS eq '运维已补充'}">
+														<a class="btn btn-xs btn-success" title="运维审核" onclick="auditing('${var.EXAMGUIDELINE_ID}','4');">
+															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="运维审核"></i>
+														</a>
 													</c:if>
 												</div>
 												<div class="hidden-md hidden-lg">
@@ -264,6 +271,19 @@
 				if(result) {
 					top.jzts();
 					var url = "<%=basePath%>examguideline/delete.do?EXAMGUIDELINE_ID="+Id+"&tm="+new Date().getTime();
+					$.get(url,function(data){
+						nextPage(${page.currentPage});
+					});
+				}
+			});
+		}
+		
+		//医生审核
+		function auditing(Id,STATUS){
+			bootbox.confirm("确定要审核吗?", function(result) {
+				if(result) {
+					top.jzts();
+					var url = "<%=basePath%>examguideline/auditing.do?EXAMGUIDELINE_ID="+Id+"&STATUS="+STATUS+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage(${page.currentPage});
 					});

@@ -59,6 +59,8 @@ public class DiseaseController extends BaseController {
 		pd = this.getPageData();
 		pd.put("DISEASE_ID", this.get32UUID());	//主键
 		logBefore(logger, pd.get("DISEASECATEGORY_ID")+"疾病分类id++++++++++++");
+		pd.put("CREATEBY", Jurisdiction.getUserId());
+		pd.put("CREATEON", new Date());
 		diseaseService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
