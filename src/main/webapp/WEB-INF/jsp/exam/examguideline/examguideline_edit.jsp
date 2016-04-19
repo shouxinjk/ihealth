@@ -329,7 +329,6 @@
 		
 		function delSou(id,tbodyID,status){
 			var EXAMGUIDELINE_ID = $("#EXAMGUIDELINE_ID").val();
-			alert(id);
 			$.ajax({
 				url:'<%=basePath%>examguideline/delSou.do',
 				type:"post",
