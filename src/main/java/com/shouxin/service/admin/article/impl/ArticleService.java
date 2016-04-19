@@ -84,6 +84,23 @@ public class ArticleService implements ArticleManager{
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("ArticleMapper.deleteAll", ArrayDATA_IDS);
 	}
+
+	/**
+	 * 新增标签跟文章的关系
+	 */
+	public void saveTagAndArticle(PageData pd) throws Exception {
+		dao.save("ArticleMapper.saveTagAndArticle", pd);
+		
+	}
+
+	/**
+	 * 新增疾病跟文章的关系
+	 */
+	public void saveDiseaseAndArticle(PageData pd) throws Exception {
+		dao.save("ArticleMapper.saveDiseaseAndArticle", pd);
+		
+	}
+
 	
 }
 
