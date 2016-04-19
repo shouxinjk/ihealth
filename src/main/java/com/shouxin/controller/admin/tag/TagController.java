@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,6 +60,8 @@ public class TagController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("TAG_ID", this.get32UUID());	//主键
+		pd.put("CREATEBY", Jurisdiction.getUserId());
+		pd.put("CREATEON", new Date());
 		tagService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -101,7 +105,7 @@ public class TagController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/list")
-	public ModelAndView list(Page page) throws Exception{
+	public ModelAndView list(Page page,HttpServletResponse res) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表Tag");
 		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		ModelAndView mv = this.getModelAndView();
@@ -135,7 +139,7 @@ public class TagController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/listAllTagCategory")
-	public ModelAndView listDiseaseCategory(Model model,String TAGATEGORY_ID) throws Exception{
+	public ModelAndView listDiseaseCategory(Model model,String TAGCATEGORY_ID) throws Exception{
 		
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
@@ -146,7 +150,7 @@ public class TagController extends BaseController {
 			logBefore(logger, json+"列表DiseaseCategory=======");
 			json = json.replaceAll("TAGCATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subTagCategory", "nodes").replaceAll("hasTagCategory", "checked").replaceAll("treeUrl", "url");
 			model.addAttribute("zTreeNodes", json);
-			mv.addObject("DISEASECATEGORY_ID",TAGATEGORY_ID);
+			mv.addObject("TAGCATEGORY_ID",TAGCATEGORY_ID);
 			mv.addObject("pd", pd);	
 			mv.setViewName("admin/tag/tag_ztree");
 		} catch(Exception e){
