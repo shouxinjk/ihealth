@@ -32,36 +32,18 @@
 			<div class="main-content-inner">
 				<div class="page-content">
 					<div class="row">
-					<div>
-						<div style="width:48%; float:left;">
-							<ul id="leftTree" class="tree"></ul>
+						<div>
+							<div style="width:48%; float:left;">
+								<span>标签信息</span>
+								<ul id="leftTree" class="tree"></ul>
+							</div>
+							<div style="width:48%; float:right;">
+								<span>疾病信息</span>
+								<ul id="rightTree" class="tree"></ul>
+							</div>
 						</div>
-						<div style="width:48%; float:right;">
-							<ul id="rightTree" class="tree"></ul>
-						</div>
-					</div>
 						
-						<script type="text/javascript">
-							
-							$(top.hangge());
-							var zTree;
-							var zTrees;
-							$(document).ready(function(){
-								var setting = {
-									showLine : true,                  //是否显示节点间的连线  
-								    checkable : true, 
-								};
-								var zn = '${zTreeNodes}';
-								var zTreeNodes = eval(zn);
-								
-								var zns = '${zTreeNodess}';
-								var zTreeNodess = eval(zns);
-								
-								zTree = $("#leftTree").zTree(setting, zTreeNodes);
-								zTrees = $("#rightTree").zTree(setting, zTreeNodess);
-							});
-							   
-						</script>
+						<hr/>
 						
 						<div class="col-xs-12">
 							<form action="article/${msg }.do" name="Form" id="Form"
@@ -109,21 +91,11 @@
 										</tr>
 
 										<tr>
-											<td
-												style="width: 75px; text-align: right; padding-top: 13px;">标签ID:</td>
-											<td><textarea rows="8" cols="30" maxlength="200"
-													name="tagIds" id="tagIds" placeholder="这里输入标签ID"
-													title="标签Id" style="width: 98%; resize: none;"></textarea>
-											</td>
+											<td><input type="hidden" name="tagIds" id="tagIds"/></td>	
 										</tr>
 
 										<tr>
-											<td
-												style="width: 75px; text-align: right; padding-top: 13px;">疾病ID:</td>
-											<td><textarea rows="8" cols="30" maxlength="200"
-													name="diseaseId" id="diseaseId" placeholder="这里输入疾病ID"
-													title="疾病ID" style="width: 98%; resize: none;"></textarea>
-											</td>
+											<td><input type="hidden" name="diseaseId" id="diseaseId"/></td>
 										</tr>
 
 										<tr>
@@ -175,9 +147,73 @@
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 	<script type="text/javascript">
+		var zTree;
+		var zTrees;
+		$(document).ready(function(){
+			initTag();
+			initDisease();
+		});
+		
+		//加载疾病信息
+		function initDisease(){
+			var setting = {
+				showLine : true, //是否显示节点间的连线 
+				checkable: true, //带有复选框
+				checkType : { "Y": "s", "N": "s" }
+			}
+			var zns = '${zTreeNodess}';
+			var zTreeNodess = eval(zns);
+			zTrees = $("#rightTree").zTree(setting, zTreeNodess);
+		}							
+		
+		//加载标签信息
+		function initTag(){
+			var setting = {
+				showLine : true,//是否显示节点间的连线 
+				checkable: true,
+				checkType : { "Y": "s", "N": "s" }
+			};
+			var zn = '${zTreeNodes}';
+			var zTreeNodes = eval(zn);
+			zTree = $("#leftTree").zTree(setting, zTreeNodes);
+		}
+		
+		function check(){
+			tagOnCheck();
+			diseaseOnCheck();
+		}
+		
+		function diseaseOnCheck(){
+			var str = "";
+			var nodes = zTrees.getCheckedNodes(true);
+			for(var i=0;i<nodes.length;i++){
+				if(nodes[i].id!=undefined){
+					str += nodes[i].id + ",";
+				}		
+			}
+			str = str.substring(0,str.length - 1);
+			$("#diseaseId").val(str);
+		}
+		
+		function tagOnCheck(){
+			var str = "";
+			var nodes = zTree.getCheckedNodes(true);
+			for(var i=0;i<nodes.length;i++){
+				alert(nodes[i].id);
+				if(nodes[i].id!=undefined){
+					str += nodes[i].id + ",";
+				}
+			}
+			//去掉字符串最后一个逗号
+			str = str.substring(0,str.length - 1);
+			$("#tagIds").val(str);
+		}
+	
+	
 		$(top.hangge());
 		//保存
 		function save(){
+			
 			if($("#TITLE").val()==""){
 				$("#TITLE").tips({
 					side:3,
@@ -228,7 +264,7 @@
 				$("#SUMMARY").focus();
 			return false;
 			}
-			
+			check();
 			$("#Form").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();

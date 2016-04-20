@@ -150,27 +150,20 @@ public class ArticleController extends BaseController {
 		pd = this.getPageData();
 		/**
 		 * 需求： 当用户点击新增按钮时，跳转到新增页面并获取所有的标签分类下的标签信息
-		 * 
 		 */
 		try{
 			List<TagCategory> list = this.tagcategoryService.findTagsList();
-			
 			List<DiseaseCategory> disList = this.diseasecategoryService.findAllDiseases();
-			
 			String jsons = JSONArray.fromObject(disList).toString();
-			
 			String json = JSONArray.fromObject(list).toString();
 			logger.debug(json + "-------------------------------------------------");
-			json = json.replaceAll("TAG_ID", "id").replaceAll("NAME", "name").replaceAll("tags", "nodes").replaceAll("hasTagCategory", "checked").replaceAll("treeUrl", "url");
-			
-			jsons = jsons.replaceAll("DISEASE_ID", "id").replaceAll("NAME", "name").replaceAll("diseases", "nodes").replaceAll("hasTagCategory", "checked").replaceAll("treeUrl", "url");
-			
+			json = json.replaceAll("TAG_ID", "id").replaceAll("TAGCATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("tags", "nodes");
+			jsons = jsons.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
 			model.addAttribute("zTreeNodes", json);
 			model.addAttribute("zTreeNodess", jsons);
 		} catch(Exception e){
 			logger.error(e.toString(), e);
 		}
-		
 		mv.setViewName("admin/article/article_edit");
 		mv.addObject("msg", "saveRelations");
 		mv.addObject("pd", pd);
@@ -275,28 +268,30 @@ public class ArticleController extends BaseController {
 		
 		//获取前段页面传入的多个标签的ID 并按,拆分
 		String tagIds = pd.getString("tagIds");
-		logger.debug("多个标签的ID为："+tagIds);
-		
-
-		//按,进行拆分  保存数据到数据库中
-		String[] tags = StringUtil.StrList(tagIds);
-		for (int i = 0; i < tags.length; i++) {
-			pd.put("id", this.get32UUID());
-			pd.put("tag_id", tags[i]);
-			pd.put("article_id", articleId);
-			this.articleService.saveTagAndArticle(pd);
+		if(tagIds != null && "".equals(tagIds)){
+			logger.debug("多个标签的ID为："+tagIds);
+			//按,进行拆分  保存数据到数据库中
+			String[] tags = StringUtil.StrList(tagIds);
+			for (int i = 0; i < tags.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("tag_id", tags[i]);
+				pd.put("article_id", articleId);
+				this.articleService.saveTagAndArticle(pd);
+			}
 		}
+		
 		//获取当前选中的疾病的ID
 		String diseaseId = pd.getString("diseaseId");
-		logger.debug("多个疾病的ID为:" + diseaseId);
-		String[] diseases = StringUtil.StrList(diseaseId);
-		for (int i = 0; i < diseases.length; i++) {
-			pd.put("diseaseandarticle_id", this.get32UUID());
-			pd.put("article_id", articleId);
-			pd.put("disease_id", diseases[i]);
-			this.articleService.saveDiseaseAndArticle(pd);
+		if(diseaseId != null && "".equals(diseaseId)){
+			logger.debug("多个疾病的ID为:" + diseaseId);
+			String[] diseases = StringUtil.StrList(diseaseId);
+			for (int i = 0; i < diseases.length; i++) {
+				pd.put("diseaseandarticle_id", this.get32UUID());
+				pd.put("article_id", articleId);
+				pd.put("disease_id", diseases[i]);
+				this.articleService.saveDiseaseAndArticle(pd);
+			}
 		}
-		
 		pd.put("ARTICLE_ID", articleId);	//主键
 		pd.put("PUBLISHTIME", new Date()); //发布时间
 		pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
