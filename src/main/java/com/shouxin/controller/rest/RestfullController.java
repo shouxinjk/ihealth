@@ -151,6 +151,7 @@ public class RestfullController extends BaseController {
 		// 判断婚姻状态 传入下拉列表中的value 1 未婚 2 已婚 3 同居 4 离异 5寡居
 		marriageStatus = MarriageStatusEnum.getNameByIndex(Integer.parseInt(marriageStatus));
 
+		//MarriageStatusEnum.getIndexByName(marriageStatus);
 		// 判断学历
 		degree = DegreeEnum.getNameByIndex(Integer.parseInt(degree));
 

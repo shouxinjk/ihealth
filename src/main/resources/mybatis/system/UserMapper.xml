@@ -413,6 +413,7 @@
 				EMAIL					= #{EMAIL},
 				NUMBER					= #{NUMBER},
 				PHONE					= #{PHONE},
+				BIRTHDAY				= #{BIRTHDAY},
 				ALIAS					= #{ALIAS},
 				OPENID                  = #{OPENID},
 				LIVEPLACE				= #{LIVEPLACE},
