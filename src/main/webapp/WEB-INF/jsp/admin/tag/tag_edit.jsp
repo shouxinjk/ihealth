@@ -46,7 +46,7 @@
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">描述:</td>
-								<td><input type="text" name="EXPRESSION" id="EXPRESSION" value="${pd.EXPRESSION}" maxlength="255" placeholder="这里输入表达式" title="表达式" style="width:98%;"/></td>
+								<td><input type="text" name="EXPRESSION" id="EXPRESSION" value="${pd.DESCRIPTION}" maxlength="255" placeholder="这里输入描述信息" title="描述" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">表达式:</td>
@@ -99,36 +99,6 @@
 		            time:2
 		        });
 				$("#NAME").focus();
-			return false;
-			}
-			if($("#EXPRESSION").val()==""){
-				$("#EXPRESSION").tips({
-					side:3,
-		            msg:'请输入表达式',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#EXPRESSION").focus();
-			return false;
-			}
-			if($("#CREATEBY").val()==""){
-				$("#CREATEBY").tips({
-					side:3,
-		            msg:'请输入用户id',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEBY").focus();
-			return false;
-			}
-			if($("#CREATEON").val()==""){
-				$("#CREATEON").tips({
-					side:3,
-		            msg:'请输入时间',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CREATEON").focus();
 			return false;
 			}
 			$("#Form").submit();

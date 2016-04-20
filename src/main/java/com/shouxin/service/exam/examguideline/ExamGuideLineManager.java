@@ -67,5 +67,12 @@ public interface ExamGuideLineManager{
 	 */
 	public void auditing(PageData pd) throws Exception;
 	
+	/**
+	 * 查询运维审核后的指南
+	 * @param pd
+	 * @throws Exception
+	 */
+	public List<PageData> listRelease(Page page) throws Exception;
+	
 }
 

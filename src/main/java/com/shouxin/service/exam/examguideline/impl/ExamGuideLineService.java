@@ -8,76 +8,89 @@ import com.shouxin.entity.Page;
 import com.shouxin.util.PageData;
 import com.shouxin.service.exam.examguideline.ExamGuideLineManager;
 
-/** 
- * 说明： 医学体检指南
- * 创建人：shouxin
- * 创建时间：2016-04-07
+/**
+ * 说明： 医学体检指南 创建人：shouxin 创建时间：2016-04-07
+ * 
  * @version
  */
 @Service("examguidelineService")
-public class ExamGuideLineService implements ExamGuideLineManager{
+public class ExamGuideLineService implements ExamGuideLineManager {
 
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
-	
-	/**新增
+
+	/**
+	 * 新增
+	 * 
 	 * @param pd
 	 * @throws Exception
 	 */
-	public void save(PageData pd)throws Exception{
+	public void save(PageData pd) throws Exception {
 		dao.save("ExamGuideLineMapper.save", pd);
 	}
-	
-	/**删除
+
+	/**
+	 * 删除
+	 * 
 	 * @param pd
 	 * @throws Exception
 	 */
-	public void delete(PageData pd)throws Exception{
+	public void delete(PageData pd) throws Exception {
 		dao.delete("ExamGuideLineMapper.delete", pd);
 	}
-	
-	/**修改
+
+	/**
+	 * 修改
+	 * 
 	 * @param pd
 	 * @throws Exception
 	 */
-	public void edit(PageData pd)throws Exception{
+	public void edit(PageData pd) throws Exception {
 		dao.update("ExamGuideLineMapper.edit", pd);
 	}
-	
-	/**列表
+
+	/**
+	 * 列表
+	 * 
 	 * @param page
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<PageData> list(Page page)throws Exception{
-		return (List<PageData>)dao.findForList("ExamGuideLineMapper.datalistPage", page);
+	public List<PageData> list(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("ExamGuideLineMapper.datalistPage", page);
 	}
-	
-	/**列表(全部)
+
+	/**
+	 * 列表(全部)
+	 * 
 	 * @param pd
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<PageData> listAll(PageData pd)throws Exception{
-		return (List<PageData>)dao.findForList("ExamGuideLineMapper.listAll", pd);
+	public List<PageData> listAll(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("ExamGuideLineMapper.listAll", pd);
 	}
-	
-	/**通过id获取数据
+
+	/**
+	 * 通过id获取数据
+	 * 
 	 * @param pd
 	 * @throws Exception
 	 */
-	public PageData findById(PageData pd)throws Exception{
-		return (PageData)dao.findForObject("ExamGuideLineMapper.findById", pd);
+	public PageData findById(PageData pd) throws Exception {
+		return (PageData) dao.findForObject("ExamGuideLineMapper.findById", pd);
 	}
-	
-	/**批量删除
+
+	/**
+	 * 批量删除
+	 * 
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
 	 */
-	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
+	public void deleteAll(String[] ArrayDATA_IDS) throws Exception {
 		dao.delete("ExamGuideLineMapper.deleteAll", ArrayDATA_IDS);
 	}
-	
+
 	/**
 	 * 修改指南规则
 	 */
@@ -85,7 +98,7 @@ public class ExamGuideLineService implements ExamGuideLineManager{
 		// TODO Auto-generated method stub
 		dao.update("ExamGuideLineMapper.editRule", pd);
 	}
-	
+
 	/**
 	 * 修改指南状态
 	 */
@@ -93,6 +106,13 @@ public class ExamGuideLineService implements ExamGuideLineManager{
 		// TODO Auto-generated method stub
 		dao.update("ExamGuideLineMapper.auditing", pd);
 	}
-	
-}
 
+	/**
+	 * 查询运维审核后的指南
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listRelease(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("ExamGuideLineMapper.datalistReleasePage", page);
+	}
+
+}

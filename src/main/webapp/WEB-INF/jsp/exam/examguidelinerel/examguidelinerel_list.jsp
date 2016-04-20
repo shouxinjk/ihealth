@@ -31,7 +31,7 @@
 						<div class="col-xs-12">
 							
 						<!-- 检索  -->
-						<form action="tag/list.do" method="post" name="Form" id="Form">
+						<form action="examguideline/listRule.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
 								<td>
@@ -56,9 +56,11 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">名称</th>
-									<th class="center">表达式</th>
-									<th class="center">描述</th>
+									<th class="center">指南名称</th>
+									<th class="center">疾病类别</th>
+									<th class="center">疾病名称</th>
+									<th class="center">关注因素</th>
+									<th class="center">状态</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -71,26 +73,33 @@
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
 											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.TAG_ID}" class="ace" /><span class="lbl"></span></label>
+												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.EXAMGUIDELINE_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'>${var.NAME}</td>
-											<td class='center'>${var.EXPRESSION}</td>
-											<td class='center'>${var.DESCRIPTION}</td>
+											<td class='center'>${var.GNAME}</td>
+											<td class='center'>${var.CNAME}</td>
+											<td class='center'>${var.DNAME}</td>
+											<td class='center'>${var.CONCERNEDFACTORS}</td>
+											<td class='center'>${var.STATUS}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.TAG_ID}','${TAGCATEGORY_ID} }');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
-													</a>
+													<c:if test="${QX.edit == 1&&var.STATUS eq '运维已审核'}">
+														<a class="btn btn-xs btn-success" title="发布" onclick="auditing1('${var.EXAMGUIDELINE_ID}','5')">
+															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="发布"></i>
+														</a>
 													</c:if>
-													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.TAG_ID}');">
-														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
-													</a>
+													<c:if test="${QX.edit == 1&& var.STATUS eq '已发布'}">
+														<a class="btn btn-xs btn-success" title="失效" onclick="auditing1('${var.EXAMGUIDELINE_ID}','6');">
+															<i class="menu-icon fa fa-user blue" title="失效"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.edit == 1&& var.STATUS eq '已失效'}">
+														<a class="btn btn-xs btn-success" title="重新发布" onclick="auditing1('${var.EXAMGUIDELINE_ID}','5');">
+															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="重新发布"></i>
+														</a>
 													</c:if>
 												</div>
 												<div class="hidden-md hidden-lg">
@@ -102,7 +111,7 @@
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 															<c:if test="${QX.edit == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="edit('${var.TAG_ID}','${TAGCATEGORY_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
+																<a style="cursor:pointer;" onclick="edit('${var.EXAMGUIDELINE_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
 																	<span class="green">
 																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																	</span>
@@ -111,7 +120,7 @@
 															</c:if>
 															<c:if test="${QX.del == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="del('${var.TAG_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
+																<a style="cursor:pointer;" onclick="del('${var.EXAMGUIDELINE_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
 																	<span class="red">
 																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																	</span>
@@ -143,14 +152,6 @@
 						<div class="page-header position-relative">
 						<table style="width:100%;">
 							<tr>
-								<td style="vertical-align:top;">
-									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-sm btn-success" onclick="add('${TAGCATEGORY_ID}');">新增</a>
-									</c:if>
-									<c:if test="${QX.del == 1 }">
-									<a class="btn btn-sm btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
-									</c:if>
-								</td>
 								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 							</tr>
 						</table>
@@ -242,56 +243,74 @@
 			});
 		});
 		
-		//新增
-		function add(TAGCATEGORY_ID){
+		<%-- //新增
+		function add(){
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>tag/goAdd.do?TAGCATEGORY_ID='+TAGCATEGORY_ID;
+			 diag.URL = '<%=basePath%>examguideline/goAdd.do';
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 parent.location.href="<%=basePath%>tag/listAllTagCategory.do?TAGCATEGORY_ID=${TAGCATEGORY_ID}&dnowPage=${page.currentPage}";
+					 if('${page.currentPage}' == '0'){
+						 top.jzts();
+						 setTimeout("self.location=self.location",100);
+					 }else{
+						 nextPage(${page.currentPage});
+					 }
 				}
 				diag.close();
 			 };
 			 diag.show();
 		}
-		
-		//删除
+		 --%>
+		<%-- //删除
 		function del(Id){
 			bootbox.confirm("确定要删除吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>tag/delete.do?TAG_ID="+Id+"&tm="+new Date().getTime();
+					var url = "<%=basePath%>examguideline/delete.do?EXAMGUIDELINE_ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage(${page.currentPage});
 					});
 				}
 			});
+		} --%>
+		
+		//医生审核
+		function auditing1(Id,STATUS){
+			bootbox.confirm("确定要操作吗?", function(result) {
+				if(result) {
+					top.jzts();
+					var url = "<%=basePath%>examguideline/auditing.do?EXAMGUIDELINE_ID="+Id+"&STATUS="+STATUS;
+					$.get(url,function(data){
+						location.href="<%=basePath%>examguideline/listRelease.do?dnowPage=${page.currentPage}";
+					});
+				}
+			});
 		}
 		
-		//修改
-		function edit(Id,TAGCATEGORY_ID){
+		<%-- //修改
+		function edit(Id){
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>tag/goEdit.do?TAG_ID='+Id+'&TAGCATEGORY_ID='+TAGCATEGORY_ID;
+			 diag.URL = '<%=basePath%>examguideline/goEditRule.do?EXAMGUIDELINE_ID='+Id;
 			 diag.Width = 450;
 			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 parent.location.href="<%=basePath%>tag/listAllTagCategory.do?TAGCATEGORY_ID=${TAGCATEGORY_ID}&dnowPage=${page.currentPage}";
+					 nextPage(${page.currentPage});
 				}
 				diag.close();
 			 };
 			 diag.show();
 		}
-		
-		//批量操作
+		 --%>
+		<%-- //批量操作
 		function makeAll(msg){
 			bootbox.confirm(msg, function(result) {
 				if(result) {
@@ -320,7 +339,7 @@
 							top.jzts();
 							$.ajax({
 								type: "POST",
-								url: '<%=basePath%>tag/deleteAll.do?tm='+new Date().getTime(),
+								url: '<%=basePath%>examguideline/deleteAll.do?tm='+new Date().getTime(),
 						    	data: {DATA_IDS:str},
 								dataType:'json',
 								//beforeSend: validateData,
@@ -336,10 +355,10 @@
 				}
 			});
 		};
-		
+		 --%>
 		//导出excel
 		function toExcel(){
-			window.location.href='<%=basePath%>tag/excel.do';
+			window.location.href='<%=basePath%>examguideline/excel.do';
 		}
 	</script>
 
