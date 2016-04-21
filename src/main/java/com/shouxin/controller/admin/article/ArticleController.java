@@ -268,7 +268,7 @@ public class ArticleController extends BaseController {
 		
 		//获取前段页面传入的多个标签的ID 并按,拆分
 		String tagIds = pd.getString("tagIds");
-		if(tagIds != null && "".equals(tagIds)){
+		if(tagIds != null && !"".equals(tagIds)){
 			logger.debug("多个标签的ID为："+tagIds);
 			//按,进行拆分  保存数据到数据库中
 			String[] tags = StringUtil.StrList(tagIds);
@@ -282,7 +282,7 @@ public class ArticleController extends BaseController {
 		
 		//获取当前选中的疾病的ID
 		String diseaseId = pd.getString("diseaseId");
-		if(diseaseId != null && "".equals(diseaseId)){
+		if(!"".equals(diseaseId) && diseaseId != null){
 			logger.debug("多个疾病的ID为:" + diseaseId);
 			String[] diseases = StringUtil.StrList(diseaseId);
 			for (int i = 0; i < diseases.length; i++) {

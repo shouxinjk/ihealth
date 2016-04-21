@@ -199,7 +199,6 @@
 			var str = "";
 			var nodes = zTree.getCheckedNodes(true);
 			for(var i=0;i<nodes.length;i++){
-				alert(nodes[i].id);
 				if(nodes[i].id!=undefined){
 					str += nodes[i].id + ",";
 				}
