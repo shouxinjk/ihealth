@@ -32,7 +32,7 @@
 			<div class="main-content-inner">
 				<div class="page-content">
 					<div class="row">
-					<c:if test="${msg !='edit'  }">
+					
 						<div>
 							<div style="width:48%; float:left;">
 								<span>标签信息</span>
@@ -43,7 +43,6 @@
 								<ul id="rightTree" class="tree"></ul>
 							</div>
 						</div>
-					</c:if>
 						
 						<div class="col-xs-12">
 							<form action="article/${msg }.do" name="Form" id="Form"
@@ -153,6 +152,10 @@
 			initTag();
 			initDisease();
 		});
+		
+		//根据文章ID查询 标签信息
+		
+		//根据文章ID查询 疾病信息
 		
 		//加载疾病信息
 		function initDisease(){

@@ -107,6 +107,9 @@ public class ArticleController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		
+		
+		
 		pd.put("PUBLISHTIME", new Date()); //发布时间
 		articleService.edit(pd);
 		mv.addObject("msg","success");
@@ -175,10 +178,27 @@ public class ArticleController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/goEdit")
-	public ModelAndView goEdit()throws Exception{
+	public ModelAndView goEdit(Model model)throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		/**
+		 * 需求： 当用户点击新增按钮时，跳转到新增页面并获取所有的标签分类下的标签信息
+		 */
+		try{
+			List<TagCategory> list = this.tagcategoryService.findTagsList();
+			List<DiseaseCategory> disList = this.diseasecategoryService.findAllDiseases();
+			String jsons = JSONArray.fromObject(disList).toString();
+			String json = JSONArray.fromObject(list).toString();
+			logger.debug(json + "-------------------------------------------------");
+			json = json.replaceAll("TAG_ID", "id").replaceAll("TAGCATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("tags", "nodes");
+			jsons = jsons.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
+			model.addAttribute("zTreeNodes", json);
+			model.addAttribute("zTreeNodess", jsons);
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		
 		pd = articleService.findById(pd);	//根据ID读取
 		mv.setViewName("admin/article/article_edit");
 		mv.addObject("msg", "edit");
@@ -292,6 +312,7 @@ public class ArticleController extends BaseController {
 				this.articleService.saveDiseaseAndArticle(pd);
 			}
 		}
+		
 		pd.put("ARTICLE_ID", articleId);	//主键
 		pd.put("PUBLISHTIME", new Date()); //发布时间
 		pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
