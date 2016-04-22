@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shouxin.controller.base.BaseController;
+import com.shouxin.service.admin.article.ArticleManager;
 import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
 import com.shouxin.service.system.user.UserManager;
@@ -43,6 +44,9 @@ public class RestfullController extends BaseController {
 	private CheckupPackageManager checkuppackageService;
 	@Resource(name = "checkupitemService")
 	private CheckupItemManager checkupitemService;
+	
+	@Resource(name="articleService")
+	private ArticleManager articleService;
 
 	/**
 	 * 用户注册，通过手机号码
@@ -536,7 +540,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "findArticleByUserId", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findArticleByUserId(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据userId获取用户信息");
+		logBefore(logger, "根据userId获取文章信息");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -547,7 +551,7 @@ public class RestfullController extends BaseController {
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		String userId = (String) jasonObject.get("userId");
 		
-		pd.put("USER_ID", userId);
+		pd.put("CREATEBY", userId);
 		
 		logger.debug("userId为空,获取文章信息！");
 		if (null == userId || "".equals(userId)) {
@@ -560,6 +564,56 @@ public class RestfullController extends BaseController {
 			} else {
 				msg = "no";
 			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 根据文章信息ID 获取文章信息 
+	 * url:http://localhost:8080/ihealth/rest/findArticleById
+	 * type:post
+	 * @param {"articleId":"文章信息ID"}
+	 * @return 根据ID查询出数据返回：
+	 * 		{ 
+	 * 		"result": "success", 
+	 * 		"data": { 
+	 * 					"LOGOURL": 照片url,	"PUBLISHTIME": 发布时间 ,
+	 * 					"SUMMARY": "摘要", 	"CREATEBY": "创建记录员工id",
+	 *         			"TITLE": "标题", 		"ARTICLE_ID": "ID", 
+	 *         			"AUTHOR": "作者", 	"CREATEON":创建记录时间 ,
+	 *         			"URL": 内容url 
+	 *         		}
+	 *      }
+	 * 当articleId为空： 返回{ "result": "error"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "findArticleById", method = RequestMethod.POST)
+	@ResponseBody
+	public Object findArticleById(@RequestBody String a) throws Exception{
+		logBefore(logger, "根据文章ID获取文章信息！");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		// 将String类型的数据转换为json
+		JSONObject jasonObject = JSONObject.fromObject(a);
+		String articleId = (String) jasonObject.get("articleId");
+		
+		pd.put("ARTICLE_ID", articleId);
+		
+		logger.debug("根据文章ID获取文章信息！");
+		if (null == articleId || "".equals(articleId)) {
+			msg = "error";
+		} else {
+			PageData data = this.articleService.findById(pd);
+			if(data!=null){
+				msg = "success";
+				map.put("data", data);
+			}
+			
 		}
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);

@@ -147,21 +147,10 @@
 	
 	<!-- 根据用户ID 查询文章推送信息 -->
 	<select id ="findArticlesById" parameterType="pd" resultType="pd">
-		SELECT 
-		  a.* 
-		FROM
-		  admin_tag t 
-		  LEFT JOIN admin_userandtag ut 
-		    ON t.`TAG_ID` = ut.`tag_id` 
-		  LEFT JOIN sys_user u 
-		    ON u.`USER_ID` = ut.`user_id` 
-		  LEFT JOIN admin_tagandarticle ta 
-		    ON ta.`tag_id` = t.`TAG_ID` 
-		  LEFT JOIN tb_article a 
-		    ON a.`ARTICLE_ID` = ta.`article_id` 
+		SELECT * FROM tb_article a
 		<where>
-			<if test="USER_ID != null and USER_ID != ''">
-				and u.USER_ID = #{USER_ID}
+			<if test="CREATEBY != null and CREATEBY != ''">
+				and a.CREATEBY = #{CREATEBY}
 			</if>
 		</where>	
 	</select>
