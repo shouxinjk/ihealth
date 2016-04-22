@@ -525,9 +525,6 @@ CREATE TABLE `TB_MEDICALCENERADMIN` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
---------------------------------------
-------------    体检项目表          ------------
---------------------------------------
 DROP TABLE IF EXISTS `tb_checkupitem`;
 CREATE TABLE `tb_checkupitem` (
   `CHECKUPITEM_ID` varchar(100) NOT NULL,
