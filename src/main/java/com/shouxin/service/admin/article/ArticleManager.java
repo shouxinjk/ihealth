@@ -70,5 +70,11 @@ public interface ArticleManager{
 	
 	public List<PageData> findAllTags(PageData pd)throws Exception;
 	
+	/**前20条数据 按时间降序排序
+	 * @param pd
+	 * @throws Exception
+	 */
+	public List<PageData> listByTopTwenty(PageData pd)throws Exception;
+	
 }
 

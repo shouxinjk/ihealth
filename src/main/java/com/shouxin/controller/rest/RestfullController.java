@@ -514,6 +514,90 @@ public class RestfullController extends BaseController {
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
+	
+	/**
+	 * 获取前20篇文章信息 
+	 * url:http://localhost:8080/ihealth/rest/findByTopTwenty
+	 * type:post
+	 * @return 获取文章信息不为空： 
+	 * 		{ 
+	 * 		"result": "success", 
+	 * 		"data": [ { 
+	 * 					"LOGOURL": 照片url,	"PUBLISHTIME": 发布时间 ,
+	 * 					"SUMMARY": "摘要", 	"CREATEBY": "创建记录员工id",
+	 *         			"TITLE": "标题", 		"ARTICLE_ID": "ID", 
+	 *         			"AUTHOR": "作者", 	"CREATEON":创建记录时间 ,
+	 *         			"URL": 内容url 
+	 *         		} ] 
+	 *      }
+	 * 
+	 * 获取文章信息为空： 返回{ "result": "error"} 
+	 * @throws Exception
+	 */
+	@SuppressWarnings("null")
+	@RequestMapping(value = "findByTopTwenty", method = RequestMethod.POST)
+	@ResponseBody
+	public Object findByTopTwenty() throws Exception{
+		logBefore(logger, "获取前20篇文章信息！");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		List<PageData> data = this.articleService.listByTopTwenty(pd);
+		if(data!=null||data.size()>0){
+			msg = "success";
+			map.put("data", data);
+		}else{
+			msg = "error";
+		}
+		
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 获取所有文章信息 
+	 * url:http://localhost:8080/ihealth/rest/findAllArticles
+	 * type:post
+	 * @return 获取文章信息不为空： 
+	 * 		{ 
+	 * 		"result": "success", 
+	 * 		"data": [ { 
+	 * 					"LOGOURL": 照片url,	"PUBLISHTIME": 发布时间 ,
+	 * 					"SUMMARY": "摘要", 	"CREATEBY": "创建记录员工id",
+	 *         			"TITLE": "标题", 		"ARTICLE_ID": "ID", 
+	 *         			"AUTHOR": "作者", 	"CREATEON":创建记录时间 ,
+	 *         			"URL": 内容url 
+	 *         		} ] 
+	 *      }
+	 * 
+	 * 获取文章信息为空： 返回{ "result": "error"} 
+	 * @throws Exception
+	 */
+	@SuppressWarnings("null")
+	@RequestMapping(value = "findAllArticles", method = RequestMethod.POST)
+	@ResponseBody
+	public Object findAllArticles() throws Exception{
+		logBefore(logger, "获取所有文章信息！");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		List<PageData> data = this.articleService.listAll(pd);
+		if(data!=null||data.size()>0){
+			msg = "success";
+			map.put("data", data);
+		}else{
+			msg = "error";
+		}
+		
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
 
 	/**
 	 * 根据用户ID 获取文章信息 

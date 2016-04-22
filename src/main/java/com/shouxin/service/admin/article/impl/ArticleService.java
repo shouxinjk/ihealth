@@ -106,6 +106,15 @@ public class ArticleService implements ArticleManager{
 		
 		return (List<PageData>) dao.findForList("ArticleMapper.findAllTags", pd);
 	}
+	
+	/**
+	 * 查询前20条数据 按创建时间逆序排序
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listByTopTwenty(PageData pd) throws Exception {
+		
+		return (List<PageData>)dao.findForList("ArticleMapper.listByTopTwenty", pd);
+	}
 
 	
 }
