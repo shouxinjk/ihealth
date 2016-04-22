@@ -1049,7 +1049,7 @@ public class RestfullController extends BaseController {
 				this.userService.saveRelationUser(pd);
 				msg = "success";
 			} catch (Exception e) {
-				msg = "error";
+				msg = "no";
 			}
 		}
 		map.put("result", msg);
