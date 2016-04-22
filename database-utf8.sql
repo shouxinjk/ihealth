@@ -671,21 +671,25 @@ CREATE TABLE `admin_tag` (
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '用户id',
   `CREATEON` date DEFAULT NULL COMMENT '时间',
   `TAGCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '所属分类id',
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`TAG_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_tag
 -- ----------------------------
-INSERT INTO `admin_tag` VALUES ('1', '吸烟', '伤肺a', null, null, '3');
-INSERT INTO `admin_tag` VALUES ('11', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
-INSERT INTO `admin_tag` VALUES ('12', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
-INSERT INTO `admin_tag` VALUES ('2', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
-INSERT INTO `admin_tag` VALUES ('4', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
-INSERT INTO `admin_tag` VALUES ('5', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
-INSERT INTO `admin_tag` VALUES ('6', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
-INSERT INTO `admin_tag` VALUES ('6df68a155ae047bc9e7b91a58c8201b1', '身体5', '身体4', null, null, 'd816537d8a2747d5ba27927da72048a7');
-INSERT INTO `admin_tag` VALUES ('7', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7');
+INSERT INTO `admin_tag` VALUES ('1', '吸烟', '伤肺a', null, null, '3', '肺癌');
+INSERT INTO `admin_tag` VALUES ('11', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
+INSERT INTO `admin_tag` VALUES ('12', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
+INSERT INTO `admin_tag` VALUES ('2', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
+INSERT INTO `admin_tag` VALUES ('3', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
+INSERT INTO `admin_tag` VALUES ('4', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
+INSERT INTO `admin_tag` VALUES ('5', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
+INSERT INTO `admin_tag` VALUES ('53f3d010f30c4e5589fd477e050d036d', '生活111', '111', '69177258a06e4927b4639ab1684c3320', '2016-04-22', '14a4ca2b13d44b198f990a8debd11983', '圣湖');
+INSERT INTO `admin_tag` VALUES ('6', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
+INSERT INTO `admin_tag` VALUES ('7', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
+INSERT INTO `admin_tag` VALUES ('8', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
+INSERT INTO `admin_tag` VALUES ('9', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
 -- ----------------------------
 -- Table structure for admin_tagcategory
 -- ----------------------------
