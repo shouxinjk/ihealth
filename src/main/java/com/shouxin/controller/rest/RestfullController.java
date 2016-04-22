@@ -1006,4 +1006,55 @@ public class RestfullController extends BaseController {
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
+	
+	/**
+	 * 根据userId 添加关联用户 
+	 * url:http://localhost:8080/ihealth/rest/saveUserAndUser
+	 * type:post
+	 * @param {
+	 * 			"userId":"当前登录的用户ID(主ID)",		"user_Id":"关联用户的ID",
+	 *        }
+	 * @return 
+	 * 		当新增用户信息失败时！跟新增关联用户关系失败时！返回{"result":"error"}
+	 *      当新增关联关系成功时！返回{"result":"success"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "saveUserAndUser", method = RequestMethod.POST)
+	@ResponseBody
+	public Object saveUserAndUser(@RequestBody String u) {
+		logBefore(logger, "保存用户关系");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		// 将String类型的数据转换为json
+		JSONObject jasonObject = JSONObject.fromObject(u);
+		
+		String userId = jasonObject.get("userId").toString();
+		String user_Id = jasonObject.get("user_Id").toString();
+	
+		String useranduser_id = this.get32UUID();	//生成用户关联表中的主键
+
+		if (userId != null && !"".equals(userId) && user_Id != null && !"".equals(user_Id) ) {
+			msg = "error";
+		}else{
+			pd.put("useranduser_id", useranduser_id);
+			pd.put("user_id_one", userId);
+			pd.put("user_id_two", user_Id);
+			
+			try {
+				logger.debug("保存用户关系");
+				this.userService.saveRelationUser(pd);
+				msg = "success";
+			} catch (Exception e) {
+				msg = "error";
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+
 }
