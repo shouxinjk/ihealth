@@ -66,7 +66,6 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">用户名</th>
 									<th class="center">检查项目分组</th>
 									<th class="center">检查项目名称</th>
 									<th class="center">特性</th>
@@ -95,7 +94,6 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.CHECKUPITEM_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'>${var.users.USERNAME}</td>
 											<td class='center'>${var.SUBGROUP}</td>
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.FEATURES}</td>
@@ -272,110 +270,7 @@
 			});
 		});
 		
-		//新增
-		<%-- function add(){
-			 top.jzts();
-			 var diag = new top.Dialog();
-			 diag.Drag=true;
-			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>checkupitem/goAdd.do';
-			 diag.Width = 450;
-			 diag.Height = 355;
-			 diag.CancelEvent = function(){ //关闭事件
-				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 if('${page.currentPage}' == '0'){
-						 top.jzts();
-						 setTimeout("self.location=self.location",100);
-					 }else{
-						 nextPage(${page.currentPage});
-					 }
-				}
-				diag.close();
-			 };
-			 diag.show();
-		} --%>
 		
-		//删除
-		<%-- function del(Id){
-			bootbox.confirm("确定要删除吗?", function(result) {
-				if(result) {
-					top.jzts();
-					var url = "<%=basePath%>checkupitem/delete.do?CHECKUPITEM_ID="+Id+"&tm="+new Date().getTime();
-					$.get(url,function(data){
-						nextPage(${page.currentPage});
-					});
-				}
-			});
-		} --%>
-		
-		//修改
-		<%-- function edit(Id){
-			 top.jzts();
-			 var diag = new top.Dialog();
-			 diag.Drag=true;
-			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>checkupitem/goEdit.do?CHECKUPITEM_ID='+Id;
-			 diag.Width = 450;
-			 diag.Height = 355;
-			 diag.CancelEvent = function(){ //关闭事件
-				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 nextPage(${page.currentPage});
-				}
-				diag.close();
-			 };
-			 diag.show();
-		} --%>
-		
-		//批量操作
-		<%-- function makeAll(msg){
-			bootbox.confirm(msg, function(result) {
-				if(result) {
-					var str = '';
-					for(var i=0;i < document.getElementsByName('ids').length;i++){
-					  if(document.getElementsByName('ids')[i].checked){
-					  	if(str=='') str += document.getElementsByName('ids')[i].value;
-					  	else str += ',' + document.getElementsByName('ids')[i].value;
-					  }
-					}
-					if(str==''){
-						bootbox.dialog({
-							message: "<span class='bigger-110'>您没有选择任何内容!</span>",
-							buttons: 			
-							{ "button":{ "label":"确定", "className":"btn-sm btn-success"}}
-						});
-						$("#zcheckbox").tips({
-							side:1,
-				            msg:'点这里全选',
-				            bg:'#AE81FF',
-				            time:8
-				        });
-						return;
-					}else{
-						if(msg == '确定要删除选中的数据吗?'){
-							top.jzts();
-							$.ajax({
-								type: "POST",
-								url: '<%=basePath%>checkupitem/deleteAll.do?tm='+new Date().getTime(),
-						    	data: {DATA_IDS:str},
-								dataType:'json',
-								//beforeSend: validateData,
-								cache: false,
-								success: function(data){
-									 $.each(data.list, function(i, list){
-											nextPage(${page.currentPage});
-									 });
-								}
-							});
-						}
-					}
-				}
-			});
-		}; --%>
-		
-		//导出excel
-		function toExcel(){
-			window.location.href='<%=basePath%>checkupitem/excel.do';
-		}
 	</script>
 
 

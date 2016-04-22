@@ -1,5 +1,6 @@
 package com.shouxin.entity.system;
 
+import java.util.Date;
 import java.util.List;
 
 import com.shouxin.entity.Page;
@@ -34,7 +35,7 @@ public class User {
 	private String EMAIL;			// 电子邮件
 	private String OPENID;			// 对应微信OPENID
 	private String ALIAS;			// 昵称
-	private String BIRTHDAY;		// 生日
+	private Date BIRTHDAY;			// 生日
 	private String SEX;				// 性别
 	private String BIRTHPLACE;		// 出生地
 	private String LIVEPLACE;		// 居住地
@@ -175,10 +176,11 @@ public class User {
 	public void setALIAS(String aLIAS) {
 		ALIAS = aLIAS;
 	}
-	public String getBIRTHDAY() {
+	
+	public Date getBIRTHDAY() {
 		return BIRTHDAY;
 	}
-	public void setBIRTHDAY(String bIRTHDAY) {
+	public void setBIRTHDAY(Date bIRTHDAY) {
 		BIRTHDAY = bIRTHDAY;
 	}
 	public String getSEX() {

@@ -96,15 +96,7 @@
 	
 	<!-- 通过checkupPackageId获取数据 -->
 	<select id="findAllById" parameterType="int" resultMap="resultItemsForUsers">
-		SELECT 
-		  * 
-		FROM
-		  TB_CHECKUPITEM ci,
-		  TB_CHECKUPPACKAGE cp,
-		  sys_user u 
-		WHERE ci.`CHECKUPPACKAGE_ID` = cp.`CHECKUPPACKAGE_ID` 
-		  AND ci.`USER_ID` = u.`USER_ID` 
-		  AND cp.`CHECKUPPACKAGE_ID` = #{cp.CHECKUPPACKAGE_ID}
+		SELECT * FROM tb_checkupitem c WHERE c.`CHECKUPPACKAGE_ID` = #{cp.CHECKUPPACKAGE_ID}
 	</select>
 	
 	<!-- 新增-->

@@ -74,7 +74,6 @@
 									<th class="center">内容url</th>
 									<th class="center">摘要</th>
 									<th class="center">发布时间</th>
-									<th class="center">创建记录员工id</th>
 									<th class="center">创建记录时间</th>
 									<th class="center">操作</th>
 								</tr>
@@ -97,7 +96,6 @@
 											<td class='center'>${var.URL}</td>
 											<td class='center'>${var.SUMMARY}</td>
 											<td class='center'>${var.PUBLISHTIME}</td>
-											<td class='center'>${var.CREATEBY}</td>
 											<td class='center'>${var.CREATEON}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
