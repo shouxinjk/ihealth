@@ -704,6 +704,17 @@ CREATE TABLE `admin_tagcategory` (
   PRIMARY KEY (`TAGCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `admin_tagcategory` VALUES ('1', '生活方式', '生活方式', '1', 'aa', '2016-03-29', '0');
+INSERT INTO `admin_tagcategory` VALUES ('14a4ca2b13d44b198f990a8debd11983', '生活1', '生活方式', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '1');
+INSERT INTO `admin_tagcategory` VALUES ('1bb6ce40646a465498b747d96eb3d521', '呵呵', '呵呵', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '0');
+INSERT INTO `admin_tagcategory` VALUES ('2', '身体不适', '身体不适', '0', 'aa', '2016-03-29', '0');
+INSERT INTO `admin_tagcategory` VALUES ('3', '作息规律', '生活方式', '0', 'aa', '2016-03-29', '1');
+INSERT INTO `admin_tagcategory` VALUES ('9926502adb7d44d188550218b56b10c8', '身体4', '身体不适', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '2');
+INSERT INTO `admin_tagcategory` VALUES ('ca8526696da74baba8afae866edff1c2', '作息规律1', '生活方式', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '3');
+INSERT INTO `admin_tagcategory` VALUES ('cf9e046a210c41ccbb052bef74fed3b9', '身体1', '身体不适', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '2');
+INSERT INTO `admin_tagcategory` VALUES ('d816537d8a2747d5ba27927da72048a7', '身体', '身体不适', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '2');
+
+
 -- ----------------------------
 -- Table structure for admin_useranddisease
 -- ----------------------------
