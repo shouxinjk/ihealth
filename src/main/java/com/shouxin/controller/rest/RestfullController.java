@@ -1037,7 +1037,7 @@ public class RestfullController extends BaseController {
 	
 		String useranduser_id = this.get32UUID();	//生成用户关联表中的主键
 
-		if (userId != null && !"".equals(userId) && user_Id != null && !"".equals(user_Id) ) {
+		if (userId == null && "".equals(userId) && user_Id == null && "".equals(user_Id) ) {
 			msg = "error";
 		}else{
 			pd.put("useranduser_id", useranduser_id);
