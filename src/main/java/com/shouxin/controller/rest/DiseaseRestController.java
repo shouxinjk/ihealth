@@ -3,6 +3,7 @@ package com.shouxin.controller.rest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 import javax.annotation.Resource;
 
@@ -59,6 +60,7 @@ public class DiseaseRestController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/listAllDisease", method = RequestMethod.POST)
+	@ResponseBody
 	public Object listAllTagCategory() throws Exception {
 		// logBefore(logger, Jurisdiction.getUsername()+"列表TagCategory");
 		Map<Object, Object> allMap = new HashMap<Object, Object>();
@@ -121,7 +123,7 @@ public class DiseaseRestController extends BaseController {
 	}
 
 	/**
-	 * 修改属于用户的标签信息 URL：http://localhost:8080/ihealth/rest/updateTag
+	 * 修改属于用户的标签信息 URL：http://localhost:8080/ihealth/restdisease/updateDisease
 	 * 
 	 * @param tag
 	 *            参数一：userID 当前用户的id ，参数二 tagID 所有选中标签的id 将选中的标签的id拼接为以逗号 隔开的字符串
@@ -141,6 +143,11 @@ public class DiseaseRestController extends BaseController {
 		String userID = json.get("userID").toString();
 		String allDiseaseIDStr = json.get("diseaseID").toString();
 		String[] allDiseaseID = allDiseaseIDStr.split(",");
+		TreeSet<String> tr = new TreeSet<String>();
+		for(int i=0;i<allDiseaseID.length;i++){
+			tr.add(allDiseaseID[i]);
+		}
+		allDiseaseID = (String[]) tr.toArray(new String[0]);
 		if (allDiseaseIDStr != null && allDiseaseID.length > 0 && userID != null) {
 			pd.put("USER_ID", userID);
 			diseaseService.deleteDiseaseByUserID(pd);
@@ -202,8 +209,8 @@ public class DiseaseRestController extends BaseController {
 			List<PageData> allDiseaseIsInherItable = diseaseService.listAllByUserIDIsInherItable(pd);
 			msg = "success";
 			map.put("allData", allDisease);
-			map.put("IsInheritableDiseaseData", allDiseaseIsHighIncaidence);
-			map.put("IsHighIncidence", allDiseaseIsInherItable);
+			map.put("IsInheritableDiseaseData", allDiseaseIsInherItable);
+			map.put("IsHighIncidence", allDiseaseIsHighIncaidence);
 		} else {
 			msg = "no";
 		}

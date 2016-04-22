@@ -111,6 +111,7 @@
 		<include refid="tableName"></include>
 		set 
 			NAME = #{NAME},
+			DESCRIPTION = #{DESCRIPTION},
 		DISEASECATEGORY_ID = DISEASECATEGORY_ID
 		where 
 		DISEASECATEGORY_ID = #{DISEASECATEGORY_ID}

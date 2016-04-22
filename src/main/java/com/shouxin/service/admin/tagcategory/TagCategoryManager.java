@@ -43,6 +43,13 @@ public interface TagCategoryManager{
 	 */
 	public List<PageData> listAll(PageData pd)throws Exception;
 	
+	/**
+	 * 查询所有parent_id = 0 父级标签分类
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listAllFu(PageData pd) throws Exception;
+	
 	/**通过id获取数据
 	 * @param pd
 	 * @throws Exception

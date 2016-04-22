@@ -168,6 +168,15 @@
 		<include refid="tableName"></include>
 	</select>
 	
+	<!-- 列表(全部) -->
+	<select id="listAllFu" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		 where PARENT_ID = 0
+	</select>
+	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
 		delete from

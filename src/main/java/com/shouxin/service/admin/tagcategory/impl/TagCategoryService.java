@@ -139,6 +139,15 @@ public class TagCategoryService implements TagCategoryManager{
 		
 		return (List<TagCategory>) dao.findForList("TagCategoryMapper.findTagsList",null);
 	}
+	
+	/**
+	 * 查询所有parent_id为0 的父级标签分类
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllFu(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("TagCategoryMapper.listAllFu",pd);
+	}
 
 	
 }

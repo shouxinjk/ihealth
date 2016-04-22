@@ -281,7 +281,7 @@
 					top.jzts();
 					var url = "<%=basePath%>examcategory/delete.do?EXAMCATEGORY_ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
-						nextPage(${page.currentPage});
+						parent.location.href="<%=basePath%>examcategory/listAllExamCategory.do?EXAMCATEGORY_ID=${EXAMCATEGORY_ID}&dnowPage=${page.currentPage}";
 					});
 				}
 			});

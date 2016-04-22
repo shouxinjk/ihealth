@@ -40,13 +40,14 @@ public class TagRestController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/listAllTagCategory", method = RequestMethod.POST)
+	@ResponseBody
 	public Object listAllTagCategory() throws Exception {
 		// logBefore(logger, Jurisdiction.getUsername()+"列表TagCategory");
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		List<PageData> tagCategory = tagcategoryService.listAll(pd);
+		List<PageData> tagCategory = tagcategoryService.listAllFu(pd);
 		if (tagCategory != null && tagCategory.size() > 0) {
 			msg = "success";
 			map.put("data", tagCategory);
@@ -69,13 +70,14 @@ public class TagRestController extends BaseController {
 	 *         "EXPRESSION":选择标签后的脚本表达式 } ]
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/listAllDiseaseByDiseaseCategoryID", method = RequestMethod.POST)
+	@RequestMapping(value = "/listAllTagByTagCategoryID", method = RequestMethod.POST)
 	@ResponseBody
 	public Object listAllDiseaseByDiseaseCategoryID(@RequestBody String tagCategory) throws Exception {
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		logBefore(logger, tagCategory+"json+++++++++++");
 		JSONObject json = JSONObject.fromObject(tagCategory);
 		String tagCategory_ID = json.get("tagCategory_ID").toString();
 		if (tagCategory_ID != null && !tagCategory_ID.equals("")) {
@@ -129,7 +131,7 @@ public class TagRestController extends BaseController {
 	}
 
 	/**
-	 * 修改属于用户的标签信息 URL：http://localhost:8080/ihealth/rest/updateTag
+	 * 修改属于用户的标签信息 URL：http://localhost:8080/ihealth/resttag/updateTag
 	 * 
 	 * @param tag
 	 *            参数一：userID 当前用户的id ，参数二 tagID 所有选中标签的id 将选中的标签的id拼接为以逗号 隔开的字符串

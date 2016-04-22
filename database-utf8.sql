@@ -252,7 +252,7 @@ INSERT INTO `sys_menu` VALUES ('158', '医学检查分类管理', 'examcategory/
 INSERT INTO `sys_menu` VALUES ('179', '医学检查项目管理', 'examitem/listAllExamCategory.do', '6', '10', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('221', '指南规则管理', 'examguideline/listRule.do', '6', '12', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('222', '检查频率', 'examfrequency/list.do', '6', '14', 'menu-icon fa fa-leaf black', '1', '1');
-
+INSERT INTO `sys_menu` VALUES ('243', '指南发布管理', 'examguideline/listRelease.do', '6', '13', 'menu-icon fa fa-leaf black', '1', '1');
 
 
 -- ----------------------------

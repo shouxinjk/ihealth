@@ -181,21 +181,21 @@
 	<!-- 查询该用户下的所有疾病 -->
 	<select id="listDiseaseByUserID" parameterType="pd" resultType="pd">
 		SELECT d.* from admin_disease d ,admin_useranddisease ud where
-		d.DISEASE_ID = ud.disease_id
+		d.DISEASE_ID = ud.disease_id and ud.USER_ID = #{USER_ID}
 	</select>
 
 	<!-- 查询该用户下的所有遗传疾病 -->
 	<select id="listDiseaseByUserIDIsInherItable" parameterType="pd"
 		resultType="pd">
 		SELECT d.* from admin_disease d ,admin_useranddisease ud
-		where d.DISEASE_ID = ud.disease_id and ISINHERITABLE=1
+		where d.DISEASE_ID = ud.disease_id and ISINHERITABLE=1 and ud.USER_ID = #{USER_ID}
 	</select>
 	
 	<!-- 查询该用户下的所有关注疾病 -->
 	<select id="listDiseaeByUserIDIsHighIncaidence" parameterType="pd"
 		resultType="pd">
 		SELECT d.* from admin_disease d ,admin_useranddisease ud
-		where d.DISEASE_ID = ud.disease_id and ISHIGHINCIDENCE=1
+		where d.DISEASE_ID = ud.disease_id and ISHIGHINCIDENCE=1 and ud.USER_ID = #{USER_ID}
 	</select>
 
 
