@@ -84,12 +84,10 @@
 		  tc.`NAME` AS tc_name,
 		  tc.`TAGCATEGORY_ID` AS tc_tagcetegory_id,
 		  tc.`MATETYPE` AS tc_matetype,
-		  tc.`PARENT_ID` AS tc_parent_id,
 		  tc.`ISEXCLUSIVE` AS tc_isexclusive,
 		  t.`EXPRESSION` AS t_expression,
 		  t.`NAME` AS t_name,
-		  t.`TAG_ID` AS t_tag_id,
-		  t.`PARENT_ID` AS t_parent_id
+		  t.`TAG_ID` AS t_tag_id
 		FROM
 		  admin_tagcategory tc 
 		  LEFT JOIN admin_tag t 
