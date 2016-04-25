@@ -136,11 +136,11 @@
 											<td style="width:79px;text-align: right;padding-top: 13px;">备注:</td>
 											<td><input type="text" name="BZ" id="BZ"value="${pd.BZ }" placeholder="这里输入备注" maxlength="64" title="备注" style="width:98%;"/></td>
 										</tr>
-										<tr>
+										<tr style="display:none;">
 											<td><input type="hidden" name="tagIds" id="tagIds"/></td>	
 										</tr>
 
-										<tr>
+										<tr style="display:none;">
 											<td><input type="hidden" name="diseaseId" id="diseaseId"/></td>
 										</tr>
 										<tr>
