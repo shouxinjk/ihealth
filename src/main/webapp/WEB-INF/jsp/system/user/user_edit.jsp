@@ -186,7 +186,6 @@
 	});
 	
 	var id = $("#user_id").val();
-	alert(id);
 	//获取关联的标签
 	$.ajax({
 		url:"user/findTagsById/"+id,
