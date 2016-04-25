@@ -27,12 +27,16 @@
 				<div class="page-content">
 					<div class="row">
 						<div>
-							<div style="width:48%; float:left;">
+							<div style="width:29%; float:left;">
 								<span>标签信息</span>
 								<ul id="leftTree" class="tree"></ul>
 							</div>
-							<div style="width:48%; float:right;">
-								<span>疾病信息</span>
+							<div style="width:29%; float:left;">
+								<span>既往病史</span>
+								<ul id="centerTree" class="tree"></ul>
+							</div>
+							<div style="width:29%; float:left;">
+								<span>家族遗传病史</span>
 								<ul id="rightTree" class="tree"></ul>
 							</div>
 						</div>
@@ -143,6 +147,10 @@
 										<tr style="display:none;">
 											<td><input type="hidden" name="diseaseId" id="diseaseId"/></td>
 										</tr>
+										
+										<tr style="display:none;">
+											<td><input type="hidden" name="fhdiseaseId" id="fhdiseaseId"/></td>
+										</tr>
 										<tr>
 											<td style="text-align: center;" colspan="10">
 												<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
@@ -180,9 +188,11 @@
 <script type="text/javascript">
 	var zTree;
 	var zTrees;
+	var zTreess;
 	$(document).ready(function(){
 		initTag();
 		initDisease();
+		initfhDisease();
 	});
 	
 	var id = $("#user_id").val();
@@ -202,7 +212,7 @@
 		}
 	});
 	
-	//获取关联的疾病
+	//获取关联的既往疾病
 	$.ajax({
 		url:"user/findDiseasesById/"+id,
 		type:"post",
@@ -218,7 +228,23 @@
 		}
 	});
 	
-	//加载疾病信息
+	//获取关联的家族遗传疾病
+	$.ajax({
+		url:"user/findFhDiseasesById/"+id,
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			var diseases = data.fhdiseaseList;
+			for (var i = 0; i < diseases.length; i++) {
+				var nodes = zTreess.getNodeByParam("id",diseases[i].disease_id);
+				nodes.checked = true;
+				zTree.updateNode(nodes);
+			}
+			
+		}
+	});
+	
+	//加载既往疾病信息
 	function initDisease(){
 		var setting = {
 			showLine : true, //是否显示节点间的连线 
@@ -227,9 +253,21 @@
 		}
 		var zns = '${zTreeNodess}';
 		var zTreeNodess = eval(zns);
-		zTrees = $("#rightTree").zTree(setting, zTreeNodess);
+		zTrees = $("#centerTree").zTree(setting, zTreeNodess);
 		
-	}							
+	}
+	
+	//加载家族遗传疾病信息
+	function initfhDisease(){
+		var setting = {
+			showLine : true, //是否显示节点间的连线 
+			checkable: true, //带有复选框
+			checkType : { "Y": "s", "N": "s" }
+		}
+		var zns = '${zTreeNodess}';
+		var zTreeNodesss = eval(zns);
+		zTreess = $("#rightTree").zTree(setting, zTreeNodesss);
+	}
 	
 	//加载标签信息
 	function initTag(){
@@ -246,9 +284,23 @@
 	function check(){
 		tagOnCheck();
 		diseaseOnCheck();
+		fhDiseaseOnCheck();
 	}
 	
-	//获取选中的疾病ID
+	//获取选中的家族遗传病史
+	function fhDiseaseOnCheck(){
+		var str = "";
+		var nodes = zTreess.getCheckedNodes(true);
+		for(var i=0;i<nodes.length;i++){
+			if(nodes[i].id!=undefined){
+				str += nodes[i].id + ",";
+			}		
+		}
+		str = str.substring(0,str.length - 1);
+		$("#fhdiseaseId").val(str);
+	}
+	
+	//获取选中的既往疾病ID
 	function diseaseOnCheck(){
 		var str = "";
 		var nodes = zTrees.getCheckedNodes(true);
@@ -274,6 +326,7 @@
 		str = str.substring(0,str.length - 1);
 		$("#tagIds").val(str);
 	}
+	
 	$(top.hangge());
 	$(document).ready(function(){
 		if($("#user_id").val()!=""){

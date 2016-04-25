@@ -238,4 +238,20 @@ public class UserService implements UserManager{
 	public void deleteDiseases(PageData pd) throws Exception {
 		dao.delete("UserMapper.deleteDiseases", pd);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findFhDiseaseByUserId(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("UserMapper.findFhDiseaseByUserId", pd);
+	}
+
+	public void deleteFhDiseases(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		dao.delete("UserMapper.deleteFhDiseases", pd);
+	}
+
+	public void saveUserAndFhDisease(PageData pd) throws Exception {
+		dao.save("UserMapper.saveUserAndFhDisease", pd);
+		
+	}
 }

@@ -152,6 +152,14 @@ public interface UserManager {
 	public List<PageData> findDiseaseById(PageData pd)throws Exception;
 	
 	/**
+	 * 根据用户ID 获取家族疾病信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findFhDiseaseByUserId(PageData pd)throws Exception;
+	
+	/**
 	 * 通过传入的用户ID  获取关联的用户信息
 	 * @param pd
 	 * @return
@@ -175,11 +183,18 @@ public interface UserManager {
 	public void saveUserAndTag(PageData pd)throws Exception;
 	
 	/**
-	 * 新增疾病跟用户的关系
+	 * 新增既往疾病跟用户的关系
 	 * @param pd
 	 * @throws Exception
 	 */
 	public void saveUserAndDisease(PageData pd)throws Exception;
+	
+	/**
+	 * 新增家族遗传疾病跟用户的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveUserAndFhDisease(PageData pd)throws Exception;
 	
 	/**
 	 * 根据用户ID 查询所关联的标签信息
@@ -202,4 +217,6 @@ public interface UserManager {
 	
 	
 	public void deleteDiseases(PageData pd)throws Exception;
+	
+	public void deleteFhDiseases(PageData pd)throws Exception;
 }

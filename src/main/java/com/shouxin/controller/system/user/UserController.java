@@ -192,13 +192,26 @@ public class UserController extends BaseController {
 		//获取当前选中的疾病的ID
 		String diseaseId = pd.getString("diseaseId");
 		if(!"".equals(diseaseId) && diseaseId != null){
-			logger.debug("多个疾病的ID为:" + diseaseId);
+			logger.debug("多个既往疾病的ID为:" + diseaseId);
 			String[] diseases = StringUtil.StrList(diseaseId);
 			for (int i = 0; i < diseases.length; i++) {
 				pd.put("id", this.get32UUID());
 				pd.put("user_id", user_id);
 				pd.put("disease_id", diseases[i]);
 				this.userService.saveUserAndDisease(pd);
+			}
+		}
+		
+		//获取当前选中的家族遗传疾病的ID
+		String fhdiseaseId = pd.getString("fhdiseaseId");
+		if(!"".equals(fhdiseaseId) && fhdiseaseId != null){
+			logger.debug("多个家族遗传疾病的ID为:" + fhdiseaseId);
+			String[] fhdiseases = StringUtil.StrList(fhdiseaseId);
+			for (int i = 0; i < fhdiseases.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("user_id", user_id);
+				pd.put("disease_id", fhdiseases[i]);
+				this.userService.saveUserAndFhDisease(pd);
 			}
 		}
 		
@@ -228,7 +241,7 @@ public class UserController extends BaseController {
 	public Object findTagsById(@PathVariable String id) throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
 		PageData pd = new PageData();
-		logger.debug("文章的ID为:" + id);
+		logger.debug("用户的ID为:" + id);
 		pd.put("user_id", id);
 		List<PageData> tagList = this.userService.findTagsByUserId(pd);
 		if(tagList.size()>0 && tagList !=null){
@@ -238,7 +251,7 @@ public class UserController extends BaseController {
 	}
 	
 	/**
-	 * 根据用户ID 获取疾病信息
+	 * 根据用户ID 获取既往疾病信息
 	 * @param id
 	 * @return
 	 * @throws Exception
@@ -248,11 +261,31 @@ public class UserController extends BaseController {
 	public Object findDiseasesById(@PathVariable String id) throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
 		PageData pd = new PageData();
-		logger.debug("文章的ID为:" + id);
+		logger.debug("用户的ID为:" + id);
 		pd.put("user_id", id);
 		List<PageData> diseaseList = this.userService.findDiseaseByUserId(pd);
 		if(diseaseList.size()>0 && diseaseList !=null){
 			map.put("diseaseList", diseaseList);
+		}
+		return AppUtil.returnObject(pd, map);
+	}
+	
+	/**
+	 * 根据用户ID 获取家族遗传疾病信息
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findFhDiseasesById/{id}")
+	@ResponseBody
+	public Object findFhDiseasesById(@PathVariable String id) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		PageData pd = new PageData();
+		logger.debug("用户的ID为:" + id);
+		pd.put("user_id", id);
+		List<PageData> fhdiseaseList = this.userService.findFhDiseaseByUserId(pd);
+		if(fhdiseaseList.size()>0 && fhdiseaseList !=null){
+			map.put("fhdiseaseList", fhdiseaseList);
 		}
 		return AppUtil.returnObject(pd, map);
 	}
@@ -451,17 +484,15 @@ public class UserController extends BaseController {
 		}
 		
 		String user_id = pd.getString("USER_ID");
+		pd.put("user_id", user_id);
 		//获取前段页面传入的多个标签的ID 并按,拆分
 		String tagIds = pd.getString("tagIds");
 		logger.debug(tagIds);
 		if (tagIds != null && !"".equals(tagIds)) {
 			//拆分
 			String[] tags = StringUtil.StrList(tagIds);
-			//根据传入的文章ID 删除所有跟此文章有关系的的数据
-			pd.put("user_id", user_id);
-			//删除
+			//删除跟这个用户有关系的所有的标签信息
 			this.userService.deleteTags(pd);
-			
 			for (int i = 0; i < tags.length; i++) {
 				pd.put("id", this.get32UUID());
 				pd.put("tag_id", tags[i]);
@@ -469,9 +500,6 @@ public class UserController extends BaseController {
 				this.userService.saveUserAndTag(pd);
 			}
 		}
-		
-		
-		
 		//根据传入的文章ID 和 标签ID 新增关系
 		
 		
@@ -482,13 +510,26 @@ public class UserController extends BaseController {
 		if (diseaseId != null && !"".equals(diseaseId)) {
 			//拆分
 			String[] diseases = StringUtil.StrList(diseaseId);
-			//根据传入的文章ID 删除所有跟此文章有关系的的数据
-			pd.put("user_id", user_id);			
+			//删除所有跟此用户有关系的的既往疾病信息
 			this.userService.deleteDiseases(pd);
 			for (int i = 0; i < diseases.length; i++) {
 				pd.put("id", this.get32UUID());
 				pd.put("disease_id", diseases[i]);
 				this.userService.saveUserAndDisease(pd);
+			}
+		}
+		
+		//获取当前选中的家族遗传疾病的ID
+		String fhdiseaseId = pd.getString("fhdiseaseId");
+		if(!"".equals(fhdiseaseId) && fhdiseaseId != null){
+			String[] fhdiseases = StringUtil.StrList(fhdiseaseId);
+			logger.debug("多个家族遗传疾病的ID为:" + fhdiseaseId);
+			//删除所有跟次用户有关系的家族遗传疾病
+			this.userService.deleteFhDiseases(pd);
+			for (int i = 0; i < fhdiseases.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("disease_id", fhdiseases[i]);
+				this.userService.saveUserAndFhDisease(pd);
 			}
 		}
 		

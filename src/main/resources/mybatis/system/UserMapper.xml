@@ -203,9 +203,14 @@
 	</insert>
 	
 	
-	<!-- 新增用户时，向admin_useranddisease表新增信息 -->
+	<!-- 新增用户时，向admin_useranddisease(既往病史表)表新增信息 -->
 	<insert id="saveUserAndDisease" parameterType="pd">
 		insert into admin_useranddisease values(#{id},#{user_id},#{disease_id})
+	</insert>
+	
+	<!-- 新增用户时，向admin_userandfhdisease(家族遗传病表)表新增信息 -->
+	<insert id="saveUserAndFhDisease" parameterType="pd">
+		insert into admin_userandfhdisease values(#{id},#{user_id},#{disease_id})
 	</insert>
 	
 	
@@ -215,12 +220,15 @@
 	</select>
 	
 	
-	<!-- 根据用户ID 查询所有关联的疾病信息 -->
+	<!-- 根据用户ID 查询所有关联的既往疾病信息 -->
 	<select id="findDiseaseByUserId" parameterType="pd" resultType="pd">
 		SELECT ud.disease_id FROM admin_useranddisease ud WHERE ud.user_id = #{user_id}
 	</select>
 	
-	
+	<!-- 根据用户ID 查询所有关联的家族遗传疾病信息 -->
+	<select id="findFhDiseaseByUserId" parameterType="pd" resultType="pd">
+		SELECT ufd.disease_id FROM admin_userandfhdisease ufd WHERE ufd.user_id = #{user_id}
+	</select>
 	
 	
 	<!-- 根据用户ID 删除所有关联的标签信息 -->
@@ -228,9 +236,14 @@
 		DELETE FROM admin_userandtag WHERE user_id = #{user_id}
 	</delete>
 	
-	<!-- 根据用户ID 删除所有关联的疾病信息 -->
+	<!-- 根据用户ID 删除所有关联的既往疾病信息 -->
 	<delete id="deleteDiseases" parameterType="pd">
 		DELETE FROM admin_useranddisease WHERE user_id = #{user_id}
+	</delete>
+	
+	<!-- 根据用户ID 删除所有关联的家族遗传疾病信息 -->
+	<delete id="deleteFhDiseases" parameterType="pd">
+		DELETE FROM admin_userandfhdisease WHERE user_id = #{user_id}
 	</delete>
 	
 	<!-- 更新登录时间 -->
