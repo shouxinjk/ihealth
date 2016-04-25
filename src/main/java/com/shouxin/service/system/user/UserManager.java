@@ -166,4 +166,40 @@ public interface UserManager {
 	 * @throws Exception
 	 */
 	public void saveRelationUser(PageData pd)throws Exception;
+	
+	/**
+	 * 新增标签跟用户的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveUserAndTag(PageData pd)throws Exception;
+	
+	/**
+	 * 新增疾病跟用户的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveUserAndDisease(PageData pd)throws Exception;
+	
+	/**
+	 * 根据用户ID 查询所关联的标签信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findTagsByUserId(PageData pd)throws Exception;
+	
+	/**
+	 * 根据用户ID 查询所关联的疾病信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findDiseaseByUserId(PageData pd)throws Exception;
+	
+	
+	public void deleteTags(PageData pd)throws Exception;
+	
+	
+	public void deleteDiseases(PageData pd)throws Exception;
 }

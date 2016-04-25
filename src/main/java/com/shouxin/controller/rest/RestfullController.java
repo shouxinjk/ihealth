@@ -214,8 +214,8 @@ public class RestfullController extends BaseController {
 		pds.put("SEX", sex);
 		pds.put("MARRIAGESTATUS", marriageStatus);
 		pds.put("BIRTHDAY", birthday);
-		pds.put("HEIGHT", Integer.parseInt(height));
-		pds.put("WEIGHT", Integer.parseInt(weight));
+		pds.put("HEIGHT", height);
+		pds.put("WEIGHT", weight);
 		pds.put("BIRTHPLACE", birthPlace);
 		pds.put("LIVEPLACE", livePlace);
 		pds.put("CAREER", career);
@@ -976,8 +976,8 @@ public class RestfullController extends BaseController {
 		pd.put("SEX", sex);
 		pd.put("MARRIAGESTATUS", marriageStatus);
 		pd.put("BIRTHDAY", birthday);
-		pd.put("HEIGHT", Integer.parseInt(height));
-		pd.put("WEIGHT", Integer.parseInt(weight));
+		pd.put("HEIGHT", height);
+		pd.put("WEIGHT", weight);
 		pd.put("BIRTHPLACE", birthPlace);
 		pd.put("LIVEPLACE", livePlace);
 		pd.put("CAREER", career);

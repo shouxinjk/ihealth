@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="static/ace/css/chosen.css" />
 <!-- jsp文件头和头部 -->
 <%@ include file="../index/top.jsp"%>
+<link type="text/css" rel="stylesheet" href="plugins/zTree/2.6/zTreeStyle.css" />
 </head>
 <body class="no-skin">
 	<!-- /section:basics/navbar.layout -->
@@ -25,6 +26,16 @@
 			<div class="main-content-inner">
 				<div class="page-content">
 					<div class="row">
+						<div>
+							<div style="width:48%; float:left;">
+								<span>标签信息</span>
+								<ul id="leftTree" class="tree"></ul>
+							</div>
+							<div style="width:48%; float:right;">
+								<span>疾病信息</span>
+								<ul id="rightTree" class="tree"></ul>
+							</div>
+						</div>
 						<div class="col-xs-12">
 								<form action="user/${msg }.do" name="userForm" id="userForm" method="post">
 									<input type="hidden" name="USER_ID" id="user_id" value="${pd.USER_ID }"/>
@@ -126,6 +137,13 @@
 											<td><input type="text" name="BZ" id="BZ"value="${pd.BZ }" placeholder="这里输入备注" maxlength="64" title="备注" style="width:98%;"/></td>
 										</tr>
 										<tr>
+											<td><input type="hidden" name="tagIds" id="tagIds"/></td>	
+										</tr>
+
+										<tr>
+											<td><input type="hidden" name="diseaseId" id="diseaseId"/></td>
+										</tr>
+										<tr>
 											<td style="text-align: center;" colspan="10">
 												<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
 												<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
@@ -156,8 +174,107 @@
 	<script src="static/ace/js/chosen.jquery.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
+	<script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="plugins/zTree/2.6/jquery.ztree-2.6.min.js"></script>
 </body>
 <script type="text/javascript">
+	var zTree;
+	var zTrees;
+	$(document).ready(function(){
+		initTag();
+		initDisease();
+	});
+	
+	var id = $("#user_id").val();
+	alert(id);
+	//获取关联的标签
+	$.ajax({
+		url:"user/findTagsById/"+id,
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			var tags = data.tagList;
+			for (var i = 0; i < tags.length; i++) {
+				var node = zTree.getNodeByParam("id",tags[i].tag_id);
+				node.checked = true;
+				zTree.updateNode(node);
+			}
+			
+		}
+	});
+	
+	//获取关联的疾病
+	$.ajax({
+		url:"user/findDiseasesById/"+id,
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			var diseases = data.diseaseList;
+			for (var i = 0; i < diseases.length; i++) {
+				var nodes = zTrees.getNodeByParam("id",diseases[i].disease_id);
+				nodes.checked = true;
+				zTree.updateNode(nodes);
+			}
+			
+		}
+	});
+	
+	//加载疾病信息
+	function initDisease(){
+		var setting = {
+			showLine : true, //是否显示节点间的连线 
+			checkable: true, //带有复选框
+			checkType : { "Y": "s", "N": "s" }
+		}
+		var zns = '${zTreeNodess}';
+		var zTreeNodess = eval(zns);
+		zTrees = $("#rightTree").zTree(setting, zTreeNodess);
+		
+	}							
+	
+	//加载标签信息
+	function initTag(){
+		var setting = {
+			showLine : true,//是否显示节点间的连线 
+			checkable: true,
+			checkType : { "Y": "s", "N": "s" }
+		};
+		var zn = '${zTreeNodes}';
+		var zTreeNodes = eval(zn);
+		zTree = $("#leftTree").zTree(setting, zTreeNodes);
+	}
+	
+	function check(){
+		tagOnCheck();
+		diseaseOnCheck();
+	}
+	
+	//获取选中的疾病ID
+	function diseaseOnCheck(){
+		var str = "";
+		var nodes = zTrees.getCheckedNodes(true);
+		for(var i=0;i<nodes.length;i++){
+			if(nodes[i].id!=undefined){
+				str += nodes[i].id + ",";
+			}		
+		}
+		str = str.substring(0,str.length - 1);
+		$("#diseaseId").val(str);
+	}
+	
+	//获取选中的标签ID
+	function tagOnCheck(){
+		var str = "";
+		var nodes = zTree.getCheckedNodes(true);
+		for(var i=0;i<nodes.length;i++){
+			if(nodes[i].id!=undefined){
+				str += nodes[i].id + ",";
+			}
+		}
+		//去掉字符串最后一个逗号
+		str = str.substring(0,str.length - 1);
+		$("#tagIds").val(str);
+	}
 	$(top.hangge());
 	$(document).ready(function(){
 		if($("#user_id").val()!=""){
@@ -167,6 +284,7 @@
 	});
 	//保存
 	function save(){
+		check();
 		if($("#role_id").val()==""){
 			$("#juese").tips({
 				side:3,
@@ -299,6 +417,7 @@
 			cache: false,
 			success: function(data){
 				 if("success" == data.result){
+					check();
 					$("#userForm").submit();
 					$("#zhongxin").hide();
 					$("#zhongxin2").show();
@@ -321,6 +440,7 @@
 			cache: false,
 			success: function(data){
 				 if("success" == data.result){
+					check();
 					$("#userForm").submit();
 					$("#zhongxin").hide();
 					$("#zhongxin2").show();

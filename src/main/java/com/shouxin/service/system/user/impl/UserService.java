@@ -210,4 +210,32 @@ public class UserService implements UserManager{
 	public void saveRelationUser(PageData pd) throws Exception {
 		dao.save("UserMapper.saveRelationUser", pd);
 	}
+
+	public void saveUserAndTag(PageData pd) throws Exception {
+		dao.save("UserMapper.saveUserAndTag", pd);
+		
+	}
+
+	public void saveUserAndDisease(PageData pd) throws Exception {
+		dao.save("UserMapper.saveUserAndDisease", pd);
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findTagsByUserId(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("UserMapper.findTagsByUserId", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findDiseaseByUserId(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("UserMapper.findDiseaseByUserId", pd);
+	}
+
+	public void deleteTags(PageData pd) throws Exception {
+		dao.delete("UserMapper.deleteTags", pd);
+	}
+
+	public void deleteDiseases(PageData pd) throws Exception {
+		dao.delete("UserMapper.deleteDiseases", pd);
+	}
 }

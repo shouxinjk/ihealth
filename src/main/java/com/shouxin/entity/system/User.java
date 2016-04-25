@@ -35,7 +35,7 @@ public class User {
 	private String EMAIL;			// 电子邮件
 	private String OPENID;			// 对应微信OPENID
 	private String ALIAS;			// 昵称
-	private Date BIRTHDAY;			// 生日
+	private String BIRTHDAY;			// 生日
 	private String SEX;				// 性别
 	private String BIRTHPLACE;		// 出生地
 	private String LIVEPLACE;		// 居住地
@@ -43,8 +43,8 @@ public class User {
 	private String CAREER;			// 职业
 	private String DEGREE;			// 学历
 	private String AVATAR;			// 用户图像
-	private Integer HEIGHT;			// 身高
-	private Integer WEIGHT;			// 体重
+	private String HEIGHT;			// 身高
+	private String WEIGHT;			// 体重
 	
 	private Role role;			//角色对象
 	private Page page;			//分页对象
@@ -177,10 +177,11 @@ public class User {
 		ALIAS = aLIAS;
 	}
 	
-	public Date getBIRTHDAY() {
+	
+	public String getBIRTHDAY() {
 		return BIRTHDAY;
 	}
-	public void setBIRTHDAY(Date bIRTHDAY) {
+	public void setBIRTHDAY(String bIRTHDAY) {
 		BIRTHDAY = bIRTHDAY;
 	}
 	public String getSEX() {
@@ -225,18 +226,19 @@ public class User {
 	public void setAVATAR(String aVATAR) {
 		AVATAR = aVATAR;
 	}
-	public Integer getHEIGHT() {
+	public String getHEIGHT() {
 		return HEIGHT;
 	}
-	public void setHEIGHT(Integer hEIGHT) {
+	public void setHEIGHT(String hEIGHT) {
 		HEIGHT = hEIGHT;
 	}
-	public Integer getWEIGHT() {
+	public String getWEIGHT() {
 		return WEIGHT;
 	}
-	public void setWEIGHT(Integer wEIGHT) {
+	public void setWEIGHT(String wEIGHT) {
 		WEIGHT = wEIGHT;
 	}
+	
 	
 	
 	
