@@ -89,11 +89,11 @@
 											</td>
 										</tr>
 
-										<tr>
+										<tr style="display:none;">
 											<td><input type="hidden" name="tagIds" id="tagIds"/></td>	
 										</tr>
 
-										<tr>
+										<tr style="display:none;">
 											<td><input type="hidden" name="diseaseId" id="diseaseId"/></td>
 										</tr>
 
