@@ -18,6 +18,19 @@
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
+<style type="text/css">
+	.autocut{
+	    width:80px;  
+	    overflow:hidden;  
+	    white-space:nowrap;  
+	    text-overflow:ellipsis;  
+	    -o-text-overflow:ellipsis;  
+	    -icab-text-overflow: ellipsis;  
+	    -khtml-text-overflow: ellipsis;  
+	    -moz-text-overflow: ellipsis;  
+	    -webkit-text-overflow: ellipsis;  
+	}
+</style>
 </head>
 <body class="no-skin">
 
@@ -74,9 +87,6 @@
 									<th class="center">指南来源</th>
 									<th class="center">详细描述</th>
 									<th class="center">该记录生成时间</th>
-									<th class="center">用于产生该记录的标记</th>
-									<th class="center">版本</th>
-									<th class="center">系统标记</th>
 									
 									
 									<!-- <th class="center">操作</th> -->
@@ -96,15 +106,12 @@
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.SUBGROUP}</td>
 											<td class='center'>${var.NAME}</td>
-											<td class='center'>${var.FEATURES}</td>
+											<td class='center'><div class="autocut">${var.FEATURES}</div></td>
 											<td class='center'>${var.FREQUENCY}</td>
 											<td class='center'>${var.STATUS}</td>
-											<td class='center'>${var.ORIGINATE}</td>
-											<td class='center'>${var.DESCRIPTION}</td>
+											<td class='center'><div class="autocut">${var.ORIGINATE}</div></td>
+											<td class='center'><div class="autocut">${var.DESCRIPTION}</div></td>
 											<td class='center'>${var.GENERATEDTIME}</td>
-											<td class='center'>${var.WORKER}</td>
-											<td class='center'>${var.REVISION}</td>
-											<td class='center'>${var.SYSFLAG}</td>
 											<%-- <td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

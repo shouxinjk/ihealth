@@ -153,9 +153,38 @@
 			initDisease();
 		});
 		
-		//根据文章ID查询 标签信息
+		var id = $("#ARTICLE_ID").val();
+		//获取关联的标签
+		$.ajax({
+			url:"article/findTagsById/"+id,
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				var tags = data.tagList;
+				for (var i = 0; i < tags.length; i++) {
+					var node = zTree.getNodeByParam("id",tags[i].tag_id);
+					node.checked = true;
+					zTree.updateNode(node);
+				}
+				
+			}
+		});
 		
-		//根据文章ID查询 疾病信息
+		//获取关联的疾病
+		$.ajax({
+			url:"article/findDiseasesById/"+id,
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				var diseases = data.diseaseList;
+				for (var i = 0; i < diseases.length; i++) {
+					var nodes = zTrees.getNodeByParam("id",diseases[i].disease_id);
+					nodes.checked = true;
+					zTree.updateNode(nodes);
+				}
+				
+			}
+		});
 		
 		//加载疾病信息
 		function initDisease(){
@@ -167,6 +196,7 @@
 			var zns = '${zTreeNodess}';
 			var zTreeNodess = eval(zns);
 			zTrees = $("#rightTree").zTree(setting, zTreeNodess);
+			
 		}							
 		
 		//加载标签信息
@@ -186,6 +216,7 @@
 			diseaseOnCheck();
 		}
 		
+		//获取选中的疾病ID
 		function diseaseOnCheck(){
 			var str = "";
 			var nodes = zTrees.getCheckedNodes(true);
@@ -198,6 +229,7 @@
 			$("#diseaseId").val(str);
 		}
 		
+		//获取选中的标签ID
 		function tagOnCheck(){
 			var str = "";
 			var nodes = zTree.getCheckedNodes(true);

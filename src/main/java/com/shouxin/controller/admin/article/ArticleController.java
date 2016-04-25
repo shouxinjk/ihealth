@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -108,7 +109,46 @@ public class ArticleController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		
+		String articleId = pd.getString("ARTICLE_ID");
+		//获取前段页面传入的多个标签的ID 并按,拆分
+		String tagIds = pd.getString("tagIds");
+		logger.debug(tagIds);
+		if (tagIds != null && !"".equals(tagIds)) {
+			//拆分
+			String[] tags = StringUtil.StrList(tagIds);
+			//根据传入的文章ID 删除所有跟此文章有关系的的数据
+			pd.put("article_id", articleId);
+			//删除
+			this.articleService.deleteTags(pd);
+			for (int i = 0; i < tags.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("tag_id", tags[i]);
+				//新增关系
+				this.articleService.saveTagAndArticle(pd);
+			}
+		}
 		
+		
+		
+		//根据传入的文章ID 和 标签ID 新增关系
+		
+		
+		//获取当前选中的疾病的ID
+		String diseaseId = pd.getString("diseaseId");
+		logger.debug(diseaseId);
+		//拆分
+		if (diseaseId != null && !"".equals(diseaseId)) {
+			//拆分
+			String[] diseases = StringUtil.StrList(diseaseId);
+			//根据传入的文章ID 删除所有跟此文章有关系的的数据
+			pd.put("article_id", articleId);			
+			this.articleService.deleteDiseases(pd);
+			for (int i = 0; i < diseases.length; i++) {
+				pd.put("diseaseandarticle_id", this.get32UUID());
+				pd.put("disease_id", diseases[i]);
+				this.articleService.saveDiseaseAndArticle(pd);
+			}
+		}
 		
 		pd.put("PUBLISHTIME", new Date()); //发布时间
 		articleService.edit(pd);
@@ -173,6 +213,44 @@ public class ArticleController extends BaseController {
 		return mv;
 	}	
 	
+	/**
+	 * 根据文章ID 获取标签信息
+	 */
+	@RequestMapping(value="findTagsById/{id}")
+	@ResponseBody
+	public Object findTagsById(@PathVariable String id) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		PageData pd = new PageData();
+		logger.debug("文章的ID为:" + id);
+		pd.put("article_id", id);
+		List<PageData> tagList = this.articleService.findTagsByArticleId(pd);
+		if(tagList.size()>0 && tagList !=null){
+			map.put("tagList", tagList);
+		}
+		return AppUtil.returnObject(pd, map);
+	}
+	
+	/**
+	 * 根据文章ID 获取疾病信息
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findDiseasesById/{id}")
+	@ResponseBody
+	public Object findDiseasesById(@PathVariable String id) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		PageData pd = new PageData();
+		logger.debug("文章的ID为:" + id);
+		pd.put("article_id", id);
+		List<PageData> diseaseList = this.articleService.findDiseaseByArticleId(pd);
+		if(diseaseList.size()>0 && diseaseList !=null){
+			map.put("diseaseList", diseaseList);
+		}
+		return AppUtil.returnObject(pd, map);
+	}
+	
+	
 	 /**去修改页面
 	 * @param
 	 * @throws Exception
@@ -182,6 +260,7 @@ public class ArticleController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		
 		/**
 		 * 需求： 当用户点击新增按钮时，跳转到新增页面并获取所有的标签分类下的标签信息
 		 */
@@ -204,7 +283,7 @@ public class ArticleController extends BaseController {
 		mv.addObject("msg", "edit");
 		mv.addObject("pd", pd);
 		return mv;
-	}	
+	}
 	
 	 /**批量删除
 	 * @param

@@ -19,6 +19,19 @@
 <%@ include file="../index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
+<style type="text/css">
+	.autocut{
+	    width:40px;  
+	    overflow:hidden;  
+	    white-space:nowrap;  
+	    text-overflow:ellipsis;  
+	    -o-text-overflow:ellipsis;  
+	    -icab-text-overflow: ellipsis;  
+	    -khtml-text-overflow: ellipsis;  
+	    -moz-text-overflow: ellipsis;  
+	    -webkit-text-overflow: ellipsis;  
+	}
+</style>
 </head>
 <body class="no-skin">
 
@@ -70,23 +83,14 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">编号</th>
-									<th class="center">用户名</th>
 									<th class="center">姓名</th>
-									<th class="center">角色</th>
 									<th class="center"><i class="ace-icon fa fa-envelope-o"></i>邮箱</th>
-									<th class="center"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>最近登录</th>
-									<th class="center">上次登录IP</th>
 									<th class="center">电话</th>
 									<th class="center">昵称</th>
-									<th class="center">生日</th>
 									<th class="center">性别</th>
-									<th class="center">出生地</th>
 									<th class="center">居住地</th>
 									<th class="center">婚姻状态</th>
 									<th class="center">职业</th>
-									<th class="center">学历</th>
-									<th class="center">用户头像地址</th>
 									<th class="center">身高</th>
 									<th class="center">体重</th>
 									<th class="center">操作</th>
@@ -107,23 +111,14 @@
 												<c:if test="${user.USERNAME == 'admin'}"><label><input type='checkbox' disabled="disabled" class="ace" /><span class="lbl"></span></label></c:if>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class="center">${user.NUMBER }</td>
-											<td class="center"><a onclick="viewUser('${user.USERNAME}')" style="cursor:pointer;">${user.USERNAME }</a></td>
 											<td class="center">${user.NAME }</td>
-											<td class="center">${user.ROLE_NAME }</td>
 											<td class="center"><a title="发送电子邮件" style="text-decoration:none;cursor:pointer;" <c:if test="${QX.email == 1 }">onclick="sendEmail('${user.EMAIL }');"</c:if>>${user.EMAIL }&nbsp;<i class="ace-icon fa fa-envelope-o"></i></a></td>
-											<td class="center">${user.LAST_LOGIN}</td>
-											<td class="center">${user.IP}</td>
 											<td class="center">${user.PHONE}</td>
 											<td class="center">${user.ALIAS}</td>
-											<td class="center">${user.BIRTHDAY}</td>
 											<td class="center">${user.SEX}</td>
-											<td class="center">${user.BIRTHPLACE}</td>
-											<td class="center">${user.LIVEPLACE}</td>
+											<td class="center"><div class="autocut">${user.LIVEPLACE}</div></td>
 											<td class="center">${user.MARRIAGESTATUS}</td>
 											<td class="center">${user.CAREER}</td>
-											<td class="center">${user.DEGREE}</td>
-											<td class="center">${user.AVATAR}</td>
 											<td class="center">${user.HEIGHT}</td>
 											<td class="center">${user.WEIGHT}</td>
 											<td class="center">

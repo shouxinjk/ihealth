@@ -24,6 +24,10 @@ public interface ArticleManager{
 	 */
 	public void delete(PageData pd)throws Exception;
 	
+	public void deleteTags(PageData pd)throws Exception;
+	
+	
+	public void deleteDiseases(PageData pd)throws Exception;
 	/**修改
 	 * @param pd
 	 * @throws Exception
@@ -75,6 +79,23 @@ public interface ArticleManager{
 	 * @throws Exception
 	 */
 	public List<PageData> listByTopTwenty(PageData pd)throws Exception;
+	
+	/**
+	 * 根据文章ID 查询所关联的标签信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findTagsByArticleId(PageData pd)throws Exception;
+	
+	/**
+	 * 根据文章ID 查询所关联的疾病信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findDiseaseByArticleId(PageData pd)throws Exception;
+	
 	
 }
 

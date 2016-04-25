@@ -18,6 +18,7 @@
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
+
 </head>
 <body class="no-skin">
 
@@ -67,12 +68,9 @@
 									</th>
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">生成该记录的标记</th>
-									<th class="center">该记录生成时间</th>
 									<th class="center">开始生效时间</th>
 									<th class="center">失效时间</th>
 									<th class="center">状态</th>
-									<th class="center">版本</th>
-									<th class="center">系统标记</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -89,12 +87,9 @@
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.WORKER}</td>
-											<td class='center'>${var.GENERATEDTIME}</td>
 											<td class='center'>${var.EFFECTIVEFROM}</td>
 											<td class='center'>${var.EXPIREON}</td>
 											<td class='center'>${var.STATUS}</td>
-											<td class='center'>${var.REVISION}</td>
-											<td class='center'>${var.SYSFLAG}</td>
 											<td class="center">
 												<a href="checkupitem/lists/${var.CHECKUPPACKAGE_ID}">详细信息</a>
 											</td>

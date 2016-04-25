@@ -18,7 +18,19 @@
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
-
+<style type="text/css">
+	.autocut{
+	    width:100px;  
+	    overflow:hidden;  
+	    white-space:nowrap;  
+	    text-overflow:ellipsis;  
+	    -o-text-overflow:ellipsis;  
+	    -icab-text-overflow: ellipsis;  
+	    -khtml-text-overflow: ellipsis;  
+	    -moz-text-overflow: ellipsis;  
+	    -webkit-text-overflow: ellipsis;  
+	}
+</style>
 </head>
 <body class="no-skin">
 
@@ -70,11 +82,8 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">标题</th>
 									<th class="center">作者</th>
-									<th class="center">照片url</th>
-									<th class="center">内容url</th>
 									<th class="center">摘要</th>
 									<th class="center">发布时间</th>
-									<th class="center">创建记录时间</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -92,11 +101,8 @@
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.TITLE}</td>
 											<td class='center'>${var.AUTHOR}</td>
-											<td class='center'>${var.LOGOURL}</td>
-											<td class='center'>${var.URL}</td>
-											<td class='center'>${var.SUMMARY}</td>
+											<td class='center'><div class="autocut">${var.SUMMARY}</div></td>
 											<td class='center'>${var.PUBLISHTIME}</td>
-											<td class='center'>${var.CREATEON}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

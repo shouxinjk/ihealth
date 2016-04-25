@@ -116,6 +116,33 @@ public class ArticleService implements ArticleManager{
 		return (List<PageData>)dao.findForList("ArticleMapper.listByTopTwenty", pd);
 	}
 
+	/**
+	 * 根据文章ID 查询关联的标签信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> findTagsByArticleId(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("ArticleMapper.findTagsByArticleId", pd);
+	}
+
+	
+	/**
+	 * 根据文章ID 查询关联的疾病信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> findDiseaseByArticleId(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("ArticleMapper.findDiseaseByArticleId", pd);
+	}
+
+	public void deleteTags(PageData pd) throws Exception {
+		
+		dao.delete("ArticleMapper.deleteTags", pd);
+	}
+
+	public void deleteDiseases(PageData pd) throws Exception {
+		dao.delete("ArticleMapper.deleteDiseases", pd);
+		
+	}
+
 	
 }
 

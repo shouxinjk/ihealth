@@ -65,6 +65,18 @@
 		#{ARTICLE_ID}
 	</sql>
 	
+	<!-- 根据文章ID 查询所有关联的标签信息 -->
+	<select id="findTagsByArticleId" parameterType="pd" resultType="pd">
+		SELECT ta.tag_id FROM admin_tagandarticle ta WHERE ta.article_id = #{article_id}
+	</select>
+	
+	
+	<!-- 根据文章ID 查询所有关联的疾病信息 -->
+	<select id="findDiseaseByArticleId" parameterType="pd" resultType="pd">
+		SELECT da.disease_id FROM admin_diseaseandarticle da WHERE da.article_id = #{article_id}
+	</select>
+	
+	
 	<!-- 录入文章时，向admin_tagandarticle表新增信息 -->
 	<insert id="saveTagAndArticle" parameterType="pd">
 		insert into 
@@ -114,6 +126,14 @@
 		<include refid="tableName"></include>
 		where 
 			ARTICLE_ID = #{ARTICLE_ID}
+	</delete>
+	
+	<delete id="deleteTags" parameterType="pd">
+		DELETE FROM admin_tagandarticle WHERE article_id = #{article_id}
+	</delete>
+	
+	<delete id="deleteDiseases" parameterType="pd">
+		DELETE FROM admin_diseaseandarticle WHERE article_id = #{article_id}
 	</delete>
 	
 	<!-- 修改 -->
