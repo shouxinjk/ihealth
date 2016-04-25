@@ -70,5 +70,13 @@ public interface ExamItemManager{
 	 */
 	public PageData findExamCategoryById(PageData pd)throws Exception;
 	
+	/**
+	 * 通过EXAMCATEGORY_ID查询检查分类信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listItemByExamCategoryID(String EXAMCATEGORY_ID) throws Exception;
+	
 }
 

@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.admin.Disease;
+import com.shouxin.entity.exam.ExamItem;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
@@ -34,8 +35,10 @@ import net.sf.json.JSONObject;
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.service.admin.disease.DiseaseManager;
 import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
+import com.shouxin.service.exam.examcategory.ExamCategoryManager;
 import com.shouxin.service.exam.examfrequency.ExamFrequencyManager;
 import com.shouxin.service.exam.examguideline.ExamGuideLineManager;
+import com.shouxin.service.exam.examitem.ExamItemManager;
 import com.shouxin.service.exam.examsolution.ExamSolutionManager;
 
 /** 
@@ -58,6 +61,10 @@ public class ExamGuideLineController extends BaseController {
 	private ExamSolutionManager examsolutionService;
 	@Resource(name="examfrequencyService")
 	private ExamFrequencyManager examfrequencyService;
+	@Resource(name="examcategoryService")
+	private ExamCategoryManager examcategoryService;
+	@Resource(name="examitemService")
+	private ExamItemManager examitemService;
 	/**保存
 	 * @param
 	 * @throws Exception
@@ -268,6 +275,8 @@ public class ExamGuideLineController extends BaseController {
 		logBefore(logger, pd+"列表EXAM  ==== exanmm");
 		List<PageData> pds = diseasecategoryService.listAll(pd);//查询出所有的疾分类
 		List<PageData> varDisList = diseaseService.listAll(pd);//查询出所有疾病
+		List<PageData> varItemCategoryList = examcategoryService.listAll(pd);//查询所有检查项目分类
+		logBefore(logger, varItemCategoryList+"查询所有检查项目分类");
 		List<PageData> varSouAndItem = examsolutionService.listAllExamSolutionAndExamItem(pd);//查询所有的检查手段
 		List<PageData> varFreqList = examfrequencyService.listAll(pd);//查询所有检查频率
 		List<PageData> varSouList = examsolutionService.listExamSolutionByExamGuidelineID(pd.get("EXAMGUIDELINE_ID").toString());
@@ -278,12 +287,18 @@ public class ExamGuideLineController extends BaseController {
 		mv.addObject("pd", pd);
 		mv.addObject("pds",pds);
 		mv.addObject("varDisList",varDisList);
+		mv.addObject("varItemCategoryList",varItemCategoryList);
 		mv.addObject("varSouList",varSouList);
 		mv.addObject("varItemList",varSouAndItem);
 		mv.addObject("varFreqList",varFreqList);
 		return mv;
 	}	
 	
+	/**
+	 * 新增检查指南手段
+	 * @param resp
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/addSou")
 	public void addSou(HttpServletResponse resp) throws Exception{
 		PageData pd = new PageData();
@@ -336,6 +351,13 @@ public class ExamGuideLineController extends BaseController {
 			return mv;
 		}	
 	
+		/**
+		 * 疾病分类两级联动查询
+		 * @param req
+		 * @param resp
+		 * @param DISEASECATEGORY_ID
+		 * @throws Exception
+		 */
 	@RequestMapping(value="/refreshDisease")
 	public void refreshDisease(HttpServletRequest req,HttpServletResponse resp,String DISEASECATEGORY_ID) throws Exception{
 		List<Disease> diseases = diseaseService.listDiseaseByDiseaseCategoryID(DISEASECATEGORY_ID);
@@ -344,6 +366,28 @@ public class ExamGuideLineController extends BaseController {
 		req.setAttribute("diseases", diseases);
 		JSONArray json = JSONArray.fromObject(diseases);
 		logBefore(logger, json+"列表disease == json");
+		PrintWriter pw = null;
+		pw=resp.getWriter();
+		pw.print(json);
+		pw.close();
+	}
+	
+	/**
+	 * 检查分类两级联动查询
+	 * @param req
+	 * @param resp
+	 * @param DISEASECATEGORY_ID
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/refreshItem")
+	public void refreshItem(HttpServletRequest req,HttpServletResponse resp,String ITEMCATEGORY_ID) throws Exception{
+		List<PageData> item = examitemService.listItemByExamCategoryID(ITEMCATEGORY_ID);
+		logBefore(logger, item+"item列表");
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/json;charset=utf-8");
+		req.setAttribute("item", item);
+		JSONArray json = JSONArray.fromObject(item);
+		logBefore(logger, json+"列表item == json");
 		PrintWriter pw = null;
 		pw=resp.getWriter();
 		pw.print(json);

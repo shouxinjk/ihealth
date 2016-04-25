@@ -101,16 +101,18 @@
 														<thead>
 															<tr>
 																<th>检查手段</th>
+																<th>检查特性</th>
 																<th>开始年龄</th>
 																<th>频率</th>
-																<th><a href="#">+</a></th>
+																<th></th>
 															</tr>
 														</thead>
 														<tbody id="DANGERTBODY">
 															<c:forEach items="#{varSouList}" var="sou" varStatus="vs">
 																<c:if test="${sou.RISKTYPE eq 0 }">
 																	<tr>
-																		<td>${sou.INAME}(<span>${sou.FEATURES}</span>)<input
+																		<td>${sou.INAME}</td>
+																		<td><span>${sou.FEATURES}</span><input
 																			type="hidden" value="${sou.EXAMITEM_ID }" /></td>
 																		<td><span>${sou.STARTAGE}</span></td>
 																		<td>${sou.FNAME}<input type="hidden"
@@ -123,12 +125,21 @@
 															</c:forEach>
 														</tbody>
 														<tr>
-															<td><select name="ITEMSELECTG" ID="ITEMSELECTG">
-																	<c:forEach items="${varItemList}" var="item"
-																		varStatus="vas">
-																		<option value="${item.EXAMITEM_ID}">${item.INAME}</option>
+															<td>
+																<select name="ITEMCATESELECT2" ID="ITEMCATESELECT2" onchange="itemChange2()">
+																	<c:forEach items="${varItemCategoryList}" var="itemCategory"
+																		varStatus="vasc">
+																		<option value="${itemCategory.EXAMCATEGORY_ID }">${itemCategory.NAME}</option>
 																	</c:forEach>
-															</select> <input type="checkbox" name="FEATURESG" value="经济" />经济
+																</select> 
+																<select name="ITEMSELECTG2" ID="ITEMSELECTG2">
+																		<c:forEach items="${varItemList}" var="item"
+																			varStatus="vas">
+																			<option value="${item.EXAMITEM_ID}">${item.INAME}</option>
+																		</c:forEach>
+																</select>
+															</td>
+															<td> <input type="checkbox" name="FEATURESG" value="经济" />经济
 																<input type="checkbox" name="FEATURESG" value="全面" />全面
 																<input type="checkbox" name="FEATURESG" value="安全" />安全</td>
 															<td><input type="text" id="STARTAGEG"
@@ -169,6 +180,7 @@
 														<thead>
 															<tr>
 																<th>检查手段</th>
+																<th>检查特性</th>
 																<th>开始年龄</th>
 																<th>频率</th>
 																<th></th>
@@ -178,7 +190,9 @@
 															<c:forEach items="#{varSouList}" var="sou" varStatus="vs">
 																<c:if test="${sou.RISKTYPE eq 1 }">
 																	<tr>
-																		<td><span>${sou.INAME}(${sou.FEATURES})</span> <input
+																		<td>${sou.INAME}
+																		</td>
+																		<td>${sou.FEATURES}<input
 																			type="hidden" value="${sou.EXAMITEM_ID }" /></td>
 																		<td><span>${sou.STARTAGE}</span></td>
 																		<td><span>${sou.FNAME}</span> <input
@@ -191,12 +205,22 @@
 															</c:forEach>
 														</tbody>
 														<tr>
-															<td><select name="ITEMSELECT" ID="ITEMSELECT">
+															<td>
+																<select name="ITEMCATESELECT" ID="ITEMCATESELECT" onchange="itemChange()">
+																	<c:forEach items="${varItemCategoryList}" var="itemCategory"
+																		varStatus="vasc">
+																		<option value="${itemCategory.EXAMCATEGORY_ID }">${itemCategory.NAME}</option>
+																	</c:forEach>
+																</select>
+																<select name="ITEMSELECT" ID="ITEMSELECT">
 																	<c:forEach items="${varItemList}" var="item"
 																		varStatus="vas">
 																		<option value="${item.EXAMITEM_ID }">${item.INAME}</option>
 																	</c:forEach>
-															</select> <input type="checkbox" name="FEATURES" value="经济" />经济
+																</select>
+															</td>
+															<td>
+															 <input type="checkbox" name="FEATURES" value="经济" />经济
 																<input type="checkbox" name="FEATURES" value="全面" />全面
 																<input type="checkbox" name="FEATURES" value="安全" />安全</td>
 															<td><input type="text" id="STARTAGE"
@@ -337,6 +361,7 @@
 			});
 		}
 		
+		//删除检查手段
 		function delSou(id,tbodyID,status){
 			alert(1)
 			var EXAMGUIDELINE_ID = $("#EXAMGUIDELINE_ID").val();
@@ -361,7 +386,7 @@
 				}
 			})
 		}
-		//选择疾病分类时提交
+		//选择疾病分类时两级联动查询
 		function diseaseChange(EXAMGUIDELINE_ID){
 			var DISEASECATEGORY_ID = $("#DISEASECATEGORY").get(0).options[$("#DISEASECATEGORY").get(0).selectedIndex].value;
 			$.ajax({
@@ -378,6 +403,48 @@
 								+ msg[i].NAME + "</option>";
 					}
 					$("#DISEASE").html(str);
+				}
+			});
+		}
+		
+		//选择检查项目分类时两级联动查询
+		function itemChange(){
+			var ITEMCATEGORY_ID = $("#ITEMCATESELECT").get(0).options[$("#ITEMCATESELECT").get(0).selectedIndex].value;
+			$.ajax({
+				url:"<%=basePath%>examguideline/refreshItem.do",
+				type : "post",
+				data : {
+					"ITEMCATEGORY_ID" : ITEMCATEGORY_ID
+				},
+				success : function(data) {
+					var msg = eval(data);
+					var str = "";
+					for (var i = 0; i < msg.length; i++) {
+						str += "<option value="+msg[i].EXAMITEM_ID+">"
+								+ msg[i].INAME + "</option>";
+					}
+					$("#ITEMSELECT").html(str);
+				}
+			});
+		}
+		
+		//选择检查项目分类时两级联动查询
+		function itemChange2(){
+			var ITEMCATEGORY_ID = $("#ITEMCATESELECT2").get(0).options[$("#ITEMCATESELECT2").get(0).selectedIndex].value;
+			$.ajax({
+				url:"<%=basePath%>examguideline/refreshItem.do",
+				type : "post",
+				data : {
+					"ITEMCATEGORY_ID" : ITEMCATEGORY_ID
+				},
+				success : function(data) {
+					var msg = eval(data);
+					var str = "";
+					for (var i = 0; i < msg.length; i++) {
+						str += "<option value="+msg[i].EXAMITEM_ID+">"
+								+ msg[i].INAME + "</option>";
+					}
+					$("#ITEMSELECTG2").html(str);
 				}
 			});
 		}

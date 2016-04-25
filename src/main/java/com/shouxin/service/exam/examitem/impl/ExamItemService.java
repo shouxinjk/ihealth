@@ -111,6 +111,15 @@ public class ExamItemService implements ExamItemManager{
 		return examcategoryService.findById(pd);
 	}
 	
+	/**
+	 * 通过EXAMCATEGORY_ID查询检查分类信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listItemByExamCategoryID(String EXAMCATEGORY_ID) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("ExamItemMapper.listItemByItemCategory_id", EXAMCATEGORY_ID);
+	}
+	
 	
 	
 }
