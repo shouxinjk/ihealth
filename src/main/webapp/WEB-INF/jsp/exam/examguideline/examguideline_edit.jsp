@@ -139,7 +139,7 @@
 																	</c:forEach>
 															</select></td>
 															<td><a id="addTableTr"
-																onclick="addTabelg('DANGERTBODY')">增加</a> <input
+																onclick="addTabelg('DANGERTBODY',0)">增加</a> <input
 																type="hidden" name="EXAMSOLUTION_IDG"
 																id="EXAMSOLUTION_IDG" value="${sou.EXAMSOLUTION_ID}" /></td>
 														</tr>
@@ -207,7 +207,7 @@
 																	</c:forEach>
 															</select></td>
 															<td><a id="addTableTr"
-																onclick="addTabel('ORDINARYTBODY')">增加</a> <input
+																onclick="addTabel('ORDINARYTBODY',1)">增加</a> <input
 																type="hidden" name="EXAMSOLUTION_ID"
 																id="EXAMSOLUTION_ID" value="${sou.EXAMSOLUTION_ID}" /></td>
 														</tr>
@@ -259,7 +259,7 @@
 	<script type="text/javascript">
 		$(top.hangge());
 		
-		function addTabel(id){
+		function addTabel(id,status){
 			var ITEMSELECT = $("#ITEMSELECT").get(0).options[$("#ITEMSELECT").get(0).selectedIndex].text;
 			var ITEMSELECT_ID = $("#ITEMSELECT").get(0).options[$("#ITEMSELECT").get(0).selectedIndex].value;
 			var FEATURES = "";
@@ -283,8 +283,18 @@
 							'<td>'+json[i].INAME+'(<span>'+json[i].FEATURES+'</span>)<input type="hidden" value="'+json[i].EXAMITEM_ID+'"</td>'+
 							'<td><span>'+json[i].STARTAGE+'</span></td>'+
 							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
-							'<td><a onclick="delSou("'+json[i].EXAMSOLUTION_ID+'");">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
+							'<td><a onclick="delSou(\''+json[i].EXAMSOLUTION_ID+'\',\''+id+'\','+status+')">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
 							'</tr>';
+							/* str+='<tr>'+
+							'<td><span>'+json[i].INAME+'('+json[i].FEATURES+')</span> <input'+
+								'type="hidden" value="'+json[i].EXAMITEM_ID+'" /></td>'+
+							'<td><span>'+json[i].STARTAGE+'</span></td>'+
+							'<td><span>'+json[i].FNAME+'</span> <input'+
+								'type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
+							'<td><a onclick="delSou('${sou.EXAMSOLUTION_ID}','ORDINARYTBODY',1);">删除</a> <input type="hidden"'+
+								'name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID"'+
+								'value="${sou.EXAMSOLUTION_ID}" /></td>'+
+						'</tr>'; */
 						}
 					}
 					$("#ORDINARYTBODY").html(str);
@@ -293,7 +303,7 @@
 		}
 		
 		
-		function addTabelg(id){
+		function addTabelg(id,status){
 			var ITEMSELECT = $("#ITEMSELECTG").get(0).options[$("#ITEMSELECTG").get(0).selectedIndex].text;
 			var ITEMSELECT_ID = $("#ITEMSELECTG").get(0).options[$("#ITEMSELECTG").get(0).selectedIndex].value;
 			var FEATURES = "";
@@ -318,7 +328,7 @@
 							'<td>'+json[i].INAME+'(<span>'+json[i].FEATURES+'</span>)<input type="hidden" value="'+json[i].EXAMITEM_ID+'"</td>'+
 							'<td><span>'+json[i].STARTAGE+'</span></td>'+
 							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
-							'<td><a onclick="delSou("'+json[i].EXAMSOLUTION_ID+'");">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
+							'<td><a onclick="delSou(\''+json[i].EXAMSOLUTION_ID+'\',\''+id+'\','+status+')">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
 							'</tr>';
 						}
 					}
@@ -328,6 +338,7 @@
 		}
 		
 		function delSou(id,tbodyID,status){
+			alert(1)
 			var EXAMGUIDELINE_ID = $("#EXAMGUIDELINE_ID").val();
 			$.ajax({
 				url:'<%=basePath%>examguideline/delSou.do',
@@ -342,7 +353,7 @@
 							'<td>'+json[i].INAME+'(<span>'+json[i].FEATURES+'</span>)<input type="hidden" value="'+json[i].EXAMITEM_ID+'"</td>'+
 							'<td><span>'+json[i].STARTAGE+'</span></td>'+
 							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
-							'<td><a onclick="delSou("'+json[i].EXAMSOLUTION_ID+'","'+tbodyID+'",'+status+');">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
+							'<td><a onclick="delSou(\''+json[i].EXAMSOLUTION_ID+'\',\''+tbodyID+'\','+status+')">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
 							'</tr>';
 						}
 					}
