@@ -83,6 +83,13 @@
 		EXAMITEM_ID = #{EXAMITEM_ID}
 	</update>
 	
+	<!-- 通过检查分类id获取检查项目信息 -->
+	<select id="listItemByItemCategory_id" parameterType="java.lang.String" resultType="pd">
+		select i.NAME AS INAME,I.EXAMITEM_ID AS EXAMITEM_ID from exam_examitem i LEFT JOIN
+		 exam_examcategory c on i.EXAMCATEGORY_ID = c.EXAMCATEGORY_ID where c.EXAMCATEGORY_ID =#{EXAMCATEGORY_ID} 
+		 GROUP BY EXAMITEM_ID
+	</select>
+	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
