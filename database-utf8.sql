@@ -870,4 +870,10 @@ INSERT INTO `exam_examsolution` VALUES ('3', 'cccc', '0', '11', 'cc', '经济,�
 INSERT INTO `exam_examsolution` VALUES ('4', 'bb', '1', '11', 'bb', '经济,全面,安全', '1', '1', '1');
 INSERT INTO `exam_examsolution` VALUES ('5', 'bb', '1', '11', 'bb', '经济,全面,安全', '2', '1', '1');
 
+CREATE TABLE `admin_userandfhdisease` (
+  `id` varchar(32) NOT NULL,
+  `user_id` varchar(32) DEFAULT NULL COMMENT '用户ID',
+  `disease_id` varchar(32) DEFAULT NULL COMMENT '家族遗传病',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -26,28 +26,29 @@
 			<div class="main-content-inner">
 				<div class="page-content">
 					<div class="row">
-						<div>
-							<div style="width:29%; float:left;">
+						<div style="margin:0 auto;width:100%;height: 200px;overflow: auto;">
+							<div style="width:33%; float:left;margin-left: 1%;">
 								<span>标签信息</span>
 								<ul id="leftTree" class="tree"></ul>
 							</div>
-							<div style="width:29%; float:left;">
+							<div style="width:33%; float:left;">
 								<span>既往病史</span>
 								<ul id="centerTree" class="tree"></ul>
 							</div>
-							<div style="width:29%; float:left;">
+							<div style="width:33%; float:left;">
 								<span>家族遗传病史</span>
 								<ul id="rightTree" class="tree"></ul>
 							</div>
 						</div>
 						<div class="col-xs-12">
+								<span style="color:red;">*&nbsp;号所标识的列为必填列</span> 
 								<form action="user/${msg }.do" name="userForm" id="userForm" method="post">
 									<input type="hidden" name="USER_ID" id="user_id" value="${pd.USER_ID }"/>
 									<div id="zhongxin" style="padding-top: 13px;">
 									<table id="table_report" class="table table-striped table-bordered table-hover">
 										<c:if test="${fx != 'head'}">
 										<tr>
-											<td style="width:79px;text-align: right;padding-top: 13px;">角色:</td>
+											<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span> 角色:</td>
 											<td id="juese">
 											<select class="chosen-select form-control" name="ROLE_ID" id="role_id" data-placeholder="请选择角色" style="vertical-align:top;" style="width:98%;" >
 											<option value=""></option>
@@ -62,19 +63,19 @@
 											<input name="ROLE_ID" id="role_id" value="${pd.ROLE_ID }" type="hidden" />
 										</c:if>
 										<tr>
-											<td style="width:79px;text-align: right;padding-top: 13px;">用户名:</td>
+											<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span> 用户名:</td>
 											<td><input type="text" name="USERNAME" id="loginname" value="${pd.USERNAME }" maxlength="32" placeholder="这里输入用户名" title="用户名" style="width:98%;"/></td>
 										</tr>
 										<tr>
-											<td style="width:79px;text-align: right;padding-top: 13px;">编号:</td>
+											<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span> 编号:</td>
 											<td><input type="text" name="NUMBER" id="NUMBER" value="${pd.NUMBER }" maxlength="32" placeholder="这里输入编号" title="编号" onblur="hasN('${pd.USERNAME }')" style="width:98%;"/></td>
 										</tr>
 										<tr>
-											<td style="width:79px;text-align: right;padding-top: 13px;">密码:</td>
-											<td><input type="password" name="PASSWORD" id="password"  maxlength="32" placeholder="输入密码" title="密码" style="width:98%;"/></td>
+											<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span> 密码:</td>
+											<td><input type="password" name="PASSWORD" id="password"  maxlength="32" placeholder="输入密码 	" title="密码" style="width:98%;"/></td>
 										</tr>
 										<tr>
-											<td style="width:79px;text-align: right;padding-top: 13px;">确认密码:</td>
+											<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span> 确认密码:</td>
 											<td><input type="password" name="chkpwd" id="chkpwd"  maxlength="32" placeholder="确认密码" title="确认密码" style="width:98%;"/></td>
 										</tr>
 										
@@ -92,15 +93,15 @@
 										</tr>
 										
 										<tr>
-											<td style="width:79px;text-align: right;padding-top: 13px;">姓名:</td>
+											<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span> 姓名:</td>
 											<td><input type="text" name="NAME" id="name"  value="${pd.NAME }"  maxlength="32" placeholder="这里输入姓名" title="姓名" style="width:98%;"/></td>
 										</tr>
 										<tr>
-											<td style="width:79px;text-align: right;padding-top: 13px;">手机号:</td>
+											<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span> 手机号:</td>
 											<td><input type="number" name="PHONE" id="PHONE"  value="${pd.PHONE }"  maxlength="32" placeholder="这里输入手机号" title="手机号" style="width:98%;"/></td>
 										</tr>
 										<tr>
-											<td style="width:79px;text-align: right;padding-top: 13px;">邮箱:</td>
+											<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span> 邮箱:</td>
 											<td><input type="email" name="EMAIL" id="EMAIL"  value="${pd.EMAIL }" maxlength="32" placeholder="这里输入邮箱" title="邮箱" onblur="hasE('${pd.USERNAME }')" style="width:98%;"/></td>
 										</tr>
 										
@@ -336,7 +337,6 @@
 	});
 	//保存
 	function save(){
-		check();
 		if($("#role_id").val()==""){
 			$("#juese").tips({
 				side:3,
@@ -373,7 +373,7 @@
 			return false;
 		}else{
 			$("#NUMBER").val($.trim($("#NUMBER").val()));
-		}
+		} 
 		if($("#user_id").val()=="" && $("#password").val()==""){
 			$("#password").tips({
 				side:3,
@@ -404,7 +404,7 @@
 	        });
 			$("#name").focus();
 			return false;
-		}
+		} 
 		var myreg = /^(((13[0-9]{1})|159)+\d{8})$/;
 		if($("#PHONE").val()==""){
 			
@@ -449,6 +449,7 @@
 		if($("#user_id").val()==""){
 			hasU();
 		}else{
+			check();
 			$("#userForm").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();
@@ -469,7 +470,6 @@
 			cache: false,
 			success: function(data){
 				 if("success" == data.result){
-					check();
 					$("#userForm").submit();
 					$("#zhongxin").hide();
 					$("#zhongxin2").show();
@@ -492,7 +492,6 @@
 			cache: false,
 			success: function(data){
 				 if("success" == data.result){
-					check();
 					$("#userForm").submit();
 					$("#zhongxin").hide();
 					$("#zhongxin2").show();
