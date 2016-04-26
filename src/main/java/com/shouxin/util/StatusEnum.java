@@ -13,8 +13,9 @@ public enum StatusEnum {
 	//用户表
 	DISABLE("禁用",9),ENABLE("启用",10),
 	//体检套餐表
-	HASBEENGENERATED("已生成",11),ALREADYSELECTED("已选定",12),GENERATIONIN("生成中",13);
-	
+	HASBEENGENERATED("已生成",11),ALREADYSELECTED("已选定",12),GENERATIONIN("生成中",13),
+	//文章状态
+	SUBMITTED("已提交",14),THEAPPROVED("已审核",15),CANCELTHERELEASE("取消发布",16),AUDITDIDNOTPASS("审核未通过",17);
 	
 	private String name;
 	private int index;

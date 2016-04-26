@@ -80,6 +80,13 @@
 												value="${pd.URL}" maxlength="255" placeholder="这里输入内容url"
 												title="内容url" style="width: 98%;" /></td>
 										</tr>
+										<%-- <tr>
+											<td
+												style="width: 75px; text-align: right; padding-top: 13px;">状态:</td>
+											<td><input type="text" name="STATUS" id="STATUS"
+												value="${pd.STATUS}" maxlength="255" placeholder="在这里输入状态"
+												title="状态" style="width: 98%;" /></td>
+										</tr> --%>
 										<tr>
 											<td
 												style="width: 75px; text-align: right; padding-top: 13px;">摘要:</td>

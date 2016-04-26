@@ -254,7 +254,9 @@ INSERT INTO `sys_menu` VALUES ('222', '检查频率', 'examfrequency/list.do', '
 INSERT INTO `sys_menu` VALUES ('243', '指南发布管理', 'examguideline/listRelease.do', '6', '13', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('51','文章信息管理','article/list.do','6','1','menu-icon fa fa-leaf black','1',1);
 INSERT INTO `sys_menu` VALUES ('75','体检套餐管理','checkuppackage/listAll.do','6','2','menu-icon fa fa-leaf black','1',1);
-
+INSERT INTO `sys_menu` VALUES (244,'文章审核','article/auditList.do','51','1','menu-icon fa fa-leaf black','1',1);
+INSERT INTO `sys_menu` VALUES (265,'审核未通过','article/auditErrorList.do','51','2','menu-icon fa fa-leaf black','1',1);
+INSERT INTO `sys_menu` VALUES (266,'文章发布','article/articleRelease.do','51','3','menu-icon fa fa-leaf black','1',1);
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
@@ -574,6 +576,7 @@ CREATE TABLE `TB_ARTICLE` (
 		`PUBLISHTIME` datetime DEFAULT NULL COMMENT '发布时间',
 		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
 		`CREATEON` datetime DEFAULT NULL COMMENT '创建记录时间',
+		`STATUS` varchar(255) DEFAULT NULL COMMENT '状态',
   		PRIMARY KEY (`ARTICLE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

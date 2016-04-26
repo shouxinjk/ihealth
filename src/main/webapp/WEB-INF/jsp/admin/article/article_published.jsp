@@ -95,6 +95,7 @@
 								<c:when test="${not empty varList}">
 									<c:if test="${QX.cha == 1}">
 									<c:forEach items="${varList}" var="var" varStatus="vs">
+										<c:if test="${var.STATUS == '已发布' or var.STATUS == '已审核' or var.STATUS == '取消发布'}">
 										<tr>
 											<td class='center'>
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.ARTICLE_ID}" class="ace" /><span class="lbl"></span></label>
@@ -115,17 +116,24 @@
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 													</a>
 													</c:if>
+													
 													<c:if test="${QX.del == 1 }">
 													<a class="btn btn-xs btn-danger" onclick="del('${var.ARTICLE_ID}');">
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 													</c:if>
-													<c:if test="${QX.edit == 1 and var.STATUS == '新建'}">
-													<a class="btn btn-xs btn-success" onclick="sub('${var.ARTICLE_ID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="提交"></i>
+													
+													<c:if test="${QX.edit == 1}">
+													<a class="btn btn-xs btn-success" onclick="published('${var.ARTICLE_ID}');">
+														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="发布"></i>
 													</a>
 													</c:if>
 													
+													<c:if test="${QX.del == 1 }">
+													<a class="btn btn-xs btn-danger" onclick="cancelPublished('${var.ARTICLE_ID}');">
+														<i class="ace-icon fa fa-trash-o bigger-120" title="取消发布"></i>
+													</a>
+													</c:if>
 				
 												</div>
 												<div class="hidden-md hidden-lg">
@@ -144,6 +152,7 @@
 																</a>
 															</li>
 															</c:if>
+															
 															<c:if test="${QX.del == 1 }">
 															<li>
 																<a style="cursor:pointer;" onclick="del('${var.ARTICLE_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
@@ -153,11 +162,22 @@
 																</a>
 															</li>
 															</c:if>
-															<c:if test="${QX.edit == 1 and var.STATUS == '新建'}">
+															
+															<c:if test="${QX.edit == 1}">
 															<li>
-																<a style="cursor:pointer;" onclick="sub('${var.ARTICLE_ID}');" class="tooltip-success" data-rel="tooltip" title="提交">
+																<a style="cursor:pointer;" onclick="published('${var.ARTICLE_ID}');" class="tooltip-success" data-rel="tooltip" title="发布">
 																	<span class="green">
 																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																	</span>
+																</a>
+															</li>
+															</c:if>
+															
+															<c:if test="${QX.del == 1 }">
+															<li>
+																<a style="cursor:pointer;" onclick="cancelPublished('${var.ARTICLE_ID}');" class="tooltip-error" data-rel="tooltip" title="取消发布">
+																	<span class="red">
+																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																	</span>
 																</a>
 															</li>
@@ -167,6 +187,7 @@
 												</div>
 											</td>
 										</tr>
+									</c:if>
 									</c:forEach>
 									</c:if>
 									<c:if test="${QX.cha == 0 }">
@@ -339,10 +360,10 @@
 			 diag.show();
 		}
 		
-		//提交
-		function sub(id){
+		//发布成功
+		function published(id){
 			$.ajax({
-				url:"article/editStatus",
+				url:"article/published",
 				type:"post",
 				contentType:"application/json;charset=utf8",
 				data:JSON.stringify({"id":id}),
@@ -350,9 +371,33 @@
 				success:function(data){
 					var result = data.result;
 					if(result == "success"){
-						window.location.href="article/list";
+						window.location.href="article/articleRelease";
 					}else if(result="error"){
-						alert("提交失败！");
+						alert("发布失败！");
+					}else{
+						alert("获取ID失败！");
+					}
+				},
+				error:function(){
+					alert("程序出问题了,请联系管理人员");
+				}
+			});
+		}
+		
+		//取消发布
+		function cancelPublished(id){
+			$.ajax({
+				url:"article/cancelPublished",
+				type:"post",
+				contentType:"application/json;charset=utf8",
+				data:JSON.stringify({"id":id}),
+				dataType:"json",
+				success:function(data){
+					var result = data.result;
+					if(result == "success"){
+						window.location.href="article/articleRelease";
+					}else if(result="error"){
+						alert("审核失败！");
 					}else{
 						alert("获取ID失败！");
 					}

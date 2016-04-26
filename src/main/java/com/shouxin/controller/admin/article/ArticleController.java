@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,9 +32,11 @@ import com.shouxin.entity.admin.TagCategory;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
+import com.shouxin.util.StatusEnum;
 import com.shouxin.util.StringUtil;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.service.admin.article.ArticleManager;
@@ -76,10 +79,204 @@ public class ArticleController extends BaseController {
 		pd.put("PUBLISHTIME", new Date()); //发布时间
 		pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
 		pd.put("CREATEON", new Date());//改记录创建时间
+		pd.put("STATUS", StatusEnum.NEW);
 		articleService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
+	}
+	
+	//将新建的文章状态改为已发布
+	/**修改
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/editStatus")
+	@ResponseBody
+	public Object editStatus(@RequestBody String Status) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改Article的状态信息");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		JSONObject jasonObject = JSONObject.fromObject(Status);
+		
+		String id = (String) jasonObject.get("id");
+		if(id!=null&&!"".equals(id)){
+			pd.put("ARTICLE_ID", id);
+			pd = this.articleService.findById(pd);
+			String status = pd.getString("STATUS");
+			if (status.equals(StatusEnum.NEW.getName())) {
+				status = StatusEnum.SUBMITTED.getName();
+				pd.put("STATUS", status);
+				System.out.println("---------------"+pd);
+				this.articleService.edit(pd);
+				msg = "success";
+			}else{
+				msg = "error";
+			}
+		}else{
+			msg = "null";
+		}
+		
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**将已提交的文章状态改为已审核
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/auditSuccess")
+	@ResponseBody
+	public Object auditSuccess(@RequestBody String Status) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改Article的状态信息");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		JSONObject jasonObject = JSONObject.fromObject(Status);
+		
+		String id = (String) jasonObject.get("id");
+		if(id!=null&&!"".equals(id)){
+			pd.put("ARTICLE_ID", id);
+			pd = this.articleService.findById(pd);
+			String status = pd.getString("STATUS");
+			if (status.equals(StatusEnum.SUBMITTED.getName())) {
+				status = StatusEnum.THEAPPROVED.getName();
+				pd.put("STATUS", status);
+				System.out.println("---------------"+pd);
+				this.articleService.edit(pd);
+				msg = "success";
+			}else{
+				msg = "error";
+			}
+		}else{
+			msg = "null";
+		}
+		
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**将已提交的文章状态改为拒绝审核
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/auditError")
+	@ResponseBody
+	public Object auditError(@RequestBody String Status) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改Article的状态信息");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		JSONObject jasonObject = JSONObject.fromObject(Status);
+		
+		String id = (String) jasonObject.get("id");
+		if(id!=null&&!"".equals(id)){
+			pd.put("ARTICLE_ID", id);
+			pd = this.articleService.findById(pd);
+			String status = pd.getString("STATUS");
+			if (status.equals(StatusEnum.SUBMITTED.getName())) {
+				status = StatusEnum.AUDITDIDNOTPASS.getName();
+				pd.put("STATUS", status);
+				System.out.println("---------------"+pd);
+				this.articleService.edit(pd);
+				msg = "success";
+			}else{
+				msg = "error";
+			}
+		}else{
+			msg = "null";
+		}
+		
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 将已审核的文章修改为已发布
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/published")
+	@ResponseBody
+	public Object published(@RequestBody String Status) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改Article的状态信息");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		JSONObject jasonObject = JSONObject.fromObject(Status);
+		
+		String id = (String) jasonObject.get("id");
+		if(id!=null&&!"".equals(id)){
+			pd.put("ARTICLE_ID", id);
+			pd = this.articleService.findById(pd);
+			String status = pd.getString("STATUS");
+			if (status.equals(StatusEnum.THEAPPROVED.getName())) {
+				status = StatusEnum.PUBLISH.getName();
+				pd.put("STATUS", status);
+				System.out.println("---------------"+pd);
+				this.articleService.edit(pd);
+				msg = "success";
+			}else{
+				msg = "error";
+			}
+		}else{
+			msg = "null";
+		}
+		
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 将已发布改为取消发布
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/cancelPublished")
+	@ResponseBody
+	public Object cancelPublished(@RequestBody String Status) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改Article的状态信息");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		JSONObject jasonObject = JSONObject.fromObject(Status);
+		
+		String id = (String) jasonObject.get("id");
+		if(id!=null&&!"".equals(id)){
+			pd.put("ARTICLE_ID", id);
+			pd = this.articleService.findById(pd);
+			String status = pd.getString("STATUS");
+			if (status.equals(StatusEnum.PUBLISH.getName())) {
+				status = StatusEnum.CANCELTHERELEASE.getName();
+				pd.put("STATUS", status);
+				System.out.println("---------------"+pd);
+				this.articleService.edit(pd);
+				msg = "success";
+			}else{
+				msg = "error";
+			}
+		}else{
+			msg = "null";
+		}
+		
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
 	}
 	
 	/**删除
@@ -180,6 +377,79 @@ public class ArticleController extends BaseController {
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
 	}
+	
+	/**文章审核页面
+	 * @param page
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/auditList")
+	public ModelAndView auditList(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表Article");
+		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		page.setPd(pd);
+		List<PageData>	varList = articleService.list(page);	//列出Article列表
+		mv.setViewName("admin/article/article_audit");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	
+	/**文章审核未通过页面
+	 * @param page
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/auditErrorList")
+	public ModelAndView auditErrorList(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表Article");
+		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		page.setPd(pd);
+		List<PageData>	varList = articleService.list(page);	//列出Article列表
+		mv.setViewName("admin/article/article_auditDidNotPass");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	
+	/**文章发布页面
+	 * @param page
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/articleRelease")
+	public ModelAndView articleRelease(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表Article");
+		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		page.setPd(pd);
+		List<PageData>	varList = articleService.list(page);	//列出Article列表
+		mv.setViewName("admin/article/article_published");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	
 	
 	
 	/**去新增页面
@@ -396,6 +666,7 @@ public class ArticleController extends BaseController {
 		pd.put("PUBLISHTIME", new Date()); //发布时间
 		pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
 		pd.put("CREATEON", new Date());//改记录创建时间
+		pd.put("STATUS", StatusEnum.NEW.getName()); //设置新增的文章状态  为  新增
 		articleService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
