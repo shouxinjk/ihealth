@@ -1,5 +1,6 @@
 package com.shouxin.entity.medical;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,7 +11,11 @@ import java.util.Date;
  * @version 2.0
  */
 
-public class MedicalExamItem {
+public class MedicalExamItem implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String MEDICALEXAMITEM_ID; // 检查项目id
 	private String NAME; // '名称',
 	private double PRICE; // '价格',

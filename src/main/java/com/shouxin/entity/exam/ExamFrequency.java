@@ -1,10 +1,15 @@
 package com.shouxin.entity.exam;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class ExamFrequency {
+public class ExamFrequency implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String EXAMFREQUENCY_ID;// varchar(100) NOT NULL,
 	private String NAME;// varchar(255) DEFAULT NULL COMMENT '名称',
 	private String EXPRESSION;// varchar(255) DEFAULT NULL COMMENT 'CRON表达式，定义检查的间隔频率',

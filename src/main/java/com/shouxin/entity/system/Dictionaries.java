@@ -1,5 +1,6 @@
 package com.shouxin.entity.system;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,8 +13,12 @@ import java.util.List;
 * 修改时间：2015年12月16日
 * @version 2.0
  */
-public class Dictionaries {
+public class Dictionaries implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String NAME;			//名称
 	private String NAME_EN;			//英文名称
 	private String BIANMA;			//编码

@@ -1,5 +1,6 @@
 package com.shouxin.entity.system;
 
+import java.io.Serializable;
 import java.util.List;
 /**
  * 
@@ -11,8 +12,9 @@ import java.util.List;
 * 创建时间：2015年7月27日
 * @version 2.0
  */
-public class Menu {
+public class Menu implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private String MENU_ID;		//菜单ID
 	private String MENU_NAME;	//菜单名称
 	private String MENU_URL;	//链接

@@ -1,9 +1,14 @@
 package com.shouxin.entity.exam;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ExamSolution {
+public class ExamSolution implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String EXAMSOLUTION_ID;//
 	private String NAME;
 	private String SUBGROUP;// '检查手段分组标记',

@@ -1,5 +1,6 @@
 package com.shouxin.entity.system;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import com.shouxin.entity.Page;
 * 创建时间：2014年6月28日
 * @version 1.0
  */
-public class User {
+public class User implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private String USER_ID;		//用户id
 	private String USERNAME;	//用户名
 	private String PASSWORD; 	//密码

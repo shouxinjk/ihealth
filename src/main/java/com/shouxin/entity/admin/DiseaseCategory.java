@@ -1,10 +1,15 @@
 package com.shouxin.entity.admin;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class DiseaseCategory {
+public class DiseaseCategory implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String DISEASECATEGORY_ID;// varchar(100) NOT NULL,
 	private String NAME;// varchar(255) DEFAULT NULL COMMENT '名称',
 	private String DESCRIPTION;// varchar(255) DEFAULT NULL COMMENT '描述',

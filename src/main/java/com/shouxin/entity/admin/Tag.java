@@ -1,9 +1,14 @@
 package com.shouxin.entity.admin;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Tag {
+public class Tag implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String TAG_ID;// varchar(100) NOT NULL,
 	private String NAME;// varchar(255) DEFAULT NULL COMMENT '名称',
 	private String EXPRESSION;// varchar(255) DEFAULT NULL COMMENT '表达式',

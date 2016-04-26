@@ -1,10 +1,15 @@
 package com.shouxin.entity.exam;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class ExamItem {
+public class ExamItem implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String EXAMITEM_ID;// ,
 	private String NAME;// '名称',
 	private String DESCRIPTION;// '描述',

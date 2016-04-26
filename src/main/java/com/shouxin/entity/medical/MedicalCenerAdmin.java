@@ -1,5 +1,6 @@
 package com.shouxin.entity.medical;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,8 +11,12 @@ import java.util.Date;
  * @version 2.0
  */
 
-public class MedicalCenerAdmin {
+public class MedicalCenerAdmin implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String MEDICALCENERADMIN_ID; // 医院管理员信息id
 	private String DEPARTMENT; // 所属部门或科室
 	private String TITLE; // 职位

@@ -1,10 +1,15 @@
 package com.shouxin.entity.admin;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class TagCategory {
+public class TagCategory implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String TAGCATEGORY_ID;// varchar(100) NOT NULL,
 	private String NAME;// varchar(255) DEFAULT NULL COMMENT '标签分类名称',
 	private String MATETYPE;// varchar(255) DEFAULT NULL COMMENT '特性',

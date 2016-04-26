@@ -1,10 +1,15 @@
 package com.shouxin.entity.exam;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class ExamCategory {
+public class ExamCategory implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String EXAMCATEGORY_ID;// varchar(100) NOT NULL,
 	private String NAME;// varchar(255) DEFAULT NULL COMMENT '检查项目分类名称',
 	private String DESCRIPTION;// varchar(255) DEFAULT NULL COMMENT '描述',

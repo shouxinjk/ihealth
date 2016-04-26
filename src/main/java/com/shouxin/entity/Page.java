@@ -1,5 +1,7 @@
 package com.shouxin.entity;
 
+import java.io.Serializable;
+
 import com.shouxin.util.Const;
 import com.shouxin.util.PageData;
 import com.shouxin.util.Tools;
@@ -9,8 +11,12 @@ import com.shouxin.util.Tools;
  * @author  shouxin
  * 创建时间：2014年6月28日
  */
-public class Page {
+public class Page implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int showCount; //每页显示记录数
 	private int totalPage;		//总页数
 	private int totalResult;	//总记录数

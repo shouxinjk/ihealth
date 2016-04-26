@@ -1,9 +1,14 @@
 package com.shouxin.entity.exam;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class ExamGuideline {
+public class ExamGuideline implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String EXAMGUIDELINE_ID;//
 	private String NAME;// 检查指南名称
 	private String ORIGINATE; // '来源',

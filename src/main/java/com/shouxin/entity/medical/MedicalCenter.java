@@ -1,5 +1,6 @@
 package com.shouxin.entity.medical;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,11 @@ import java.util.List;
  * @author shouxin 作者单位： 联系方式： 修改时间：2016年4月6日
  * @version 2.0
  */
-public class MedicalCenter {
+public class MedicalCenter implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String MEDICALCENTER_ID; // 体检中心id
 	private String STATUS; // 状态
 	private String NAME; // 名称

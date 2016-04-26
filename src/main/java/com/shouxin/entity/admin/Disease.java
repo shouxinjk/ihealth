@@ -1,8 +1,13 @@
 package com.shouxin.entity.admin;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Disease {
+public class Disease implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String DISEASE_ID; // varchar(100) NOT NULL,
 	private String NAME; // varchar(255) DEFAULT NULL COMMENT '名称',
 	private String DESCRIPTION; // varchar(255) DEFAULT NULL COMMENT '描述',
