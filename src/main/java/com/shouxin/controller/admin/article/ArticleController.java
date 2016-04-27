@@ -86,8 +86,8 @@ public class ArticleController extends BaseController {
 		return mv;
 	}
 	
-	//将新建的文章状态改为已发布
-	/**修改
+	/**
+	 * 将新建的文章状态改为已发布
 	 * @param
 	 * @throws Exception
 	 */
@@ -110,7 +110,6 @@ public class ArticleController extends BaseController {
 			String status = pd.getString("STATUS");
 			if (status.equals(StatusEnum.NEW.getName())) {
 				status = StatusEnum.SUBMITTED.getName();
-				pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
 				pd.put("STATUS", status);
 				System.out.println("---------------"+pd);
 				this.articleService.edit(pd);
@@ -149,7 +148,6 @@ public class ArticleController extends BaseController {
 			String status = pd.getString("STATUS");
 			if (status.equals(StatusEnum.SUBMITTED.getName())) {
 				status = StatusEnum.THEAPPROVED.getName();
-				pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
 				pd.put("STATUS", status);
 				System.out.println("---------------"+pd);
 				this.articleService.edit(pd);
@@ -188,7 +186,6 @@ public class ArticleController extends BaseController {
 			String status = pd.getString("STATUS");
 			if (status.equals(StatusEnum.SUBMITTED.getName())) {
 				status = StatusEnum.AUDITDIDNOTPASS.getName();
-				pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
 				pd.put("STATUS", status);
 				System.out.println("---------------"+pd);
 				this.articleService.edit(pd);
@@ -228,7 +225,6 @@ public class ArticleController extends BaseController {
 			String status = pd.getString("STATUS");
 			if (status.equals(StatusEnum.THEAPPROVED.getName())) {
 				status = StatusEnum.PUBLISH.getName();
-				pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
 				pd.put("STATUS", status);
 				System.out.println("---------------"+pd);
 				this.articleService.edit(pd);
@@ -268,7 +264,6 @@ public class ArticleController extends BaseController {
 			String status = pd.getString("STATUS");
 			if (status.equals(StatusEnum.PUBLISH.getName())) {
 				status = StatusEnum.CANCELTHERELEASE.getName();
-				pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
 				pd.put("STATUS", status);
 				System.out.println("---------------"+pd);
 				this.articleService.edit(pd);
