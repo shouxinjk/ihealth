@@ -128,5 +128,57 @@ public class AppuserService implements AppuserManager{
 		return (PageData)dao.findForObject("AppuserMapper.getAppUserCount", value);
 	}
 	
+	public void saveAppUserAndTag(PageData pd) throws Exception {
+		dao.save("AppuserMapper.saveAppUserAndTag", pd);
+	}
+
+	public void saveAppUserAndPersonal(PageData pd) throws Exception {
+		dao.save("AppuserMapper.saveAppUserAndPersonal", pd);
+	}
+
+	public void saveAppUserAndFocus(PageData pd) throws Exception {
+		dao.save("AppuserMapper.saveAppUserAndFocus", pd);
+	}
+
+	public void saveAppUserAndFamily(PageData pd) throws Exception {
+		dao.save("AppuserMapper.saveAppUserAndFamily", pd);
+	}
+
+	public void deleteTag(PageData pd) throws Exception {
+		dao.delete("AppuserMapper.deleteTag", pd);
+	}
+
+	public void deletePersonal(PageData pd) throws Exception {
+		dao.delete("AppuserMapper.deletePersonal", pd);
+	}
+
+	public void deleteFocus(PageData pd) throws Exception {
+		dao.delete("AppuserMapper.deleteFocus", pd);
+	}
+
+	public void deleteFamily(PageData pd) throws Exception {
+		dao.delete("AppuserMapper.deleteFamily", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findTagsById(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("AppuserMapper.findTagsById", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findPersonalDiseasesById(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("AppuserMapper.findPersonalDiseasesById", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findFocusDiseasesById(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("AppuserMapper.findFocusDiseasesById", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findFamilyDiseasesById(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("AppuserMapper.findFamilyDiseasesById", pd);
+	}
+	
 }
 

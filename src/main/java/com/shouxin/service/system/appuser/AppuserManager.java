@@ -91,5 +91,93 @@ public interface AppuserManager {
 	 */
 	public PageData getAppUserCount(String value)throws Exception;
 	
+	/**
+	 * 保存会员跟标签的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveAppUserAndTag(PageData pd)throws Exception;
+	
+	/**
+	 * 保存会员跟个人疾病关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveAppUserAndPersonal(PageData pd)throws Exception;
+	
+	/**
+	 * 保存会员跟关注疾病的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveAppUserAndFocus(PageData pd)throws Exception;
+	
+	/**
+	 * 保存会员跟家族遗传疾病的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveAppUserAndFamily(PageData pd)throws Exception;
+	
+	/**
+	 * 根据会员ID 删除会员跟标签的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void deleteTag(PageData pd)throws Exception;
+	
+	/**
+	 * 根据会员ID 删除会员跟个人疾病的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void deletePersonal(PageData pd)throws Exception;
+	
+	/**
+	 * 根据会员ID 删除会员跟关注疾病的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void deleteFocus(PageData pd)throws Exception;
+	
+	/**
+	 * 根据会员ID 删除会员跟家族遗传疾病的关系
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void deleteFamily(PageData pd)throws Exception;
+	
+	
+	/**
+	 * 根据ID查询 会员跟标签的关系
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findTagsById(PageData pd)throws Exception;
+	
+	/**
+	 * 根据ID查询 会员跟个人疾病的关系
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findPersonalDiseasesById(PageData pd)throws Exception;
+	
+	/**
+	 * 根据ID查询 会员跟关注疾病的关系
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findFocusDiseasesById(PageData pd)throws Exception;
+	
+	/**
+	 * 根据ID查询 会员跟家族遗传疾病的关系
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findFamilyDiseasesById(PageData pd)throws Exception;
 }
 

@@ -18,6 +18,7 @@
 <%@ include file="../index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
+<link type="text/css" rel="stylesheet" href="plugins/zTree/2.6/zTreeStyle.css" />
 </head>
 <body class="no-skin">
 	<!-- /section:basics/navbar.layout -->
@@ -27,13 +28,46 @@
 			<div class="main-content-inner">
 				<div class="page-content">
 					<div class="row">
+						<!-- tree show -->
+						<div style="margin:0 auto;width:100%;height: 200px;overflow: auto;">
+							<div style="width:25%; float:left;">
+								<span>标签信息</span>
+								<ul id="tagTree" class="tree"></ul>
+							</div>
+							
+							<div style="width:25%; float:left;">
+								<span>个人疾病</span>
+								<ul id="personalTree" class="tree"></ul>
+							</div>
+							
+							<div style="width:25%; float:left;">
+								<span>关注疾病</span>
+								<ul id="focusTree" class="tree"></ul>
+							</div>
+							
+							<div style="width:25%; float:left;">
+								<span>家族遗传疾病</span>
+								<ul id="familyTree" class="tree"></ul>
+							</div>
+						</div>
+						
 						<div class="col-xs-12">
+						<span style="color:red;">*&nbsp;号所标识的列为必填列</span> 
 						<form action="happuser/${msg }.do" name="userForm" id="userForm" method="post">
+							<!-- 生活方式标签 ID -->
+							<input type="hidden" name="tagIds" id="tagIds"/>
+							<!-- 个人疾病  ID-->
+							<input type="hidden" name="personalDiseaseId" id="personalDiseaseId"/>
+							<!-- 关注疾病 ID -->
+							<input type="hidden" name="focusDiseaseId" id="focusDiseaseId"/>
+							<!-- 家族遗传疾病  ID-->
+							<input type="hidden" name="familyDiseaseId" id="familyDiseaseId"/>
+							
 							<input type="hidden" name="USER_ID" id="user_id" value="${pd.USER_ID }"/>
 							<div id="zhongxin" style="padding-top: 13px;">
 							<table id="table_report" class="table table-striped table-bordered table-hover">
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">角色:</td>
+									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;角色:</td>
 									<td id="js">
 									<select class="chosen-select form-control" name="ROLE_ID" id="role_id" data-placeholder="请选择等级" style="vertical-align:top;"  title="级别" style="width:98%;" >
 									<option value=""></option>
@@ -46,31 +80,31 @@
 									<td><input class="span10 date-picker" name="START_TIME" id="START_TIME" value="${pd.START_TIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="开通日期"  title="开通日期" style="width:98%;" /></td>
 								</tr>
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">用户名:</td>
+									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;用户名:</td>
 									<td><input type="text" name="USERNAME" id="loginname" value="${pd.USERNAME }" placeholder="这里输入用户名" title="用户名" style="width:98%;" /></td>
 									<td style="width:79px;text-align: right;padding-top: 13px;">到期日期:</td>
 									<td><input class="span10 date-picker" name="END_TIME" id="END_TIME" value="${pd.END_TIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="到期日期" title="到期日期" style="width:98%;" /></td>
 								</tr>
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">编号:</td>
+									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;编号:</td>
 									<td><input type="text" name="NUMBER" id="NUMBER" value="${pd.NUMBER }" maxlength="32" placeholder="这里输入编号" title="编号" onblur="hasN('${pd.USERNAME }')" style="width:98%;" /></td>
-									<td style="width:79px;text-align: right;padding-top: 13px;">邮箱:</td>
+									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;邮箱:</td>
 									<td><input type="email" name="EMAIL" id="EMAIL"  value="${pd.EMAIL }" maxlength="32" placeholder="这里输入邮箱" title="邮箱" onblur="hasE('${pd.USERNAME }')" style="width:98%;" /></td>
 								</tr>
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">密码:</td>
+									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;密码:</td>
 									<td><input type="password" name="PASSWORD" id="password"  placeholder="输入密码"  title="密码" style="width:98%;" /></td>
 									<td style="width:79px;text-align: right;padding-top: 13px;">手机号:</td>
 									<td><input type="tel" name="PHONE" id="PHONE" value="${pd.PHONE }" placeholder="这里输入手机号" title="手机号" style="width:98%;" /></td>
 								</tr>
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">确认密码:</td>
+									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;确认密码:</td>
 									<td><input type="password" name="chkpwd" id="chkpwd"  placeholder="确认密码"  title="确认密码" style="width:98%;" /></td>
 									<td style="width:79px;text-align: right;padding-top: 13px;">身份证号:</td>
 									<td><input type="text" name="SFID" id="SFID" value="${pd.SFID }" placeholder="这里输入身份证号" title="身份证号" style="width:98%;" /></td>
 								</tr>
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">姓名:</td>
+									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;姓名:</td>
 									<td><input type="text" name="NAME" id="name"  value="${pd.NAME }" placeholder="这里输入姓名" title="姓名" style="width:98%;" /></td>
 									<td style="width:79px;text-align: right;padding-top: 13px;">开通年限:</td>
 									<td><input type="number" name="YEARS" id="YEARS" class="input_txt" value="${pd.YEARS }" placeholder="开通年限(请输入数字)" title="开通年限" style="width:98%;" /></td>
@@ -119,8 +153,204 @@
 	<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
+	
+	<script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="plugins/zTree/2.6/jquery.ztree-2.6.min.js"></script>
 </body>						
 <script type="text/javascript">
+	//定义树形菜单
+	var tagTree;
+	var personalTree;
+	var focusTree;
+	var familyTree;
+	
+	$(document).ready(function(){
+		initTag();
+		initPersonalDisease();
+		initFocusDisease();
+		initFamilyDisease();
+	});
+	
+	//加载标签信息
+	function initTag(){
+		var setting = {
+			showLine : true,//是否显示节点间的连线 
+			checkable: true,
+			checkType : { "Y": "s", "N": "s" }
+		};
+		var zn = '${zTreeNodes}';
+		var zTreeNodes = eval(zn);
+		tagTree = $("#tagTree").zTree(setting, zTreeNodes);
+	}
+
+	//加个人疾病信息
+	function initPersonalDisease(){
+		var setting = {
+			showLine : true, //是否显示节点间的连线 
+			checkable: true, //带有复选框
+			checkType : { "Y": "s", "N": "s" }
+		}
+		var zns = '${zTreeNodess}';
+		var zTreeNodess = eval(zns);
+		personalTree = $("#personalTree").zTree(setting, zTreeNodess);
+		
+	}
+	
+	//加关注疾病信息
+	function initFocusDisease(){
+		var setting = {
+			showLine : true, //是否显示节点间的连线 
+			checkable: true, //带有复选框
+			checkType : { "Y": "s", "N": "s" }
+		}
+		var zns = '${zTreeNodess}';
+		var zTreeNodess = eval(zns);
+		focusTree = $("#focusTree").zTree(setting, zTreeNodess);
+	}
+	
+	//加载家族遗传疾病信息
+	function initFamilyDisease(){
+		var setting = {
+			showLine : true, //是否显示节点间的连线 
+			checkable: true, //带有复选框
+			checkType : { "Y": "s", "N": "s" }
+		}
+		var zns = '${zTreeNodess}';
+		var zTreeNodess = eval(zns);
+		familyTree = $("#familyTree").zTree(setting, zTreeNodess);
+	}
+	
+	
+	
+	function check(){
+		tagOnCheck();
+		personaOnCheck();
+		focusOnCheck();
+		familyOnCheck();
+	}
+	
+	//获取选中的标签ID
+	function tagOnCheck(){
+		var str = "";
+		var nodes = tagTree.getCheckedNodes(true);
+		for(var i=0;i<nodes.length;i++){
+			if(nodes[i].id!=undefined){
+				str += nodes[i].id + ",";
+			}
+		}
+		//去掉字符串最后一个逗号
+		str = str.substring(0,str.length - 1);
+		$("#tagIds").val(str);
+	}
+	
+	//获取选中的个人疾病ID
+	function personaOnCheck(){
+		var str = "";
+		var nodes = personalTree.getCheckedNodes(true);
+		for(var i=0;i<nodes.length;i++){
+			if(nodes[i].id!=undefined){
+				str += nodes[i].id + ",";
+			}		
+		}
+		str = str.substring(0,str.length - 1);
+		$("#personalDiseaseId").val(str);
+	}
+	
+	//获取选中的关注病 ID
+	function focusOnCheck(){
+		var str = "";
+		var nodes = focusTree.getCheckedNodes(true);
+		for(var i=0;i<nodes.length;i++){
+			if(nodes[i].id!=undefined){
+				str += nodes[i].id + ",";
+			}		
+		}
+		str = str.substring(0,str.length - 1);
+		$("#focusDiseaseId").val(str);
+	}
+	
+	//获取选中的家族遗传疾病ID
+	function familyOnCheck(){
+		var str = "";
+		var nodes = familyTree.getCheckedNodes(true);
+		for(var i=0;i<nodes.length;i++){
+			if(nodes[i].id!=undefined){
+				str += nodes[i].id + ",";
+			}		
+		}
+		str = str.substring(0,str.length - 1);
+		$("#familyDiseaseId").val(str);
+	}
+	
+	
+	var id = $("#user_id").val();
+	
+	
+	//获取关联的标签
+	$.ajax({
+		url:"happuser/findTagsById/"+id,
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			var tags = data.tagList;
+			for (var i = 0; i < tags.length; i++) {
+				var node = tagTree.getNodeByParam("id",tags[i].tag_id);
+				node.checked = true;
+				tagTree.updateNode(node);
+			}
+			
+		}
+	});
+	
+	//根据Id获取关联的个人疾病
+	$.ajax({
+		url:"happuser/findPersonalDiseasesById/"+id,
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			var diseases = data.pdiseaseList;
+			for (var i = 0; i < diseases.length; i++) {
+				var nodes = personalTree.getNodeByParam("id",diseases[i].disease_id);
+				nodes.checked = true;
+				personalTree.updateNode(nodes);
+			}
+			
+		}
+	});
+	
+	//根据ID获取关注的疾病
+	$.ajax({
+		url:"happuser/findFocusDiseasesById/"+id,
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			var diseases = data.fdiseaseList;
+			for (var i = 0; i < diseases.length; i++) {
+				var nodes = focusTree.getNodeByParam("id",diseases[i].disease_id);
+				nodes.checked = true;
+				focusTree.updateNode(nodes);
+			}
+			
+		}
+	});
+	
+	//根据ID获取关联的家族遗传病
+	$.ajax({
+		url:"happuser/findFamilyDiseasesById/"+id,
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			var diseases = data.fhdiseaseList;
+			for (var i = 0; i < diseases.length; i++) {
+				var nodes = familyTree.getNodeByParam("id",diseases[i].disease_id);
+				nodes.checked = true;
+				familyTree.updateNode(nodes);
+			}
+			
+		}
+	});
+	
+	
 	$(top.hangge());
 	
 	$(document).ready(function(){
@@ -136,6 +366,7 @@
 
 	//保存
 	function save(){
+		
 		if($("#role_id").val()==""){
 			$("#js").tips({
 				side:3,
@@ -257,6 +488,7 @@
 		if($("#user_id").val()==""){
 			hasU();
 		}else{
+			check();
 			$("#userForm").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();

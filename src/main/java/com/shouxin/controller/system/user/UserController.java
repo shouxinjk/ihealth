@@ -172,7 +172,7 @@ public class UserController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		
-		//生成 新增文章信息的ID
+		//生成 用户信息的ID
 		String user_id = this.get32UUID();
 		
 		//获取前段页面传入的多个标签的ID 并按,拆分

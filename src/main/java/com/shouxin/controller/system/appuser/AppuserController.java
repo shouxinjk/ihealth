@@ -13,15 +13,21 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.DiseaseCategory;
+import com.shouxin.entity.admin.TagCategory;
 import com.shouxin.entity.system.Role;
+import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
+import com.shouxin.service.admin.tagcategory.TagCategoryManager;
 import com.shouxin.service.system.appuser.AppuserManager;
 import com.shouxin.service.system.role.RoleManager;
 import com.shouxin.util.AppUtil;
@@ -29,6 +35,9 @@ import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.MD5;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
+import com.shouxin.util.StringUtil;
+
+import net.sf.json.JSONArray;
 
 /** 
  * 类名称：AppuserController
@@ -45,6 +54,88 @@ public class AppuserController extends BaseController {
 	private AppuserManager appuserService;
 	@Resource(name="roleService")
 	private RoleManager roleService;
+	@Resource(name="tagcategoryService")
+	private TagCategoryManager tagcategoryService;
+	@Resource(name="diseasecategoryService")
+	private DiseaseCategoryManager diseasecategoryService;
+	
+	
+	/**
+	 * 根据用户ID 获取标签信息
+	 */
+	@RequestMapping(value="findTagsById/{id}")
+	@ResponseBody
+	public Object findTagsById(@PathVariable String id) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		PageData pd = new PageData();
+		logger.debug("用户的ID为:" + id);
+		pd.put("user_id", id);
+		List<PageData> tagList = this.appuserService.findTagsById(pd);
+		if(tagList.size()>0 && tagList !=null){
+			map.put("tagList", tagList);
+		}
+		return AppUtil.returnObject(pd, map);
+	}
+	
+	/**
+	 * 根据用户ID 获取既个人疾病信息
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findPersonalDiseasesById/{id}")
+	@ResponseBody
+	public Object findPersonalDiseasesById(@PathVariable String id) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		PageData pd = new PageData();
+		logger.debug("用户的ID为:" + id);
+		pd.put("user_id", id);
+		List<PageData> pdiseaseList = this.appuserService.findPersonalDiseasesById(pd);
+		if(pdiseaseList.size()>0 && pdiseaseList !=null){
+			map.put("pdiseaseList", pdiseaseList);
+		}
+		return AppUtil.returnObject(pd, map);
+	}
+	
+	/**
+	 * 根据用户ID 获取关注疾病信息
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findFocusDiseasesById/{id}")
+	@ResponseBody
+	public Object findFocusDiseasesById(@PathVariable String id) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		PageData pd = new PageData();
+		logger.debug("用户的ID为:" + id);
+		pd.put("user_id", id);
+		List<PageData> fdiseaseList = this.appuserService.findFocusDiseasesById(pd);
+		if(fdiseaseList.size()>0 && fdiseaseList !=null){
+			map.put("fdiseaseList", fdiseaseList);
+		}
+		return AppUtil.returnObject(pd, map);
+	}
+	
+	/**
+	 * 根据用户ID 获取遗传疾病信息
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="findFamilyDiseasesById/{id}")
+	@ResponseBody
+	public Object findFamilyDiseasesById(@PathVariable String id) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		PageData pd = new PageData();
+		logger.debug("用户的ID为:" + id);
+		pd.put("user_id", id);
+		List<PageData> fhdiseaseList = this.appuserService.findFamilyDiseasesById(pd);
+		if(fhdiseaseList.size()>0 && fhdiseaseList !=null){
+			map.put("fhdiseaseList", fhdiseaseList);
+		}
+		return AppUtil.returnObject(pd, map);
+	}
 	
 	/**显示用户列表
 	 * @param page
@@ -80,12 +171,30 @@ public class AppuserController extends BaseController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(value="/goAddU")
-	public ModelAndView goAddU() throws Exception{
+	public ModelAndView goAddU(Model model) throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("ROLE_ID", "2");
 		List<Role> roleList = roleService.listAllRolesByPId(pd);			//列出会员组角色
+		
+		/**
+		 * 需求： 当用户点击新增按钮时，跳转到新增页面并获取所有的标签分类下的标签信息
+		 */
+		try{
+			List<TagCategory> list = this.tagcategoryService.findTagsList();
+			List<DiseaseCategory> disList = this.diseasecategoryService.findAllDiseases();
+			String jsons = JSONArray.fromObject(disList).toString();
+			String json = JSONArray.fromObject(list).toString();
+			logger.debug(json + "-------------------------------------------------");
+			json = json.replaceAll("TAG_ID", "id").replaceAll("TAGCATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("tags", "nodes");
+			jsons = jsons.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
+			model.addAttribute("zTreeNodes", json);
+			model.addAttribute("zTreeNodess", jsons);
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		
 		mv.setViewName("system/appuser/appuser_edit");
 		mv.addObject("msg", "saveU");
 		mv.addObject("pd", pd);
@@ -104,7 +213,68 @@ public class AppuserController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("USER_ID", this.get32UUID());	//ID
+		
+		//生成 用户信息的ID
+		String user_id = this.get32UUID();
+		
+		//获取前段页面传入的多个标签的ID 并按,拆分
+		String tagIds = pd.getString("tagIds");
+		
+		if(tagIds != null && !"".equals(tagIds)){
+			logger.debug("多个标签的ID为："+tagIds);
+			//按,进行拆分  保存数据到数据库中
+			String[] tags = StringUtil.StrList(tagIds);
+			for (int i = 0; i < tags.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("tag_id", tags[i]);
+				pd.put("user_id", user_id);
+				this.appuserService.saveAppUserAndTag(pd);
+			}
+		}
+		
+		//获取当前选中的个人疾病的ID
+		String personalDiseaseId = pd.getString("personalDiseaseId");
+		
+		if(!"".equals(personalDiseaseId) && personalDiseaseId != null){
+			logger.debug("多个既往疾病的ID为:" + personalDiseaseId);
+			String[] Pdiseases = StringUtil.StrList(personalDiseaseId);
+			for (int i = 0; i < Pdiseases.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("user_id", user_id);
+				pd.put("disease_id", Pdiseases[i]);
+				this.appuserService.saveAppUserAndPersonal(pd);
+			}
+		}
+		
+		//获取当前选中的关注疾病的ID
+		String focusDiseaseId = pd.getString("focusDiseaseId");
+		
+		if(!"".equals(focusDiseaseId) && focusDiseaseId != null){
+			logger.debug("多个家族遗传疾病的ID为:" + focusDiseaseId);
+			String[] focusDiseases = StringUtil.StrList(focusDiseaseId);
+			for (int i = 0; i < focusDiseases.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("user_id", user_id);
+				pd.put("disease_id", focusDiseases[i]);
+				this.appuserService.saveAppUserAndFocus(pd);
+			}
+		}
+		
+		//获取当前选中的家族遗传疾病的ID
+		String familyDiseaseId = pd.getString("familyDiseaseId");
+		
+		if(!"".equals(familyDiseaseId) && familyDiseaseId != null){
+			logger.debug("多个家族遗传疾病的ID为:" + familyDiseaseId);
+			String[] fDiseases = StringUtil.StrList(familyDiseaseId);
+			for (int i = 0; i < fDiseases.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("user_id", user_id);
+				pd.put("disease_id", fDiseases[i]);
+				this.appuserService.saveAppUserAndFamily(pd);
+			}
+		}
+		
+		pd.put("USER_ID", user_id);	//ID
 		pd.put("RIGHTS", "");					
 		pd.put("LAST_LOGIN", "");				//最后登录时间
 		pd.put("IP", "");						//IP
@@ -212,6 +382,75 @@ public class AppuserController extends BaseController {
 		if(pd.getString("PASSWORD") != null && !"".equals(pd.getString("PASSWORD"))){
 			pd.put("PASSWORD", MD5.md5(pd.getString("PASSWORD")));
 		}
+		
+		String user_id = pd.getString("USER_ID");
+		pd.put("user_id", user_id);
+		
+		//获取前段页面传入的多个标签的ID 并按,拆分
+		String tagIds = pd.getString("tagIds");
+		logger.debug(tagIds);
+		if (tagIds != null && !"".equals(tagIds)) {
+			//拆分
+			String[] tags = StringUtil.StrList(tagIds);
+			//删除跟这个用户有关系的所有的标签信息
+			this.appuserService.deleteTag(pd);
+			
+			for (int i = 0; i < tags.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("tag_id", tags[i]);
+				//新增关系
+				this.appuserService.saveAppUserAndTag(pd);
+			}
+		}
+		
+		//获取当前选中的个人疾病的ID
+		String personalDiseaseId = pd.getString("personalDiseaseId");
+		logger.debug(personalDiseaseId);
+		//拆分
+		if (personalDiseaseId != null && !"".equals(personalDiseaseId)) {
+			//拆分
+			String[] PDiseases = StringUtil.StrList(personalDiseaseId);
+			//删除所有跟此用户有关系的的个人疾病信息
+			this.appuserService.deletePersonal(pd);
+			for (int i = 0; i < PDiseases.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("disease_id", PDiseases[i]);
+				this.appuserService.saveAppUserAndPersonal(pd);
+			}
+		}
+		
+		//获取当前选中的关注疾病的ID
+		String focusDiseaseId = pd.getString("focusDiseaseId");
+		logger.debug(focusDiseaseId);
+		//拆分
+		if (focusDiseaseId != null && !"".equals(focusDiseaseId)) {
+			//拆分
+			String[] FDiseases = StringUtil.StrList(focusDiseaseId);
+			//删除所有跟此用户有关系的的关注疾病信息
+			this.appuserService.deleteFocus(pd);
+			for (int i = 0; i < FDiseases.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("disease_id", FDiseases[i]);
+				this.appuserService.saveAppUserAndFocus(pd);
+			}
+		}
+		
+		//获取当前选中的遗传疾病ID
+		String familyDiseaseId = pd.getString("familyDiseaseId");
+		logger.debug(familyDiseaseId);
+		//拆分
+		if (familyDiseaseId != null && !"".equals(familyDiseaseId)) {
+			//拆分
+			String[] FHDiseases = StringUtil.StrList(familyDiseaseId);
+			//删除所有跟此用户有关系的的遗传疾病信息
+			this.appuserService.deleteFamily(pd);
+			for (int i = 0; i < FHDiseases.length; i++) {
+				pd.put("id", this.get32UUID());
+				pd.put("disease_id", FHDiseases[i]);
+				this.appuserService.saveAppUserAndFamily(pd);
+			}
+		}
+		
 		appuserService.editU(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -222,13 +461,28 @@ public class AppuserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="/goEditU")
-	public ModelAndView goEditU(){
+	public ModelAndView goEditU(Model model){
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try {
 			pd.put("ROLE_ID", "2");
 			List<Role> roleList = roleService.listAllRolesByPId(pd);//列出会员组角色
+			
+			/**
+			 * 需求： 当用户点击新增按钮时，跳转到新增页面并获取所有的标签分类下的标签信息
+			 */
+			List<TagCategory> list = this.tagcategoryService.findTagsList();
+			List<DiseaseCategory> disList = this.diseasecategoryService.findAllDiseases();
+			String jsons = JSONArray.fromObject(disList).toString();
+			String json = JSONArray.fromObject(list).toString();
+			logger.debug(json + "-------------------------------------------------");
+			json = json.replaceAll("TAG_ID", "id").replaceAll("TAGCATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("tags", "nodes");
+			jsons = jsons.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
+			model.addAttribute("zTreeNodes", json);
+			model.addAttribute("zTreeNodess", jsons);
+			
+			
 			pd = appuserService.findByUiId(pd);						//根据ID读取
 			mv.setViewName("system/appuser/appuser_edit");
 			mv.addObject("msg", "editU");
