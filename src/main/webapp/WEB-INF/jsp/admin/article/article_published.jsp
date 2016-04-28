@@ -113,13 +113,13 @@
 												<div class="hidden-sm hidden-xs btn-group">
 													
 													
-													<c:if test="${QX.edit == 1}">
+													<c:if test="${QX.edit == 1 and var.STATUS=='取消发布' or var.STATUS =='已审核'}">
 													<a class="btn btn-xs btn-success" onclick="published('${var.ARTICLE_ID}');">
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="发布"></i>
 													</a>
 													</c:if>
 													
-													<c:if test="${QX.del == 1 }">
+													<c:if test="${QX.del == 1 and var.STATUS=='已发布'}">
 													<a class="btn btn-xs btn-danger" onclick="cancelPublished('${var.ARTICLE_ID}');">
 														<i class="ace-icon fa fa-trash-o bigger-120" title="取消发布"></i>
 													</a>

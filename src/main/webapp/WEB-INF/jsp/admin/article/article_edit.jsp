@@ -47,8 +47,8 @@
 						<div class="col-xs-12">
 							<form action="article/${msg }.do" name="Form" id="Form"
 								method="post">
-								<input type="hidden" name="ARTICLE_ID" id="ARTICLE_ID"
-									value="${pd.ARTICLE_ID}" />
+								<input type="hidden" name="ARTICLE_ID" id="ARTICLE_ID" value="${pd.ARTICLE_ID}" />
+								<input type="hidden" name="STATUS" id="STATUS" value="${pd.STATUS}"/>
 								<div id="zhongxin" style="padding-top: 13px;">
 									<table id="table_report"
 										class="table table-striped table-bordered table-hover">

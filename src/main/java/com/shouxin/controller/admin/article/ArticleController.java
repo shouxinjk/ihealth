@@ -108,7 +108,7 @@ public class ArticleController extends BaseController {
 			pd.put("ARTICLE_ID", id);
 			pd = this.articleService.findById(pd);
 			String status = pd.getString("STATUS");
-			if (status.equals(StatusEnum.NEW.getName())) {
+			if (status.equals(StatusEnum.NEW.getName())||status.equals(StatusEnum.AUDITDIDNOTPASS.getName())) {
 				status = StatusEnum.SUBMITTED.getName();
 				pd.put("STATUS", status);
 				System.out.println("---------------"+pd);
@@ -223,7 +223,7 @@ public class ArticleController extends BaseController {
 			pd.put("ARTICLE_ID", id);
 			pd = this.articleService.findById(pd);
 			String status = pd.getString("STATUS");
-			if (status.equals(StatusEnum.THEAPPROVED.getName())) {
+			if (status.equals(StatusEnum.THEAPPROVED.getName())||status.equals(StatusEnum.CANCELTHERELEASE.getName())) {
 				status = StatusEnum.PUBLISH.getName();
 				pd.put("STATUS", status);
 				System.out.println("---------------"+pd);
@@ -307,6 +307,10 @@ public class ArticleController extends BaseController {
 		pd = this.getPageData();
 		
 		String articleId = pd.getString("ARTICLE_ID");
+		String status = pd.getString("STATUS");
+		if (status=="" || status == null) {
+			status = StatusEnum.NEW.getName();
+		}
 		//获取前段页面传入的多个标签的ID 并按,拆分
 		String tagIds = pd.getString("tagIds");
 		logger.debug(tagIds);

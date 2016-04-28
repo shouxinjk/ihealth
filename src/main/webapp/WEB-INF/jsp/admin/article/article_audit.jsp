@@ -111,7 +111,7 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													
+												<c:if test="${var.STATUS!='已审核'}">
 													<c:if test="${QX.edit == 1}">
 													<a class="btn btn-xs btn-success" onclick="auditSuccess('${var.ARTICLE_ID}');">
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="审核通过"></i>
@@ -123,7 +123,7 @@
 														<i class="ace-icon fa fa-trash-o bigger-120" title="审核拒绝"></i>
 													</a>
 													</c:if>
-				
+												</c:if>
 												</div>
 												<div class="hidden-md hidden-lg">
 													<div class="inline pos-rel">
@@ -132,7 +132,7 @@
 														</button>
 			
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-															
+															<c:if test="${var.STATUS!='已审核'}">
 															
 															<c:if test="${QX.edit == 1}">
 															<li>
@@ -152,6 +152,7 @@
 																	</span>
 																</a>
 															</li>
+															</c:if>
 															</c:if>
 														</ul>
 													</div>
