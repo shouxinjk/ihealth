@@ -855,22 +855,21 @@ CREATE TABLE `exam_examsolution` (
   `EXAMSOLUTION_ID` varchar(100) NOT NULL,
   `SUBGROUP` varchar(255) DEFAULT NULL COMMENT '检查手段分组标记',
   `RISKTYPE` int(255) DEFAULT NULL COMMENT '干预手段对应风险',
-  `STARTAGE` int(11) NOT NULL COMMENT '开始检查年龄',
+  `STARTAGE` int(11) DEFAULT NULL COMMENT '开始检查年龄',
   `ENDAGE` varchar(255) DEFAULT NULL COMMENT '结束检查年龄',
-  `FEATURES` varchar(255) DEFAULT NULL COMMENT '医学检查手段',
-  `EXAMGUIDELINE_ID` varchar(100) NOT NULL,
-  `EXAMITEM_ID` varchar(100) NOT NULL,
-  `EXAMFREQUENCY_ID` varchar(100) NOT NULL,
+  `FEATURES` set('安全','全面','经济') DEFAULT '' COMMENT '医学检查手段',
+  `EXAMGUIDELINE_ID` varchar(100) DEFAULT NULL,
+  `EXAMITEM_ID` varchar(100) DEFAULT NULL,
+  `EXAMFREQUENCY_ID` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`EXAMSOLUTION_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of exam_examsolution
 -- ----------------------------
-INSERT INTO `exam_examsolution` VALUES ('2', 'cccc', '0', '11', 'cc', '经济,全面,安全', '1', '1', '1');
-INSERT INTO `exam_examsolution` VALUES ('3', 'cccc', '0', '11', 'cc', '经济,全面,安全', '1', '1', '1');
-INSERT INTO `exam_examsolution` VALUES ('4', 'bb', '1', '11', 'bb', '经济,全面,安全', '1', '1', '1');
-INSERT INTO `exam_examsolution` VALUES ('5', 'bb', '1', '11', 'bb', '经济,全面,安全', '2', '1', '1');
+INSERT INTO `exam_examsolution` VALUES ('05a0c47ebc404ce88cc5133d64e7ea53', null, '1', '0', null, '', '0ab33b76f20c4f74b0528373c9412373', '1', '1');
+INSERT INTO `exam_examsolution` VALUES ('aaaa', null, null, null, null, '经济', null, null, null);
+INSERT INTO `exam_examsolution` VALUES ('fdb192b981af4565aa8880529e1199d3', null, '0', '2', null, '安全', '0ab33b76f20c4f74b0528373c9412373', '1', '1');
 
 
 DROP TABLE IF EXISTS `admin_userandfhdisease`;
