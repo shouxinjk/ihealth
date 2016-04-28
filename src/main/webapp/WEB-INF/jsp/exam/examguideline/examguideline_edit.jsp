@@ -129,7 +129,14 @@
 																<select name="ITEMCATESELECT2" ID="ITEMCATESELECT2" onchange="itemChange2()">
 																	<c:forEach items="${varItemCategoryList}" var="itemCategory"
 																		varStatus="vasc">
-																		<option value="${itemCategory.EXAMCATEGORY_ID }">${itemCategory.NAME}</option>
+																		<c:if test="${itemCategory.PARENT_ID =='0' }">
+																			<option value="${itemCategory.EXAMCATEGORY_ID }">${itemCategory.NAME}</option>	
+																			<c:forEach items="${varItemCategoryList}" var="itemCategory2">
+																				<c:if test="${itemCategory2.PARENT_ID == itemCategory.EXAMCATEGORY_ID }">
+																					<option value="${itemCategory2.EXAMCATEGORY_ID }">&nbsp;&nbsp;&nbsp;--${itemCategory2.NAME}</option>
+																				</c:if>
+																			</c:forEach>	
+																		</c:if>
 																	</c:forEach>
 																</select> 
 																<select name="ITEMSELECTG2" ID="ITEMSELECTG2">
@@ -209,7 +216,14 @@
 																<select name="ITEMCATESELECT" ID="ITEMCATESELECT" onchange="itemChange()">
 																	<c:forEach items="${varItemCategoryList}" var="itemCategory"
 																		varStatus="vasc">
-																		<option value="${itemCategory.EXAMCATEGORY_ID }">${itemCategory.NAME}</option>
+																		<c:if test="${itemCategory.PARENT_ID =='0' }">
+																			<option value="${itemCategory.EXAMCATEGORY_ID }">${itemCategory.NAME}</option>	
+																			<c:forEach items="${varItemCategoryList}" var="itemCategory2">
+																				<c:if test="${itemCategory2.PARENT_ID == itemCategory.EXAMCATEGORY_ID }">
+																					<option value="${itemCategory2.EXAMCATEGORY_ID }">&nbsp;&nbsp;&nbsp;--${itemCategory2.NAME}</option>
+																				</c:if>
+																			</c:forEach>	
+																		</c:if>
 																	</c:forEach>
 																</select>
 																<select name="ITEMSELECT" ID="ITEMSELECT">
@@ -290,6 +304,7 @@
 			$('input[name="FEATURES"]:checked').each(function(){ 
 				FEATURES+=$(this).val()+","; 
 				}); 
+			FEATURES =FEATURES.substring(0,FEATURES.length-1); 
 			var EXAMGUIDELINE_ID = $("#EXAMGUIDELINE_ID").val();
 			var STARTAGE = $("#STARTAGE").val();
 			var FREQSELECT = $("#FREQSELECT").get(0).options[$("#FREQSELECT").get(0).selectedIndex].text;
@@ -304,7 +319,7 @@
 					for(var i = 0;i<json.length;i++){
 						if(json[i].RISKTYPE==1){
 							str+='<tr>'+
-							'<td>'+json[i].INAME+'(<span>'+json[i].FEATURES+'</span>)<input type="hidden" value="'+json[i].EXAMITEM_ID+'"</td>'+
+							'<td>'+json[i].INAME+'</td><td>'+json[i].FEATURES+'<input type="hidden" value="'+json[i].EXAMITEM_ID+'"/></td>'+
 							'<td><span>'+json[i].STARTAGE+'</span></td>'+
 							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
 							'<td><a onclick="delSou(\''+json[i].EXAMSOLUTION_ID+'\',\''+id+'\','+status+')">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
@@ -328,12 +343,13 @@
 		
 		
 		function addTabelg(id,status){
-			var ITEMSELECT = $("#ITEMSELECTG").get(0).options[$("#ITEMSELECTG").get(0).selectedIndex].text;
-			var ITEMSELECT_ID = $("#ITEMSELECTG").get(0).options[$("#ITEMSELECTG").get(0).selectedIndex].value;
+			var ITEMSELECT = $("#ITEMSELECTG2").get(0).options[$("#ITEMSELECTG2").get(0).selectedIndex].text;
+			var ITEMSELECT_ID = $("#ITEMSELECTG2").get(0).options[$("#ITEMSELECTG2").get(0).selectedIndex].value;
 			var FEATURES = "";
 			$('input[name="FEATURESG"]:checked').each(function(){ 
 				FEATURES+=$(this).val()+","; 
 				}); 
+			FEATURES =FEATURES.substring(0,FEATURES.length-1); 
 			var EXAMGUIDELINE_ID = $("#EXAMGUIDELINE_ID").val();
 			var STARTAGE = $("#STARTAGEG").val();
 			var NAME = $("#NAME").val();
@@ -349,7 +365,7 @@
 					for(var i = 0;i<json.length;i++){
 						if(json[i].RISKTYPE==0){
 							str+='<tr>'+
-							'<td>'+json[i].INAME+'(<span>'+json[i].FEATURES+'</span>)<input type="hidden" value="'+json[i].EXAMITEM_ID+'"</td>'+
+							'<td>'+json[i].INAME+'</td><td>'+json[i].FEATURES+'<input type="hidden" value="'+json[i].EXAMITEM_ID+'"/></td>'+
 							'<td><span>'+json[i].STARTAGE+'</span></td>'+
 							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
 							'<td><a onclick="delSou(\''+json[i].EXAMSOLUTION_ID+'\',\''+id+'\','+status+')">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
@@ -363,7 +379,6 @@
 		
 		//删除检查手段
 		function delSou(id,tbodyID,status){
-			alert(1)
 			var EXAMGUIDELINE_ID = $("#EXAMGUIDELINE_ID").val();
 			$.ajax({
 				url:'<%=basePath%>examguideline/delSou.do',
@@ -375,7 +390,7 @@
 					for(var i = 0;i<json.length;i++){
 						if(json[i].RISKTYPE==status){
 							str+='<tr>'+
-							'<td>'+json[i].INAME+'(<span>'+json[i].FEATURES+'</span>)<input type="hidden" value="'+json[i].EXAMITEM_ID+'"</td>'+
+							'<td>'+json[i].INAME+'</td><td>'+json[i].FEATURES+'<input type="hidden" value="'+json[i].EXAMITEM_ID+'" /></td>'+
 							'<td><span>'+json[i].STARTAGE+'</span></td>'+
 							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
 							'<td><a onclick="delSou(\''+json[i].EXAMSOLUTION_ID+'\',\''+tbodyID+'\','+status+')">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+

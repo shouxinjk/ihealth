@@ -117,6 +117,24 @@
 		<include refid="tableName"></include>
 	</select>
 	
+	<!-- 父级列表 -->
+	<select id="listParentAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> 
+		where PARENT_ID = 0
+	</select>
+	
+	<!-- 子级列表 -->
+	<select id="listSonAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where PARENT_ID !=0
+	</select>
+	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
 		delete from

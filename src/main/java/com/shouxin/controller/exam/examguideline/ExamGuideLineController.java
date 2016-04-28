@@ -303,7 +303,11 @@ public class ExamGuideLineController extends BaseController {
 	public void addSou(HttpServletResponse resp) throws Exception{
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		logBefore(logger, pd.get("FEATURES")+"FEATURES+++++++++++++++++++");
 		pd.put("EXAMSOLUTION_ID", this.get32UUID());	//主键
+		if(pd.get("STARTAGE").equals("")){
+			pd.put("STARTAGE", 0);
+		}
 		examsolutionService.save(pd);
 		List<PageData> varSouList = examsolutionService.listExamSolutionByExamGuidelineID(pd.get("EXAMGUIDELINE_ID").toString());
 		JSONArray array = JSONArray.fromObject(varSouList);
