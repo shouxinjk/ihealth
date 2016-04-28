@@ -127,17 +127,6 @@
 														<tr>
 															<td>
 																<select name="ITEMCATESELECT2" ID="ITEMCATESELECT2" onchange="itemChange2()">
-																	<c:forEach items="${varItemCategoryList}" var="itemCategory"
-																		varStatus="vasc">
-																		<c:if test="${itemCategory.PARENT_ID =='0' }">
-																			<option value="${itemCategory.EXAMCATEGORY_ID }">${itemCategory.NAME}</option>	
-																			<c:forEach items="${varItemCategoryList}" var="itemCategory2">
-																				<c:if test="${itemCategory2.PARENT_ID == itemCategory.EXAMCATEGORY_ID }">
-																					<option value="${itemCategory2.EXAMCATEGORY_ID }">&nbsp;&nbsp;&nbsp;--${itemCategory2.NAME}</option>
-																				</c:if>
-																			</c:forEach>	
-																		</c:if>
-																	</c:forEach>
 																</select> 
 																<select name="ITEMSELECTG2" ID="ITEMSELECTG2">
 																		<c:forEach items="${varItemList}" var="item"
@@ -214,17 +203,7 @@
 														<tr>
 															<td>
 																<select name="ITEMCATESELECT" ID="ITEMCATESELECT" onchange="itemChange()">
-																	<c:forEach items="${varItemCategoryList}" var="itemCategory"
-																		varStatus="vasc">
-																		<c:if test="${itemCategory.PARENT_ID =='0' }">
-																			<option value="${itemCategory.EXAMCATEGORY_ID }">${itemCategory.NAME}</option>	
-																			<c:forEach items="${varItemCategoryList}" var="itemCategory2">
-																				<c:if test="${itemCategory2.PARENT_ID == itemCategory.EXAMCATEGORY_ID }">
-																					<option value="${itemCategory2.EXAMCATEGORY_ID }">&nbsp;&nbsp;&nbsp;--${itemCategory2.NAME}</option>
-																				</c:if>
-																			</c:forEach>	
-																		</c:if>
-																	</c:forEach>
+																	
 																</select>
 																<select name="ITEMSELECT" ID="ITEMSELECT">
 																	<c:forEach items="${varItemList}" var="item"
@@ -295,8 +274,29 @@
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 	<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url:"<%=basePath%>examguideline/listCategory.do",
+			type:"post",
+			success:function(data){
+				var d = eval(data);
+				listCategory(d);
+			}
+		});
+	})
 		$(top.hangge());
 		
+		function listCategory(data){
+			for(var i=0;i<data.length;i++){
+				var str = "<option value='"+data[i].EXAMCATEGORY_ID+"'>"+data[i].NAME+"</option>";
+				$("#ITEMCATESELECT").append(str);
+				$("#ITEMCATESELECT2").append(str);
+				if(data[i].subExamCategory != undefined){
+					listCategory(data[i].subExamCategory);
+				}
+			}
+		}
+	
 		function addTabel(id,status){
 			var ITEMSELECT = $("#ITEMSELECT").get(0).options[$("#ITEMSELECT").get(0).selectedIndex].text;
 			var ITEMSELECT_ID = $("#ITEMSELECT").get(0).options[$("#ITEMSELECT").get(0).selectedIndex].value;

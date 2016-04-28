@@ -22,6 +22,17 @@ public class ExamCategory implements Serializable{
 	private ExamCategory examCategory;
 	private boolean hasExamCategory = false;
 	private List<ExamItem> examItems;
+	private String prefix;
+	
+	
+
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
 
 	public String getEXAMCATEGORY_ID() {
 		return EXAMCATEGORY_ID;

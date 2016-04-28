@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.admin.Disease;
+import com.shouxin.entity.exam.ExamCategory;
 import com.shouxin.entity.exam.ExamItem;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
@@ -275,7 +276,7 @@ public class ExamGuideLineController extends BaseController {
 		logBefore(logger, pd+"列表EXAM  ==== exanmm");
 		List<PageData> pds = diseasecategoryService.listAll(pd);//查询出所有的疾分类
 		List<PageData> varDisList = diseaseService.listAll(pd);//查询出所有疾病
-		List<PageData> varItemCategoryList = examcategoryService.listAll(pd);//查询所有检查项目分类
+		List<ExamCategory> varItemCategoryList = examcategoryService.listAllExamCategory("0");//查询所有检查项目分类
 		logBefore(logger, varItemCategoryList+"查询所有检查项目分类");
 		List<PageData> varSouAndItem = examsolutionService.listAllExamSolutionAndExamItem(pd);//查询所有的检查手段
 		List<PageData> varFreqList = examfrequencyService.listAll(pd);//查询所有检查频率
@@ -292,7 +293,23 @@ public class ExamGuideLineController extends BaseController {
 		mv.addObject("varItemList",varSouAndItem);
 		mv.addObject("varFreqList",varFreqList);
 		return mv;
-	}	
+	}
+	
+	/**
+	 * 查询检查项目分类
+	 * @param resp
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/listCategory")
+	public void listExamCategory(HttpServletResponse resp) throws Exception{
+		List<ExamCategory> varItemCategoryList = examcategoryService.listAllExamCategory2("0","");//查询所有检查项目分类
+		JSONArray array = JSONArray.fromObject(varItemCategoryList);
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/html;charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.println(array);
+		out.close();
+	}
 	
 	/**
 	 * 新增检查指南手段

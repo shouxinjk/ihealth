@@ -62,7 +62,7 @@ public interface ExamCategoryManager{
 	 * @throws Exception
 	 */
 	public List<ExamCategory> listSubExamCategoryByParentID(String parentID) throws Exception;
-	
+	public List<ExamCategory> listSubExamCategoryByParentID2(String parentID,String prefix) throws Exception;
 	/**
 	 * 获取所有数据并填充每条数据的子级列表(递归处理)
 	 * @param parentID
@@ -70,6 +70,7 @@ public interface ExamCategoryManager{
 	 * @throws Exception
 	 */
 	public List<ExamCategory> listAllExamCategory(String parentID) throws Exception;
+	public List<ExamCategory> listAllExamCategory2(String parentID,String prefix) throws Exception;
 	
 }
 

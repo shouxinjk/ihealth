@@ -90,6 +90,20 @@ public class ExamCategoryService implements ExamCategoryManager{
 		// TODO Auto-generated method stub
 		return (List<ExamCategory>) dao.findForList("ExamCategoryMapper.listSubExamCategoryByID", parentID);
 	}
+	
+	public List<ExamCategory> listSubExamCategoryByParentID2(String parentID,String prefix) throws Exception {
+		// TODO Auto-generated method stub
+		List<ExamCategory> c = (List<ExamCategory>) dao.findForList("ExamCategoryMapper.listSubExamCategoryByID", parentID);
+		if(!parentID.equals("0")){
+			prefix += "--";
+		}
+		for (ExamCategory ca : c) {
+			
+			ca.setNAME(prefix+ca.getNAME());
+			ca.setPrefix(prefix);
+		}
+		return c;
+	}
 
 	public List<ExamCategory> listAllExamCategory(String parentID) throws Exception {
 		// TODO Auto-generated method stub
@@ -98,6 +112,18 @@ public class ExamCategoryService implements ExamCategoryManager{
 			cate.setTreeUrl("examcategory/list.do?EXAMCATEGORY_ID="+cate.getEXAMCATEGORY_ID());
 			cate.setTarget("treeFrame");
 			cate.setSubExamCategory(this.listAllExamCategory(cate.getEXAMCATEGORY_ID()));
+		}
+		return examCategory;
+	}
+	
+	public List<ExamCategory> listAllExamCategory2(String parentID,String prefix) throws Exception {
+		// TODO Auto-generated method stub
+		List<ExamCategory> examCategory = this.listSubExamCategoryByParentID2(parentID,prefix);
+		for (ExamCategory cate : examCategory) {
+			cate.setTreeUrl("examcategory/list.do?EXAMCATEGORY_ID="+cate.getEXAMCATEGORY_ID());
+			cate.setTarget("treeFrame");
+			List<ExamCategory> examCategory2 = this.listAllExamCategory2(cate.getEXAMCATEGORY_ID(),cate.getPrefix());
+			cate.setSubExamCategory(examCategory2);
 		}
 		return examCategory;
 	}
