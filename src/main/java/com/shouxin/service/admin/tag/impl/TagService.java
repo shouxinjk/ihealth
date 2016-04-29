@@ -142,4 +142,10 @@ public class TagService implements TagManager {
 		return (List<PageData>) dao.findForList("TagMapper.findALLByUserID", pd);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<PageData> findAllGroupByUId(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("TagMapper.findALLByUserID", pd);
+	}
+
 }

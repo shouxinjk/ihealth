@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.service.admin.article.ArticleManager;
+import com.shouxin.service.admin.disease.DiseaseManager;
+import com.shouxin.service.admin.tag.TagManager;
 import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
+import com.shouxin.service.system.appuser.AppuserManager;
 import com.shouxin.service.system.user.UserManager;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.DegreeEnum;
@@ -44,9 +47,16 @@ public class RestfullController extends BaseController {
 	private CheckupPackageManager checkuppackageService;
 	@Resource(name = "checkupitemService")
 	private CheckupItemManager checkupitemService;
-	
+	@Resource(name="tagService")
+	private TagManager tagService;
 	@Resource(name="articleService")
 	private ArticleManager articleService;
+	
+	@Resource(name="appuserService")
+	private AppuserManager appuserService;
+	
+	@Resource(name="diseaseService")
+	private DiseaseManager diseaseService;
 
 	/**
 	 * 用户注册，通过手机号码
@@ -819,6 +829,8 @@ public class RestfullController extends BaseController {
 	 * 		{ 
 	 * 		"result": "success", 
 	 * 		"data": [ {
+	 * 					"useranduser_id": "关联表主键","connection": "我们之间的关系",
+	 * 					"useranduser_id": "我是谁",	"user_id_two": "跟谁关联",
 	 *         			"NUMBER": "编号", 			"RIGHTS": "权限", 
 	 *         			"IP": "IP地址", 				"PHONE": "电话",
 	 *         			"ALIAS": "昵称", 				"SEX": "性别", 
@@ -1015,13 +1027,15 @@ public class RestfullController extends BaseController {
 	 * 			"userId":"当前登录的用户ID(主ID)",		"user_Id":"关联用户的ID",
 	 *        }
 	 * @return 
-	 * 		当新增用户信息失败时！跟新增关联用户关系失败时！返回{"result":"error"}
+	 * 		当传入的参数为null 返回{"result":"error"}
 	 *      当新增关联关系成功时！返回{"result":"success"}
+	 *      如果关系已存在 返回：{"result":"existence"}
+	 *      程序出错 返回{"result":"no"}
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "saveUserAndUser", method = RequestMethod.POST)
 	@ResponseBody
-	public Object saveUserAndUser(@RequestBody String u) {
+	public Object saveUserAndUser(@RequestBody String u) throws Exception {
 		logBefore(logger, "保存用户关系");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
@@ -1034,23 +1048,159 @@ public class RestfullController extends BaseController {
 		
 		String userId = jasonObject.get("userId").toString();
 		String user_Id = jasonObject.get("user_Id").toString();
-	
-		String useranduser_id = this.get32UUID();	//生成用户关联表中的主键
-
+		String connection = jasonObject.get("connection").toString();
 		if (userId == null && "".equals(userId) && user_Id == null && "".equals(user_Id) ) {
 			msg = "error";
 		}else{
-			pd.put("useranduser_id", useranduser_id);
 			pd.put("user_id_one", userId);
 			pd.put("user_id_two", user_Id);
-			
-			try {
-				logger.debug("保存用户关系");
-				this.userService.saveRelationUser(pd);
-				msg = "success";
-			} catch (Exception e) {
-				msg = "no";
+			//根据当前传入的用户ID 查询数据库是存在
+			PageData pds = this.userService.findConnectionWhether(pd);
+			if (pds != null && pds.size()>0) {
+				msg = "existence";
+			}else{
+				pd.put("useranduser_id", this.get32UUID());
+				pd.put("connection", connection);
+				try {
+					logger.debug("保存用户关系");
+					this.userService.saveRelationUser(pd);
+					msg = "success";
+				} catch (Exception e) {
+					msg = "no";
+				}
 			}
+			
+			
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 根据userId 查询用户信息完整度
+	 * url:http://localhost:8080/ihealth/rest/findMessageIntegrity
+	 * type:post
+	 * @param {"userId":"当前登录的用户ID(主ID)"}
+	 * @return 用户ID不为空 返回
+	 * 	{
+	 * "result":"success",
+	 * "data":
+	 * 		{
+	 * 		"tagNumber":标签信息完整度,
+	 * 		"connectionNumber":关心的人完整度,
+	 * 		"USER_ID":"用户ID",
+	 * 		"diseaseNumber":疾病信息完整度,
+	 * 		"userNumber":用户信息完整度
+	 * 		}
+	 * }
+	 * 传入的用户ID为空 返回{"result":"error"}
+	 * 
+	 */
+	@RequestMapping(value = "findMessageIntegrity", method = RequestMethod.POST)
+	@ResponseBody
+	public Object findMessageIntegrity(@RequestBody String u) throws Exception {
+		logBefore(logger, "查询信息完整度");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		Integer userNumber = 0;
+		Integer tagNumber = 0;
+		Integer diseaseNumber = 0;
+		Integer	connectionNumber = 0;
+		
+		// 将String类型的数据转换为json
+		JSONObject jasonObject = JSONObject.fromObject(u);
+		String userId = jasonObject.get("userId").toString();
+		
+		if (userId != null && !"".equals(userId)) {
+			pd.put("USER_ID", userId);
+			//根据用户ID 查询用户信息
+			PageData pds = this.userService.findById(pd);
+			if (pds.getString("PHONE") != null && !"".equals(pds.getString("PHONE"))) {
+				userNumber += 10;
+			}
+			if (pds.getString("BIRTHDAY") != null && !"".equals(pds.getString("BIRTHDAY"))) {
+				userNumber += 10;
+			}
+			if (pds.getString("SEX") != null && !"".equals(pds.getString("SEX"))) {
+				userNumber += 10;
+			}
+			if (pds.getString("MARRIAGESTATUS") != null && !"".equals(pds.getString("MARRIAGESTATUS"))) {
+				userNumber += 10;
+			}
+			if (pds.getString("BIRTHPLACE") != null && !"".equals(pds.getString("BIRTHPLACE"))) {
+				userNumber += 10;
+			}
+			if (pds.getString("LIVEPLACE") != null && !"".equals(pds.getString("LIVEPLACE"))) {
+				userNumber += 10;
+			}
+			if (pds.getString("HEIGHT") != null && !"".equals(pds.getString("HEIGHT"))) {
+				userNumber += 10;
+			}
+			if (pds.getString("WEIGHT") != null && !"".equals(pds.getString("WEIGHT"))) {
+				userNumber += 10;
+			}
+			if (pds.getString("CAREER") != null && !"".equals(pds.getString("CAREER"))) {
+				userNumber += 10;
+			}
+			if (pds.getString("DEGREE") != null && !"".equals(pds.getString("DEGREE"))) {
+				userNumber += 10;
+			}
+			if (userNumber>=100) {
+				userNumber =100;
+			}
+			
+			//获取关联的用户
+			List<PageData> list = this.userService.findUsersById(pd);
+			for (int i = 0; i < list.size(); i++) {
+				connectionNumber += 40;
+			}
+			
+			if (connectionNumber >= 100) {
+				connectionNumber = 100;
+			}
+			
+			//获取标签信息
+			List<PageData> tagList = this.tagService.findAllGroupByUId(pd);
+			
+			if (tagList.size()>0 && tagList != null) {
+				for (int i = 0; i < tagList.size(); i++) {
+					tagNumber += 10;
+				}
+				if (tagNumber>=100) {
+					tagNumber =100;
+				}
+			}
+			//所有疾病
+			if (this.diseaseService.listAllByUserID(pd).size() > 0) {
+				diseaseNumber += 30;
+			}
+			//家族遗传病
+			if (this.diseaseService.listAllByUserIDIsInherItable(pd).size() > 0) {
+				diseaseNumber += 30;
+			}
+			//关注疾病
+			if (this.diseaseService.listAllByUserIDIsHighIncaidence(pd).size() > 0) {
+				diseaseNumber += 40;
+			}
+			
+			if (diseaseNumber >= 100) {
+				diseaseNumber = 100;
+			}
+			//Integer userNumber = 0;
+			//Integer tagNumber = 0;
+			//Integer diseaseNumber = 0;
+			//Integer	connectionNumber = 0;
+			pd.put("userNumber", userNumber);
+			pd.put("tagNumber", tagNumber);
+			pd.put("diseaseNumber", diseaseNumber);
+			pd.put("connectionNumber", connectionNumber);
+			map.put("data", pd);
+			msg = "success";
+		}else{
+			msg = "error";
 		}
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);

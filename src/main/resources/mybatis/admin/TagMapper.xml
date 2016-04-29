@@ -170,6 +170,22 @@
 		 from admin_tag t,admin_userandtag ut where t.TAG_ID=ut.tag_id and ut.user_id=#{USER_ID}
 	</select>
 	
+	<!-- 通过用户id获取tag数据 并分组查询-->
+	<select id="findAllGroupByUId" parameterType="pd" resultType="pd">
+		SELECT 
+		  t.DESCRIPTION AS TDESCRIPTION,
+		  t.TAG_ID AS TAG_ID,
+		  t.NAME AS NAME,
+		  t.TAGCATEGORY_ID AS TAGCATEGORY_ID,
+		  t.EXPRESSION AS EXPRESSION 
+		FROM
+		  admin_tag t,
+		  admin_userandtag ut 
+		WHERE t.TAG_ID = ut.tag_id 
+		  AND ut.user_id = #{user_id} 
+		GROUP BY t.TAGCATEGORY_ID
+	</select>
+	
 	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">

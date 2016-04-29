@@ -79,5 +79,8 @@ public interface TagManager{
 	 * @throws Exception
 	 */
 	public List<PageData> listTagByUserID(PageData pd)throws Exception;
+	
+
+	public List<PageData> findAllGroupByUId(PageData pd)throws Exception;
 }
 
