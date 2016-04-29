@@ -48,14 +48,16 @@
 	<sql id="userAttribute">
 		useranduser_id,
 		user_id_one,
-		user_id_two
+		user_id_two,
+		connection
 	</sql>
 	
 	<!-- 用户关联关系表的值 -->
 	<sql id="userValue">
 		#{useranduser_id},
 		#{user_id_one},
-		#{user_id_two}
+		#{user_id_two},
+		#{connection}
 	</sql>
 	
 	<!-- 字段 -->
@@ -121,7 +123,7 @@
 	<!-- 根据用户ID查询所有的关联用户 -->
 	<select id="findUserCastUser" parameterType="pd" resultType="pd">
 		SELECT 
-		  u.*,uu.useranduser_id
+		  *
 		FROM
 		  sys_user u,
 		  sys_useranduser uu 
@@ -129,6 +131,15 @@
 		  AND uu.`user_id_one` = #{user_id_one}
 	</select>
 	
+	<!-- 查询关系是否存在 -->
+	<select id="findConnectionWhether" parameterType="pd" resultType="pd">
+		SELECT 
+		  * 
+		FROM
+		  sys_useranduser uu 
+		WHERE uu.`user_id_one` = #{user_id_one} 
+		  AND uu.`user_id_two` = #{user_id_two} 
+	</select>
 	
 	
 	
@@ -283,6 +294,22 @@
 			<include refid="tableName"></include>
 		where 
 			USERNAME = #{USERNAME}
+	</select>
+	
+	<!-- 通过用户名或者电话号码获取模糊查询数据 -->
+	<select id="findLike" parameterType="pd" resultType="pd" >
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		<where>
+			<if test="NAME != null and NAME != ''">
+				and NAME like CONCAT(CONCAT('%',#{NAME}),'%')
+			</if>
+			<if test="PHONE != null and PHONE != ''">
+				and PHONE like CONCAT(CONCAT('%',#{PHONE}),'%')
+			</if>
+		</where>
 	</select>
 	
 	<!-- 通过Phone获取数据 -->

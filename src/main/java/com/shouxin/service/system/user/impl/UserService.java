@@ -254,4 +254,15 @@ public class UserService implements UserManager{
 		dao.save("UserMapper.saveUserAndFhDisease", pd);
 		
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findLike(PageData pd) throws Exception {
+		
+		return (List<PageData>) dao.findForList("UserMapper.findLike", pd);
+	}
+
+	public PageData findConnectionWhether(PageData pd) throws Exception {
+		
+		return (PageData)dao.findForObject("UserMapper.findConnectionWhether", pd);
+	}
 }

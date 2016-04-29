@@ -126,6 +126,11 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
+													<c:if test="${QX.cha == 1 }">
+													<a class="btn btn-xs btn-info" title='查看我关心的人' onclick="iCareAbout('${user.USER_ID}');">
+														<i class="ace-icon fa fa-search nav-search-icon" title="查看我关心的人"></i>
+													</a>
+													</c:if>
 													<c:if test="${QX.FHSMS == 1 }">
 													<a class="btn btn-xs btn-info" title='发送站内信' onclick="sendFhsms('${user.USERNAME }');">
 														<i class="ace-icon fa fa-envelope-o bigger-120" title="发送站内信"></i>
@@ -153,6 +158,15 @@
 															<i class="ace-icon fa fa-cog icon-only bigger-110"></i>
 														</button>
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+															<c:if test="${QX.cha == 1 }">
+															<li>
+																<a style="cursor:pointer;" onclick="iCareAbout('${user.USER_ID}');" class="tooltip-info" data-rel="tooltip" title="查看我关心的人">
+																	<span class="green">
+																		<i class="ace-icon fa fa-search nav-search-icon"></i>
+																	</span>
+																</a>
+															</li>
+															</c:if>
 															<c:if test="${QX.FHSMS == 1 }">
 															<li>
 																<a style="cursor:pointer;" onclick="sendFhsms('${user.USERNAME }');" class="tooltip-info" data-rel="tooltip" title="发送站内信">
@@ -286,6 +300,22 @@ function delUser(userId,msg){
 		};
 	});
 }
+
+//去我关心的人页面
+function iCareAbout(user_id){
+	top.jzts();
+	 var diag = new top.Dialog();
+	 diag.Drag=true;
+	 diag.Title ="我关心的人";
+	 diag.URL = '<%=basePath%>user/goICareAbout.do?user_id_one='+user_id;
+	 diag.Width = 469;
+	 diag.Height = 510;
+	 diag.CancelEvent = function(){ //关闭事件
+		diag.close();
+	 };
+	 diag.show();
+}
+
 
 //新增
 function add(){

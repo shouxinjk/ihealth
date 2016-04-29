@@ -354,7 +354,7 @@
 				success:function(data){
 					var result = data.result;
 					if(result == "success"){
-						window.location.href="article/list";
+						location.reload();
 					}else if(result="error"){
 						alert("提交失败！");
 					}else{

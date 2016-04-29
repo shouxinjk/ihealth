@@ -603,6 +603,7 @@ CREATE TABLE `sys_useranduser` (
   `useranduser_id` varchar(32) NOT NULL,
   `user_id_one` varchar(32) DEFAULT NULL,
   `user_id_two` varchar(32) DEFAULT NULL,
+  `connection` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`useranduser_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

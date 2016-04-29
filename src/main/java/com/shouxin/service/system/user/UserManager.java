@@ -121,6 +121,14 @@ public interface UserManager {
 	 */
 	public List<PageData> listAllUser(PageData pd)throws Exception;
 	
+	/**
+	 * 根据输入的值 模糊查询
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findLike(PageData pd)throws Exception;
+	
 	/**获取总数
 	 * @param pd
 	 * @throws Exception
@@ -219,4 +227,9 @@ public interface UserManager {
 	public void deleteDiseases(PageData pd)throws Exception;
 	
 	public void deleteFhDiseases(PageData pd)throws Exception;
+	
+	/**
+	 * 查询当前用户关系是否存在
+	 */
+	public PageData findConnectionWhether(PageData pd)throws Exception;
 }

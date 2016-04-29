@@ -286,7 +286,7 @@
 				success:function(data){
 					var result = data.result;
 					if(result == "success"){
-						window.location.href="article/articleRelease";
+						location.reload();
 					}else if(result="error"){
 						alert("发布失败！");
 					}else{
@@ -310,7 +310,7 @@
 				success:function(data){
 					var result = data.result;
 					if(result == "success"){
-						window.location.href="article/articleRelease";
+						location.reload();
 					}else if(result="error"){
 						alert("审核失败！");
 					}else{
