@@ -58,6 +58,7 @@ public class RestfullController extends BaseController {
 	@Resource(name="diseaseService")
 	private DiseaseManager diseaseService;
 
+	
 	/**
 	 * 用户注册，通过手机号码
 	 * url : http://localhost:8080/ihealth/rest/register 
@@ -198,7 +199,7 @@ public class RestfullController extends BaseController {
 		String livePlace = (String) jasonObject.get("livePlace");
 		String career = (String) jasonObject.get("career");
 		String degree = (String) jasonObject.get("degree");
-
+		
 		// 将用户ID添加到PageDate中
 		pd.put("USER_ID", userId);
 		//根据用户ID查询用户信息
@@ -1023,8 +1024,10 @@ public class RestfullController extends BaseController {
 	 * 根据userId 添加关联用户 
 	 * url:http://localhost:8080/ihealth/rest/saveUserAndUser
 	 * type:post
+	 * 传入参数
 	 * @param {
 	 * 			"userId":"当前登录的用户ID(主ID)",		"user_Id":"关联用户的ID",
+	 * 			"connection":"用户关系"
 	 *        }
 	 * @return 
 	 * 		当传入的参数为null 返回{"result":"error"}
@@ -1050,22 +1053,25 @@ public class RestfullController extends BaseController {
 		String user_Id = jasonObject.get("user_Id").toString();
 		String connection = jasonObject.get("connection").toString();
 		if (userId == null && "".equals(userId) && user_Id == null && "".equals(user_Id) ) {
+			logger.debug("获取用户ID失败！");
 			msg = "error";
 		}else{
 			pd.put("user_id_one", userId);
 			pd.put("user_id_two", user_Id);
-			//根据当前传入的用户ID 查询数据库是存在
+			//根据当前传入的用户ID 查询数据库是否存在
 			PageData pds = this.userService.findConnectionWhether(pd);
 			if (pds != null && pds.size()>0) {
+				logger.debug("用户关系已存在！");
 				msg = "existence";
 			}else{
 				pd.put("useranduser_id", this.get32UUID());
 				pd.put("connection", connection);
 				try {
-					logger.debug("保存用户关系");
 					this.userService.saveRelationUser(pd);
+					logger.debug("保存用户关系成功！");
 					msg = "success";
 				} catch (Exception e) {
+					logger.debug("程序失败！");
 					msg = "no";
 				}
 			}
