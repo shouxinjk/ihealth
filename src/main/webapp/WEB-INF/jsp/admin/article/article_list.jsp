@@ -94,7 +94,9 @@
 							<c:choose>
 								<c:when test="${not empty varList}">
 									<c:if test="${QX.cha == 1}">
+									
 									<c:forEach items="${varList}" var="var" varStatus="vs">
+									<c:if test ="${var.STATUS == '新建' or var.STATUS == '审核未通过' }">
 										<tr>
 											<td class='center'>
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.ARTICLE_ID}" class="ace" /><span class="lbl"></span></label>
@@ -171,8 +173,10 @@
 												</div>
 											</td>
 										</tr>
+										</c:if>
 									</c:forEach>
 									</c:if>
+									
 									<c:if test="${QX.cha == 0 }">
 										<tr>
 											<td colspan="100" class="center">您无权查看</td>

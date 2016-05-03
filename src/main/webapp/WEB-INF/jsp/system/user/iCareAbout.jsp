@@ -37,7 +37,6 @@
 								<thead>
 									<tr>
 										<th class="center">姓名</th>
-										
 										<th class="center">性别</th>
 										<th class="center">跟我的关系</th>
 										<th class="center">操作</th>
