@@ -96,33 +96,47 @@ public class RestfullController extends BaseController {
 		String msg = null;
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		
+		String phone = null;
+		String openId = null;
+		String user_id_one = null;
 		// 将String类型的数据转换为json 
 		JSONObject jasonObject = JSONObject.fromObject(userVO);
-		
-		// 获取json中的key并赋值给字符串 
-		String phone = (String) jasonObject.get("phone");
-		String openId = (String) jasonObject.get("openId");
-		String user_id_one = jasonObject.getString("userId").toString();
+		if (jasonObject.get("phone").toString() != null) {
+			phone = jasonObject.get("phone").toString();
+		}
+		if (jasonObject.get("openId").toString() != null) {
+			openId = jasonObject.get("openId").toString();
+		}
+		if (jasonObject.getString("userId").toString().isEmpty()) {
+			user_id_one = jasonObject.getString("userId").toString();
+		}
+		// 将数据添加到PageDate 
 		
 		// 生成ID主键 
 		String userId = this.get32UUID();
-
-		// 将数据添加到PageDate 
 		pd.put("USER_ID", userId); 								// ID 主键
 		pd.put("PHONE", phone); 								// 电话号码
 		pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
-		pd.put("OPENID", openId); 								// OpenID
+		pd.put("OPENID", openId); 
 		
-		// 判断手机号码是否存在
-		if (null == userService.findByPhone(pd)) { 
-			logger.debug("经过判断，手机号码在数据库中不存在，执行新增操作");
-			userService.saveU(pd); // 执行保存
-			logger.debug("将用户ID保存，在后续页面上取值");
-			msg = "success";
-			PageData pageDate = userService.findById(pd);			// 根据ID查询用户数据
-			map.put("data", pageDate);
-		} else {
+		//判断用户是否传入了userID
+		if (user_id_one == null || "".equals(user_id_one)) {
+			
+			// 判断手机号码是否存在
+			if (null == userService.findByPhone(pd)) { 
+				logger.debug("经过判断，手机号码在数据库中不存在，执行新增操作");
+				userService.saveU(pd); // 执行保存
+				logger.debug("将用户ID保存，在后续页面上取值");
+				msg = "success";
+				PageData pageDate = userService.findById(pd);			// 根据ID查询用户数据
+				map.put("data", pageDate);
+			} else {
+				// 手机号码存在，通过手机号码查询用户信息
+				PageData pageDate = this.userService.findByPhone(pd);	// 根据手机号码查询用户数据
+				map.put("data", pageDate);
+				msg = "existence";
+			}
+		}else{
 			// 手机号码存在，通过手机号码查询用户信息
 			PageData pageDate = this.userService.findByPhone(pd);	// 根据手机号码查询用户数据
 			String user_id_two = pageDate.getString("USER_ID");
@@ -136,9 +150,8 @@ public class RestfullController extends BaseController {
 				map.put("data", pageDate);
 				msg = "existence";
 			}
-			
-			
 		}
+		
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
