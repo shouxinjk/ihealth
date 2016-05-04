@@ -42,16 +42,6 @@
 										</span>
 									</div>
 								</td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart"  value="" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="开始日期"/></td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginEnd" name="lastLoginEnd"  value="" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期" title="结束日期"/></td>
-								<td style="vertical-align:top;padding-left:2px;">
-								 	<select class="chosen-select form-control" name="name" id="id" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
-									<option value=""></option>
-									<option value="">全部</option>
-									<option value="">1</option>
-									<option value="">2</option>
-								  	</select>
-								</td>
 								<c:if test="${QX.cha == 1 }">
 								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 								</c:if>
@@ -110,7 +100,7 @@
 													</c:if>
 													<c:if test="${QX.del == 1 && var.STATUS eq '新建'}">
 														<a class="btn btn-xs btn-danger" onclick="auditing('${var.EXAMGUIDELINE_ID}');">
-															<i class="ace-icon fa fa-trash-o bigger-120" title="审核"></i>
+															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
 														</a>
 													</c:if>
 												</div>
@@ -304,7 +294,7 @@
 			bootbox.confirm("确定要审核吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>examguideline/auditing.do?EXAMGUIDELINE_ID="+Id+"&STATUS=2&tm="+new Date().getTime();
+					var url = "<%=basePath%>examguideline/auditing.do?EXAMGUIDELINE_ID="+Id+"&STATUS=18&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage(${page.currentPage});
 					});

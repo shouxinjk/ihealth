@@ -298,8 +298,8 @@
 		}
 	
 		function addTabel(id,status){
-			var ITEMSELECT = $("#ITEMSELECT").get(0).options[$("#ITEMSELECT").get(0).selectedIndex].text;
-			var ITEMSELECT_ID = $("#ITEMSELECT").get(0).options[$("#ITEMSELECT").get(0).selectedIndex].value;
+			//var ITEMSELECT_ID = $("#ITEMSELECT").get(0).options[$("#ITEMSELECT").get(0).selectedIndex].value;
+			var ITEMSELECT_ID = $("#ITEMSELECT option:selected").val();
 			var FEATURES = "";
 			$('input[name="FEATURES"]:checked').each(function(){ 
 				FEATURES+=$(this).val()+","; 
@@ -318,6 +318,9 @@
 					var str = '';
 					for(var i = 0;i<json.length;i++){
 						if(json[i].RISKTYPE==1){
+							if(json[i].INAME == undefined){
+								json[i].INAME = "";
+							}
 							str+='<tr>'+
 							'<td>'+json[i].INAME+'</td><td>'+json[i].FEATURES+'<input type="hidden" value="'+json[i].EXAMITEM_ID+'"/></td>'+
 							'<td><span>'+json[i].STARTAGE+'</span></td>'+
@@ -343,8 +346,8 @@
 		
 		
 		function addTabelg(id,status){
-			var ITEMSELECT = $("#ITEMSELECTG2").get(0).options[$("#ITEMSELECTG2").get(0).selectedIndex].text;
-			var ITEMSELECT_ID = $("#ITEMSELECTG2").get(0).options[$("#ITEMSELECTG2").get(0).selectedIndex].value;
+			//var ITEMSELECT_ID = $("#ITEMSELECTG2").get(0).options[$("#ITEMSELECTG2").get(0).selectedIndex].value;
+			var ITEMSELECT_ID = $("#ITEMSELECTG2 option:selected").val();
 			var FEATURES = "";
 			$('input[name="FEATURESG"]:checked').each(function(){ 
 				FEATURES+=$(this).val()+","; 
@@ -364,6 +367,9 @@
 					var str = '';
 					for(var i = 0;i<json.length;i++){
 						if(json[i].RISKTYPE==0){
+							if(json[i].INAME == undefined){
+								json[i].INAME="";							
+							}
 							str+='<tr>'+
 							'<td>'+json[i].INAME+'</td><td>'+json[i].FEATURES+'<input type="hidden" value="'+json[i].EXAMITEM_ID+'"/></td>'+
 							'<td><span>'+json[i].STARTAGE+'</span></td>'+
