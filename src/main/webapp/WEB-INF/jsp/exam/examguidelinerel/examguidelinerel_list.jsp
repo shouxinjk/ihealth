@@ -31,7 +31,7 @@
 						<div class="col-xs-12">
 							
 						<!-- 检索  -->
-						<form action="examguideline/listRule.do" method="post" name="Form" id="Form">
+						<form action="examguideline/listRelease.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
 								<td>
@@ -88,17 +88,17 @@
 												<div class="hidden-sm hidden-xs btn-group">
 													<c:if test="${QX.edit == 1&&var.STATUS eq '运维已审核'}">
 														<a class="btn btn-xs btn-success" title="发布" onclick="auditing1('${var.EXAMGUIDELINE_ID}','5')">
-															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="发布"></i>
+															<i class="ace-icon fa fa-folder bigger-120" title="发布"></i>
 														</a>
 													</c:if>
 													<c:if test="${QX.edit == 1&& var.STATUS eq '已发布'}">
-														<a class="btn btn-xs btn-success" title="失效" onclick="auditing1('${var.EXAMGUIDELINE_ID}','6');">
-															<i class="menu-icon fa fa-user blue" title="失效"></i>
+														<a class="btn btn-xs" title="失效" onclick="auditing1('${var.EXAMGUIDELINE_ID}','6');">
+															<i class="menu-icon fa fa-retweet blue" title="失效"></i>
 														</a>
 													</c:if>
 													<c:if test="${QX.edit == 1&& var.STATUS eq '已失效'}">
 														<a class="btn btn-xs btn-success" title="重新发布" onclick="auditing1('${var.EXAMGUIDELINE_ID}','5');">
-															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="重新发布"></i>
+															<i class="ace-icon fa fa-folder-open bigger-120" title="重新发布"></i>
 														</a>
 													</c:if>
 												</div>

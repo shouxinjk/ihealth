@@ -114,5 +114,13 @@ public class ExamGuideLineService implements ExamGuideLineManager {
 	public List<PageData> listRelease(Page page) throws Exception {
 		return (List<PageData>) dao.findForList("ExamGuideLineMapper.datalistReleasePage", page);
 	}
+	
+	/**
+	 * 医生已提交指南审核管理页面
+	 */
+	public List<PageData> listVerfiy(Page page) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("ExamGuideLineMapper.datalistVerfiyPage", page);
+	}
 
 }

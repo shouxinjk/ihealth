@@ -91,13 +91,13 @@
 															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 														</a>
 														<a class="btn btn-xs btn-success" title="运维补充" onclick="auditing('${var.EXAMGUIDELINE_ID}','3');">
-															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="运维补充"></i>
+															<i class="ace-icon fa fa-th-large bigger-120" title="运维补充"></i>
 														</a>
 														
 													</c:if>
 													<c:if test="${QX.edit == 1&& var.STATUS eq '运维已补充'}">
 														<a class="btn btn-xs btn-success" title="运维审核" onclick="auditing('${var.EXAMGUIDELINE_ID}','4');">
-															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="运维审核"></i>
+															<i class="ace-icon fa fa-check-circle-o bigger-120" title="运维审核"></i>
 														</a>
 													</c:if>
 												</div>

@@ -74,5 +74,12 @@ public interface ExamGuideLineManager{
 	 */
 	public List<PageData> listRelease(Page page) throws Exception;
 	
+	/**
+	 * 医生已提交指南列表
+	 * @param pd
+	 * @throws Exception
+	 */
+	public List<PageData> listVerfiy(Page page) throws Exception;
+	
 }
 

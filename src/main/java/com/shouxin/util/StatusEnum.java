@@ -3,6 +3,7 @@ package com.shouxin.util;
 public enum StatusEnum {
 	
 	NEW("新建",1),
+	SUBMIT("已提交",18),
 	DOCTOREXAMIN("医生已审核",2),
 	OPERATIONSUPPLEMENT("运维已补充",3),
 	OPERATIONEXAMINE("运维已审核",4),
