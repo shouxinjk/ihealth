@@ -63,7 +63,7 @@ public class RestfullController extends BaseController {
 	 * 用户注册，通过手机号码
 	 * url : http://localhost:8080/ihealth/rest/register 
 	 * type:post
-	 * @param {phone:"xx",openid:"xxx","userId":当前用户ID}
+	 * @param {phone:"xx",openid:"xxx"}
 	 * @return 当手号码不存在时，执行新增用户并返回用户信息:
 	 * 				{"result": "success","data": {"OPENID":"OPENID","PHONE": "电话","USER_ID": "USER_ID","ROLE_ID": "用户权限"}}
 	 * 		         当用户执行添加关心的人的操作时，关系存在返回的数据
@@ -96,62 +96,37 @@ public class RestfullController extends BaseController {
 		String msg = null;
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		String phone = null;
-		String openId = null;
-		String user_id_one = null;
+		
 		// 将String类型的数据转换为json 
 		JSONObject jasonObject = JSONObject.fromObject(userVO);
-		if (jasonObject.get("phone").toString() != null) {
-			phone = jasonObject.get("phone").toString();
-		}
-		if (jasonObject.get("openId").toString() != null) {
-			openId = jasonObject.get("openId").toString();
-		}
-		if (jasonObject.getString("userId").toString().isEmpty()) {
-			user_id_one = jasonObject.getString("userId").toString();
-		}
-		// 将数据添加到PageDate 
+		
+		// 获取json中的key并赋值给字符串 
+		String phone = jasonObject.get("phone").toString();
+		String openId = jasonObject.get("openId").toString();
 		
 		// 生成ID主键 
 		String userId = this.get32UUID();
+
+		// 将数据添加到PageDate 
 		pd.put("USER_ID", userId); 								// ID 主键
 		pd.put("PHONE", phone); 								// 电话号码
 		pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
-		pd.put("OPENID", openId); 
+		pd.put("OPENID", openId); 								// OpenID
 		
-		//判断用户是否传入了userID
-		if (user_id_one == null || "".equals(user_id_one)) {
-			
-			// 判断手机号码是否存在
-			if (null == userService.findByPhone(pd)) { 
-				logger.debug("经过判断，手机号码在数据库中不存在，执行新增操作");
-				userService.saveU(pd); // 执行保存
-				logger.debug("将用户ID保存，在后续页面上取值");
-				msg = "success";
-				PageData pageDate = userService.findById(pd);			// 根据ID查询用户数据
-				map.put("data", pageDate);
-			} else {
-				// 手机号码存在，通过手机号码查询用户信息
-				PageData pageDate = this.userService.findByPhone(pd);	// 根据手机号码查询用户数据
-				map.put("data", pageDate);
-				msg = "existence";
-			}
-		}else{
+		// 判断手机号码是否存在
+		if (null == userService.findByPhone(pd)) { 
+			logger.debug("经过判断，手机号码在数据库中不存在，执行新增操作");
+			userService.saveU(pd); // 执行保存
+			logger.debug("将用户ID保存，在后续页面上取值");
+			msg = "success";
+			PageData pageDate = userService.findById(pd);			// 根据ID查询用户数据
+			map.put("data", pageDate);
+		} else {
 			// 手机号码存在，通过手机号码查询用户信息
 			PageData pageDate = this.userService.findByPhone(pd);	// 根据手机号码查询用户数据
-			String user_id_two = pageDate.getString("USER_ID");
-			//根据当前用户ID 和通过电话号码查询出的用户ID 判断 用户之间是否存在关系
-			pd.put("user_id_one", user_id_one);
-			pd.put("user_id_two", user_id_two);
-			PageData pds = this.userService.findConnectionWhether(pd);
-			if (pds != null && pds.size()>0) {
-				msg = "connection_existence";
-			}else{
-				map.put("data", pageDate);
-				msg = "existence";
-			}
+			map.put("data", pageDate);
+			msg = "existence";	
 		}
-		
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
