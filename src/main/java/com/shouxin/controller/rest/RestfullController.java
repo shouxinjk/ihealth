@@ -63,37 +63,27 @@ public class RestfullController extends BaseController {
 	 * 用户注册，通过手机号码
 	 * url : http://localhost:8080/ihealth/rest/register 
 	 * type:post
-	 * @param {phone:"xx",openid:"xxx"}
+	 * @param {phone:"xx",openid:"xxx","userId":当前用户ID}
 	 * @return 当手号码不存在时，执行新增用户并返回用户信息:
 	 * 				{"result": "success","data": {"OPENID":"OPENID","PHONE": "电话","USER_ID": "USER_ID","ROLE_ID": "用户权限"}}
+	 * 		         当用户执行添加关心的人的操作时，关系存在返回的数据
+	 * 			{"result": "connection_existence"}
 	 *         当手机号码存在，返回 
 	 *         		{ 
 	 *         			"result": "existence", 
 	 *        			"data": { 
-	 *        					"NUMBER": "编号",
-	 *         					"RIGHTS": "权限", 
-	 *         					"IP": "IP地址", 
-	 *         					"PHONE": "电话", 
-	 *         					"ALIAS": "昵称",
-	 *         					"SEX": "性别", 
-	 *         					"USER_ID": "ID", 
-	 *         					"MARRIAGESTATUS": "婚姻状况",
-	 *         					"LAST_LOGIN": "最后登录时间",
-	 *         					"EMAIL": "邮箱地址", 
-	 *         					"HEIGHT": 身高,
-	 *         					"BIRTHPLACE": "出生地", 
-	 *         					"NAME": "姓名", 
-	 *         					"CAREER": "职业", 
-	 *         					"STATUS": "0",
-	 *         					"OPENID": "openId", 
-	 *         					"PASSWORD": "密码", 
-	 *         					"BZ": "333", 
-	 *         					"USERNAME":"用户名", 
-	 *         					"DEGREE": "学历", 
-	 *         					"LIVEPLACE": "常住地", 
-	 *         					"AVATAR": "头像地址",
-	 *         					"WEIGHT": 体重, 
-	 *         					"BIRTHDAY": "生日" 
+	 *        					"NUMBER": "编号",					"RIGHTS": "权限", 
+	 *         					"IP": "IP地址", 					"PHONE": "电话", 
+	 *         					"ALIAS": "昵称",					"SEX": "性别", 
+	 *         					"USER_ID": "ID",				"MARRIAGESTATUS": "婚姻状况",
+	 *         					"LAST_LOGIN": "最后登录时间",		"EMAIL": "邮箱地址", 
+	 *         					"HEIGHT": 身高,					"BIRTHPLACE": "出生地", 
+	 *         					"NAME": "姓名", 					"CAREER": "职业", 
+	 *         					"STATUS": "0",					"OPENID": "openId", 
+	 *         					"PASSWORD": "密码", 				"BZ": "333", 
+	 *         					"USERNAME":"用户名", 				"DEGREE": "学历", 
+	 *         					"LIVEPLACE": "常住地", 			"AVATAR": "头像地址",
+	 *         					"WEIGHT": 体重, 					"BIRTHDAY": "生日" 
 	 *         					} 
 	 *         		}
 	 */
@@ -113,6 +103,7 @@ public class RestfullController extends BaseController {
 		// 获取json中的key并赋值给字符串 
 		String phone = (String) jasonObject.get("phone");
 		String openId = (String) jasonObject.get("openId");
+		String user_id_one = jasonObject.getString("userId").toString();
 		
 		// 生成ID主键 
 		String userId = this.get32UUID();
@@ -134,8 +125,19 @@ public class RestfullController extends BaseController {
 		} else {
 			// 手机号码存在，通过手机号码查询用户信息
 			PageData pageDate = this.userService.findByPhone(pd);	// 根据手机号码查询用户数据
-			map.put("data", pageDate);
-			msg = "existence";
+			String user_id_two = pageDate.getString("USER_ID");
+			//根据当前用户ID 和通过电话号码查询出的用户ID 判断 用户之间是否存在关系
+			pd.put("user_id_one", user_id_one);
+			pd.put("user_id_two", user_id_two);
+			PageData pds = this.userService.findConnectionWhether(pd);
+			if (pds != null && pds.size()>0) {
+				msg = "connection_existence";
+			}else{
+				map.put("data", pageDate);
+				msg = "existence";
+			}
+			
+			
 		}
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
