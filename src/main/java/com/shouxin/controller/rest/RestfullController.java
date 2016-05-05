@@ -130,6 +130,61 @@ public class RestfullController extends BaseController {
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
+	
+	//根据手机号码 判断用户关系
+	/**
+	 * 根据手机号码 判断用户关系
+	 * @param message {"phone":"手机号码","userId":"当前用户ID"}
+	 * @return 	当传入的手机号码为null时 返回：{"result":"phoneisnull"}
+	 * 			当通过手机号查询的数据为null时  返回{"result":"no"}
+	 * 			查询出有关系已存在时  返回 {"result":"guanxicunzai"}
+	 * 			查询关系不存在时       返回{"result":"guanxibucunzai"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getConnectionByPhone", method = RequestMethod.POST)
+	@ResponseBody
+	public  Object getConnectionByPhone(@RequestBody(required = true) String message) throws Exception {
+		logBefore(logger, "通过手机号码注册user");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		// 将String类型的数据转换为json 
+		JSONObject jasonObject = JSONObject.fromObject(message);
+		String phone = jasonObject.get("phone").toString();
+		String user_id_one = jasonObject.get("userId").toString();
+		if (user_id_one != null && !"".equals(user_id_one)) {
+			pd.put("user_id_one", user_id_one);
+		}
+		if (phone != null && !"".equals(phone)) {
+			pd.put("PHONE", phone);
+			//根据手机号码 查询用户信息
+			PageData pds = this.userService.findByPhone(pd);
+			//判断查询的数据是否为空
+			if (pds != null && pds.size()>0) {
+				String user_id_two = pds.getString("USER_ID");
+				pd.put("user_id_two", user_id_two);
+				//查询关系是否存在
+				PageData upd = this.userService.findConnectionWhether(pd);
+				if (upd.size()>0 && upd != null) {
+					msg = "guanxicunzai";
+				}else{
+					msg = "guanxibucunzai";
+				}	
+			}else{
+				//通过手机号码查询的数据不存在
+				msg = "no";
+			}
+		}else{
+			msg = "phoneisnull";
+		}
+		
+		
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
 
 	/**
 	 * 根据ID更新用户信息
@@ -1149,14 +1204,19 @@ public class RestfullController extends BaseController {
 			}
 			
 			//获取关联的用户
-			List<PageData> list = this.userService.findUsersById(pd);
-			for (int i = 0; i < list.size(); i++) {
-				connectionNumber += 40;
+			
+			if (userId != null && !"".equals(userId)) {
+				pd.put("user_id_one", userId);
+				List<PageData> list = this.userService.findUsersById(pd);
+				for (int i = 0; i < list.size(); i++) {
+					connectionNumber += 40;
+				}
+				
+				if (connectionNumber >= 100) {
+					connectionNumber = 100;
+				}
 			}
 			
-			if (connectionNumber >= 100) {
-				connectionNumber = 100;
-			}
 			
 			//获取标签信息
 			List<PageData> tagList = this.tagService.findAllGroupByUId(pd);
