@@ -265,4 +265,10 @@ public class UserService implements UserManager{
 		
 		return (PageData)dao.findForObject("UserMapper.findConnectionWhether", pd);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findUsers(PageData pd) throws Exception {
+		
+		return (List<PageData>) dao.findForList("UserMapper.findUsers", pd);
+	}
 }

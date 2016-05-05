@@ -93,21 +93,11 @@ public class UserController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
-		String lastLoginStart = pd.getString("lastLoginStart");	//开始时间
-		String lastLoginEnd = pd.getString("lastLoginEnd");		//结束时间
-		if(lastLoginStart != null && !"".equals(lastLoginStart)){
-			pd.put("lastLoginStart", lastLoginStart+" 00:00:00");
-		}
-		if(lastLoginEnd != null && !"".equals(lastLoginEnd)){
-			pd.put("lastLoginEnd", lastLoginEnd+" 00:00:00");
-		} 
-		page.setPd(pd);
-		List<PageData>	userList = userService.listUsers(page);	//列出用户列表
-		pd.put("ROLE_ID", "1");
-		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出所有系统用户角色
+		
+		List<PageData>	userList = userService.findUsers(pd);	//列出用户列表
+		
 		mv.setViewName("system/user/user_list");
 		mv.addObject("userList", userList);
-		mv.addObject("roleList", roleList);
 		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;

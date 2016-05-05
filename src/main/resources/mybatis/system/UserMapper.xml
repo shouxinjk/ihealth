@@ -578,6 +578,16 @@
 		order by u.LAST_LOGIN desc
 	</select>
 	
+	<select id="findUsers" resultType="pd" parameterType="pd">
+		select * from sys_user u
+		<where>
+			<if test="keywords!= null and keywords != ''">
+				u.PHONE LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+			</if>
+		</where>
+	</select>
+	
+	
 	<!-- 获取总数 -->
 	<select id="getUserCount" parameterType="String" resultType="pd">
 		select 

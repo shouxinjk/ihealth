@@ -122,6 +122,14 @@ public interface UserManager {
 	public List<PageData> listAllUser(PageData pd)throws Exception;
 	
 	/**
+	 * 查询所有
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findUsers(PageData pd)throws Exception;
+	
+	/**
 	 * 根据输入的值 模糊查询
 	 * @param pd
 	 * @return
