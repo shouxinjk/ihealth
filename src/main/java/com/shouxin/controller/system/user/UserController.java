@@ -103,6 +103,31 @@ public class UserController extends BaseController {
 		return mv;
 	}
 	
+	//查看微信端注册用户
+	/**显示用户列表
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/getUsers")
+	public ModelAndView listalluser(Page page)throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		
+		List<PageData>	userList = userService.findAllUserByOpenId(pd);	//列出用户列表
+		
+		mv.setViewName("system/user/registered_users");
+		mv.addObject("userList", userList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	
 	/**删除用户
 	 * @param out
 	 * @throws Exception 

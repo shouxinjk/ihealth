@@ -130,6 +130,14 @@ public interface UserManager {
 	public List<PageData> findUsers(PageData pd)throws Exception;
 	
 	/**
+	 * 查询所有通过微信端注册的用户
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findAllUserByOpenId(PageData pd)throws Exception;
+	
+	/**
 	 * 根据输入的值 模糊查询
 	 * @param pd
 	 * @return

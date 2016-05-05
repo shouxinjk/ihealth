@@ -587,6 +587,17 @@
 		</where>
 	</select>
 	
+	<select id="findAllUserByOpenId" resultType="pd">
+		SELECT 
+		  * 
+		FROM
+		  sys_user u 
+		WHERE u.`OPENID` IS NOT NULL 
+		<if test="keywords!= null and keywords != ''">
+			and u.PHONE LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+		</if>
+	</select>
+	
 	
 	<!-- 获取总数 -->
 	<select id="getUserCount" parameterType="String" resultType="pd">

@@ -271,4 +271,10 @@ public class UserService implements UserManager{
 		
 		return (List<PageData>) dao.findForList("UserMapper.findUsers", pd);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findAllUserByOpenId(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("UserMapper.findAllUserByOpenId",pd);
+	}
 }
