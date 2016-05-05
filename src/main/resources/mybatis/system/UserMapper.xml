@@ -480,6 +480,7 @@
 				ALIAS					= #{ALIAS},
 				OPENID                  = #{OPENID},
 				LIVEPLACE				= #{LIVEPLACE},
+				BIRTHPLACE				= #{BIRTHPLACE},
 				MARRIAGESTATUS			= #{MARRIAGESTATUS},
 				CAREER					= #{CAREER},
 				DEGREE					= #{DEGREE},
