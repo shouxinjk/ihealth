@@ -276,7 +276,7 @@ INSERT INTO `sys_menu` VALUES ('75','体检套餐管理','checkuppackage/listAll
 INSERT INTO `sys_menu` VALUES ('244','文章审核','article/auditList.do','6','15','menu-icon fa fa-leaf black','1',1);
 INSERT INTO `sys_menu` VALUES ('266','文章发布','article/articleRelease.do','6','16','menu-icon fa fa-leaf black','1',1);
 INSERT INTO `sys_menu` VALUES ('177','查看微信注册用户','user/getUsers.do','40','3','menu-icon fa fa-users brown','1',1);
-
+INSERT INTO `sys_menu` VALUES ('244', '指南审核', 'examguideline/listVerify.do', '6', '14', 'menu-icon fa fa-leaf black', '1', '1');
 
 -- ----------------------------
 -- Table structure for sys_role
