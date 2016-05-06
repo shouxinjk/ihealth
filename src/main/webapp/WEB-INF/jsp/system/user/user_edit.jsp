@@ -183,7 +183,6 @@
 	<script src="static/ace/js/chosen.jquery.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
-	<script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
 	<script type="text/javascript" src="plugins/zTree/2.6/jquery.ztree-2.6.min.js"></script>
 </body>
 <script type="text/javascript">

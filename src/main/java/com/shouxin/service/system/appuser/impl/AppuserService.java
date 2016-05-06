@@ -179,6 +179,50 @@ public class AppuserService implements AppuserManager{
 	public List<PageData> findFamilyDiseasesById(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("AppuserMapper.findFamilyDiseasesById", pd);
 	}
+
+	/**
+	 * 根据电话号码查询会员信息
+	 */
+	public PageData findByPhone(PageData pd) throws Exception {
+		
+		return (PageData) dao.findForObject("AppuserMapper.findByPhone", pd);
+	}
+
+	/**
+	 * 删除关联关系
+	 */
+	public void deleteRelationUser(PageData pd) throws Exception {
+		dao.delete("AppuserMapper.deleteRelationUser", pd);
+		
+	}
+
+	/**
+	 * 根据用户ID查询所有的关联用户
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> findUserCastUser(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("AppuserMapper.findUserCastUser", pd);
+	}
+
+	/**
+	 * 新增用户关系
+	 */
+	public void saveRelationUser(PageData pd) throws Exception {
+		dao.save("AppuserMapper.saveRelationUser", pd);
+	}
+
+	/**
+	 * 查询关系是否存在
+	 */
+	public PageData findConnectionWhether(PageData pd) throws Exception {
+		return (PageData) dao.findForObject("AppuserMapper.findConnectionWhether", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findLike(PageData pd) throws Exception {
+		
+		return (List<PageData>) dao.findForList("AppuserMapper.findLike", pd);
+	}
 	
 }
 

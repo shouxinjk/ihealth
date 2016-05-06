@@ -166,47 +166,7 @@
 		</where>	
 	</select>
 	
-	<!-- 根据用户ID 获取用户选中的标签 -->
-	<select id="findTagById" resultType="pd" parameterType="pd">
-				SELECT 
-		  t.* 
-		FROM
-		  admin_tag t 
-		  LEFT JOIN admin_userandtag ut 
-		    ON t.`TAG_ID` = ut.`tag_id` 
-		  LEFT JOIN sys_user u 
-		    ON u.`USER_ID` = ut.`user_id` 
-		  LEFT JOIN admin_tagandarticle ta 
-		    ON ta.`tag_id` = t.`TAG_ID` 
-		  LEFT JOIN tb_article a 
-		    ON a.`ARTICLE_ID` = ta.`article_id` 
-		<where>
-			<if test="USER_ID != null and USER_ID != ''">
-				and u.USER_ID = #{USER_ID}
-			</if>
-		</where>
-	</select>
 	
-	<!-- 根据用户ID获取疾病信息 -->
-	<select id="findDiseaseById" resultType="pd" parameterType="pd">
-		SELECT 
-		  d.* 
-		FROM
-		  admin_disease d 
-		  LEFT JOIN admin_diseaseanduser du 
-		    ON d.`DISEASE_ID` = du.`DISEASE_ID`
-		  LEFT JOIN sys_user u 
-		    ON u.`USER_ID` = du.`USER_ID` 
-		  LEFT JOIN admin_diseaseanddiseasecategory dd
-		    ON d.`DISEASE_ID` = dd.`DISEASE_ID` 
-		  LEFT JOIN admin_diseasecategory dc
-		    ON dd.`DISEASECATEGORY_ID` = dc.`DISEASECATEGORY_ID`
-		<where>
-			<if test="USER_ID != null and USER_ID != ''">
-				and u.USER_ID = #{USER_ID}
-			</if>
-		</where>
-	</select>
 	
 	<!-- 新增用户时，向admin_userandtag表新增信息 -->
 	<insert id="saveUserAndTag" parameterType="pd">
@@ -502,6 +462,7 @@
 			USER_ID = #{USER_ID}
 	</delete>
 	
+	<!-- 删除我关心的人 -->
 	<delete id="deleteRelationUser" parameterType="pd" flushCache="false">
 		DELETE 
 		FROM
@@ -587,6 +548,7 @@
 		</where>
 	</select>
 	
+	<!-- 通过openID获取用户数据 -->
 	<select id="findAllUserByOpenId" resultType="pd">
 		SELECT 
 		  * 

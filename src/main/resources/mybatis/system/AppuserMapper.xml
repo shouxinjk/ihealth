@@ -26,7 +26,18 @@
 		END_TIME,
 		YEARS,
 		EMAIL,
-		NUMBER
+		NUMBER,
+		SEX,
+		BIRTHDAY,
+		MARRIAGESTATUS,
+		HEIGHT,
+		WEIGHT,
+		BIRTHPLACE,
+		LIVEPLACE,
+		CAREER,
+		DEGREE,
+		OPENID,
+		AVATAR
 	</sql>
 	
 	<!-- 字段值 -->
@@ -47,8 +58,105 @@
 		#{END_TIME},
 		#{YEARS},
 		#{EMAIL},
-		#{NUMBER}	
+		#{NUMBER},
+		#{SEX},
+		#{BIRTHDAY},
+		#{MARRIAGESTATUS},
+		#{HEIGHT},
+		#{WEIGHT},
+		#{BIRTHPLACE},
+		#{LIVEPLACE},
+		#{CAREER},	
+		#{DEGREE},
+		#{OPENID},
+		#{AVATAR}
 	</sql>
+	
+	
+	<!-- 用户关联关系表 -->
+	<sql id="useranduser">
+		sys_app_user_and_user
+	</sql>
+	<!-- 用户关联关系表的字段 -->
+	<sql id="userAttribute">
+		useranduser_id,
+		user_id_one,
+		user_id_two,
+		connection
+	</sql>
+	
+	<!-- 用户关联关系表的值 -->
+	<sql id="userValue">
+		#{useranduser_id},
+		#{user_id_one},
+		#{user_id_two},
+		#{connection}
+	</sql>
+	
+	<!-- 通过用户名或者电话号码获取模糊查询数据 -->
+	<select id="findLike" parameterType="pd" resultType="pd" >
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		<where>
+			<if test="NAME != null and NAME != ''">
+				and NAME like CONCAT(CONCAT('%',#{NAME}),'%')
+			</if>
+			<if test="PHONE != null and PHONE != ''">
+				and PHONE like CONCAT(CONCAT('%',#{PHONE}),'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据用户ID查询所有的关联用户 -->
+	<select id="findUserCastUser" parameterType="pd" resultType="pd">
+		SELECT 
+		  *
+		FROM
+		  sys_app_user u,
+		  sys_app_user_and_user uu 
+		WHERE u.`USER_ID` = uu.`user_id_two`  
+		  AND uu.`user_id_one` = #{user_id_one}
+	</select>
+	
+	<!-- 查询关系是否存在 -->
+	<select id="findConnectionWhether" parameterType="pd" resultType="pd">
+		SELECT 
+		  * 
+		FROM
+		  sys_app_user_and_user uu 
+		WHERE uu.`user_id_one` = #{user_id_one} 
+		  AND uu.`user_id_two` = #{user_id_two} 
+	</select>
+	
+	<!-- 新增关联用户 -->
+	<insert id="saveRelationUser" parameterType="pd" >
+		insert into <include refid="useranduser"></include> (
+			<include refid="userAttribute"></include>
+		) values (
+			<include refid="userValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除我关心的人 -->
+	<delete id="deleteRelationUser" parameterType="pd" flushCache="false">
+		DELETE 
+		FROM
+		  sys_app_user_and_user 
+		WHERE sys_app_user_and_user.`useranduser_id` = #{useranduser_id}
+	</delete>
+	
+	<!-- 根据用户ID 查询文章推送信息 -->
+	<select id ="findArticlesById" parameterType="pd" resultType="pd">
+		SELECT * FROM tb_article a
+		<where>
+			<if test="CREATEBY != null and CREATEBY != ''">
+				and a.CREATEBY = #{CREATEBY}
+			</if>
+		</where>	
+	</select>
+	
 	
 	<!-- 保存会员跟标签的关系 -->
 	<insert id="saveAppUserAndTag" parameterType="pd">
@@ -149,6 +257,7 @@
 	</select>
 	
 	
+	
 	<!-- 角色表 -->
 	<sql id="roleTableName">
 		SYS_ROLE
@@ -178,6 +287,17 @@
 				u.EMAIL,
 				u.PHONE,
 				u.NUMBER,
+				u.SEX,
+				u.BIRTHDAY,
+				u.MARRIAGESTATUS,
+				u.HEIGHT,
+				u.WEIGHT,
+				u.BIRTHPLACE,
+				u.LIVEPLACE,
+				u.CAREER,
+				u.DEGREE,
+				u.OPENID,
+				u.AVATAR,
 				r.ROLE_ID,
 				r.ROLE_NAME
 		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r 
@@ -273,7 +393,18 @@
 			YEARS					= #{YEARS},
 			STATUS 					= #{STATUS},
 			EMAIL					= #{EMAIL},
-			NUMBER 					= #{NUMBER}
+			NUMBER 					= #{NUMBER},
+			SEX						= #{SEX},
+			BIRTHDAY				= #{BIRTHDAY},
+			MARRIAGESTATUS			= #{MARRIAGESTATUS},
+			HEIGHT					= #{HEIGHT},
+			WEIGHT					= #{WEIGHT},
+			BIRTHPLACE				= #{BIRTHPLACE},
+			LIVEPLACE				= #{LIVEPLACE},
+			CAREER					= #{CAREER},
+			DEGREE					= #{DEGREE},
+			OPENID					= #{OPENID},
+			AVATAR					= #{AVATAR}
 		<if test="PASSWORD != null and PASSWORD != ''">
 			,PASSWORD				= #{PASSWORD}
 		</if>
@@ -287,8 +418,24 @@
 			<include refid="Field"></include>
 		from 
 			<include refid="tableName"></include>
+		<where>
+			<if test="USER_ID != null and USER_ID != ''">
+				and USER_ID = #{USER_ID}
+			</if>
+			<if test="OPENID != null and OPENID != ''">
+				and OPENID = #{OPENID}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 通过手机号码查询用户数据 -->
+	<select id="findByPhone" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
 		where 
-			USER_ID = #{USER_ID}
+			PHONE = #{PHONE}
 	</select>
 	
 	<!-- 全部会员 -->
@@ -306,6 +453,17 @@
 				u.PHONE,
 				u.SFID,
 				u.NUMBER,
+				u.SEX,
+				u.BIRTHDAY,
+				u.MARRIAGESTATUS,
+				u.HEIGHT,
+				u.WEIGHT,
+				u.BIRTHPLACE,
+				u.LIVEPLACE,
+				u.CAREER,
+				u.DEGREE,
+				u.OPENID,
+				u.AVATAR,
 				r.ROLE_ID,
 				r.ROLE_NAME
 		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r 

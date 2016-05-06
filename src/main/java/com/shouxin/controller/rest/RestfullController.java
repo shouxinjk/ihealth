@@ -1,5 +1,6 @@
 package com.shouxin.controller.rest;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class RestfullController extends BaseController {
 	 * 用户注册，通过手机号码
 	 * url : http://localhost:8080/ihealth/rest/register 
 	 * type:post
-	 * @param {phone:"xx",openid:"xxx"}
+	 * @param {phone:"xx",openId:"xxx","name":"姓名","avatar","用户头像"}
 	 * @return 当手号码不存在时，执行新增用户并返回用户信息:
 	 * 				{"result": "success","data": {"OPENID":"OPENID","PHONE": "电话","USER_ID": "USER_ID","ROLE_ID": "用户权限"}}
 	 * 		         当用户执行添加关心的人的操作时，关系存在返回的数据
@@ -103,7 +104,8 @@ public class RestfullController extends BaseController {
 		// 获取json中的key并赋值给字符串 
 		String phone = jasonObject.get("phone").toString();
 		String openId = jasonObject.get("openId").toString();
-		
+		//String name = jasonObject.get("name").toString();
+		//String avatar = jasonObject.get("avatar").toString();
 		// 生成ID主键 
 		String userId = this.get32UUID();
 
@@ -112,18 +114,23 @@ public class RestfullController extends BaseController {
 		pd.put("PHONE", phone); 								// 电话号码
 		pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
 		pd.put("OPENID", openId); 								// OpenID
-		
+		pd.put("STATUS", "1");
+		pd.put("USERNAME", phone);								//电话号码作为默认用户名
+		pd.put("LAST_LOGIN", new Date());						//最后登录时间
+		//pd.put("NAME", name);
+		//pd.put("AVATAR", avatar);
 		// 判断手机号码是否存在
-		if (null == userService.findByPhone(pd)) { 
+		if (null == this.appuserService.findByPhone(pd)) { 
+			
 			logger.debug("经过判断，手机号码在数据库中不存在，执行新增操作");
-			userService.saveU(pd); // 执行保存
+			appuserService.saveU(pd); // 执行保存
 			logger.debug("将用户ID保存，在后续页面上取值");
 			msg = "success";
-			PageData pageDate = userService.findById(pd);			// 根据ID查询用户数据
+			PageData pageDate = appuserService.findByUiId(pd);			// 根据ID查询用户数据
 			map.put("data", pageDate);
 		} else {
 			// 手机号码存在，通过手机号码查询用户信息
-			PageData pageDate = this.userService.findByPhone(pd);	// 根据手机号码查询用户数据
+			PageData pageDate = this.appuserService.findByPhone(pd);	// 根据手机号码查询用户数据
 			map.put("data", pageDate);
 			msg = "existence";	
 		}
@@ -161,13 +168,13 @@ public class RestfullController extends BaseController {
 		if (phone != null && !"".equals(phone)) {
 			pd.put("PHONE", phone);
 			//根据手机号码 查询用户信息
-			PageData pds = this.userService.findByPhone(pd);
+			PageData pds = this.appuserService.findByPhone(pd);
 			//判断查询的数据是否为空
 			if (pds != null && pds.size()>0) {
 				String user_id_two = pds.getString("USER_ID");
 				pd.put("user_id_two", user_id_two);
 				//查询关系是否存在
-				PageData upd = this.userService.findConnectionWhether(pd);
+				PageData upd = this.appuserService.findConnectionWhether(pd);
 				if (upd.size()>0 && upd != null) {
 					msg = "guanxicunzai";
 				}else{
@@ -248,7 +255,7 @@ public class RestfullController extends BaseController {
 		// 将用户ID添加到PageDate中
 		pd.put("USER_ID", userId);
 		//根据用户ID查询用户信息
-		PageData pds = this.userService.findById(pd);
+		PageData pds = this.appuserService.findByUiId(pd);
 
 		// 判断性别，并赋值
 		if (sex.equals(SexEnum.BOY.getValue())) {
@@ -276,15 +283,15 @@ public class RestfullController extends BaseController {
 		pds.put("LIVEPLACE", livePlace);
 		pds.put("CAREER", career);
 		pds.put("DEGREE", degree);
-
+		pd.put("STATUS", "1");
 		// 判断用户ID是否存在
 		if (null == userId || "".equals(userId)) {
 			msg = "error";
 		} else {
 			logger.debug("根据用户ID更新用户信息");
-			this.userService.editU(pds);
+			this.appuserService.editU(pds);
 			logger.debug("根据用户ID查询用户信息，并保存在map中");
-			PageData pageData = this.userService.findById(pds);
+			PageData pageData = this.appuserService.findByUiId(pds);
 			map.put("data", pageData);
 			msg = "suceess";
 		}
@@ -497,7 +504,7 @@ public class RestfullController extends BaseController {
 		if (null == userId || "".equals(userId)) {
 			msg = "error";
 		} else {
-			PageData data = this.userService.findById(pd);
+			PageData data = this.appuserService.findByUiId(pd);
 			if (data != null && data.size() > 0) {
 				msg = "success";
 				map.put("data", data);
@@ -559,7 +566,7 @@ public class RestfullController extends BaseController {
 		if (null == openId || "".equals(openId)) {
 			msg = "error";
 		} else {
-			PageData data = this.userService.findById(pd);
+			PageData data = this.appuserService.findByUiId(pd);
 			if (data != null && data.size() > 0) {
 				msg = "success";
 				map.put("data", data);
@@ -759,110 +766,6 @@ public class RestfullController extends BaseController {
 		return AppUtil.returnObject(new PageData(), map);
 	}
 
-	/**
-	 * 根据用户ID 获取标签信息 
-	 * url:http://localhost:8080/ihealth/rest/findTagByUserId
-	 * type:post
-	 * 
-	 * @param {"userId":"用户ID"}
-	 * @return 
-	 * 用户ID不为空 返回： 
-	 * 		{ 
-	 * 		"result": "success", 
-	 * 		"data": [ { 
-	 * 					"CREATEBY":"创建用户ID", 	"TAG_ID": "ID", 
-	 * 					"CREATEON": "创建时间", 	"EXPRESSION":"表达式", 
-	 * 					"NAME": "标签名" 
-	 * 				} ] 
-	 * 		} 
-	 * 当userID为空： 返回{ "result": "error"}
-	 * 当根据userID查询出的数据为null时 返回{ "result": "no"}
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "findTagByUserId", method = RequestMethod.POST)
-	@ResponseBody
-	public Object findTagByUserId(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据userId获取标签信息");
-		
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		String msg = null;
-		PageData pd = new PageData();
-		pd = this.getPageData();
-		
-		// 将String类型的数据转换为json
-		JSONObject jasonObject = JSONObject.fromObject(u);
-		String userId = (String) jasonObject.get("userId");
-		
-		pd.put("USER_ID", userId);
-		
-		logger.debug("userId为空,获取标签信息！");
-		if (null == userId || "".equals(userId)) {
-			msg = "error";
-		} else {
-			List<PageData> data = this.userService.findTagById(pd);
-			if (data != null && data.size() > 0) {
-				msg = "success";
-				map.put("data", data);
-			} else {
-				msg = "no";
-			}
-		}
-		map.put("result", msg);
-		return AppUtil.returnObject(new PageData(), map);
-	}
-
-	/**
-	 * 根据用户ID 获取疾病信息 
-	 * url:http://localhost:8080/ihealth/rest/findDiseaseById
-	 * type:post
-	 * 
-	 * @param {"userId":"用户ID"}
-	 * @return 
-	 * 用户ID不为空 返回： 
-	 * 		{ 
-	 * 		"result": "success", 
-	 * 		"data": [ { 
-	 * 					"CREATEBY":"创建记录员工id", 	"DESCRIPTION": "描述", 
-	 * 					"ISINHERITABLE": 是否遗传倾向,	"DISEASECATEGORY_ID": "疾病分类ID", 
-	 * 					"ISHIGHINCIDENCE": 是否高发,	"DISEASE_ID": "ID", 
-	 * 					"CREATEON": "创建记录时间", 	"NAME": "名称" 
-	 * 				} ] 
-	 * 		}
-	 * 当userID为空： 返回{ "result": "error"} 
-	 * 当根据userID查询出的数据为null时 返回{"result": "no"}
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "findDiseaseById", method = RequestMethod.POST)
-	@ResponseBody
-	public Object findDiseaseById(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据用户ID获取疾病信息");
-		
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		String msg = null;
-		PageData pd = new PageData();
-		pd = this.getPageData();
-		
-		// 将String类型的数据转换为json
-		JSONObject jasonObject = JSONObject.fromObject(u);
-		String userId = (String) jasonObject.get("userId");
-		
-		pd.put("USER_ID", userId);
-		
-		logger.debug("userId为空,获取疾病信息！");
-		if (null == userId || "".equals(userId)) {
-			msg = "error";
-		} else {
-			List<PageData> data = this.userService.findDiseaseById(pd);
-			if (data != null && data.size() > 0) {
-				msg = "success";
-				map.put("data", data);
-			} else {
-				msg = "no";
-			}
-		}
-		map.put("result", msg);
-		return AppUtil.returnObject(new PageData(), map);
-	}
 
 	/**
 	 * 通过用户ID 获取关联的用户信息 
@@ -913,7 +816,7 @@ public class RestfullController extends BaseController {
 			msg = "error";
 		} else {
 			pd.put("user_id_one", userId);
-			List<PageData> data = this.userService.findUsersById(pd);
+			List<PageData> data = this.appuserService.findUserCastUser(pd);
 			if (data != null && data.size() > 0) {
 				msg = "success";
 				map.put("data", data);
@@ -956,7 +859,7 @@ public class RestfullController extends BaseController {
 		} else {
 			pd.put("useranduser_id", useranduser_id);
 			try {
-				this.userService.deleteRelationUser(pd);
+				this.appuserService.deleteRelationUser(pd);
 				msg = "success";
 			} catch (Exception e) {
 				msg = "error";
@@ -1044,14 +947,14 @@ public class RestfullController extends BaseController {
 		if (pd != null || pd.size() > 0) {
 			try {
 				// 新增用户
-				this.userService.saveU(pd);
+				this.appuserService.saveU(pd);
 				if (userId != null || userId != "") {
 					// 执行关联信息的添加
 					try {
 						pd.put("useranduser_id", useranduser_id);
 						pd.put("user_id_one", userId);
 						pd.put("user_id_two", uuid);
-						this.userService.saveRelationUser(pd);
+						this.appuserService.saveRelationUser(pd);
 						msg = "success";
 					} catch (Exception e) {
 						msg = "error";
@@ -1104,7 +1007,7 @@ public class RestfullController extends BaseController {
 			pd.put("user_id_one", userId);
 			pd.put("user_id_two", user_Id);
 			//根据当前传入的用户ID 查询数据库是否存在
-			PageData pds = this.userService.findConnectionWhether(pd);
+			PageData pds = this.appuserService.findConnectionWhether(pd);
 			if (pds != null && pds.size()>0) {
 				logger.debug("用户关系已存在！");
 				msg = "existence";
@@ -1112,7 +1015,7 @@ public class RestfullController extends BaseController {
 				pd.put("useranduser_id", this.get32UUID());
 				pd.put("connection", connection);
 				try {
-					this.userService.saveRelationUser(pd);
+					this.appuserService.saveRelationUser(pd);
 					logger.debug("保存用户关系成功！");
 					msg = "success";
 				} catch (Exception e) {
@@ -1168,35 +1071,35 @@ public class RestfullController extends BaseController {
 		if (userId != null && !"".equals(userId)) {
 			pd.put("USER_ID", userId);
 			//根据用户ID 查询用户信息
-			PageData pds = this.userService.findById(pd);
-			if (pds.getString("PHONE") != null && !"".equals(pds.getString("PHONE"))) {
+			PageData pds = this.appuserService.findByUiId(pd);
+			if (null != pds.getString("PHONE") && !"".equals(pds.getString("PHONE"))) {
 				userNumber += 10;
 			}
-			if (pds.getString("BIRTHDAY") != null && !"".equals(pds.getString("BIRTHDAY"))) {
+			if (null != pds.getString("BIRTHDAY") && !"".equals(pds.getString("BIRTHDAY"))) {
 				userNumber += 10;
 			}
-			if (pds.getString("SEX") != null && !"".equals(pds.getString("SEX"))) {
+			if (null != pds.getString("SEX") && !"".equals(pds.getString("SEX"))) {
 				userNumber += 10;
 			}
-			if (pds.getString("MARRIAGESTATUS") != null && !"".equals(pds.getString("MARRIAGESTATUS"))) {
+			if (null != pds.getString("MARRIAGESTATUS") && !"".equals(pds.getString("MARRIAGESTATUS"))) {
 				userNumber += 10;
 			}
-			if (pds.getString("BIRTHPLACE") != null && !"".equals(pds.getString("BIRTHPLACE"))) {
+			if (null != pds.getString("BIRTHPLACE") && !"".equals(pds.getString("BIRTHPLACE"))) {
 				userNumber += 10;
 			}
-			if (pds.getString("LIVEPLACE") != null && !"".equals(pds.getString("LIVEPLACE"))) {
+			if (null != pds.getString("LIVEPLACE") && !"".equals(pds.getString("LIVEPLACE"))) {
 				userNumber += 10;
 			}
-			if (pds.getString("HEIGHT") != null && !"".equals(pds.getString("HEIGHT"))) {
+			if (null != pds.getString("HEIGHT") && !"".equals(pds.getString("HEIGHT"))) {
 				userNumber += 10;
 			}
-			if (pds.getString("WEIGHT") != null && !"".equals(pds.getString("WEIGHT"))) {
+			if (null != pds.getString("WEIGHT") && !"".equals(pds.getString("WEIGHT"))) {
 				userNumber += 10;
 			}
-			if (pds.getString("CAREER") != null && !"".equals(pds.getString("CAREER"))) {
+			if (null != pds.getString("CAREER") && !"".equals(pds.getString("CAREER"))) {
 				userNumber += 10;
 			}
-			if (pds.getString("DEGREE") != null && !"".equals(pds.getString("DEGREE"))) {
+			if (null != pds.getString("DEGREE") && !"".equals(pds.getString("DEGREE"))) {
 				userNumber += 10;
 			}
 			if (userNumber>=100) {
@@ -1207,7 +1110,7 @@ public class RestfullController extends BaseController {
 			
 			if (userId != null && !"".equals(userId)) {
 				pd.put("user_id_one", userId);
-				List<PageData> list = this.userService.findUsersById(pd);
+				List<PageData> list = this.appuserService.findUserCastUser(pd);
 				for (int i = 0; i < list.size(); i++) {
 					connectionNumber += 40;
 				}

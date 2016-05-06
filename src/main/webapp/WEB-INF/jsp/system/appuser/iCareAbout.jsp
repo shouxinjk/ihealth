@@ -94,21 +94,22 @@
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 </body>
 <script type="text/javascript">
-function checkNull(t){
-	var v = $(t).val();
-	if (null == v || "" == v) {
-		
-		alert("请输入你们的关系");
-		$("#connection").focus();
+	function checkNull(t){
+		var v = $(t).val();
+		if (null == v || "" == v) {
+			
+			alert("请输入你们的关系");
+			$("#connection").focus();
+		}
 	}
-}
+
 	function findByPhone(){
 		//获取用户输入的值
 		var keyword = $("#keyword").val();
 		if(keyword!=null && keyword != ''){
 			//根据用户输入的值进行模糊查询
 			$.ajax({
-				url:"user/findLike",
+				url:"happuser/findLike",
 				type:"post",
 				contentType:"application/json;charset=utf8",
 				data:JSON.stringify({"keyword":keyword}),
@@ -157,14 +158,13 @@ function checkNull(t){
 				alert("关系不能为空哦");
 			}else{
 				$.ajax({
-					url:"user/saveUserAndUser",
+					url:"happuser/saveUserAndUser",
 					type:"post",
 					contentType:"application/json;charset=utf8",
 					data:JSON.stringify({"userId":user_one_id,"user_Id":user_two_id,"connection":connection}),
 					dataType:"json",
 					success:function(data){
 						if(data.result=="success"){
-							alert("添加关心的人成功！");
 							location.reload();
 						}else if(data.result=="existence"){
 							alert("他已经是你关心的人了哦");
@@ -181,18 +181,22 @@ function checkNull(t){
 	//显示和隐藏输入框
 	function saveConnection(){
 		$("#mohu").toggle();
+		$("#connection").focus();
 	}
 
 	function delConnection(id){
 		$.ajax({
-			url:"user/delConnection",
+			url:"happuser/delConnection",
 			type:"post",
 			contentType:"application/json;charset=utf8",
 			data:JSON.stringify({"useranduser_id":id}),
 			dataType:"json",
 			success:function(r){
-				alert(r.result);
-				location.reload();
+				if (r.result == "success") {
+					alert("删除成功！");
+					location.reload();
+				}
+				
 			},
 			error:function(){
 				alert("删除关系失败！");

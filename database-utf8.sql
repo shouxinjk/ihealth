@@ -37,6 +37,17 @@ CREATE TABLE `sys_app_user` (
   `YEARS` int(10) DEFAULT NULL,
   `NUMBER` varchar(100) DEFAULT NULL,
   `EMAIL` varchar(32) DEFAULT NULL,
+  `SEX` varchar(255) DEFAULT NULL COMMENT '性别',
+  `BIRTHDAY` varchar(255) DEFAULT NULL COMMENT '生日',
+  `MARRIAGESTATUS` varchar(255) DEFAULT NULL COMMENT '婚姻状况',
+  `HEIGHT` varchar(255) DEFAULT NULL COMMENT '身高',
+  `WEIGHT` varchar(255) DEFAULT NULL COMMENT '体重',
+  `BIRTHPLACE` varchar(255) DEFAULT NULL COMMENT '出生地',
+  `LIVEPLACE` varchar(255) DEFAULT NULL COMMENT '居住地',
+  `CAREER` varchar(255) DEFAULT NULL COMMENT '职业',
+  `DEGREE` varchar(255) DEFAULT NULL COMMENT '学历',
+  `OPENID` varchar(255) DEFAULT NULL COMMENT 'openid',
+  `AVATAR` varchar(255) DEFAULT NULL COMMENT '用户头像',
   PRIMARY KEY (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -46,6 +57,14 @@ CREATE TABLE `sys_app_user` (
 INSERT INTO `sys_app_user` VALUES ('1e89e6504be349a68c025976b3ecc1d1', 'a1', '698d51a19d8a121ce581499d7b701668', '会员甲', '', '115b386ff04f4352b060dffcd2b5d1da', '', '', '1', '121', '1212', '1212', '2015-12-02', '2015-12-25', '2', '111', '313596790@qq.com');
 INSERT INTO `sys_app_user` VALUES ('ead1f56708e4409c8d071e0a699e5633', 'a2', 'bcbe3365e6ac95ea2c0343a2395834dd', '会员乙', '', '1b67fc82ce89457a8347ae53e43a347e', '', '', '0', '', '', '', '2015-12-01', '2015-12-24', '1', '121', '978336446@qq.com');
 
+DROP TABLE IF EXISTS `sys_app_user_and_user`;
+CREATE TABLE `sys_app_user_and_user` (
+  `useranduser_id` varchar(32) NOT NULL,
+  `user_id_one` varchar(32) DEFAULT NULL,
+  `user_id_two` varchar(32) DEFAULT NULL,
+  `connection` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`useranduser_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- ----------------------------
 -- Table structure for sys_createcode
 -- ----------------------------

@@ -17,7 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,6 +40,7 @@ import com.shouxin.util.PageData;
 import com.shouxin.util.StringUtil;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /** 
  * 类名称：AppuserController
@@ -59,6 +62,141 @@ public class AppuserController extends BaseController {
 	@Resource(name="diseasecategoryService")
 	private DiseaseCategoryManager diseasecategoryService;
 	
+	
+	/**去我关心的人
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/goICareAbout")
+	public ModelAndView goICareAbout()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		List<PageData> userList = this.appuserService.findUserCastUser(pd);
+		String uid = pd.getString("user_id_one");
+		mv.addObject("uid", uid);
+		if (userList.size()>0 && userList != null) {
+			pd.put("userList", userList);
+			pd.put("msg", "你可以查看关心的人");
+		}else{
+			pd.put("msg", "你还没有添加关心的人哦！");
+		}
+		
+		mv.setViewName("system/appuser/iCareAbout");
+		mv.addObject("pd", pd);
+		return mv;
+	}
+	/**
+	 * 删除用户关联关系
+	 * @param u
+	 * @return
+	 */
+	@RequestMapping(value = "delConnection", method = RequestMethod.POST)
+	@ResponseBody
+	public Object delConnection(@RequestBody String u) {
+		logBefore(logger, "根据用户关系表中的主键 ID(useranduser_id)删除关联的用户信息");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		// 将String类型的数据转换为json
+		JSONObject jasonObject = JSONObject.fromObject(u);
+		String useranduser_id = jasonObject.get("useranduser_id").toString();
+		
+		if (useranduser_id == null || useranduser_id == "") {
+			msg = "null";
+		} else {
+			pd.put("useranduser_id", useranduser_id);
+			try {
+				this.appuserService.deleteRelationUser(pd);
+				msg = "success";
+			} catch (Exception e) {
+				msg = "error";
+				logger.debug("删除用户关联关系失败！");
+				e.printStackTrace();
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 模糊查询
+	 * @param u
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "findLike", method = RequestMethod.POST)
+	@ResponseBody
+	public Object findLike(@RequestBody String v) throws Exception {
+		logBefore(logger, "根据手机号码模糊查询用户信息");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		// 将String类型的数据转换为json
+		JSONObject jasonObject = JSONObject.fromObject(v);
+		String phone = jasonObject.get("keyword").toString();
+		if (phone !=null && phone != "") {
+			pd.put("PHONE", phone);
+		}
+		
+		List<PageData> userList = this.appuserService.findLike(pd);
+		if (userList!=null && userList.size()>0) {
+			pd.put("list", userList);
+			msg = "success";
+		}
+		map.put("data", pd);
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	@RequestMapping(value = "saveUserAndUser", method = RequestMethod.POST)
+	@ResponseBody
+	public Object saveUserAndUser(@RequestBody String u) throws Exception {
+		logBefore(logger, "保存用户关系");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		// 将String类型的数据转换为json
+		JSONObject jasonObject = JSONObject.fromObject(u);
+		
+		String userId = jasonObject.get("userId").toString();
+		String user_Id = jasonObject.get("user_Id").toString();
+		String connection = jasonObject.get("connection").toString();
+		if (userId == null && "".equals(userId) && user_Id == null && "".equals(user_Id) ) {
+			msg = "error";
+		}else{
+			pd.put("user_id_one", userId);
+			pd.put("user_id_two", user_Id);
+			//根据当前传入的用户ID 查询数据库是存在
+			PageData pds = this.appuserService.findConnectionWhether(pd);
+			if (pds != null && pds.size()>0) {
+				msg = "existence";
+			}else{
+				pd.put("useranduser_id", this.get32UUID());
+				pd.put("connection", connection);
+				try {
+					logger.debug("保存用户关系");
+					this.appuserService.saveRelationUser(pd);
+					msg = "success";
+				} catch (Exception e) {
+					msg = "no";
+				}
+			}
+			
+			
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
 	
 	/**
 	 * 根据用户ID 获取标签信息
@@ -207,7 +345,7 @@ public class AppuserController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/saveU")
-	public ModelAndView saveU() throws Exception{
+	public ModelAndView saveU(PrintWriter out) throws Exception{
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
 		logBefore(logger, Jurisdiction.getUsername()+"新增会员");
 		ModelAndView mv = this.getModelAndView();

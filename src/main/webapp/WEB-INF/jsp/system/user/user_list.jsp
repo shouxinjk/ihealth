@@ -401,7 +401,7 @@ function makeAll(msg){
 					top.jzts();
 					$.ajax({
 						type: "POST",
-						url: '<%=basePath%>user/deleteAllU.do?tm='+new Date().getTime(),
+						url: "<%=basePath%>user/deleteAllU.do?tm="+new Date().getTime(),
 				    	data: {USER_IDS:str},
 						dataType:'json',
 						//beforeSend: validateData,

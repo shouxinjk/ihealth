@@ -54,14 +54,7 @@
 						<div class="col-xs-12">
 						<span style="color:red;">*&nbsp;号所标识的列为必填列</span> 
 						<form action="happuser/${msg }.do" name="userForm" id="userForm" method="post">
-							<!-- 生活方式标签 ID -->
-							<input type="hidden" name="tagIds" id="tagIds"/>
-							<!-- 个人疾病  ID-->
-							<input type="hidden" name="personalDiseaseId" id="personalDiseaseId"/>
-							<!-- 关注疾病 ID -->
-							<input type="hidden" name="focusDiseaseId" id="focusDiseaseId"/>
-							<!-- 家族遗传疾病  ID-->
-							<input type="hidden" name="familyDiseaseId" id="familyDiseaseId"/>
+							
 							
 							<input type="hidden" name="USER_ID" id="user_id" value="${pd.USER_ID }"/>
 							<div id="zhongxin" style="padding-top: 13px;">
@@ -104,6 +97,36 @@
 									<td><input type="text" name="SFID" id="SFID" value="${pd.SFID }" placeholder="这里输入身份证号" title="身份证号" style="width:98%;" /></td>
 								</tr>
 								<tr>
+									<td style="width:79px;text-align: right;padding-top: 13px;">性别:</td>
+									<td><input type="text" name="SEX" id="SEX" value="${pd.SEX }" placeholder="这里输入性别" title="性别" style="width:98%;" /></td>
+									<td style="width:79px;text-align: right;padding-top: 13px;">生日:</td>
+									<td><input type="text" name="BIRTHDAY" id="BIRTHDAY" value="${pd.BIRTHDAY }" placeholder="这里输入生日" title="生日" style="width:98%;" /></td>
+								</tr>
+								<tr>
+									<td style="width:79px;text-align: right;padding-top: 13px;">身高:</td>
+									<td><input type="text" name="HEIGHT" id="HEIGHT" value="${pd.HEIGHT }" placeholder="这里输入身高" title="身高" style="width:98%;" /></td>
+									<td style="width:79px;text-align: right;padding-top: 13px;">体重:</td>
+									<td><input type="text" name="WEIGHT" id="WEIGHT" value="${pd.WEIGHT }" placeholder="这里输入体重" title="体重" style="width:98%;" /></td>
+								</tr>
+								<tr>
+									<td style="width:79px;text-align: right;padding-top: 13px;">出生地:</td>
+									<td><input type="text" name="BIRTHPLACE" id="BIRTHPLACE" value="${pd.BIRTHPLACE }" placeholder="这里输入出生地" title="出生地" style="width:98%;" /></td>
+									<td style="width:79px;text-align: right;padding-top: 13px;">居住地:</td>
+									<td><input type="text" name="LIVEPLACE" id="LIVEPLACE" value="${pd.LIVEPLACE }" placeholder="这里输入居住地" title="居住地" style="width:98%;" /></td>
+								</tr>
+								<tr>
+									<td style="width:79px;text-align: right;padding-top: 13px;">职业:</td>
+									<td><input type="text" name="CAREER" id=CAREER value="${pd.CAREER }" placeholder="这里输入职业" title="职业" style="width:98%;" /></td>
+									<td style="width:79px;text-align: right;padding-top: 13px;">学历:</td>
+									<td><input type="text" name="DEGREE" id="DEGREE" value="${pd.DEGREE }" placeholder="这里输入学历" title="学历" style="width:98%;" /></td>
+								</tr>
+								
+								<tr>
+									<td style="width:79px;text-align: right;padding-top: 13px;">婚姻状况:</td>
+									<td><input type="text" name="MARRIAGESTATUS" id="MARRIAGESTATUS"  placeholder="这里输入婚姻状况"  title="婚姻状况" style="width:98%;" /></td>
+									
+								</tr>
+								<tr>
 									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;姓名:</td>
 									<td><input type="text" name="NAME" id="name"  value="${pd.NAME }" placeholder="这里输入姓名" title="姓名" style="width:98%;" /></td>
 									<td style="width:79px;text-align: right;padding-top: 13px;">开通年限:</td>
@@ -119,6 +142,22 @@
 										<option value="0" <c:if test="${pd.STATUS == '0' }">selected</c:if> >冻结</option>
 										</select>
 									</td>
+								</tr>
+								<tr style="display:none;">
+									<!-- 生活方式标签 ID -->
+									<td><input type="hidden" name="tagIds" id="tagIds"/></td>
+								</tr>
+								<tr style="display:none;">
+									<!-- 个人疾病  ID-->
+									<td><input type="hidden" name="personalDiseaseId" id="personalDiseaseId"/></td>
+								</tr>
+								<tr style="display:none;">
+									<!-- 关注疾病 ID -->
+									<td><input type="hidden" name="focusDiseaseId" id="focusDiseaseId"/></td>
+								</tr>
+								<tr style="display:none;">
+									<!-- 家族遗传疾病  ID-->
+									<td><input type="hidden" name="familyDiseaseId" id="familyDiseaseId"/></td>
 								</tr>
 								<tr>
 									<td class="center" colspan="6">
@@ -154,7 +193,6 @@
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 	
-	<script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
 	<script type="text/javascript" src="plugins/zTree/2.6/jquery.ztree-2.6.min.js"></script>
 </body>						
 <script type="text/javascript">
@@ -219,88 +257,7 @@
 		var zTreeNodess = eval(zns);
 		familyTree = $("#familyTree").zTree(setting, zTreeNodess);
 	}
-	
-	
-	
-	function check(){
-		tagOnCheck();
-		personaOnCheck();
-		focusOnCheck();
-		familyOnCheck();
-	}
-	
-	//获取选中的标签ID
-	function tagOnCheck(){
-		var str = "";
-		var nodes = tagTree.getCheckedNodes(true);
-		for(var i=0;i<nodes.length;i++){
-			if(nodes[i].id!=undefined){
-				str += nodes[i].id + ",";
-			}
-		}
-		//去掉字符串最后一个逗号
-		str = str.substring(0,str.length - 1);
-		$("#tagIds").val(str);
-	}
-	
-	//获取选中的个人疾病ID
-	function personaOnCheck(){
-		var str = "";
-		var nodes = personalTree.getCheckedNodes(true);
-		for(var i=0;i<nodes.length;i++){
-			if(nodes[i].id!=undefined){
-				str += nodes[i].id + ",";
-			}		
-		}
-		str = str.substring(0,str.length - 1);
-		$("#personalDiseaseId").val(str);
-	}
-	
-	//获取选中的关注病 ID
-	function focusOnCheck(){
-		var str = "";
-		var nodes = focusTree.getCheckedNodes(true);
-		for(var i=0;i<nodes.length;i++){
-			if(nodes[i].id!=undefined){
-				str += nodes[i].id + ",";
-			}		
-		}
-		str = str.substring(0,str.length - 1);
-		$("#focusDiseaseId").val(str);
-	}
-	
-	//获取选中的家族遗传疾病ID
-	function familyOnCheck(){
-		var str = "";
-		var nodes = familyTree.getCheckedNodes(true);
-		for(var i=0;i<nodes.length;i++){
-			if(nodes[i].id!=undefined){
-				str += nodes[i].id + ",";
-			}		
-		}
-		str = str.substring(0,str.length - 1);
-		$("#familyDiseaseId").val(str);
-	}
-	
-	
-	var id = $("#user_id").val();
-	
-	
-	//获取关联的标签
-	$.ajax({
-		url:"happuser/findTagsById/"+id,
-		type:"post",
-		dataType:"json",
-		success:function(data){
-			var tags = data.tagList;
-			for (var i = 0; i < tags.length; i++) {
-				var node = tagTree.getNodeByParam("id",tags[i].tag_id);
-				node.checked = true;
-				tagTree.updateNode(node);
-			}
-			
-		}
-	});
+
 	
 	//根据Id获取关联的个人疾病
 	$.ajax({
@@ -345,6 +302,86 @@
 				var nodes = familyTree.getNodeByParam("id",diseases[i].disease_id);
 				nodes.checked = true;
 				familyTree.updateNode(nodes);
+			}
+			
+		}
+	});
+	
+	function check(){
+		tagOnCheck();
+		personaOnCheck();
+		focusOnCheck();
+		familyOnCheck();
+	}
+	
+	//获取选中的标签ID
+	function tagOnCheck(){
+		var str = "";
+		var nodes = tagTree.getCheckedNodes(true);
+		for(var i=0;i<nodes.length;i++){
+			if(nodes[i].id!="undefined"){
+				str += nodes[i].id + ",";
+			}
+		}
+		//去掉字符串最后一个逗号
+		str = str.substring(0,str.length - 1);
+		$("#tagIds").val(str);
+	}
+	
+	//获取选中的个人疾病ID
+	function personaOnCheck(){
+		var str = "";
+		var nodes = personalTree.getCheckedNodes(true);
+		for(var i=0;i<nodes.length;i++){
+			if(nodes[i].id!="undefined"){
+				str += nodes[i].id + ",";
+			}		
+		}
+		str = str.substring(0,str.length - 1);
+		$("#personalDiseaseId").val(str);
+	}
+	
+	//获取选中的关注病 ID
+	function focusOnCheck(){
+		var str = "";
+		var nodes = focusTree.getCheckedNodes(true);
+		for(var i=0;i<nodes.length;i++){
+			if(nodes[i].id!="undefined"){
+				str += nodes[i].id + ",";
+			}		
+		}
+		str = str.substring(0,str.length - 1);
+		$("#focusDiseaseId").val(str);
+	}
+	
+	//获取选中的家族遗传疾病ID
+	function familyOnCheck(){
+		var str = "";
+		var nodes = familyTree.getCheckedNodes(true);
+		for(var i=0;i<nodes.length;i++){
+			if(nodes[i].id!="undefined"){
+				str += nodes[i].id + ",";
+			}		
+		}
+		str = str.substring(0,str.length - 1);
+		$("#familyDiseaseId").val(str);
+	}
+	
+	
+	var id = $("#user_id").val();
+	
+	
+	//获取关联的标签
+	$.ajax({
+		url:"happuser/findTagsById/"+id,
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			var tags = data.tagList;
+			for (var i = 0; i < tags.length; i++) {
+				var node = tagTree.getNodeByParam("id",tags[i].tag_id);
+				node.checked = true;
+				tagTree.updateNode(node);
 			}
 			
 		}

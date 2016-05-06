@@ -72,6 +72,14 @@ public interface AppuserManager {
 	 */
 	public PageData findByUiId(PageData pd)throws Exception;
 	
+	/**
+	 * 通过手机号码获取用户数据
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public PageData findByPhone(PageData pd)throws Exception;
+	
 	/**全部会员
 	 * @param pd
 	 * @return
@@ -179,5 +187,40 @@ public interface AppuserManager {
 	 * @throws Exception
 	 */
 	public List<PageData> findFamilyDiseasesById(PageData pd)throws Exception;
+	
+	/**
+	 * 根据用户关联关系表中的useranduser_id删除用户关联
+	 * @param pd useranduser_id
+	 * @throws Exception
+	 */
+	public void deleteRelationUser(PageData pd)throws Exception;
+	
+	/**
+	 * 通过传入的用户ID  获取关联的用户信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findUserCastUser(PageData pd)throws Exception;
+	
+	/**
+	 * 新增关联用户
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveRelationUser(PageData pd)throws Exception;
+	
+	/**
+	 * 查询当前用户关系是否存在
+	 */
+	public PageData findConnectionWhether(PageData pd)throws Exception;
+	
+	/**
+	 * 根据输入的值 模糊查询
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findLike(PageData pd)throws Exception;
 }
 
