@@ -945,7 +945,6 @@ public class RestfullController extends BaseController {
 	 *      当新增关联关系成功时！返回{"result":"success"}
 	 * @throws Exception
 	 */
-	@SuppressWarnings({ "static-access", "static-access" })
 	@RequestMapping(value = "saveRelationUser", method = RequestMethod.POST)
 	@ResponseBody
 	public Object saveRelationUser(@RequestBody String u) {

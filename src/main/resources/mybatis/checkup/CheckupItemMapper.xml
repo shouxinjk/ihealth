@@ -173,15 +173,6 @@
 		WHERE ci.`USER_ID` = #{USER_ID}
 		GROUP BY ci.`SUBGROUP`
 		
-		<where>
-			<if test="USER_ID != null and USER_ID != ''">
-				and ci.`USER_ID` = #{USER_ID}
-			</if>
-			<if test="SUBGROUP != null and SUBGROUP != ''">
-				and ci.`SUBGROUP` = #{SUBGROUP}
-			</if>
-		</where>
-		
 	</select>
 	
 	
