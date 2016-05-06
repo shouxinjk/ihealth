@@ -172,6 +172,34 @@
 		  tb_checkupitem ci 
 		WHERE ci.`USER_ID` = #{USER_ID}
 		GROUP BY ci.`SUBGROUP`
+		
+		<where>
+			<if test="USER_ID != null and USER_ID != ''">
+				and ci.`USER_ID` = #{USER_ID}
+			</if>
+			<if test="SUBGROUP != null and SUBGROUP != ''">
+				and ci.`SUBGROUP` = #{SUBGROUP}
+			</if>
+		</where>
+		
+	</select>
+	
+	
+	<!-- 分组查询 所有体检项目分组 -->
+	<select id="findCIByIdOrSubGroup"  parameterType="pd" resultType="pd">
+		SELECT 
+		  ci.`SUBGROUP`,ci.`FREQUENCY`
+		FROM
+		  tb_checkupitem ci 
+		<where>
+			<if test="USER_ID != null and USER_ID != ''">
+				and ci.`USER_ID` = #{USER_ID}
+			</if>
+			<if test="SUBGROUP != null and SUBGROUP != ''">
+				and ci.`SUBGROUP` = #{SUBGROUP}
+			</if>
+		</where>
+		
 	</select>
 	
 	<!-- 列表 -->

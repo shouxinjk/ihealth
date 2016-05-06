@@ -80,5 +80,13 @@ public interface CheckupItemManager{
 	 * @throws Exception
 	 */
 	public List<PageData> findCIByGroup(PageData pd)throws Exception;
+	
+	/**
+	 * 根据userID获取所有体检项目信息
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findCIByIdOrSubGroup(PageData pd)throws Exception;
 }
 

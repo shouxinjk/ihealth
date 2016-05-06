@@ -109,6 +109,11 @@ public class CheckupItemService implements CheckupItemManager{
 		// TODO Auto-generated method stub
 		return (List<PageData>) dao.findForList("CheckupItemMapper.findCIByGroup", pd);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findCIByIdOrSubGroup(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("CheckupItemMapper.findCIByIdOrSubGroup", pd);
+	}
 	
 }
 
