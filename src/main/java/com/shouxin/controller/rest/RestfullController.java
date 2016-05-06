@@ -445,8 +445,10 @@ public class RestfullController extends BaseController {
 		} else {
 			logger.debug("根据用户ID 查询体检项目信息");
 			List<PageData> pageDate = this.checkupitemService.listAll(pd);
+			List<PageData> groupList = this.checkupitemService.findCIByGroup(pd);
 			if (pageDate != null && pageDate.size() > 0) {
 				msg = "success";
+				map.put("group", groupList);
 				map.put("data", pageDate);
 			} else {
 				msg = "no";

@@ -103,6 +103,12 @@ public class CheckupItemService implements CheckupItemManager{
 		
 		return (List<CheckupItem>) dao.findForList("CheckupItemMapper.findAllByUserId", id);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findCIByGroup(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("CheckupItemMapper.findCIByGroup", pd);
+	}
 	
 }
 

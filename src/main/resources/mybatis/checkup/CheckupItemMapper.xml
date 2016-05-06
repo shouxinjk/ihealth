@@ -164,6 +164,16 @@
 		</where>
 	</select>
 	
+	<!-- 分组查询 所有体检项目分组 -->
+	<select id="findCIByGroup"  parameterType="pd" resultType="pd">
+		SELECT 
+		  ci.`SUBGROUP` 
+		FROM
+		  tb_checkupitem ci 
+		WHERE ci.`USER_ID` = #{USER_ID}
+		GROUP BY ci.`SUBGROUP`
+	</select>
+	
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
