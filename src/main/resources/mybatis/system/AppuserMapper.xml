@@ -37,7 +37,9 @@
 		CAREER,
 		DEGREE,
 		OPENID,
-		AVATAR
+		AVATAR,
+		CREATEBY,
+		CREATEON
 	</sql>
 	
 	<!-- 字段值 -->
@@ -69,7 +71,9 @@
 		#{CAREER},	
 		#{DEGREE},
 		#{OPENID},
-		#{AVATAR}
+		#{AVATAR},
+		#{CREATEBY},
+		#{CREATEON}
 	</sql>
 	
 	
@@ -297,6 +301,8 @@
 				u.CAREER,
 				u.DEGREE,
 				u.OPENID,
+				u.CREATEON,
+				u.CREATEBY,
 				u.AVATAR,
 				r.ROLE_ID,
 				r.ROLE_NAME
@@ -404,7 +410,9 @@
 			CAREER					= #{CAREER},
 			DEGREE					= #{DEGREE},
 			OPENID					= #{OPENID},
-			AVATAR					= #{AVATAR}
+			AVATAR					= #{AVATAR},
+			CREATEBY				= #{CREATEBY},
+			CREATEON				= #{CREATEON}
 		<if test="PASSWORD != null and PASSWORD != ''">
 			,PASSWORD				= #{PASSWORD}
 		</if>
@@ -464,6 +472,8 @@
 				u.DEGREE,
 				u.OPENID,
 				u.AVATAR,
+				u.CREATEBY,
+				u.CREATEON,
 				r.ROLE_ID,
 				r.ROLE_NAME
 		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r 

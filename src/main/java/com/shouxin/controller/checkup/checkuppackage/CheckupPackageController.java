@@ -50,6 +50,8 @@ public class CheckupPackageController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("CHECKUPPACKAGE_ID", this.get32UUID());	//主键
+		pd.put("CREATEON", new Date());
+		pd.put("CREATEBY", Jurisdiction.getUserId());
 		checkuppackageService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");

@@ -51,6 +51,8 @@ public class CheckupItemController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("CHECKUPITEM_ID", this.get32UUID());	//主键
+		pd.put("CREATEON", new Date());
+		pd.put("CREATEBY", Jurisdiction.getUserId());
 		checkupitemService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");

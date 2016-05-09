@@ -23,6 +23,7 @@ import com.shouxin.service.system.appuser.AppuserManager;
 import com.shouxin.service.system.user.UserManager;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.DegreeEnum;
+import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.MarriageStatusEnum;
 import com.shouxin.util.PageData;
 import com.shouxin.util.SexEnum;
@@ -117,6 +118,7 @@ public class RestfullController extends BaseController {
 		pd.put("STATUS", "1");
 		pd.put("USERNAME", phone);								//电话号码作为默认用户名
 		pd.put("LAST_LOGIN", new Date());						//最后登录时间
+		pd.put("CREATEON", new Date());							//该记录的创建时间
 		//pd.put("NAME", name);
 		//pd.put("AVATAR", avatar);
 		// 判断手机号码是否存在

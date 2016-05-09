@@ -416,6 +416,8 @@ public class AppuserController extends BaseController {
 		pd.put("RIGHTS", "");					
 		pd.put("LAST_LOGIN", "");				//最后登录时间
 		pd.put("IP", "");						//IP
+		pd.put("CREATEON", new Date());
+		pd.put("CREATEBY", Jurisdiction.getUserId());
 		pd.put("PASSWORD", MD5.md5(pd.getString("PASSWORD")));
 		if(null == appuserService.findByUsername(pd)){
 			appuserService.saveU(pd);			//判断新增权限
