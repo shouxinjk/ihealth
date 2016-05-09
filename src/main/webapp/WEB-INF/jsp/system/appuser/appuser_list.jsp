@@ -323,7 +323,7 @@
 			 diag.Drag=true;
 			 diag.Title ="我关心的人";
 			 diag.URL = '<%=basePath%>happuser/goICareAbout.do?user_id_one='+user_id;
-			 diag.Width = 469;
+			 diag.Width = 500;
 			 diag.Height = 510;
 			 diag.CancelEvent = function(){ //关闭事件
 				diag.close();
@@ -376,7 +376,7 @@
 						 top.jzts();
 						 setTimeout("self.location=self.location",100);
 					 }else{
-						 nextPage(${page.currentPage});
+						 nextPage('${page.currentPage}');
 					 }
 				}
 				diag.close();
@@ -395,7 +395,7 @@
 			 diag.Height = 419;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 nextPage(${page.currentPage});
+					 nextPage('${page.currentPage}');
 				}
 				diag.close();
 			 };
@@ -409,7 +409,7 @@
 					top.jzts();
 					var url = "<%=basePath%>happuser/deleteU.do?USER_ID="+userId+"&tm="+new Date().getTime();
 					$.get(url,function(data){
-						nextPage(${page.currentPage});
+						nextPage('${page.currentPage}');
 					});
 				}
 			});
@@ -461,7 +461,7 @@
 								cache: false,
 								success: function(data){
 									 $.each(data.list, function(i, list){
-											nextPage(${page.currentPage});
+											nextPage('${page.currentPage}');
 									 });
 								}
 							});

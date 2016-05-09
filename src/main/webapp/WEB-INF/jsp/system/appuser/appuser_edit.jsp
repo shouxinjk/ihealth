@@ -55,7 +55,7 @@
 						<span style="color:red;">*&nbsp;号所标识的列为必填列</span> 
 						<form action="happuser/${msg }.do" name="userForm" id="userForm" method="post">
 							
-							
+							<input type="hidden" name = "msg" id ="msg" value= "${msg }">
 							<input type="hidden" name="USER_ID" id="user_id" value="${pd.USER_ID }"/>
 							<div id="zhongxin" style="padding-top: 13px;">
 							<table id="table_report" class="table table-striped table-bordered table-hover">
@@ -192,7 +192,6 @@
 	<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
-	
 	<script type="text/javascript" src="plugins/zTree/2.6/jquery.ztree-2.6.min.js"></script>
 </body>						
 <script type="text/javascript">
@@ -257,57 +256,8 @@
 		var zTreeNodess = eval(zns);
 		familyTree = $("#familyTree").zTree(setting, zTreeNodess);
 	}
-
 	
-	//根据Id获取关联的个人疾病
-	$.ajax({
-		url:"happuser/findPersonalDiseasesById/"+id,
-		type:"post",
-		dataType:"json",
-		success:function(data){
-			var diseases = data.pdiseaseList;
-			for (var i = 0; i < diseases.length; i++) {
-				var nodes = personalTree.getNodeByParam("id",diseases[i].disease_id);
-				nodes.checked = true;
-				personalTree.updateNode(nodes);
-			}
-			
-		}
-	});
-	
-	//根据ID获取关注的疾病
-	$.ajax({
-		url:"happuser/findFocusDiseasesById/"+id,
-		type:"post",
-		dataType:"json",
-		success:function(data){
-			var diseases = data.fdiseaseList;
-			for (var i = 0; i < diseases.length; i++) {
-				var nodes = focusTree.getNodeByParam("id",diseases[i].disease_id);
-				nodes.checked = true;
-				focusTree.updateNode(nodes);
-			}
-			
-		}
-	});
-	
-	//根据ID获取关联的家族遗传病
-	$.ajax({
-		url:"happuser/findFamilyDiseasesById/"+id,
-		type:"post",
-		dataType:"json",
-		success:function(data){
-			var diseases = data.fhdiseaseList;
-			for (var i = 0; i < diseases.length; i++) {
-				var nodes = familyTree.getNodeByParam("id",diseases[i].disease_id);
-				nodes.checked = true;
-				familyTree.updateNode(nodes);
-			}
-			
-		}
-	});
-	
-	function check(){
+	function che(){
 		tagOnCheck();
 		personaOnCheck();
 		focusOnCheck();
@@ -319,7 +269,7 @@
 		var str = "";
 		var nodes = tagTree.getCheckedNodes(true);
 		for(var i=0;i<nodes.length;i++){
-			if(nodes[i].id!="undefined"){
+			if(nodes[i].id!=undefined){
 				str += nodes[i].id + ",";
 			}
 		}
@@ -333,7 +283,7 @@
 		var str = "";
 		var nodes = personalTree.getCheckedNodes(true);
 		for(var i=0;i<nodes.length;i++){
-			if(nodes[i].id!="undefined"){
+			if(nodes[i].id!=undefined){
 				str += nodes[i].id + ",";
 			}		
 		}
@@ -346,7 +296,7 @@
 		var str = "";
 		var nodes = focusTree.getCheckedNodes(true);
 		for(var i=0;i<nodes.length;i++){
-			if(nodes[i].id!="undefined"){
+			if(nodes[i].id!=undefined){
 				str += nodes[i].id + ",";
 			}		
 		}
@@ -359,7 +309,7 @@
 		var str = "";
 		var nodes = familyTree.getCheckedNodes(true);
 		for(var i=0;i<nodes.length;i++){
-			if(nodes[i].id!="undefined"){
+			if(nodes[i].id!=undefined){
 				str += nodes[i].id + ",";
 			}		
 		}
@@ -370,22 +320,73 @@
 	
 	var id = $("#user_id").val();
 	
-	
-	//获取关联的标签
-	$.ajax({
-		url:"happuser/findTagsById/"+id,
-		type:"post",
-		dataType:"json",
-		success:function(data){
-			var tags = data.tagList;
-			for (var i = 0; i < tags.length; i++) {
-				var node = tagTree.getNodeByParam("id",tags[i].tag_id);
-				node.checked = true;
-				tagTree.updateNode(node);
+	var msg = $("#msg").val();
+	if(msg == "editU"){
+		//获取关联的标签
+		$.ajax({
+			url:"happuser/findTagsById/"+id,
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				var tags = data.tagList;
+				for (var i = 0; i < tags.length; i++) {
+					var node = tagTree.getNodeByParam("id",tags[i].tag_id);
+					node.checked = true;
+					tagTree.updateNode(node);
+				}
+				
 			}
-			
-		}
-	});
+		});
+		
+		//根据Id获取关联的个人疾病
+		$.ajax({
+			url:"happuser/findPersonalDiseasesById/"+id,
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				var diseases = data.pdiseaseList;
+				for (var i = 0; i < diseases.length; i++) {
+					var nodes = personalTree.getNodeByParam("id",diseases[i].disease_id);
+					nodes.checked = true;
+					personalTree.updateNode(nodes);
+				}
+			}
+		});
+		
+		//根据ID获取关注的疾病
+		$.ajax({
+			url:"happuser/findFocusDiseasesById/"+id,
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				var diseases = data.fdiseaseList;
+				for (var i = 0; i < diseases.length; i++) {
+					var nodes = focusTree.getNodeByParam("id",diseases[i].disease_id);
+					nodes.checked = true;
+					focusTree.updateNode(nodes);
+				}
+				
+			}
+		});
+		
+		//根据ID获取关联的家族遗传病
+		$.ajax({
+			url:"happuser/findFamilyDiseasesById/"+id,
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				var diseases = data.fhdiseaseList;
+				for (var i = 0; i < diseases.length; i++) {
+					var nodes = familyTree.getNodeByParam("id",diseases[i].disease_id);
+					nodes.checked = true;
+					familyTree.updateNode(nodes);
+				}
+				
+			}
+		});
+	}
+	
+	
 	
 	
 	$(top.hangge());
@@ -525,7 +526,7 @@
 		if($("#user_id").val()==""){
 			hasU();
 		}else{
-			check();
+			che();
 			$("#userForm").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();
@@ -543,6 +544,7 @@
 			cache: false,
 			success: function(data){
 				 if("success" == data.result){
+					 che();
 					$("#userForm").submit();
 					$("#zhongxin").hide();
 					$("#zhongxin2").show();

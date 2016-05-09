@@ -1122,101 +1122,109 @@ public class RestfullController extends BaseController {
 		
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
-		String userId = jasonObject.get("userId").toString();
-		
-		if (userId != null && !"".equals(userId)) {
-			pd.put("USER_ID", userId);
-			//根据用户ID 查询用户信息
-			PageData pds = this.appuserService.findByUiId(pd);
-			if (null != pds.getString("PHONE") && !"".equals(pds.getString("PHONE"))) {
-				userNumber += 10;
-			}
-			if (null != pds.getString("BIRTHDAY") && !"".equals(pds.getString("BIRTHDAY"))) {
-				userNumber += 10;
-			}
-			if (null != pds.getString("SEX") && !"".equals(pds.getString("SEX"))) {
-				userNumber += 10;
-			}
-			if (null != pds.getString("MARRIAGESTATUS") && !"".equals(pds.getString("MARRIAGESTATUS"))) {
-				userNumber += 10;
-			}
-			if (null != pds.getString("BIRTHPLACE") && !"".equals(pds.getString("BIRTHPLACE"))) {
-				userNumber += 10;
-			}
-			if (null != pds.getString("LIVEPLACE") && !"".equals(pds.getString("LIVEPLACE"))) {
-				userNumber += 10;
-			}
-			if (null != pds.getString("HEIGHT") && !"".equals(pds.getString("HEIGHT"))) {
-				userNumber += 10;
-			}
-			if (null != pds.getString("WEIGHT") && !"".equals(pds.getString("WEIGHT"))) {
-				userNumber += 10;
-			}
-			if (null != pds.getString("CAREER") && !"".equals(pds.getString("CAREER"))) {
-				userNumber += 10;
-			}
-			if (null != pds.getString("DEGREE") && !"".equals(pds.getString("DEGREE"))) {
-				userNumber += 10;
-			}
-			if (userNumber>=100) {
-				userNumber =100;
-			}
-			
-			//获取关联的用户
+		try {
+			String userId = jasonObject.get("userId").toString();
 			
 			if (userId != null && !"".equals(userId)) {
-				pd.put("user_id_one", userId);
-				List<PageData> list = this.appuserService.findUserCastUser(pd);
-				for (int i = 0; i < list.size(); i++) {
-					connectionNumber += 40;
+				pd.put("USER_ID", userId);
+				//根据用户ID 查询用户信息
+				PageData pds = this.appuserService.findByUiId(pd);
+				if (null != pds.getString("PHONE") && !"".equals(pds.getString("PHONE"))) {
+					userNumber += 10;
+				}
+				if (null != pds.getString("BIRTHDAY") && !"".equals(pds.getString("BIRTHDAY"))) {
+					userNumber += 10;
+				}
+				if (null != pds.getString("SEX") && !"".equals(pds.getString("SEX"))) {
+					userNumber += 10;
+				}
+				if (null != pds.getString("MARRIAGESTATUS") && !"".equals(pds.getString("MARRIAGESTATUS"))) {
+					userNumber += 10;
+				}
+				if (null != pds.getString("BIRTHPLACE") && !"".equals(pds.getString("BIRTHPLACE"))) {
+					userNumber += 10;
+				}
+				if (null != pds.getString("LIVEPLACE") && !"".equals(pds.getString("LIVEPLACE"))) {
+					userNumber += 10;
+				}
+				if (null != pds.getString("HEIGHT") && !"".equals(pds.getString("HEIGHT"))) {
+					userNumber += 10;
+				}
+				if (null != pds.getString("WEIGHT") && !"".equals(pds.getString("WEIGHT"))) {
+					userNumber += 10;
+				}
+				if (null != pds.getString("CAREER") && !"".equals(pds.getString("CAREER"))) {
+					userNumber += 10;
+				}
+				if (null != pds.getString("DEGREE") && !"".equals(pds.getString("DEGREE"))) {
+					userNumber += 10;
+				}
+				if (userNumber>=100) {
+					userNumber =100;
 				}
 				
-				if (connectionNumber >= 100) {
-					connectionNumber = 100;
+				//获取关联的用户
+				
+				if (userId != null && !"".equals(userId)) {
+					pd.put("user_id_one", userId);
+					List<PageData> list = this.appuserService.findUserCastUser(pd);
+					for (int i = 0; i < list.size(); i++) {
+						connectionNumber += 40;
+					}
+					
+					if (connectionNumber >= 100) {
+						connectionNumber = 100;
+					}
 				}
-			}
-			
-			
-			//获取标签信息
-			List<PageData> tagList = this.tagService.findAllGroupByUId(pd);
-			
-			if (tagList.size()>0 && tagList != null) {
-				for (int i = 0; i < tagList.size(); i++) {
-					tagNumber += 10;
+				
+				
+				//获取标签信息
+				List<PageData> tagList = this.tagService.findAllGroupByUId(pd);
+				
+				if (tagList.size()>0 && tagList != null) {
+					for (int i = 0; i < tagList.size(); i++) {
+						tagNumber += 10;
+					}
+					if (tagNumber>=100) {
+						tagNumber =100;
+					}
 				}
-				if (tagNumber>=100) {
-					tagNumber =100;
+				//所有疾病
+				if (this.diseaseService.listAllByUserID(pd).size() > 0) {
+					diseaseNumber += 30;
 				}
+				//家族遗传病
+				if (this.diseaseService.listAllByUserIDIsInherItable(pd).size() > 0) {
+					diseaseNumber += 30;
+				}
+				//关注疾病
+				if (this.diseaseService.listAllByUserIDIsHighIncaidence(pd).size() > 0) {
+					diseaseNumber += 40;
+				}
+				
+				if (diseaseNumber >= 100) {
+					diseaseNumber = 100;
+				}
+				//Integer userNumber = 0;
+				//Integer tagNumber = 0;
+				//Integer diseaseNumber = 0;
+				//Integer	connectionNumber = 0;
+				pd.put("userNumber", userNumber);
+				pd.put("tagNumber", tagNumber);
+				pd.put("diseaseNumber", diseaseNumber);
+				pd.put("connectionNumber", connectionNumber);
+				map.put("data", pd);
+				msg = "success";
+			}else{
+				msg = "error";
 			}
-			//所有疾病
-			if (this.diseaseService.listAllByUserID(pd).size() > 0) {
-				diseaseNumber += 30;
-			}
-			//家族遗传病
-			if (this.diseaseService.listAllByUserIDIsInherItable(pd).size() > 0) {
-				diseaseNumber += 30;
-			}
-			//关注疾病
-			if (this.diseaseService.listAllByUserIDIsHighIncaidence(pd).size() > 0) {
-				diseaseNumber += 40;
-			}
-			
-			if (diseaseNumber >= 100) {
-				diseaseNumber = 100;
-			}
-			//Integer userNumber = 0;
-			//Integer tagNumber = 0;
-			//Integer diseaseNumber = 0;
-			//Integer	connectionNumber = 0;
-			pd.put("userNumber", userNumber);
-			pd.put("tagNumber", tagNumber);
-			pd.put("diseaseNumber", diseaseNumber);
-			pd.put("connectionNumber", connectionNumber);
-			map.put("data", pd);
-			msg = "success";
-		}else{
-			msg = "error";
+		} catch (Exception e) {
+			userNumber = 10;
+			tagNumber = 0;
+			diseaseNumber = 0;
+			connectionNumber = 0;
 		}
+		
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}

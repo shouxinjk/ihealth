@@ -345,7 +345,7 @@ public class AppuserController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/saveU")
-	public ModelAndView saveU(PrintWriter out) throws Exception{
+	public ModelAndView saveU() throws Exception{
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
 		logBefore(logger, Jurisdiction.getUsername()+"新增会员");
 		ModelAndView mv = this.getModelAndView();
