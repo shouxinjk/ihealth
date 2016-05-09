@@ -445,6 +445,62 @@ public class RestfullController extends BaseController {
 		} else {
 			logger.debug("根据用户ID 查询体检项目信息");
 			List<PageData> pageDate = this.checkupitemService.listAll(pd);
+			List<PageData> groupList = this.checkupitemService.findCIByGroup(pd);
+			if (pageDate != null && pageDate.size() > 0) {
+				msg = "success";
+				map.put("group", groupList);
+				map.put("data", pageDate);
+			} else {
+				msg = "no";
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 根据userID 和当前分组名 获取体检项目 
+	 * url：http://localhost:8080/ihealth/rest/getCheckItemsByGroup
+	 * type:post
+	 * 
+	 * @param {"userId":"用户ID","subgroup":"分组名"}
+	 * @return 当userID不为空，并且数据库中存在这个ID、返回以下数据，需要注意的是，一个用户有多个体检项目，需要循环取值 
+	 * 			{
+	 *         "result": "success", 
+	 *         "data": [ { 
+	 *         			"REVISION": 版本, 				"STATUS":"状态，包括：已选中，已删除", 
+	 *         			"DESCRIPTION": "详细描述", 		"GENERATEDTIME": 该记录生成时间,
+	 *         			"FREQUENCY": "每年一次", 			"ORIGINATE": "指南来源", 
+	 *         			"WORKER": "用于产生该记录的标记",		"SUBGROUP": "检查项目分组", 
+	 *         			"SYSFLAG": "系统标记", 			"NAME": "检查项目名称",
+	 *         			"FEATURES": "检查频率，是文字描述", 	"CHECKUPITEM_ID": "ID" 
+	 *         			} ] 
+	 *         }
+	 *         当用户ID为空时返回：{"result": "error"} 
+	 *         当根据userID查询出的数据为null时 返回：{"result": "no"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "getCheckItemsByGroup", method = RequestMethod.POST)
+	@ResponseBody
+	public Object getCheckItemsByGroup(@RequestBody String u) throws Exception {
+		logBefore(logger, "根据用户ID获取体检项目信息");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		// 将String类型的数据转换为json
+		JSONObject jasonObject = JSONObject.fromObject(u);
+		String userId = (String) jasonObject.get("userId");
+		String subgroup = (String) jasonObject.get("subgroup");
+		pd.put("USER_ID", userId);
+		pd.put("SUBGROUP", subgroup);
+		if (userId == null || "".equals(userId)) {
+			msg = "error";
+		} else {
+			logger.debug("根据用户ID 查询体检项目信息");
+			List<PageData> pageDate = this.checkupitemService.findCIByIdOrSubGroup(pd);
 			if (pageDate != null && pageDate.size() > 0) {
 				msg = "success";
 				map.put("data", pageDate);
@@ -455,6 +511,7 @@ public class RestfullController extends BaseController {
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
+	
 
 	/**
 	 * 通过用户ID获取用户信息 
@@ -888,7 +945,6 @@ public class RestfullController extends BaseController {
 	 *      当新增关联关系成功时！返回{"result":"success"}
 	 * @throws Exception
 	 */
-	@SuppressWarnings({ "static-access", "static-access" })
 	@RequestMapping(value = "saveRelationUser", method = RequestMethod.POST)
 	@ResponseBody
 	public Object saveRelationUser(@RequestBody String u) {
