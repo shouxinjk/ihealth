@@ -108,7 +108,7 @@
 															</tr>
 														</thead>
 														<tbody id="DANGERTBODY">
-															<c:forEach items="#{varSouList}" var="sou" varStatus="vs1">
+															<c:forEach items="${varSouList}" var="sou" varStatus="vs1">
 																<c:if test="${sou.RISKTYPE eq 0 }">
 																	<tr>
 																		<td>${sou.INAME}</td>
@@ -183,7 +183,7 @@
 															</tr>
 														</thead>
 														<tbody id="ORDINARYTBODY">
-															<c:forEach items="#{varSouList}" var="sou" varStatus="vs2">
+															<c:forEach items="${varSouList}" var="sou" varStatus="vs2">
 																<c:if test="${sou.RISKTYPE eq 1 }">
 																	<tr>
 																		<td>${sou.INAME}
