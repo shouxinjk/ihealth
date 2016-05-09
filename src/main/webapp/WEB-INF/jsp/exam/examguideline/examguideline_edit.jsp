@@ -108,7 +108,7 @@
 															</tr>
 														</thead>
 														<tbody id="DANGERTBODY">
-															<c:forEach items="#{varSouList}" var="sou" varStatus="vs">
+															<c:forEach items="${varSouList}" var="sou" varStatus="vs1">
 																<c:if test="${sou.RISKTYPE eq 0 }">
 																	<tr>
 																		<td>${sou.INAME}</td>
@@ -183,7 +183,7 @@
 															</tr>
 														</thead>
 														<tbody id="ORDINARYTBODY">
-															<c:forEach items="#{varSouList}" var="sou" varStatus="vs">
+															<c:forEach items="${varSouList}" var="sou" varStatus="vs2">
 																<c:if test="${sou.RISKTYPE eq 1 }">
 																	<tr>
 																		<td>${sou.INAME}
@@ -193,7 +193,7 @@
 																		<td><span>${sou.STARTAGE}</span></td>
 																		<td><span>${sou.FNAME}</span> <input
 																			type="hidden" value="${sou.EXAMFREQUENCY_ID}"></td>
-																		<td><a onclick="delSou('${sou.EXAMSOLUTION_ID}','ORDINARYTBODY',1);">删除</a> <input type="hidden"
+																		<td><a onclick="delSou('${sou.EXAMSOLUTION_ID}','ORDINARYTBODY',1);">删除</a><input type="hidden"
 																			name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID"
 																			value="${sou.EXAMSOLUTION_ID}" /></td>
 																	</tr>
