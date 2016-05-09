@@ -123,7 +123,7 @@
 								
 								<tr>
 									<td style="width:79px;text-align: right;padding-top: 13px;">婚姻状况:</td>
-									<td><input type="text" name="MARRIAGESTATUS" id="MARRIAGESTATUS"  placeholder="这里输入婚姻状况"  title="婚姻状况" style="width:98%;" /></td>
+									<td><input type="text" name="MARRIAGESTATUS" id="MARRIAGESTATUS" value="${pd.MARRIAGESTATUS }" placeholder="这里输入婚姻状况"  title="婚姻状况" style="width:98%;" /></td>
 									
 								</tr>
 								<tr>
