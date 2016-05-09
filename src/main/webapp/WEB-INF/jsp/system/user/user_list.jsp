@@ -308,7 +308,7 @@ function iCareAbout(user_id){
 	 diag.Drag=true;
 	 diag.Title ="我关心的人";
 	 diag.URL = '<%=basePath%>user/goICareAbout.do?user_id_one='+user_id;
-	 diag.Width = 600;
+	 diag.Width = 500;
 	 diag.Height = 510;
 	 diag.CancelEvent = function(){ //关闭事件
 		diag.close();

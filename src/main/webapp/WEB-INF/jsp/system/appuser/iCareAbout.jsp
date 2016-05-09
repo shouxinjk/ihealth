@@ -18,7 +18,6 @@
 <%@ include file="../index/top.jsp"%>
 <style type="text/css">
 	#mohu{margin-top:10px;}
-	/* #keyword{width:40%;} */
 	#names{border:1px solid #DBD0D0; border-top:none;}
 	#names li{list-style: none; height:30px; line-height: 30px; padding:2px;}
 </style>

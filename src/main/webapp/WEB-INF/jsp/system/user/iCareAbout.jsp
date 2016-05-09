@@ -18,8 +18,7 @@
 <%@ include file="../index/top.jsp"%>
 <style type="text/css">
 	#mohu{margin-top:10px;}
-	#keyword{width:40%;}
-	#names{width:40%;margin-left: 253px; border:1px solid #DBD0D0; border-top:none;}
+	#names{border:1px solid #DBD0D0; border-top:none;}
 	#names li{list-style: none; height:30px; line-height: 30px; padding:2px;}
 </style>
 </head>
@@ -67,10 +66,10 @@
 							</table>
 							<a class="btn btn-mini btn-primary" onclick="saveConnection();">添加我关心的人</a>
 							<div id="mohu" style="display:none;">
-								<span>关系：</span><input type="text" name="connection" id="connection" placeholder="请输入关系" onblur="checkNull(this)"/>
-								<span>手机号：</span><input type="text" name="keyword" id="keyword" onkeyup="findByPhone();" placeholder="请输入手机号码"/>
+								<span style="float:left; width:50%;">关系：<input type="text" name="connection" id="connection" placeholder="请输入关系" onblur="checkNull(this)"/></span>
+								<span style="float:right; width:50%;">手机号：<input type="text" name="keyword" id="keyword" onkeyup="findByPhone();" placeholder="请输入手机号码"/></span>
 								
-								<ul id="names"></ul>
+								<ul id="names"  style="float:right; width:159px; margin-right: 27px;"></ul>
 							</div>
 						</div>
 					</div>
