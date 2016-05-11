@@ -656,11 +656,7 @@ CREATE TABLE `admin_disease` (
 -- ----------------------------
 -- Records of admin_disease
 -- ----------------------------
-INSERT INTO `admin_disease` VALUES ('1', '禽流感', 'asd', '1', '0', 'aa', '2016-03-29', '4');
-INSERT INTO `admin_disease` VALUES ('2', '感冒', 'asd', '0', '1', 'aa', '2016-03-29', '4');
-INSERT INTO `admin_disease` VALUES ('249ec8837fd243fbbae0de5ca64105f2', 'aSDAsdasd22', 'asdadasd', '0', '1', null, null, 'a2d72567589a4d80a6ec9f795152d373');
-INSERT INTO `admin_disease` VALUES ('3', '肺癌', 'asd', '1', '1', 'aa', '2016-03-29', '3');
-INSERT INTO `admin_disease` VALUES ('4', '血癌', 'asd', '1', '0', 'aa', '2016-03-29', '3');
+
 
 -- ----------------------------
 -- Table structure for admin_diseasecategory
@@ -679,10 +675,7 @@ CREATE TABLE `admin_diseasecategory` (
 -- ----------------------------
 -- Records of admin_diseasecategory
 -- ----------------------------
-INSERT INTO `admin_diseasecategory` VALUES ('1', '肿瘤', '不好医治', '1', '2016-03-28', '0');
-INSERT INTO `admin_diseasecategory` VALUES ('2', '流感', '易传染', '1', '2016-03-29', '0');
-INSERT INTO `admin_diseasecategory` VALUES ('3', '肺癌', '吸烟过多', '1', '2016-03-30', '1');
-INSERT INTO `admin_diseasecategory` VALUES ('4', '非典', '非典你', '1', '2016-03-29', '2');
+
 
 -- ----------------------------
 -- Table structure for admin_tag
@@ -702,18 +695,7 @@ CREATE TABLE `admin_tag` (
 -- ----------------------------
 -- Records of admin_tag
 -- ----------------------------
-INSERT INTO `admin_tag` VALUES ('1', '吸烟', '伤肺a', null, null, '3', '肺癌');
-INSERT INTO `admin_tag` VALUES ('11', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
-INSERT INTO `admin_tag` VALUES ('12', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
-INSERT INTO `admin_tag` VALUES ('2', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
-INSERT INTO `admin_tag` VALUES ('3', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
-INSERT INTO `admin_tag` VALUES ('4', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
-INSERT INTO `admin_tag` VALUES ('5', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
-INSERT INTO `admin_tag` VALUES ('53f3d010f30c4e5589fd477e050d036d', '生活111', '111', '69177258a06e4927b4639ab1684c3320', '2016-04-22', '14a4ca2b13d44b198f990a8debd11983', '圣湖');
-INSERT INTO `admin_tag` VALUES ('6', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
-INSERT INTO `admin_tag` VALUES ('7', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
-INSERT INTO `admin_tag` VALUES ('8', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
-INSERT INTO `admin_tag` VALUES ('9', '暴饮暴食', '肠胃不好', 'aa', '2016-03-29', 'd816537d8a2747d5ba27927da72048a7', '肠胃');
+
 -- ----------------------------
 -- Table structure for admin_tagcategory
 -- ----------------------------
@@ -729,15 +711,6 @@ CREATE TABLE `admin_tagcategory` (
   PRIMARY KEY (`TAGCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `admin_tagcategory` VALUES ('1', '生活方式', '生活方式', '1', 'aa', '2016-03-29', '0');
-INSERT INTO `admin_tagcategory` VALUES ('14a4ca2b13d44b198f990a8debd11983', '生活1', '生活方式', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '1');
-INSERT INTO `admin_tagcategory` VALUES ('1bb6ce40646a465498b747d96eb3d521', '呵呵', '呵呵', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '0');
-INSERT INTO `admin_tagcategory` VALUES ('2', '身体不适', '身体不适', '0', 'aa', '2016-03-29', '0');
-INSERT INTO `admin_tagcategory` VALUES ('3', '作息规律', '生活方式', '0', 'aa', '2016-03-29', '1');
-INSERT INTO `admin_tagcategory` VALUES ('9926502adb7d44d188550218b56b10c8', '身体4', '身体不适', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '2');
-INSERT INTO `admin_tagcategory` VALUES ('ca8526696da74baba8afae866edff1c2', '作息规律1', '生活方式', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '3');
-INSERT INTO `admin_tagcategory` VALUES ('cf9e046a210c41ccbb052bef74fed3b9', '身体1', '身体不适', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '2');
-INSERT INTO `admin_tagcategory` VALUES ('d816537d8a2747d5ba27927da72048a7', '身体', '身体不适', '1', '69177258a06e4927b4639ab1684c3320', '2016-04-12', '2');
 
 
 -- ----------------------------
@@ -754,7 +727,7 @@ CREATE TABLE `admin_useranddisease` (
 -- ----------------------------
 -- Records of admin_useranddisease
 -- ----------------------------
-INSERT INTO `admin_useranddisease` VALUES ('1', '1', '1');
+
 
 -- ----------------------------
 -- Table structure for admin_userandtag
@@ -791,17 +764,7 @@ CREATE TABLE `exam_examcategory` (
 -- ----------------------------
 -- Records of exam_examcategory
 -- ----------------------------
-INSERT INTO `exam_examcategory` VALUES ('1', '常规检查', '常规检查', 'aa', '2016-03-30', '0');
-INSERT INTO `exam_examcategory` VALUES ('16d4b11354f5472d9199861403dfd02d', 'AsDadsad', 'asdasdsad', null, null, '1ef4420e1e2143bcaf53d92914f777d3');
-INSERT INTO `exam_examcategory` VALUES ('198893447d914f3da869cd42008aa6e9', '手术33', '手术33', null, null, 'cbad9083459243298f29bb1cd1ede53a');
-INSERT INTO `exam_examcategory` VALUES ('1ef4420e1e2143bcaf53d92914f777d3', 'Dasda', 'asdasdas', null, null, '61cb73a6ff5f468c80b534b281681a83');
-INSERT INTO `exam_examcategory` VALUES ('2', '体液检查', '体液检查', 'aa', '2016-03-29', '1');
-INSERT INTO `exam_examcategory` VALUES ('3', '射线检查', '射线检查', 'aa', '2016-03-30', '1');
-INSERT INTO `exam_examcategory` VALUES ('33a32a3c2f0a46c3955afeaef5ae4114', 'dasdasd', 'asdasdasda', null, null, '61cb73a6ff5f468c80b534b281681a83');
-INSERT INTO `exam_examcategory` VALUES ('3d5e69c6517f44ef89b378299f7e5d13', '哈哈1', '哈哈', null, null, 'b878e67cbe0a4d71a84bba277f976bb2');
-INSERT INTO `exam_examcategory` VALUES ('4', '手术检查', '手术检查', 'bb', '2016-03-30', '0');
-INSERT INTO `exam_examcategory` VALUES ('5', '穿刺检查', '穿刺检查', 'bb', '2016-03-29', '4');
-INSERT INTO `exam_examcategory` VALUES ('6', '内窥镜', '内窥镜', 'bb', '2016-03-31', '4');
+
 
 -- ----------------------------
 -- Table structure for exam_examfrequency
@@ -819,7 +782,7 @@ CREATE TABLE `exam_examfrequency` (
 -- ----------------------------
 -- Records of exam_examfrequency
 -- ----------------------------
-INSERT INTO `exam_examfrequency` VALUES ('1', '一年一次', '一年检查一次', 'aa', '2016-03-30');
+
 
 -- ----------------------------
 -- Table structure for exam_examguideline
@@ -845,10 +808,6 @@ CREATE TABLE `exam_examguideline` (
 -- ----------------------------
 -- Records of exam_examguideline
 -- ----------------------------
-INSERT INTO `exam_examguideline` VALUES ('1', 'AA', 'BBB', '抽烟，酗酒', '高危人群界定方法', '高危人群界定方法脚本2', '普通人群界定方法', '普通人群界定方法脚本22', '1', 'AAA', '2016-04-06', '2', '肿瘤筛查2233');
-INSERT INTO `exam_examguideline` VALUES ('1dc852848c0c4010bd7e508752e19128', null, null, 'ceshi', 'shibie', null, 'shibie', null, '2', null, null, '54adb455afab452cae778f238a4fa9bc', 'ceshi ');
-INSERT INTO `exam_examguideline` VALUES ('2', 'AA', 'AA', 'aaa', 'AA', 'aa', 'aaa', 'aa', '4', 'aa', '2016-03-29', '1', 'aaa');
-INSERT INTO `exam_examguideline` VALUES ('97805f517b8e4925bb7e3f68c341e0b5', null, null, 'aaaa', 'aaa', null, 'aaa', null, '2', null, null, '1', 'aaa');
 
 -- ----------------------------
 -- Table structure for exam_examitem
@@ -865,16 +824,6 @@ CREATE TABLE `exam_examitem` (
   PRIMARY KEY (`EXAMITEM_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of exam_examitem
--- ----------------------------
-INSERT INTO `exam_examitem` VALUES ('1', '体液分析检查一', '体液分析检查一', 'aa', '2016-03-29', '2', null);
-INSERT INTO `exam_examitem` VALUES ('2', '体液分析检查二', '体液分析检查二', 'aa', '2016-03-30', '2', null);
-INSERT INTO `exam_examitem` VALUES ('22be8e012295496faab0d4398db09d81', '体液3', '体液3', null, null, null, null);
-INSERT INTO `exam_examitem` VALUES ('3', '内窥镜一', '内窥镜一', 'aa', '2016-03-29', '6', null);
-INSERT INTO `exam_examitem` VALUES ('4', '内窥镜二', '内窥镜二', 'aa', '2016-03-30', '6', null);
-INSERT INTO `exam_examitem` VALUES ('6af838063a3b42cd9e3bfaab9afc6809', 'DDDD', 'CCCC', null, null, '2', null);
-INSERT INTO `exam_examitem` VALUES ('96a8a8b8a99949fca0b16d83152969f6', 'Asdasdaaaa', 'asdasda', null, null, 'b878e67cbe0a4d71a84bba277f976bb2', null);
 
 -- ----------------------------
 -- Table structure for exam_examsolution
@@ -896,9 +845,6 @@ CREATE TABLE `exam_examsolution` (
 -- ----------------------------
 -- Records of exam_examsolution
 -- ----------------------------
-INSERT INTO `exam_examsolution` VALUES ('05a0c47ebc404ce88cc5133d64e7ea53', null, '1', '0', null, '', '0ab33b76f20c4f74b0528373c9412373', '1', '1');
-INSERT INTO `exam_examsolution` VALUES ('aaaa', null, null, null, null, '经济', null, null, null);
-INSERT INTO `exam_examsolution` VALUES ('fdb192b981af4565aa8880529e1199d3', null, '0', '2', null, '安全', '0ab33b76f20c4f74b0528373c9412373', '1', '1');
 
 
 DROP TABLE IF EXISTS `admin_userandfhdisease`;
