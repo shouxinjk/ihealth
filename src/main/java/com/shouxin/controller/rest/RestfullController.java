@@ -108,10 +108,9 @@ public class RestfullController extends BaseController {
 		//String name = jasonObject.get("name").toString();
 		//String avatar = jasonObject.get("avatar").toString();
 		// 生成ID主键 
-		String userId = this.get32UUID();
 
 		// 将数据添加到PageDate 
-		pd.put("USER_ID", userId); 								// ID 主键
+		pd.put("USER_ID", this.get32UUID()); 								// ID 主键
 		pd.put("PHONE", phone); 								// 电话号码
 		pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
 		pd.put("OPENID", openId); 								// OpenID
@@ -123,17 +122,13 @@ public class RestfullController extends BaseController {
 		//pd.put("AVATAR", avatar);
 		// 判断手机号码是否存在
 		if (null == this.appuserService.findByPhone(pd)) { 
-			
 			logger.debug("经过判断，手机号码在数据库中不存在，执行新增操作");
 			appuserService.saveU(pd); // 执行保存
 			logger.debug("将用户ID保存，在后续页面上取值");
 			msg = "success";
-			PageData pageDate = appuserService.findByUiId(pd);			// 根据ID查询用户数据
-			map.put("data", pageDate);
+			map.put("data", appuserService.findByUiId(pd));
 		} else {
-			// 手机号码存在，通过手机号码查询用户信息
-			PageData pageDate = this.appuserService.findByPhone(pd);	// 根据手机号码查询用户数据
-			map.put("data", pageDate);
+			map.put("data", this.appuserService.findByPhone(pd));
 			msg = "existence";	
 		}
 		map.put("result", msg);

@@ -173,12 +173,11 @@
 	<!-- 分组查询 所有体检项目分组 -->
 	<select id="findCIByGroup"  parameterType="pd" resultType="pd">
 		SELECT 
-		  ci.`SUBGROUP`,ci.`FREQUENCY`
+		  * 
 		FROM
 		  tb_checkupitem ci 
 		WHERE ci.`USER_ID` = #{USER_ID}
 		GROUP BY ci.`SUBGROUP`
-		
 	</select>
 	
 	
