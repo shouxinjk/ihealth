@@ -186,8 +186,12 @@
 		SELECT 
 		  *
 		FROM
-		  tb_checkupitem ci where ci.`USER_ID` = #{USER_ID} and ci.`SUBGROUP` = #{SUBGROUP}
-		
+		  tb_checkupitem ci
+		<where>
+			<if test="USER_ID != null and USER_ID != ''">
+				and ci.`USER_ID` = #{USER_ID}
+			</if>
+		</where>
 	</select>
 	
 	<!-- 列表 -->

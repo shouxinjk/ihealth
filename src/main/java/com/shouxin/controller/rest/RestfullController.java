@@ -460,7 +460,7 @@ public class RestfullController extends BaseController {
 	 * url：http://localhost:8080/ihealth/rest/getCheckItemsByGroup
 	 * type:post
 	 * 
-	 * @param {"userId":"用户ID","subgroup":"分组名"}
+	 * @param {"userId":"用户ID"}
 	 * @return 当userID不为空，并且数据库中存在这个ID、返回以下数据，需要注意的是，一个用户有多个体检项目，需要循环取值 
 	 * 			{
 	 *         "result": "success", 
@@ -490,9 +490,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		String userId = (String) jasonObject.get("userId");
-		String subgroup = (String) jasonObject.get("subgroup");
 		pd.put("USER_ID", userId);
-		pd.put("SUBGROUP", subgroup);
 		if (userId == null || "".equals(userId)) {
 			msg = "error";
 		} else {
@@ -510,7 +508,7 @@ public class RestfullController extends BaseController {
 	}
 	
 	/**
-	 * 根据userID 和当前分组名 获取体检项目 
+	 * 根据体检项目ID 获取体检项目
 	 * url：http://localhost:8080/ihealth/rest/getCheckItem
 	 * type:post
 	 * 

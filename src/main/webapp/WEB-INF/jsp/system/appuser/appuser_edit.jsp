@@ -32,22 +32,21 @@
 						<div style="margin:0 auto;width:100%;height: 200px;overflow: auto;">
 							<div style="width:25%; float:left;">
 								<span>标签信息</span>
-								<ul id="tagTree" class="tree"></ul>
+								<ul id="tagTree" class="tree" style="overflow:auto"></ul>
 							</div>
 							
 							<div style="width:25%; float:left;">
 								<span>个人疾病</span>
-								<ul id="personalTree" class="tree"></ul>
+								<ul id="personalTree" class="tree" style="overflow:auto"></ul>
 							</div>
-							
 							<div style="width:25%; float:left;">
 								<span>关注疾病</span>
-								<ul id="focusTree" class="tree"></ul>
+								<ul id="focusTree" class="tree" style="overflow:auto"></ul>
 							</div>
 							
 							<div style="width:25%; float:left;">
 								<span>家族遗传疾病</span>
-								<ul id="familyTree" class="tree"></ul>
+								<ul id="familyTree" class="tree" style="overflow:auto"></ul>
 							</div>
 						</div>
 						
@@ -631,5 +630,10 @@
 			});
 		}
 	});
+</script>
+
+<script type="text/javascript">
+	$("#personalTree li").val();
+	alert($("#personalTree li").val())
 </script>
 </html>

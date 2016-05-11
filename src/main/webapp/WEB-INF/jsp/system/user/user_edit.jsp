@@ -43,6 +43,7 @@
 						<div class="col-xs-12">
 								<span style="color:red;">*&nbsp;号所标识的列为必填列</span> 
 								<form action="user/${msg }.do" name="userForm" id="userForm" method="post">
+									<input type="hidden" name ="msg" id="msg" value ="${msg }"/>
 									<input type="hidden" name="USER_ID" id="user_id" value="${pd.USER_ID }"/>
 									<div id="zhongxin" style="padding-top: 13px;">
 									<table id="table_report" class="table table-striped table-bordered table-hover">
@@ -195,54 +196,8 @@
 		initfhDisease();
 	});
 	
-	var id = $("#user_id").val();
-	//获取关联的标签
-	$.ajax({
-		url:"user/findTagsById/"+id,
-		type:"post",
-		dataType:"json",
-		success:function(data){
-			var tags = data.tagList;
-			for (var i = 0; i < tags.length; i++) {
-				var node = zTree.getNodeByParam("id",tags[i].tag_id);
-				node.checked = true;
-				zTree.updateNode(node);
-			}
-			
-		}
-	});
 	
-	//获取关联的既往疾病
-	$.ajax({
-		url:"user/findDiseasesById/"+id,
-		type:"post",
-		dataType:"json",
-		success:function(data){
-			var diseases = data.diseaseList;
-			for (var i = 0; i < diseases.length; i++) {
-				var nodes = zTrees.getNodeByParam("id",diseases[i].disease_id);
-				nodes.checked = true;
-				zTree.updateNode(nodes);
-			}
-			
-		}
-	});
 	
-	//获取关联的家族遗传疾病
-	$.ajax({
-		url:"user/findFhDiseasesById/"+id,
-		type:"post",
-		dataType:"json",
-		success:function(data){
-			var diseases = data.fhdiseaseList;
-			for (var i = 0; i < diseases.length; i++) {
-				var nodes = zTreess.getNodeByParam("id",diseases[i].disease_id);
-				nodes.checked = true;
-				zTree.updateNode(nodes);
-			}
-			
-		}
-	});
 	
 	//加载既往疾病信息
 	function initDisease(){
@@ -285,6 +240,58 @@
 		tagOnCheck();
 		diseaseOnCheck();
 		fhDiseaseOnCheck();
+	}
+	
+	var id = $("#user_id").val();
+	var msg = $("#mag").val();
+	if (msg == "editU") {
+		//获取关联的标签
+		$.ajax({
+			url:"user/findTagsById/"+id,
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				var tags = data.tagList;
+				for (var i = 0; i < tags.length; i++) {
+					var node = zTree.getNodeByParam("id",tags[i].tag_id);
+					node.checked = true;
+					zTree.updateNode(node);
+				}
+				
+			}
+		});
+		
+		//获取关联的既往疾病
+		$.ajax({
+			url:"user/findDiseasesById/"+id,
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				var diseases = data.diseaseList;
+				for (var i = 0; i < diseases.length; i++) {
+					var nodes = zTrees.getNodeByParam("id",diseases[i].disease_id);
+					nodes.checked = true;
+					zTree.updateNode(nodes);
+				}
+				
+			}
+		});
+		
+		//获取关联的家族遗传疾病
+		$.ajax({
+			url:"user/findFhDiseasesById/"+id,
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				var diseases = data.fhdiseaseList;
+				for (var i = 0; i < diseases.length; i++) {
+					var nodes = zTreess.getNodeByParam("id",diseases[i].disease_id);
+					nodes.checked = true;
+					zTree.updateNode(nodes);
+				}
+				
+			}
+		});
 	}
 	
 	//获取选中的家族遗传病史
