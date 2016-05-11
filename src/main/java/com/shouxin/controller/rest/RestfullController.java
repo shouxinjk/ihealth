@@ -509,6 +509,58 @@ public class RestfullController extends BaseController {
 		return AppUtil.returnObject(new PageData(), map);
 	}
 	
+	/**
+	 * 根据userID 和当前分组名 获取体检项目 
+	 * url：http://localhost:8080/ihealth/rest/getCheckItem
+	 * type:post
+	 * 
+	 * @param {"id":"体检项目ID"}
+	 * @return 根据体检项目ID，查询当前体检项目
+	 * 			{
+	 *         "result": "success", 
+	 *         "data": [ { 
+	 *         			"REVISION": 版本, 				"STATUS":"状态，包括：已选中，已删除", 
+	 *         			"DESCRIPTION": "详细描述", 		"GENERATEDTIME": 该记录生成时间,
+	 *         			"FREQUENCY": "每年一次", 			"ORIGINATE": "指南来源", 
+	 *         			"WORKER": "用于产生该记录的标记",		"SUBGROUP": "检查项目分组", 
+	 *         			"SYSFLAG": "系统标记", 			"NAME": "检查项目名称",
+	 *         			"FEATURES": "检查频率，是文字描述", 	"CHECKUPITEM_ID": "ID" 
+	 *         			} ] 
+	 *         }
+	 *         当用户ID为空时返回：{"result": "error"} 
+	 *         当根据userID查询出的数据为null时 返回：{"result": "no"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "getCheckItem", method = RequestMethod.POST)
+	@ResponseBody
+	public Object getCheckItem(@RequestBody String u) throws Exception {
+		logBefore(logger, "根据用户ID获取体检项目信息");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		// 将String类型的数据转换为json
+		JSONObject jasonObject = JSONObject.fromObject(u);
+		String id = (String) jasonObject.get("id");
+		pd.put("CHECKUPITEM_ID", id);
+		if (id == null || "".equals(id)) {
+			msg = "error";
+		} else {
+			logger.debug("根据用户ID 查询体检项目信息");
+			PageData pageDate = this.checkupitemService.findById(pd);
+			if (pageDate != null) {
+				msg = "success";
+				map.put("data", pageDate);
+			} else {
+				msg = "no";
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
 
 	/**
 	 * 通过用户ID获取用户信息 
