@@ -45,6 +45,13 @@
 										</tr>
 										<tr>
 											<td
+												style="width: 75px; text-align: right; padding-top: 13px;">指南来源:</td>
+											<td><input type="text" name="ORIGINATE" id="ORIGINATE"
+												value="${pd.ORIGINATE}" maxlength="255" placeholder="这里输入指南来源"
+												title="指南来源" style="width: 98%;" /></td>
+										</tr>
+										<tr>
+											<td
 												style="width: 75px; text-align: right; padding-top: 13px;">疾病类别:</td>
 											<td><select id="DISEASECATEGORY" name="DISEASECATEGORY"
 												style="width: 40%"
