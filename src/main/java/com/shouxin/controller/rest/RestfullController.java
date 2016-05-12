@@ -139,7 +139,7 @@ public class RestfullController extends BaseController {
 		}
 		
 		if (name != null && !"".equals(name)) {
-			pd.put("name", name);
+			pd.put("NAME", name);
 		}
 		
 		pd.put("USER_ID", this.get32UUID()); 					// 电话号码
