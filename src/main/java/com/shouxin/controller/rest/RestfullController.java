@@ -119,7 +119,7 @@ public class RestfullController extends BaseController {
 			logBefore(logger, "通过手机号码注册+++++++++++++获取到的用户头像地址为：" + avatar);
 		}
 		if (jasonObject.get("name") != null && !"".equals(jasonObject.get("name"))) {
-			avatar = jasonObject.get("name").toString().trim();
+			name = jasonObject.get("name").toString().trim();
 			logBefore(logger, "通过手机号码注册+++++++++++++获取到的用户名称为：" + name);
 		}
 		//String name = jasonObject.get("name").toString();
@@ -138,12 +138,15 @@ public class RestfullController extends BaseController {
 			pd.put("AVATAR", avatar);
 		}
 		
+		if (name != null && !"".equals(name)) {
+			pd.put("name", name);
+		}
+		
 		pd.put("USER_ID", this.get32UUID()); 					// 电话号码
 		pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
 		pd.put("STATUS", "1");									//状态
 		pd.put("LAST_LOGIN", new Date());						//最后登录时间
 		pd.put("CREATEON", new Date());							//该记录的创建时间
-		pd.put("NAME", name);
 		// 判断手机号码是否存在
 		if (null == this.appuserService.findByPhone(pd)) { 
 			logBefore(logger, "经过判断，手机号码在数据库中不存在，执行新增操作");
