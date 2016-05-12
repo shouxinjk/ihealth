@@ -254,9 +254,19 @@ public class RestfullController extends BaseController {
 		}
 		if (jasonObject.get("sex") != null) {
 			sex =  jasonObject.get("sex").toString();
+			// 判断性别，并赋值
+			if (sex.equals(SexEnum.BOY.getValue())) {
+				sex = SexEnum.BOY.getValue();
+			} else if (sex.equals(SexEnum.GIRL.getValue())) {
+				sex = SexEnum.GIRL.getValue();
+			} else {
+				sex = SexEnum.BOY.getValue();
+			}
 		}
 		if (jasonObject.get("marriageStatus") != null) {
 			marriageStatus =  jasonObject.get("marriageStatus").toString();
+			// 判断婚姻状态 传入下拉列表中的value 1 未婚 2 已婚 3 同居 4 离异 5寡居
+			marriageStatus = MarriageStatusEnum.getNameByIndex(Integer.parseInt(marriageStatus));
 		}
 		if (jasonObject.get("birthday") != null) {
 			birthday = jasonObject.get("birthday").toString();
@@ -278,6 +288,8 @@ public class RestfullController extends BaseController {
 		}
 		if (jasonObject.get("degree") != null) {
 			degree = jasonObject.get("degree").toString();
+			// 判断学历
+			degree = DegreeEnum.getNameByIndex(Integer.parseInt(degree));
 		}
 		if (jasonObject.get("avatar") != null) {
 			avatar = jasonObject.get("avatar").toString();
@@ -293,21 +305,7 @@ public class RestfullController extends BaseController {
 		//根据用户ID查询用户信息
 		PageData pds = this.appuserService.findByUiId(pd);
 
-		// 判断性别，并赋值
-		if (sex.equals(SexEnum.BOY.getValue())) {
-			sex = SexEnum.BOY.getValue();
-		} else if (sex.equals(SexEnum.GIRL.getValue())) {
-			sex = SexEnum.GIRL.getValue();
-		} else {
-			sex = SexEnum.BOY.getValue();
-		}
-
-		// 判断婚姻状态 传入下拉列表中的value 1 未婚 2 已婚 3 同居 4 离异 5寡居
-		marriageStatus = MarriageStatusEnum.getNameByIndex(Integer.parseInt(marriageStatus));
 		
-		// 判断学历
-		degree = DegreeEnum.getNameByIndex(Integer.parseInt(degree));
-
 		if (name != null || !"".equals(name)) {
 			pds.put("NAME", name);
 		}
