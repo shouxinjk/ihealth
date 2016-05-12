@@ -368,7 +368,7 @@
 			 diag.Drag=true;
 			 diag.Title ="新增会员";
 			 diag.URL = '<%=basePath%>happuser/goAddU.do';
-			 diag.Width = 950;
+			 diag.Width = 600;
 			 diag.Height = 419;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
@@ -391,7 +391,7 @@
 			 diag.Drag=true;
 			 diag.Title ="会员资料";
 			 diag.URL = '<%=basePath%>happuser/goEditU.do?USER_ID='+user_id;
-			 diag.Width = 950;
+			 diag.Width = 600;
 			 diag.Height = 419;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){

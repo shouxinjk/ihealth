@@ -178,8 +178,46 @@
 		select
 		<include refid="Field"></include>
 		from 
-		<include refid="tableName"></include>
-		where 1=1
+		<include refid="tableName"></include> as a
+		where 1=1 and a.STATUS = '新建' OR a.STATUS = '审核未通过'
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					<!-- 根据需求自己加检索条件 -->
+					<!-- TITLE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or --> 
+					
+					STATUS LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 
+				)
+		</if>
+	</select>
+	
+	<select id="auditListPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> as a
+		where 1=1 and a.STATUS = '已提交' OR a.STATUS = '已审核'
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					<!-- 根据需求自己加检索条件 -->
+					<!-- TITLE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or --> 
+					
+					STATUS LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 
+				)
+		</if>
+	</select>
+	
+	<select id="articleReleasePage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> as a
+		where 1=1 and a.STATUS = '已发布' OR a.STATUS = '已审核' or a.STATUS = '取消发布'
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(

@@ -251,7 +251,7 @@
 			checkable: true, //带有复选框
 			checkType : { "Y": "s", "N": "s" }
 		}
-		var zns = '${zTreeNodess}';
+		var zns = '${isInheritabl}';
 		var zTreeNodess = eval(zns);
 		familyTree = $("#familyTree").zTree(setting, zTreeNodess);
 	}
@@ -630,10 +630,5 @@
 			});
 		}
 	});
-</script>
-
-<script type="text/javascript">
-	$("#personalTree li").val();
-	alert($("#personalTree li").val())
 </script>
 </html>

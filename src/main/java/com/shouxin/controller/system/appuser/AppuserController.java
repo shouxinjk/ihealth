@@ -322,13 +322,18 @@ public class AppuserController extends BaseController {
 		try{
 			List<TagCategory> list = this.tagcategoryService.findTagsList();
 			List<DiseaseCategory> disList = this.diseasecategoryService.findAllDiseases();
+			List<DiseaseCategory> isInheritablList = this.diseasecategoryService.findAllIsInheritabl();
+			
+			String isInheritabl = JSONArray.fromObject(isInheritablList).toString();
 			String jsons = JSONArray.fromObject(disList).toString();
 			String json = JSONArray.fromObject(list).toString();
 			logger.debug(json + "-------------------------------------------------");
 			json = json.replaceAll("TAG_ID", "id").replaceAll("TAGCATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("tags", "nodes");
 			jsons = jsons.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
+			isInheritabl = isInheritabl.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
 			model.addAttribute("zTreeNodes", json);
 			model.addAttribute("zTreeNodess", jsons);
+			model.addAttribute("isInheritabl", isInheritabl);
 		} catch(Exception e){
 			logger.error(e.toString(), e);
 		}

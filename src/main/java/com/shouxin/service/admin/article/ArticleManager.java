@@ -34,11 +34,23 @@ public interface ArticleManager{
 	 */
 	public void edit(PageData pd)throws Exception;
 	
-	/**列表
+	/** 新建、审核未通过列表
 	 * @param page
 	 * @throws Exception
 	 */
 	public List<PageData> list(Page page)throws Exception;
+	
+	/**已提交，已审核列表
+	 * @param page
+	 * @throws Exception
+	 */
+	public List<PageData> auditListPage(Page page)throws Exception;
+	
+	/**已发布、取消发布列表
+	 * @param page
+	 * @throws Exception
+	 */
+	public List<PageData> articleReleasePage(Page page)throws Exception;
 	
 	/**列表(全部)
 	 * @param pd

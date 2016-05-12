@@ -143,6 +143,16 @@ public class ArticleService implements ArticleManager{
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<PageData> auditListPage(Page page) throws Exception {
+		return (List<PageData>)dao.findForList("ArticleMapper.auditListPage", page);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> articleReleasePage(Page page) throws Exception {
+		return (List<PageData>)dao.findForList("ArticleMapper.articleReleasePage", page);
+	}
+
 	
 }
 
