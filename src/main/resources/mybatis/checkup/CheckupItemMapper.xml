@@ -199,6 +199,11 @@
 		UPDATE tb_checkupitem ci SET ci.`STATUS` = '已选中' WHERE ci.`CHECKUPITEM_ID` = #{CHECKUPITEM_ID}
 	</update>
 	
+		<!-- 根据ID  修改状态信息为  已删除 -->
+	<update id="removeStatus" parameterType="pd">
+		UPDATE tb_checkupitem ci SET ci.`STATUS` = '已删除' WHERE ci.`SUBGROUP` = #{SUBGROUP}
+	</update>
+	
 	<!-- 分组查询 所有体检项目分组 -->
 	<select id="findCIByIdOrSubGroup"  parameterType="pd" resultType="pd">
 		SELECT 

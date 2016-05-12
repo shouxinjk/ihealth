@@ -100,5 +100,12 @@ public interface CheckupItemManager{
 	 * @throws Exception
 	 */
 	public List<PageData> findByGroup(PageData pd)throws Exception;
+	
+	/**
+	 * 删除该分组下面所有状态为已删除
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void removeStatus(PageData pd) throws Exception;
 }
 
