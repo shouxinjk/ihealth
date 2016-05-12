@@ -207,6 +207,7 @@
 		  * 
 		FROM
 		  tb_article a 
+		WHERE a.`STATUS` = '已发布' 
 		ORDER BY a.`CREATEON` DESC 
 		LIMIT 0, 20 
 	</select>
