@@ -98,24 +98,35 @@ public class RestfullController extends BaseController {
 		String msg = null;
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		
+		String phone = null;
+		String openId = null;
 		// 将String类型的数据转换为json 
 		JSONObject jasonObject = JSONObject.fromObject(userVO);
 		
 		// 获取json中的key并赋值给字符串 
-		String phone = jasonObject.get("phone").toString();
-		String openId = jasonObject.get("openId").toString();
+		if (jasonObject.get("phone") != null) {
+			phone = jasonObject.get("phone").toString();
+		}
+		if (jasonObject.get("openId") != null) {
+			openId = jasonObject.get("openId").toString();
+		}
 		//String name = jasonObject.get("name").toString();
 		//String avatar = jasonObject.get("avatar").toString();
 		// 生成ID主键 
 
 		// 将数据添加到PageDate 
-		pd.put("USER_ID", this.get32UUID()); 								// ID 主键
-		pd.put("PHONE", phone); 								// 电话号码
+										// ID 主键
+		if (phone != null || !"".equals(phone)) {
+			pd.put("PHONE", phone); 
+			pd.put("USERNAME", phone);	
+		}
+		if (openId != null || !"".equals(openId)) {
+			pd.put("OPENID", openId); 
+		}
+		
+		pd.put("USER_ID", this.get32UUID()); 					// 电话号码
 		pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
-		pd.put("OPENID", openId); 								// OpenID
-		pd.put("STATUS", "1");
-		pd.put("USERNAME", phone);								//电话号码作为默认用户名
+		pd.put("STATUS", "1");									//状态
 		pd.put("LAST_LOGIN", new Date());						//最后登录时间
 		pd.put("CREATEON", new Date());							//该记录的创建时间
 		//pd.put("NAME", name);
@@ -232,6 +243,7 @@ public class RestfullController extends BaseController {
 		String msg = null;
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		PageData pds = new PageData();
 		String userId = null;
 		String name = null;
 		String sex = null;
@@ -295,61 +307,54 @@ public class RestfullController extends BaseController {
 			avatar = jasonObject.get("avatar").toString();
 		}
 		
-		
-		if (avatar != null || !"".equals(avatar)) {
-			pd.put("AVATAR", avatar);
-		}
 		if (userId != null || !"".equals(userId)) {
 			pd.put("USER_ID", userId);
-		}
-		//根据用户ID查询用户信息
-		PageData pds = this.appuserService.findByUiId(pd);
-
-		
-		if (name != null || !"".equals(name)) {
-			pds.put("NAME", name);
-		}
-		if (sex != null || !"".equals(sex)) {
-			pds.put("SEX", sex);
-		}
-		if (marriageStatus != null || !"".equals(marriageStatus)) {
-			pds.put("MARRIAGESTATUS", marriageStatus);
-		}
-		if (birthday != null || !"".equals(birthday)) {
-			pds.put("BIRTHDAY", birthday);
-		}
-		if (height != null || !"".equals(height)) {
-			pds.put("HEIGHT", height);
-		}
-		if (weight != null || !"".equals(weight)) {
-			pds.put("WEIGHT", weight);
-		}
-		
-		if (birthPlace != null || !"".equals(birthPlace)) {
-			pds.put("BIRTHPLACE", birthPlace);
-		}
-		if (livePlace != null || !"".equals(livePlace)) {
-			pds.put("LIVEPLACE", livePlace);
-		}
-		if (career != null || !"".equals(career)) {
-			pds.put("CAREER", career);
-		}
-		if (degree != null || !"".equals(degree)) {
-			pds.put("DEGREE", degree);
-		}
-		
-		// 将值添加到PageDate中
-		pd.put("STATUS", "1");
-		// 判断用户ID是否存在
-		if (null == userId || "".equals(userId)) {
-			msg = "error";
-		} else {
+			//根据用户ID查询用户信息
+			pds = this.appuserService.findByUiId(pd);
+			
+			if (avatar != null || !"".equals(avatar)) {
+				pds.put("AVATAR", avatar);
+			}
+			if (name != null || !"".equals(name)) {
+				pds.put("NAME", name);
+			}
+			if (sex != null || !"".equals(sex)) {
+				pds.put("SEX", sex);
+			}
+			if (marriageStatus != null || !"".equals(marriageStatus)) {
+				pds.put("MARRIAGESTATUS", marriageStatus);
+			}
+			if (birthday != null || !"".equals(birthday)) {
+				pds.put("BIRTHDAY", birthday);
+			}
+			if (height != null || !"".equals(height)) {
+				pds.put("HEIGHT", height);
+			}
+			if (weight != null || !"".equals(weight)) {
+				pds.put("WEIGHT", weight);
+			}
+			
+			if (birthPlace != null || !"".equals(birthPlace)) {
+				pds.put("BIRTHPLACE", birthPlace);
+			}
+			if (livePlace != null || !"".equals(livePlace)) {
+				pds.put("LIVEPLACE", livePlace);
+			}
+			if (career != null || !"".equals(career)) {
+				pds.put("CAREER", career);
+			}
+			if (degree != null || !"".equals(degree)) {
+				pds.put("DEGREE", degree);
+			}
+			// 将值添加到PageDate中
+			pds.put("STATUS", "1");
 			logger.debug("根据用户ID更新用户信息");
 			this.appuserService.editU(pds);
-			logger.debug("根据用户ID查询用户信息，并保存在map中");
 			PageData pageData = this.appuserService.findByUiId(pds);
 			map.put("data", pageData);
 			msg = "suceess";
+		}else{
+			msg = "error";
 		}
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
