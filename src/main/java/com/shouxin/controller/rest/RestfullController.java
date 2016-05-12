@@ -232,30 +232,64 @@ public class RestfullController extends BaseController {
 		String msg = null;
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		
+		String userId = null;
+		String name = null;
+		String sex = null;
+		String marriageStatus = null;
+		String birthday = null;
+		String height = null;
+		String weight = null;
+		String birthPlace = null;
+		String livePlace = null;
+		String career = null;
+		String degree = null;
+		String avatar = null;
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(users);
+		if (jasonObject.get("userId") != null) {
+			userId = jasonObject.get("userId").toString();
+		}
+		if (jasonObject.get("name") != null) {
+			name = jasonObject.get("name").toString();
+		}
+		if (jasonObject.get("sex") != null) {
+			sex =  jasonObject.get("sex").toString();
+		}
+		if (jasonObject.get("marriageStatus") != null) {
+			marriageStatus =  jasonObject.get("marriageStatus").toString();
+		}
+		if (jasonObject.get("birthday") != null) {
+			birthday = jasonObject.get("birthday").toString();
+		}
+		if (jasonObject.get("height") != null) {
+			height = jasonObject.get("height").toString();
+		}
+		if (jasonObject.get("weight") != null) {
+			weight = jasonObject.get("weight").toString();
+		}
+		if (jasonObject.get("birthPlace") != null) {
+			birthPlace = jasonObject.get("birthPlace").toString();
+		}
+		if (jasonObject.get("livePlace") != null) {
+			livePlace = jasonObject.get("livePlace").toString();
+		}
+		if (jasonObject.get("career") != null) {
+			career = jasonObject.get("career").toString();
+		}
+		if (jasonObject.get("degree") != null) {
+			degree = jasonObject.get("degree").toString();
+		}
+		if (jasonObject.get("avatar") != null) {
+			avatar = jasonObject.get("avatar").toString();
+		}
 		
-		// 将获取到的json数据，转换为String类型
-		String userId = jasonObject.getString("userId");
-		String name = jasonObject.getString("name");
-		String sex =  jasonObject.getString("sex");
-		String marriageStatus =  jasonObject.getString("marriageStatus");
-		String birthday = jasonObject.getString("birthday");
-		String height = jasonObject.getString("height");
-		String weight = jasonObject.getString("weight");
-		String birthPlace = jasonObject.getString("birthPlace");
-		String livePlace = jasonObject.getString("livePlace");
-		String career = jasonObject.getString("career");
-		String degree = jasonObject.getString("degree");
-		String avatar = jasonObject.getString("avatar");
 		
 		if (avatar != null || !"".equals(avatar)) {
 			pd.put("AVATAR", avatar);
 		}
-		
-		// 将用户ID添加到PageDate中
-		pd.put("USER_ID", userId);
+		if (userId != null || !"".equals(userId)) {
+			pd.put("USER_ID", userId);
+		}
 		//根据用户ID查询用户信息
 		PageData pds = this.appuserService.findByUiId(pd);
 
