@@ -237,17 +237,22 @@ public class RestfullController extends BaseController {
 		JSONObject jasonObject = JSONObject.fromObject(users);
 		
 		// 将获取到的json数据，转换为String类型
-		String userId = (String) jasonObject.get("userId");
-		String name = (String) jasonObject.get("name");
-		String sex = (String) jasonObject.get("sex");
-		String marriageStatus = (String) jasonObject.get("marriageStatus");
-		String birthday = (String) jasonObject.get("birthday");
-		String height = (String) jasonObject.get("height");
-		String weight = (String) jasonObject.get("weight");
-		String birthPlace = (String) jasonObject.get("birthPlace");
-		String livePlace = (String) jasonObject.get("livePlace");
-		String career = (String) jasonObject.get("career");
-		String degree = (String) jasonObject.get("degree");
+		String userId = jasonObject.getString("userId");
+		String name = jasonObject.getString("name");
+		String sex =  jasonObject.getString("sex");
+		String marriageStatus =  jasonObject.getString("marriageStatus");
+		String birthday = jasonObject.getString("birthday");
+		String height = jasonObject.getString("height");
+		String weight = jasonObject.getString("weight");
+		String birthPlace = jasonObject.getString("birthPlace");
+		String livePlace = jasonObject.getString("livePlace");
+		String career = jasonObject.getString("career");
+		String degree = jasonObject.getString("degree");
+		String avatar = jasonObject.getString("avatar");
+		
+		if (avatar != null || !"".equals(avatar)) {
+			pd.put("AVATAR", avatar);
+		}
 		
 		// 将用户ID添加到PageDate中
 		pd.put("USER_ID", userId);
@@ -269,17 +274,39 @@ public class RestfullController extends BaseController {
 		// 判断学历
 		degree = DegreeEnum.getNameByIndex(Integer.parseInt(degree));
 
+		if (name != null || !"".equals(name)) {
+			pds.put("NAME", name);
+		}
+		if (sex != null || !"".equals(sex)) {
+			pds.put("SEX", sex);
+		}
+		if (marriageStatus != null || !"".equals(marriageStatus)) {
+			pds.put("MARRIAGESTATUS", marriageStatus);
+		}
+		if (birthday != null || !"".equals(birthday)) {
+			pds.put("BIRTHDAY", birthday);
+		}
+		if (height != null || !"".equals(height)) {
+			pds.put("HEIGHT", height);
+		}
+		if (weight != null || !"".equals(weight)) {
+			pds.put("WEIGHT", weight);
+		}
+		
+		if (birthPlace != null || !"".equals(birthPlace)) {
+			pds.put("BIRTHPLACE", birthPlace);
+		}
+		if (livePlace != null || !"".equals(livePlace)) {
+			pds.put("LIVEPLACE", livePlace);
+		}
+		if (career != null || !"".equals(career)) {
+			pds.put("CAREER", career);
+		}
+		if (degree != null || !"".equals(degree)) {
+			pds.put("DEGREE", degree);
+		}
+		
 		// 将值添加到PageDate中
-		pds.put("NAME", name);
-		pds.put("SEX", sex);
-		pds.put("MARRIAGESTATUS", marriageStatus);
-		pds.put("BIRTHDAY", birthday);
-		pds.put("HEIGHT", height);
-		pds.put("WEIGHT", weight);
-		pds.put("BIRTHPLACE", birthPlace);
-		pds.put("LIVEPLACE", livePlace);
-		pds.put("CAREER", career);
-		pds.put("DEGREE", degree);
 		pd.put("STATUS", "1");
 		// 判断用户ID是否存在
 		if (null == userId || "".equals(userId)) {
