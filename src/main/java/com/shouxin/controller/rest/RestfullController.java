@@ -101,6 +101,7 @@ public class RestfullController extends BaseController {
 		String phone = null;
 		String openId = null;
 		String avatar = null;
+		String name = null;
 		// 将String类型的数据转换为json 
 		JSONObject jasonObject = JSONObject.fromObject(userVO);
 		
@@ -116,6 +117,10 @@ public class RestfullController extends BaseController {
 		if (jasonObject.get("avatar") != null && !"".equals(jasonObject.get("avatar"))) {
 			avatar = jasonObject.get("avatar").toString().trim();
 			logBefore(logger, "通过手机号码注册+++++++++++++获取到的用户头像地址为：" + avatar);
+		}
+		if (jasonObject.get("name") != null && !"".equals(jasonObject.get("name"))) {
+			avatar = jasonObject.get("name").toString().trim();
+			logBefore(logger, "通过手机号码注册+++++++++++++获取到的用户名称为：" + name);
 		}
 		//String name = jasonObject.get("name").toString();
 		// 生成ID主键 
@@ -138,7 +143,7 @@ public class RestfullController extends BaseController {
 		pd.put("STATUS", "1");									//状态
 		pd.put("LAST_LOGIN", new Date());						//最后登录时间
 		pd.put("CREATEON", new Date());							//该记录的创建时间
-		//pd.put("NAME", name);
+		pd.put("NAME", name);
 		// 判断手机号码是否存在
 		if (null == this.appuserService.findByPhone(pd)) { 
 			logBefore(logger, "经过判断，手机号码在数据库中不存在，执行新增操作");
