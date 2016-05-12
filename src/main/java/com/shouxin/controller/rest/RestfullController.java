@@ -105,8 +105,8 @@ public class RestfullController extends BaseController {
 		// 获取json中的key并赋值给字符串 
 		String phone = jasonObject.get("phone").toString();
 		String openId = jasonObject.get("openId").toString();
-		//String name = jasonObject.get("name").toString();
-		//String avatar = jasonObject.get("avatar").toString();
+		String name = jasonObject.get("name").toString();
+		String avatar = jasonObject.get("avatar").toString();
 		// 生成ID主键 
 
 		// 将数据添加到PageDate 
@@ -118,8 +118,8 @@ public class RestfullController extends BaseController {
 		pd.put("USERNAME", phone);								//电话号码作为默认用户名
 		pd.put("LAST_LOGIN", new Date());						//最后登录时间
 		pd.put("CREATEON", new Date());							//该记录的创建时间
-		//pd.put("NAME", name);
-		//pd.put("AVATAR", avatar);
+		pd.put("NAME", name);
+		pd.put("AVATAR", avatar);
 		// 判断手机号码是否存在
 		if (null == this.appuserService.findByPhone(pd)) { 
 			logger.debug("经过判断，手机号码在数据库中不存在，执行新增操作");
