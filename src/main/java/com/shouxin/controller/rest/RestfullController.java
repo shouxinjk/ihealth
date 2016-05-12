@@ -104,10 +104,10 @@ public class RestfullController extends BaseController {
 		JSONObject jasonObject = JSONObject.fromObject(userVO);
 		
 		// 获取json中的key并赋值给字符串 
-		if (jasonObject.get("phone") != null) {
+		if (jasonObject.get("phone") != null && !"".equals(jasonObject.get("phone"))) {
 			phone = jasonObject.get("phone").toString();
 		}
-		if (jasonObject.get("openId") != null) {
+		if (jasonObject.get("openId") != null && !"".equals(jasonObject.get("openId"))) {
 			openId = jasonObject.get("openId").toString();
 		}
 		//String name = jasonObject.get("name").toString();
@@ -257,106 +257,113 @@ public class RestfullController extends BaseController {
 		String degree = null;
 		String avatar = null;
 		// 将String类型的数据转换为json
-		JSONObject jasonObject = JSONObject.fromObject(users);
-		if (jasonObject.get("userId") != null) {
-			userId = jasonObject.get("userId").toString();
-		}
-		if (jasonObject.get("name") != null) {
-			name = jasonObject.get("name").toString();
-		}
-		if (jasonObject.get("sex") != null) {
-			sex =  jasonObject.get("sex").toString();
-			// 判断性别，并赋值
-			if (sex.equals(SexEnum.BOY.getValue())) {
-				sex = SexEnum.BOY.getValue();
-			} else if (sex.equals(SexEnum.GIRL.getValue())) {
-				sex = SexEnum.GIRL.getValue();
-			} else {
-				sex = SexEnum.BOY.getValue();
+		try {
+			JSONObject jasonObject = JSONObject.fromObject(users);
+			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId"))) {
+				userId = jasonObject.get("userId").toString();
 			}
-		}
-		if (jasonObject.get("marriageStatus") != null) {
-			marriageStatus =  jasonObject.get("marriageStatus").toString();
-			// 判断婚姻状态 传入下拉列表中的value 1 未婚 2 已婚 3 同居 4 离异 5寡居
-			marriageStatus = MarriageStatusEnum.getNameByIndex(Integer.parseInt(marriageStatus));
-		}
-		if (jasonObject.get("birthday") != null) {
-			birthday = jasonObject.get("birthday").toString();
-		}
-		if (jasonObject.get("height") != null) {
-			height = jasonObject.get("height").toString();
-		}
-		if (jasonObject.get("weight") != null) {
-			weight = jasonObject.get("weight").toString();
-		}
-		if (jasonObject.get("birthPlace") != null) {
-			birthPlace = jasonObject.get("birthPlace").toString();
-		}
-		if (jasonObject.get("livePlace") != null) {
-			livePlace = jasonObject.get("livePlace").toString();
-		}
-		if (jasonObject.get("career") != null) {
-			career = jasonObject.get("career").toString();
-		}
-		if (jasonObject.get("degree") != null) {
-			degree = jasonObject.get("degree").toString();
-			// 判断学历
-			degree = DegreeEnum.getNameByIndex(Integer.parseInt(degree));
-		}
-		if (jasonObject.get("avatar") != null) {
-			avatar = jasonObject.get("avatar").toString();
-		}
-		
-		if (userId != null || !"".equals(userId)) {
-			pd.put("USER_ID", userId);
-			//根据用户ID查询用户信息
-			pds = this.appuserService.findByUiId(pd);
-			
-			if (avatar != null || !"".equals(avatar)) {
-				pds.put("AVATAR", avatar);
+			if (jasonObject.get("name") != null && !"".equals(jasonObject.get("name"))) {
+				name = jasonObject.get("name").toString();
 			}
-			if (name != null || !"".equals(name)) {
-				pds.put("NAME", name);
+			if (jasonObject.get("sex") != null && !"".equals(jasonObject.get("sex"))) {
+				sex =  jasonObject.get("sex").toString();
+				// 判断性别，并赋值
+				if (sex.equals(SexEnum.BOY.getValue())) {
+					sex = SexEnum.BOY.getValue();
+				} else if (sex.equals(SexEnum.GIRL.getValue())) {
+					sex = SexEnum.GIRL.getValue();
+				} else {
+					sex = SexEnum.BOY.getValue();
+				}
 			}
-			if (sex != null || !"".equals(sex)) {
-				pds.put("SEX", sex);
+			if (jasonObject.get("marriageStatus") != null && !"".equals(jasonObject.get("marriageStatus"))) {
+				marriageStatus =  jasonObject.get("marriageStatus").toString();
+				// 判断婚姻状态 传入下拉列表中的value 1 未婚 2 已婚 3 同居 4 离异 5寡居
+				marriageStatus = MarriageStatusEnum.getNameByIndex(Integer.parseInt(marriageStatus));
 			}
-			if (marriageStatus != null || !"".equals(marriageStatus)) {
-				pds.put("MARRIAGESTATUS", marriageStatus);
+			if (jasonObject.get("birthday") != null && !"".equals(jasonObject.get("birthday"))) {
+				birthday = jasonObject.get("birthday").toString();
 			}
-			if (birthday != null || !"".equals(birthday)) {
-				pds.put("BIRTHDAY", birthday);
+			if (jasonObject.get("height") != null && !"".equals(jasonObject.get("height"))) {
+				height = jasonObject.get("height").toString();
 			}
-			if (height != null || !"".equals(height)) {
-				pds.put("HEIGHT", height);
+			if (jasonObject.get("weight") != null && !"".equals(jasonObject.get("weight"))) {
+				weight = jasonObject.get("weight").toString();
 			}
-			if (weight != null || !"".equals(weight)) {
-				pds.put("WEIGHT", weight);
+			if (jasonObject.get("birthPlace") != null && !"".equals(jasonObject.get("birthPlace"))) {
+				birthPlace = jasonObject.get("birthPlace").toString();
+			}
+			if (jasonObject.get("livePlace") != null && !"".equals(jasonObject.get("livePlace"))) {
+				livePlace = jasonObject.get("livePlace").toString();
+			}
+			if (jasonObject.get("career") != null && !"".equals(jasonObject.get("career"))) {
+				career = jasonObject.get("career").toString();
+			}
+			if (jasonObject.get("degree") != null && !"".equals(jasonObject.get("degree"))) {
+				degree = jasonObject.get("degree").toString();
+				// 判断学历
+				degree = DegreeEnum.getNameByIndex(Integer.parseInt(degree));
+			}
+			if (jasonObject.get("avatar") != null && !"".equals(jasonObject.get("avatar"))) {
+				avatar = jasonObject.get("avatar").toString();
 			}
 			
-			if (birthPlace != null || !"".equals(birthPlace)) {
-				pds.put("BIRTHPLACE", birthPlace);
+			if (userId != null && !"".equals(userId)) {
+				pd.put("USER_ID", userId);
+				//根据用户ID查询用户信息
+				pds = this.appuserService.findByUiId(pd);
+				
+				if (avatar != null && !"".equals(avatar)) {
+					pds.put("AVATAR", avatar);
+				}
+				if (name != null && !"".equals(name)) {
+					pds.put("NAME", name);
+				}
+				if (sex != null && !"".equals(sex)) {
+					pds.put("SEX", sex);
+				}
+				if (marriageStatus != null && !"".equals(marriageStatus)) {
+					pds.put("MARRIAGESTATUS", marriageStatus);
+				}
+				if (birthday != null && !"".equals(birthday)) {
+					pds.put("BIRTHDAY", birthday);
+				}
+				if (height != null && !"".equals(height)) {
+					pds.put("HEIGHT", height);
+				}
+				if (weight != null && !"".equals(weight)) {
+					pds.put("WEIGHT", weight);
+				}
+				
+				if (birthPlace != null && !"".equals(birthPlace)) {
+					pds.put("BIRTHPLACE", birthPlace);
+				}
+				if (livePlace != null && !"".equals(livePlace)) {
+					pds.put("LIVEPLACE", livePlace);
+				}
+				if (career != null && !"".equals(career)) {
+					pds.put("CAREER", career);
+				}
+				if (degree != null && !"".equals(degree)) {
+					pds.put("DEGREE", degree);
+				}
+				// 将值添加到PageDate中
+				pds.put("STATUS", "1");
+				logger.debug("根据用户ID更新用户信息");
+				this.appuserService.editU(pds);
+				PageData pageData = this.appuserService.findByUiId(pds);
+				map.put("data", pageData);
+				msg = "suceess";
+			}else{
+				msg = "error";
+				logger.debug("传入ID为空  获取信息失败");
 			}
-			if (livePlace != null || !"".equals(livePlace)) {
-				pds.put("LIVEPLACE", livePlace);
-			}
-			if (career != null || !"".equals(career)) {
-				pds.put("CAREER", career);
-			}
-			if (degree != null || !"".equals(degree)) {
-				pds.put("DEGREE", degree);
-			}
-			// 将值添加到PageDate中
-			pds.put("STATUS", "1");
-			logger.debug("根据用户ID更新用户信息");
-			this.appuserService.editU(pds);
-			PageData pageData = this.appuserService.findByUiId(pds);
-			map.put("data", pageData);
-			msg = "suceess";
-		}else{
-			msg = "error";
+		} catch (Exception e) {
+			msg = "errorMessage";
+			logger.debug("程序出错" + e.getMessage());
+		}finally{
+			map.put("result", msg);
 		}
-		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
 
