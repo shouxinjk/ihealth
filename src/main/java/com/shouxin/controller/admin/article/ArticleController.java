@@ -398,7 +398,7 @@ public class ArticleController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 		page.setPd(pd);
-		List<PageData>	varList = articleService.list(page);	//列出Article列表
+		List<PageData>	varList = articleService.auditListPage(page);	//列出Article列表
 		mv.setViewName("admin/article/article_audit");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -423,7 +423,7 @@ public class ArticleController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 		page.setPd(pd);
-		List<PageData>	varList = articleService.list(page);	//列出Article列表
+		List<PageData>	varList = articleService.articleReleasePage(page);	//列出Article列表
 		mv.setViewName("admin/article/article_published");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);

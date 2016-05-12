@@ -76,6 +76,20 @@
 		    ON dc.`DISEASECATEGORY_ID` = d.`DISEASECATEGORY_ID` 
 	</select>
 	
+	<!-- 查询所有遗传疾病 -->
+	<select id="findAllIsInheritabl" resultMap="diseaseAndDCResultMap">
+		SELECT 
+		  dc.`DISEASECATEGORY_ID` AS dc_diseasecategory,
+		  dc.`NAME` AS dc_name,
+		  d.`DISEASE_ID` AS d_disease,
+		  d.`NAME` AS d_name 
+		FROM
+		  admin_diseasecategory dc 
+		  LEFT JOIN admin_disease d 
+		    ON dc.`DISEASECATEGORY_ID` = d.`DISEASECATEGORY_ID` 
+		 WHERE d.`ISINHERITABLE` = '1' 
+	</select>
+	
 	
 	<!-- 通过id获取子级列表 -->
 	<select id="listSubDiseaseCategorybyParentID" parameterType="java.lang.String" resultMap="diseaseCategoryResultMap">

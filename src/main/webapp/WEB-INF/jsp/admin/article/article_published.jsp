@@ -44,7 +44,7 @@
 						<div class="col-xs-12">
 							
 						<!-- 检索  -->
-						<form action="article/list.do" method="post" name="Form" id="Form">
+						<form action="article/articleRelease" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
 								<td>
@@ -94,8 +94,8 @@
 							<c:choose>
 								<c:when test="${not empty varList}">
 									<c:if test="${QX.cha == 1}">
+									
 									<c:forEach items="${varList}" var="var" varStatus="vs">
-										<c:if test="${var.STATUS == '已发布' or var.STATUS == '已审核' or var.STATUS == '取消发布'}">
 										<tr>
 											<td class='center'>
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.ARTICLE_ID}" class="ace" /><span class="lbl"></span></label>
@@ -159,9 +159,9 @@
 												</div>
 											</td>
 										</tr>
-									</c:if>
 									</c:forEach>
 									</c:if>
+									
 									<c:if test="${QX.cha == 0 }">
 										<tr>
 											<td colspan="100" class="center">您无权查看</td>
@@ -179,10 +179,7 @@
 						<div class="page-header position-relative">
 						<table style="width:100%;">
 							<tr>
-								<td style="vertical-align:top;">
-									
-								</td>
-								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
+								<td style="vertical-align:top;" colspan="2"><div class="pagination" style="padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 							</tr>
 						</table>
 						</div>
@@ -221,58 +218,6 @@
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 	<script type="text/javascript">
 		$(top.hangge());//关闭加载状态
-		//检索
-		function tosearch(){
-			top.jzts();
-			$("#Form").submit();
-		}
-		$(function() {
-		
-			//日期框
-			$('.date-picker').datepicker({
-				autoclose: true,
-				todayHighlight: true
-			});
-			
-			//下拉框
-			if(!ace.vars['touch']) {
-				$('.chosen-select').chosen({allow_single_deselect:true}); 
-				$(window)
-				.off('resize.chosen')
-				.on('resize.chosen', function() {
-					$('.chosen-select').each(function() {
-						 var $this = $(this);
-						 $this.next().css({'width': $this.parent().width()});
-					});
-				}).trigger('resize.chosen');
-				$(document).on('settings.ace.chosen', function(e, event_name, event_val) {
-					if(event_name != 'sidebar_collapsed') return;
-					$('.chosen-select').each(function() {
-						 var $this = $(this);
-						 $this.next().css({'width': $this.parent().width()});
-					});
-				});
-				$('#chosen-multiple-style .btn').on('click', function(e){
-					var target = $(this).find('input[type=radio]');
-					var which = parseInt(target.val());
-					if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
-					 else $('#form-field-select-4').removeClass('tag-input-style');
-				});
-			}
-			
-			
-			//复选框全选控制
-			var active_class = 'active';
-			$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
-				var th_checked = this.checked;//checkbox inside "TH" table header
-				$(this).closest('table').find('tbody > tr').each(function(){
-					var row = this;
-					if(th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
-					else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
-				});
-			});
-		});
-		
 		
 		
 		//发布成功
@@ -286,7 +231,7 @@
 				success:function(data){
 					var result = data.result;
 					if(result == "success"){
-						location.reload();
+						window.location.href = "article/articleRelease.do";
 					}else if(result="error"){
 						alert("发布失败！");
 					}else{
@@ -310,7 +255,7 @@
 				success:function(data){
 					var result = data.result;
 					if(result == "success"){
-						location.reload();
+						window.location.href = "article/articleRelease.do";
 					}else if(result="error"){
 						alert("审核失败！");
 					}else{
@@ -321,13 +266,6 @@
 					alert("程序出问题了,请联系管理人员");
 				}
 			});
-		}
-		
-		
-		
-		//导出excel
-		function toExcel(){
-			window.location.href='<%=basePath%>article/excel.do';
 		}
 	</script>
 

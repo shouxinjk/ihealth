@@ -96,7 +96,6 @@
 									<c:if test="${QX.cha == 1}">
 									
 									<c:forEach items="${varList}" var="var" varStatus="vs">
-									<c:if test ="${var.STATUS == '新建' or var.STATUS == '审核未通过' }">
 										<tr>
 											<td class='center'>
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.ARTICLE_ID}" class="ace" /><span class="lbl"></span></label>
@@ -173,7 +172,6 @@
 												</div>
 											</td>
 										</tr>
-										</c:if>
 									</c:forEach>
 									</c:if>
 									
@@ -347,29 +345,7 @@
 			 diag.show();
 		}
 		
-		//提交
-		function sub(id){
-			$.ajax({
-				url:"article/editStatus",
-				type:"post",
-				contentType:"application/json;charset=utf8",
-				data:JSON.stringify({"id":id}),
-				dataType:"json",
-				success:function(data){
-					var result = data.result;
-					if(result == "success"){
-						location.reload();
-					}else if(result="error"){
-						alert("提交失败！");
-					}else{
-						alert("获取ID失败！");
-					}
-				},
-				error:function(){
-					alert("程序出问题了,请联系管理人员");
-				}
-			});
-		}
+		
 		
 		//批量操作
 		function makeAll(msg){
@@ -420,6 +396,30 @@
 		//导出excel
 		function toExcel(){
 			window.location.href='<%=basePath%>article/excel.do';
+		}
+		
+		//提交
+		function sub(id){
+			$.ajax({
+				url:"article/editStatus",
+				type:"post",
+				contentType:"application/json;charset=utf8",
+				data:JSON.stringify({"id":id}),
+				dataType:"json",
+				success:function(data){
+					var result = data.result;
+					if(result == "success"){
+						window.location.href = "article/list.do";
+					}else if(result="error"){
+						alert("提交失败！");
+					}else{
+						alert("获取ID失败！");
+					}
+				},
+				error:function(){
+					alert("程序出问题了,请联系管理人员");
+				}
+			});
 		}
 	</script>
 

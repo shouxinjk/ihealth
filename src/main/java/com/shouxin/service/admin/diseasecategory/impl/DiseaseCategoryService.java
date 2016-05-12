@@ -142,6 +142,12 @@ public class DiseaseCategoryService implements DiseaseCategoryManager{
 		// TODO Auto-generated method stub
 		return (List<DiseaseCategory>) dao.findForList("DiseaseCategoryMapper.findAllDiseases", null);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<DiseaseCategory> findAllIsInheritabl() throws Exception {
+		
+		return (List<DiseaseCategory>) dao.findForList("DiseaseCategoryMapper.findAllIsInheritabl", null);
+	}
 	
 }
 

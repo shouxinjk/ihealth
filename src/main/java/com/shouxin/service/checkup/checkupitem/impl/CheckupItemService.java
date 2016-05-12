@@ -132,6 +132,10 @@ public class CheckupItemService implements CheckupItemManager{
 		dao.update("CheckupItemMapper.editStatus", pd);
 		
 	}
+
+	public void removeStatus(PageData pd) throws Exception {
+		dao.update("CheckupItemMapper.removeStatus", pd);
+	}
 	
 }
 

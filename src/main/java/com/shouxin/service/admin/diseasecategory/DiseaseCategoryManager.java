@@ -81,5 +81,7 @@ public interface DiseaseCategoryManager{
 	
 	
 	public List<DiseaseCategory> findAllDiseases() throws Exception;
+	
+	public List<DiseaseCategory> findAllIsInheritabl() throws Exception;
 }
 
