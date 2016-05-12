@@ -445,25 +445,33 @@ public class RestfullController extends BaseController {
 		String checkItemId = jasonObject.getString("checkupItemId");	//获取当前项目ID
 		String status = jasonObject.getString("stauts");		//获取状态
 		String subGroup = jasonObject.getString("subGroup");	//获取分组名
+		if (subGroup != null || !"".equals(subGroup)) {
+			//根据分组名查询当前分组下的所有项目
+			pd.put("SUBGROUP", subGroup);
+			this.checkupitemService.removeStatus(pd);
+			List<PageData> subList = this.checkupitemService.findByGroup(pd);
+			if (subList != null && subList.size() >0) {
+				for (PageData pageData : subList) {
+					// 取出所有项目的ID
+					String id = pageData.getString("CHECKUPITEM_ID");
+					// 根据ID  将查询到的所有数据的状态改为已删除
+					pd.put("CHECKUPITEM_ID", id);
+					this.checkupitemService.editAllStatus(pd);
+				}
+				msg = "success";
+			}else{
+				msg = "error";
+			}
+			
+		}else{
+			msg = "error";
+		}
 		//如果当前状态为已选中 则将当前状态修改为 已删除
 		if (status.equals(StatusEnum.ALREADYENABLED.getName())) {
-			if (subGroup != null || "".equals(subGroup)) {
-				//根据分组名查询当前分组下的所有项目
-				pd.put("SUBGROUP", subGroup);
-				List<PageData> subList = this.checkupitemService.findByGroup(pd);
-				if (subList != null && subList.size() >0) {
-					for (PageData pageData : subList) {
-						// 取出所有项目的ID
-						String id = pageData.getString("CHECKUPITEM_ID");
-						// 根据ID  将查询到的所有数据的状态改为已删除
-						pd.put("CHECKUPITEM_ID", id);
-						this.checkupitemService.editAllStatus(pd);
-					}
-					msg = "success";
-				}else{
-					msg = "error";
-				}
-				
+			if (checkItemId != null || "".equals(checkItemId)) {
+				pd.put("CHECKUPITEM_ID", checkItemId);
+				this.checkupitemService.editAllStatus(pd);
+				msg = "success";
 			}else{
 				msg = "error";
 			}
