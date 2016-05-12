@@ -31,6 +31,10 @@ public interface CheckupItemManager{
 	 */
 	public void edit(PageData pd)throws Exception;
 	
+	public void editAllStatus(PageData pd)throws Exception;
+	
+	public void editStatus(PageData pd)throws Exception;
+	
 	/**列表
 	 * @param page
 	 * @throws Exception
@@ -88,5 +92,13 @@ public interface CheckupItemManager{
 	 * @throws Exception
 	 */
 	public List<PageData> findCIByIdOrSubGroup(PageData pd)throws Exception;
+	
+	/**
+	 * 根据当前分组名  查询所有项目
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findByGroup(PageData pd)throws Exception;
 }
 

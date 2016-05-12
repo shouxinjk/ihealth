@@ -106,13 +106,31 @@ public class CheckupItemService implements CheckupItemManager{
 
 	@SuppressWarnings("unchecked")
 	public List<PageData> findCIByGroup(PageData pd) throws Exception {
-		// TODO Auto-generated method stub
 		return (List<PageData>) dao.findForList("CheckupItemMapper.findCIByGroup", pd);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<PageData> findCIByIdOrSubGroup(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("CheckupItemMapper.findCIByIdOrSubGroup", pd);
+	}
+
+	/**
+	 * 根据当前分组名，查询所有体检项目
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> findByGroup(PageData pd) throws Exception {
+		
+		return (List<PageData>) dao.findForList("CheckupItemMapper.findByGroup", pd);
+	}
+
+	public void editAllStatus(PageData pd) throws Exception {
+		dao.update("CheckupItemMapper.editAllStatus", pd);
+		
+	}
+
+	public void editStatus(PageData pd) throws Exception {
+		dao.update("CheckupItemMapper.editStatus", pd);
+		
 	}
 	
 }

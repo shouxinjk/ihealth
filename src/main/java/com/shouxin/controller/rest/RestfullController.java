@@ -352,7 +352,7 @@ public class RestfullController extends BaseController {
 	 * 根据体检项目ID修改体检项目的状态信息
 	 * url:http://localhost:8080/ihealth/rest/editCheckItem 
 	 * type:post
-	 * @param {"checkupItemId":"体检项目ID","stauts":"状态信息"}
+	 * @param {"checkupItemId":"体检项目ID","stauts":"状态信息","subGroup":"分组名"}
 	 * 
 	 * @return 	修改成功、返回 { "result": "success"} 
 	 * 			修改失败、返回{"result": "error"}
@@ -371,29 +371,41 @@ public class RestfullController extends BaseController {
 		
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(check);
-		String checkItemId = jasonObject.get("checkupItemId").toString();
-		String status = jasonObject.get("stauts").toString();
-
-		// 判断体检项目ID和状态是否为空
-		if (checkItemId == null || "".equals(checkItemId) || status == null || "".equals(status)) {
-			msg = "error";
-		} else {
-			pd.put("CHECKUPITEM_ID", checkItemId);
-			// 判断传入的状态是
-			// 如果状态值为 已选中 则改为已删除 
-			if (status.equals(StatusEnum.ALREADYENABLED.getName())) {
-				status = StatusEnum.HASBEENDELETED.getName();
-			} else if (status.equals(StatusEnum.HASBEENDELETED.getName())) {
-				// 如果状态值为已删除 则改为已选中 
-				status = StatusEnum.ALREADYENABLED.getName();
+		String checkItemId = jasonObject.getString("checkupItemId");	//获取当前项目ID
+		String status = jasonObject.getString("stauts");		//获取状态
+		String subGroup = jasonObject.getString("subGroup");	//获取分组名
+		//如果当前状态为已选中 则将当前状态修改为 已删除
+		if (status.equals(StatusEnum.ALREADYENABLED.getName())) {
+			if (subGroup != null || "".equals(subGroup)) {
+				//根据分组名查询当前分组下的所有项目
+				pd.put("SUBGROUP", subGroup);
+				List<PageData> subList = this.checkupitemService.findByGroup(pd);
+				if (subList != null && subList.size() >0) {
+					for (PageData pageData : subList) {
+						// 取出所有项目的ID
+						String id = pageData.getString("CHECKUPITEM_ID");
+						// 根据ID  将查询到的所有数据的状态改为已删除
+						pd.put("CHECKUPITEM_ID", id);
+						this.checkupitemService.editAllStatus(pd);
+					}
+					msg = "success";
+				}else{
+					msg = "error";
+				}
+				
+			}else{
+				msg = "error";
 			}
-			// 根据ID查询体检项目
-			pd = this.checkupitemService.findById(pd);
-			logger.debug("查看体检项目信息" + pd);
-			pd.put("STATUS", status);
-			logger.debug("修改体检项目信息");
-			this.checkupitemService.edit(pd);
-			msg = "success";
+		}else{
+			//根据当前ID  修改当前状态信息为已选中
+			if (checkItemId != null || "".equals(checkItemId)) {
+				pd.put("CHECKUPITEM_ID", checkItemId);
+				this.checkupitemService.editStatus(pd);
+				msg = "success";
+			}else{
+				msg = "error";
+			}
+		
 		}
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
