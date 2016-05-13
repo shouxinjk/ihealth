@@ -141,19 +141,28 @@ public class DiseaseRestController extends BaseController {
 		pd = this.getPageData();
 		JSONObject json = JSONObject.fromObject(disease);
 		String userID = json.get("userID").toString();
-		String personalDiseaseIDStr = json.get("personalDiseaseID").toString();
+		String personalDiseaseIDStr = "";
+		if(json.get("personalDiseaseID")!=null){
+			personalDiseaseIDStr = json.get("personalDiseaseID").toString();
+		}
 		String[] personalDiseaseID = personalDiseaseIDStr.split(",");
 		TreeSet<String> tr = new TreeSet<String>();
 		for(int i=0;i<personalDiseaseID.length;i++){
 			tr.add(personalDiseaseID[i]);
 		}
-		String familyDiseaseIDStr = json.get("familyDiseaseID").toString();
+		String familyDiseaseIDStr = "";
+		if(json.get("familyDiseaseID")!=null){
+			familyDiseaseIDStr = json.get("familyDiseaseID").toString();
+		}
 		String[] familyDiseaseID = familyDiseaseIDStr.split(",");
 		TreeSet<String> ftr = new TreeSet<String>();
 		for(int i=0;i<familyDiseaseID.length;i++){
 			ftr.add(familyDiseaseID[i]);
 		}
-		String focusDiseaseIDStr = json.get("focusDiseaseID").toString();
+		String focusDiseaseIDStr = "";
+		if(json.get("focusDiseaseID")!=null){
+			focusDiseaseIDStr = json.get("focusDiseaseID").toString();
+		}
 		String[] focusDiseaseID = focusDiseaseIDStr.split(",");
 		TreeSet<String> foctr = new TreeSet<String>();
 		for(int i=0;i<focusDiseaseID.length;i++){
