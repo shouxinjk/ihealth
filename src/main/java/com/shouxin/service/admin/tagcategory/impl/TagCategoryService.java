@@ -107,10 +107,12 @@ public class TagCategoryService implements TagCategoryManager{
 		List<TagCategory> TagCategory = this.listSubTagCategoryByParentId(parentID);
 		for (TagCategory cate : TagCategory) {
 			List<TagCategory> tag = this.listAllTagCategory(cate.getTAGCATEGORY_ID());
-			for (TagCategory tagCategory2 : tag) {
-				tagCategory2.setTreeUrl("tag/list.do?TAGCATEGORY_ID="+tagCategory2.getTAGCATEGORY_ID());
-				tagCategory2.setTarget("treeFrame");
-			}
+//			for (TagCategory tagCategory2 : tag) {
+//				tagCategory2.setTreeUrl("tag/list.do?TAGCATEGORY_ID="+tagCategory2.getTAGCATEGORY_ID());
+//				tagCategory2.setTarget("treeFrame");
+//			}
+			cate.setTarget("treeFrame");
+			cate.setTreeUrl("tag/list.do?TAGCATEGORY_ID="+cate.getTAGCATEGORY_ID());
 			cate.setSubTagCategory(tag);
 		}
 		return TagCategory;
