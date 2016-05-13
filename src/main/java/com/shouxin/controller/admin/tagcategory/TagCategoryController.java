@@ -57,7 +57,6 @@ public class TagCategoryController extends BaseController {
 		pd.put("CREATEBY", Jurisdiction.getUserId());
 		pd.put("CREATEON", new Date());
 //		pd.put("MATETYPE", "生活方式");
-		pd.put("ISEXCLUSIVE", 1);
 		tagcategoryService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");

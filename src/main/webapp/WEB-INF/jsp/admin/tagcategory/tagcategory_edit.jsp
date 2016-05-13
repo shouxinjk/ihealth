@@ -115,16 +115,6 @@
 				$("#NAME").focus();
 			return false;
 			}
-			if($("#MATETYPE").val()==""){
-				$("#MATETYPE").tips({
-					side:3,
-		            msg:'请输入特性',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#MATETYPE").focus();
-			return false;
-			}
 			if($("#ISEXCLUSIVE").val()==""){
 				$("#ISEXCLUSIVE").tips({
 					side:3,
