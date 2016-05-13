@@ -251,8 +251,8 @@
 			 diag.Drag=true;
 			 diag.Title ="新增";
 			 diag.URL = '<%=basePath%>examguideline/goAdd.do';
-			 diag.Width = 450;
-			 diag.Height = 355;
+			 diag.Width = 800;
+			  diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 if('${page.currentPage}' == '0'){
@@ -300,8 +300,8 @@
 			 diag.Drag=true;
 			 diag.Title ="编辑";
 			 diag.URL = '<%=basePath%>examguideline/goEditRule.do?EXAMGUIDELINE_ID='+Id;
-			 diag.Width = 450;
-			 diag.Height = 355;
+			 diag.Width = 800;
+			  diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 nextPage(${page.currentPage});
