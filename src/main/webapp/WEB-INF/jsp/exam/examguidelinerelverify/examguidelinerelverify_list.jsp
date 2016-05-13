@@ -31,7 +31,7 @@
 						<div class="col-xs-12">
 							
 						<!-- 检索  -->
-						<form action="examguideline/listRule.do" method="post" name="Form" id="Form">
+						<form action="examguideline/listRelease.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
 								<td>
@@ -86,20 +86,12 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<c:if test="${QX.edit == 1&&var.STATUS eq '医生已审核'}">
-														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
-															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
+													<c:if test="${QX.edit == 1&&var.STATUS eq '运维已补充'}">
+														<a class="btn btn-xs btn-success" title="审核" onclick="auditing1('${var.EXAMGUIDELINE_ID}','4')">
+															<i class="ace-icon fa fa-check-circle-o bigger-120" title="审核"></i>
 														</a>
-														<a class="btn btn-xs btn-success" title="运维补充" onclick="auditing('${var.EXAMGUIDELINE_ID}','3');">
-															<i class="ace-icon fa fa-th-large bigger-120" title="运维补充"></i>
-														</a>
-													</c:if>
-													<c:if test="${QX.edit == 1&& var.STATUS eq '运维审核未通过'}">
-														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
-															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
-														</a>
-														<a class="btn btn-xs btn-success" title="运维补充" onclick="auditing('${var.EXAMGUIDELINE_ID}','3');">
-															<i class="ace-icon fa fa-check-circle-o bigger-120" title="运维补充"></i>
+														<a class="btn btn-xs btn-danger" title="不合格" onclick="auditing1('${var.EXAMGUIDELINE_ID}','20')">
+															<i class="ace-icon fa fa-times-circle-o bigger-120" title="不合格"></i>
 														</a>
 													</c:if>
 												</div>
@@ -244,7 +236,7 @@
 			});
 		});
 		
-		//新增
+		<%-- //新增
 		function add(){
 			 top.jzts();
 			 var diag = new top.Dialog();
@@ -266,8 +258,8 @@
 			 };
 			 diag.show();
 		}
-		
-		//删除
+		 --%>
+		<%-- //删除
 		function del(Id){
 			bootbox.confirm("确定要删除吗?", function(result) {
 				if(result) {
@@ -278,22 +270,22 @@
 					});
 				}
 			});
-		}
+		} --%>
 		
 		//医生审核
-		function auditing(Id,STATUS){
+		function auditing1(Id,STATUS){
 			bootbox.confirm("确定要操作吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>examguideline/auditing.do?EXAMGUIDELINE_ID="+Id+"&STATUS="+STATUS+"&tm="+new Date().getTime();
+					var url = "<%=basePath%>examguideline/auditing.do?EXAMGUIDELINE_ID="+Id+"&STATUS="+STATUS;
 					$.get(url,function(data){
-						nextPage(${page.currentPage});
+						location.href="<%=basePath%>examguideline/listRelVerify.do?dnowPage=${page.currentPage}";
 					});
 				}
 			});
 		}
 		
-		//修改
+		<%-- //修改
 		function edit(Id){
 			 top.jzts();
 			 var diag = new top.Dialog();
@@ -310,8 +302,8 @@
 			 };
 			 diag.show();
 		}
-		
-		//批量操作
+		 --%>
+		<%-- //批量操作
 		function makeAll(msg){
 			bootbox.confirm(msg, function(result) {
 				if(result) {
@@ -356,7 +348,7 @@
 				}
 			});
 		};
-		
+		 --%>
 		//导出excel
 		function toExcel(){
 			window.location.href='<%=basePath%>examguideline/excel.do';

@@ -81,5 +81,12 @@ public interface ExamGuideLineManager{
 	 */
 	public List<PageData> listVerfiy(Page page) throws Exception;
 	
+	/**
+	 * 运维以补充指南列表
+	 * @param pd
+	 * @throws Exception
+	 */
+	public List<PageData> listRelVerfiy(Page page) throws Exception;
+	
 }
 

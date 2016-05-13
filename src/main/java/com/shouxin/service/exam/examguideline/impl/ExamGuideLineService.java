@@ -118,9 +118,19 @@ public class ExamGuideLineService implements ExamGuideLineManager {
 	/**
 	 * 医生已提交指南审核管理页面
 	 */
+	@SuppressWarnings("unchecked")
 	public List<PageData> listVerfiy(Page page) throws Exception {
 		// TODO Auto-generated method stub
 		return (List<PageData>) dao.findForList("ExamGuideLineMapper.datalistVerfiyPage", page);
+	}
+
+	/**
+	 * 运维已补充管理页面
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listRelVerfiy(Page page) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("ExamGuideLineMapper.datalistRelVerfiyPage", page);
 	}
 
 }

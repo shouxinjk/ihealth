@@ -103,6 +103,11 @@
 															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
 														</a>
 													</c:if>
+													<c:if test="${QX.del == 1 && var.STATUS eq '医生审核未通过'}">
+														<a class="btn btn-xs btn-danger" onclick="auditing('${var.EXAMGUIDELINE_ID}');">
+															<i class="ace-icon fa fa-twitter-square bigger-120" title="重新提交"></i>
+														</a>
+													</c:if>
 												</div>
 												<div class="hidden-md hidden-lg">
 													<div class="inline pos-rel">
@@ -291,7 +296,7 @@
 		
 		//医生审核
 		function auditing(Id){
-			bootbox.confirm("确定要审核吗?", function(result) {
+			bootbox.confirm("确定要操作吗?", function(result) {
 				if(result) {
 					top.jzts();
 					var url = "<%=basePath%>examguideline/auditing.do?EXAMGUIDELINE_ID="+Id+"&STATUS=18&tm="+new Date().getTime();
