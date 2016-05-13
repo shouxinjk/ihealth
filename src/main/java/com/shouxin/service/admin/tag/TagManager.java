@@ -67,6 +67,14 @@ public interface TagManager{
 	public List<PageData> findAllByTagCategoryId(PageData pd)throws Exception;
 	
 	/**
+	 * 通过用户id获取tag数据  并按TAGCATEGORY_ID 分组
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findALLByGroup(PageData pd)throws Exception;
+	
+	/**
 	 * 删除用户所属的标签信息
 	 * @throws Exception
 	 */
