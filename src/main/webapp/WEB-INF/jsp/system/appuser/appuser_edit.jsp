@@ -204,7 +204,7 @@
 		initTag();
 		initPersonalDisease();
 		initFocusDisease();
-		initFamilyDisease();
+		//initFamilyDisease();
 	});
 	
 	//加载标签信息
@@ -245,7 +245,7 @@
 	}
 	
 	//加载家族遗传疾病信息
-	function initFamilyDisease(){
+	/* function initFamilyDisease(){
 		var setting = {
 			showLine : true, //是否显示节点间的连线 
 			checkable: true, //带有复选框
@@ -254,7 +254,7 @@
 		var zns = '${isInheritabl}';
 		var zTreeNodess = eval(zns);
 		familyTree = $("#familyTree").zTree(setting, zTreeNodess);
-	}
+	} */
 	
 	function che(){
 		tagOnCheck();
