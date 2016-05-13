@@ -85,17 +85,41 @@ public interface DiseaseManager{
 	
 	
 	/**
-	 * 为这个用户添加疾病信息
+	 * 为这个用户添加个人疾病信息
 	 * @param pd
 	 * @throws Exception
 	 */
-	public void saveUserAndDisease(PageData pd) throws Exception;
+	public void userSavepPersonalDisease(PageData pd) throws Exception;
+	
+	/**
+	 * 为这个用户添加家族疾病信息
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void userSavepFamilyDisease(PageData pd) throws Exception;
+	
+	/**
+	 * 为这个用户添加关注疾病信息
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void userSavepFocusDisease(PageData pd) throws Exception;
 	
 	/**
 	 * 删除这个用户的所有的疾病信息
 	 * @throws Exception
 	 */
 	public void deleteDiseaseByUserID(PageData pd) throws Exception;
+	/**
+	 * 删除这个用户的所有的疾病信息
+	 * @throws Exception
+	 */
+	public void deleteFamilyDiseaseByUserID(PageData pd) throws Exception;
+	/**
+	 * 删除这个用户的所有的疾病信息
+	 * @throws Exception
+	 */
+	public void deleteFocusDiseaseByUserID(PageData pd) throws Exception;
 	
 	/**通过id获取数据
 	 * @param pd

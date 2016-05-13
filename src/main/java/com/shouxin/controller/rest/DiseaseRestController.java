@@ -111,7 +111,7 @@ public class DiseaseRestController extends BaseController {
 				pd.put("ID", this.get32UUID());
 				pd.put("USER_ID", userId);
 				pd.put("DISEASE_ID", diseaseIDS[i]);
-				diseaseService.saveUserAndDisease(pd);
+				diseaseService.userSavepPersonalDisease(pd);
 			}
 			msg = "success";
 		} else {
@@ -123,7 +123,7 @@ public class DiseaseRestController extends BaseController {
 	}
 
 	/**
-	 * 修改属于用户的标签信息 URL：http://localhost:8080/ihealth/restdisease/updateDisease
+	 * 修改属于用户的疾病信息 URL：http://localhost:8080/ihealth/restdisease/updateDisease
 	 * 
 	 * @param tag
 	 *            参数一：userID 当前用户的id ，参数二 tagID 所有选中标签的id 将选中的标签的id拼接为以逗号 隔开的字符串
@@ -134,31 +134,71 @@ public class DiseaseRestController extends BaseController {
 	@RequestMapping(value = "/updateDisease")
 	@ResponseBody
 	public Object upadteTag(@RequestBody String disease) throws Exception {
-		logBefore(logger, "修改标签信息");
+		logBefore(logger, "==更新疾病信息");
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		JSONObject json = JSONObject.fromObject(disease);
 		String userID = json.get("userID").toString();
-		String allDiseaseIDStr = json.get("diseaseID").toString();
-		String[] allDiseaseID = allDiseaseIDStr.split(",");
+		String personalDiseaseIDStr = json.get("personalDiseaseID").toString();
+		String[] personalDiseaseID = personalDiseaseIDStr.split(",");
 		TreeSet<String> tr = new TreeSet<String>();
-		for(int i=0;i<allDiseaseID.length;i++){
-			tr.add(allDiseaseID[i]);
+		for(int i=0;i<personalDiseaseID.length;i++){
+			tr.add(personalDiseaseID[i]);
 		}
-		allDiseaseID = (String[]) tr.toArray(new String[0]);
-		if (allDiseaseIDStr != null && allDiseaseID.length > 0 && userID != null) {
+		String familyDiseaseIDStr = json.get("familyDiseaseID").toString();
+		String[] familyDiseaseID = familyDiseaseIDStr.split(",");
+		TreeSet<String> ftr = new TreeSet<String>();
+		for(int i=0;i<familyDiseaseID.length;i++){
+			ftr.add(familyDiseaseID[i]);
+		}
+		String focusDiseaseIDStr = json.get("focusDiseaseID").toString();
+		String[] focusDiseaseID = focusDiseaseIDStr.split(",");
+		TreeSet<String> foctr = new TreeSet<String>();
+		for(int i=0;i<focusDiseaseID.length;i++){
+			foctr.add(focusDiseaseID[i]);
+		}
+		personalDiseaseID = (String[]) tr.toArray(new String[0]);
+		familyDiseaseID = (String[]) ftr.toArray(new String[0]);
+		focusDiseaseID = (String[]) foctr.toArray(new String[0]);
+		if (personalDiseaseIDStr != null && personalDiseaseID.length > 0 && userID != null) {
 			pd.put("USER_ID", userID);
 			diseaseService.deleteDiseaseByUserID(pd);
-			for (int i = 0; i < allDiseaseID.length; i++) {
+			for (int i = 0; i < personalDiseaseID.length; i++) {
 				pd.put("ID", this.get32UUID());
 				pd.put("USER_ID", userID);
-				pd.put("DISEASE_ID", allDiseaseID[i]);
-				diseaseService.saveUserAndDisease(pd);
+				pd.put("DISEASE_ID", personalDiseaseID[i]);
+				diseaseService.userSavepPersonalDisease(pd);
 				msg = "success";
 			}
-		} else {
+		}else{
+			msg = "no";
+		} 
+		if(familyDiseaseIDStr != null && familyDiseaseID.length > 0 && userID != null){
+			pd.put("USER_ID", userID);
+			diseaseService.deleteFamilyDiseaseByUserID(pd);
+			for (int i = 0; i < personalDiseaseID.length; i++) {
+				pd.put("ID", this.get32UUID());
+				pd.put("USER_ID", userID);
+				pd.put("DISEASE_ID", familyDiseaseID[i]);
+				diseaseService.userSavepFamilyDisease(pd);
+				msg = "success";
+			}
+		}else{
+			msg = "no";
+		} 
+		if(focusDiseaseIDStr != null && focusDiseaseID.length > 0 && userID != null){
+			pd.put("USER_ID", userID);
+			diseaseService.deleteFocusDiseaseByUserID(pd);
+			for (int i = 0; i < personalDiseaseID.length; i++) {
+				pd.put("ID", this.get32UUID());
+				pd.put("USER_ID", userID);
+				pd.put("DISEASE_ID", focusDiseaseID[i]);
+				diseaseService.userSavepFocusDisease(pd);
+				msg = "success";
+			}
+		}else {
 			msg = "no";
 		}
 		map.put("msg", msg);

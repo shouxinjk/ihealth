@@ -180,29 +180,53 @@
 
 	<!-- 查询该用户下的所有疾病 -->
 	<select id="listDiseaseByUserID" parameterType="pd" resultType="pd">
-		SELECT d.* from admin_disease d ,admin_useranddisease ud where
+		SELECT d.* from admin_disease d ,sys_app_user_and_personal_disease ud where
 		d.DISEASE_ID = ud.disease_id and ud.USER_ID = #{USER_ID}
 	</select>
 
 	<!-- 查询该用户下的所有遗传疾病 -->
 	<select id="listDiseaseByUserIDIsInherItable" parameterType="pd"
 		resultType="pd">
-		SELECT d.* from admin_disease d ,admin_useranddisease ud
-		where d.DISEASE_ID = ud.disease_id and ISINHERITABLE=1 and ud.USER_ID = #{USER_ID}
+		SELECT d.* from admin_disease d ,sys_app_user_and_family_disease ud where
+		d.DISEASE_ID = ud.disease_id and ud.USER_ID = #{USER_ID}
 	</select>
 	
 	<!-- 查询该用户下的所有关注疾病 -->
 	<select id="listDiseaeByUserIDIsHighIncaidence" parameterType="pd"
 		resultType="pd">
-		SELECT d.* from admin_disease d ,admin_useranddisease ud
-		where d.DISEASE_ID = ud.disease_id and ISHIGHINCIDENCE=1 and ud.USER_ID = #{USER_ID}
+		SELECT d.* from admin_disease d ,sys_app_user_and_focus_disease ud where
+		d.DISEASE_ID = ud.disease_id and ud.USER_ID = #{USER_ID}
 	</select>
 
 
-	<!-- 新增属于用户的疾病信息 -->
-	<insert id="userSaveDisease" parameterType="pd">
+	<!-- 新增属于用户的个人疾病信息 -->
+	<insert id="userSavepPersonalDisease" parameterType="pd">
 		insert into
-		admin_useranddisease
+		sys_app_user_and_personal_disease
+		(
+		id,user_id,disease_id
+		) values
+		(
+		#{ID},#{USER_ID},#{DISEASE_ID}
+		)
+
+	</insert>
+	<!-- 新增属于用户的家族疾病信息 -->
+	<insert id="userSavepFamilyDisease" parameterType="pd">
+		insert into
+		sys_app_user_and_family_disease
+		(
+		id,user_id,disease_id
+		) values
+		(
+		#{ID},#{USER_ID},#{DISEASE_ID}
+		)
+
+	</insert>
+	<!-- 新增属于用户的关注疾病信息 -->
+	<insert id="userSavepFocusDisease" parameterType="pd">
+		insert into
+		sys_app_user_and_focus_disease
 		(
 		id,user_id,disease_id
 		) values
@@ -212,10 +236,22 @@
 
 	</insert>
 
-	<!-- 删除属于这个用户的标签信息 -->
-	<delete id="deleteDiseaseByUserID" parameterType="pd">
+	<!-- 删除属于这个用户的个人疾病信息 -->
+	<delete id="deletePersonalDiseaseByUserID" parameterType="pd">
 		delete from
-		admin_useranddisease
+		sys_app_user_and_personal_disease
+		where user_id=#{USER_ID}
+	</delete>
+	<!-- 删除属于这个用户的家族疾病信息 -->
+	<delete id="deleteFamilyDiseaseByUserID" parameterType="pd">
+		delete from
+		sys_app_user_and_family_disease
+		where user_id=#{USER_ID}
+	</delete>
+	<!-- 删除属于这个用户的关注疾病信息 -->
+	<delete id="deleteFocusDiseaseByUserID" parameterType="pd">
+		delete from
+		sys_app_user_and_focus_disease
 		where user_id=#{USER_ID}
 	</delete>
 
