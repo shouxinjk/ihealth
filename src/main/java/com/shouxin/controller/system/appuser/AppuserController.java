@@ -320,20 +320,18 @@ public class AppuserController extends BaseController {
 		 * 需求： 当用户点击新增按钮时，跳转到新增页面并获取所有的标签分类下的标签信息
 		 */
 		try{
-			List<TagCategory> list = this.tagcategoryService.findTagsList();
-			List<DiseaseCategory> disList = this.diseasecategoryService.findAllDiseases();
-			List<DiseaseCategory> isInheritablList = this.diseasecategoryService.findAllIsInheritabl();
+			//加载疾病信息
+			JSONArray diseasearr = JSONArray.fromObject(diseasecategoryService.listSubDiseaseCategoryByParentId("0"));
+			String diseaseJson = diseasearr.toString();
+			logBefore(logger, diseaseJson+"列表DiseaseCategory=======");
+			diseaseJson = diseaseJson.replaceAll("DISEASECATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("ISINHERITABLE", "yic").replaceAll("subDiseaseCategory", "nodes").replaceAll("hasDiseaseCategory", "checked");
+			model.addAttribute("zTreeNodess", diseaseJson);
 			
-			String isInheritabl = JSONArray.fromObject(isInheritablList).toString();
-			String jsons = JSONArray.fromObject(disList).toString();
+			//加载标签信息
+			List<TagCategory> list = this.tagcategoryService.findTagsList();
 			String json = JSONArray.fromObject(list).toString();
-			logger.debug(json + "-------------------------------------------------");
 			json = json.replaceAll("TAG_ID", "id").replaceAll("TAGCATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("tags", "nodes");
-			jsons = jsons.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
-			isInheritabl = isInheritabl.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
 			model.addAttribute("zTreeNodes", json);
-			model.addAttribute("zTreeNodess", jsons);
-			model.addAttribute("isInheritabl", isInheritabl);
 		} catch(Exception e){
 			logger.error(e.toString(), e);
 		}
@@ -617,15 +615,20 @@ public class AppuserController extends BaseController {
 			/**
 			 * 需求： 当用户点击新增按钮时，跳转到新增页面并获取所有的标签分类下的标签信息
 			 */
+			
+			//加载疾病信息
+			JSONArray diseasearr = JSONArray.fromObject(diseasecategoryService.listSubDiseaseCategoryByParentId("0"));
+			String diseaseJson = diseasearr.toString();
+			logBefore(logger, diseaseJson+"列表DiseaseCategory=======");
+			diseaseJson = diseaseJson.replaceAll("DISEASECATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("ISINHERITABLE", "yic").replaceAll("subDiseaseCategory", "nodes").replaceAll("hasDiseaseCategory", "checked");
+			model.addAttribute("zTreeNodess", diseaseJson);
+			
+			//加载标签信息
 			List<TagCategory> list = this.tagcategoryService.findTagsList();
-			List<DiseaseCategory> disList = this.diseasecategoryService.findAllDiseases();
-			String jsons = JSONArray.fromObject(disList).toString();
 			String json = JSONArray.fromObject(list).toString();
-			logger.debug(json + "-------------------------------------------------");
 			json = json.replaceAll("TAG_ID", "id").replaceAll("TAGCATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("tags", "nodes");
-			jsons = jsons.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
 			model.addAttribute("zTreeNodes", json);
-			model.addAttribute("zTreeNodess", jsons);
+			
 			
 			
 			pd = appuserService.findByUiId(pd);						//根据ID读取

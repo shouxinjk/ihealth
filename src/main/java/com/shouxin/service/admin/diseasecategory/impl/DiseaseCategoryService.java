@@ -110,8 +110,7 @@ public class DiseaseCategoryService implements DiseaseCategoryManager{
 			List<DiseaseCategory> dis = this.listAllDiseaseCategory(cate.getDISEASECATEGORY_ID());
 			cate.setTreeUrl("disease/list.do?DISEASECATEGORY_ID="+cate.getDISEASECATEGORY_ID());
 			cate.setTarget("treeFrame");
-			cate.setSubDiseaseCategory(dis);
-			
+			cate.setSubDiseaseCategory(dis);	
 		}
 		
 		return diseaseCategory;

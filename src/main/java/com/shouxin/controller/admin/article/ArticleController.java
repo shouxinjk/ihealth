@@ -34,6 +34,7 @@ import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
 import com.shouxin.util.StatusEnum;
 import com.shouxin.util.StringUtil;
+import com.shouxin.util.Tools;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -370,7 +371,7 @@ public class ArticleController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		String keywords = pd.getString("keywords");				//关键词检索条件
-		if(null != keywords && !"".equals(keywords)){
+		if(Tools.notEmpty(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
 		page.setPd(pd);
