@@ -28,6 +28,7 @@ import com.shouxin.util.MarriageStatusEnum;
 import com.shouxin.util.PageData;
 import com.shouxin.util.SexEnum;
 import com.shouxin.util.StatusEnum;
+import com.shouxin.util.Tools;
 
 import net.sf.json.JSONObject;
 
@@ -1202,7 +1203,7 @@ public class RestfullController extends BaseController {
 		String userId = jasonObject.get("userId").toString();
 		String user_Id = jasonObject.get("user_Id").toString();
 		String connection = jasonObject.get("connection").toString();
-		if (userId == null && "".equals(userId) && user_Id == null && "".equals(user_Id) ) {
+		if (Tools.isEmpty(userId) && Tools.isEmpty(user_Id)) {
 			logger.debug("获取用户ID失败！");
 			msg = "error";
 		}else{
@@ -1271,38 +1272,38 @@ public class RestfullController extends BaseController {
 		try {
 			String userId = jasonObject.get("userId").toString();
 			
-			if (userId != null && !"".equals(userId)) {
+			if (Tools.notEmpty(userId)) {
 				pd.put("USER_ID", userId);
 				//根据用户ID 查询用户信息
 				PageData pds = this.appuserService.findByUiId(pd);
-				if (null != pds.getString("PHONE") && !"".equals(pds.getString("PHONE"))) {
+				if (Tools.notEmpty(pds.getString("PHONE"))) {
 					userNumber += 10;
 				}
-				if (null != pds.getString("BIRTHDAY") && !"".equals(pds.getString("BIRTHDAY"))) {
+				if (Tools.notEmpty(pds.getString("BIRTHDAY"))) {
 					userNumber += 10;
 				}
-				if (null != pds.getString("SEX") && !"".equals(pds.getString("SEX"))) {
+				if (Tools.notEmpty(pds.getString("SEX"))) {
 					userNumber += 10;
 				}
-				if (null != pds.getString("MARRIAGESTATUS") && !"".equals(pds.getString("MARRIAGESTATUS"))) {
+				if (Tools.notEmpty(pds.getString("MARRIAGESTATUS"))) {
 					userNumber += 10;
 				}
-				if (null != pds.getString("BIRTHPLACE") && !"".equals(pds.getString("BIRTHPLACE"))) {
+				if (Tools.notEmpty(pds.getString("BIRTHPLACE"))) {
 					userNumber += 10;
 				}
-				if (null != pds.getString("LIVEPLACE") && !"".equals(pds.getString("LIVEPLACE"))) {
+				if (Tools.notEmpty(pds.getString("LIVEPLACE"))) {
 					userNumber += 10;
 				}
-				if (null != pds.getString("HEIGHT") && !"".equals(pds.getString("HEIGHT"))) {
+				if (Tools.notEmpty(pds.getString("HEIGHT"))) {
 					userNumber += 10;
 				}
-				if (null != pds.getString("WEIGHT") && !"".equals(pds.getString("WEIGHT"))) {
+				if (Tools.notEmpty(pds.getString("WEIGHT"))) {
 					userNumber += 10;
 				}
-				if (null != pds.getString("CAREER") && !"".equals(pds.getString("CAREER"))) {
+				if (Tools.notEmpty(pds.getString("CAREER"))) {
 					userNumber += 10;
 				}
-				if (null != pds.getString("DEGREE") && !"".equals(pds.getString("DEGREE"))) {
+				if (Tools.notEmpty(pds.getString("DEGREE"))) {
 					userNumber += 10;
 				}
 				if (userNumber>=100) {
@@ -1310,8 +1311,7 @@ public class RestfullController extends BaseController {
 				}
 				
 				//获取关联的用户
-				
-				if (userId != null && !"".equals(userId)) {
+				if (Tools.notEmpty(userId)) {
 					pd.put("user_id_one", userId);
 					List<PageData> list = this.appuserService.findUserCastUser(pd);
 					for (int i = 0; i < list.size(); i++) {
@@ -1323,18 +1323,18 @@ public class RestfullController extends BaseController {
 					}
 				}
 				
-				
 				//获取标签信息
-				List<PageData> tagList = this.tagService.findAllGroupByUId(pd);
-				
-				if (tagList.size()>0 && tagList != null) {
-					for (int i = 0; i < tagList.size(); i++) {
-						tagNumber += 10;
-					}
-					if (tagNumber>=100) {
-						tagNumber =100;
-					}
+				List<PageData> tagList = this.tagService.findALLByGroup(pd);
+				if (tagList.size() > 0 && tagList != null) {
+					tagNumber = 10 * tagList.size();
 				}
+				if (tagNumber>=100) {
+					tagNumber =100;
+				}
+				
+				
+				
+				
 				//所有疾病
 				if (this.diseaseService.listAllByUserID(pd).size() > 0) {
 					diseaseNumber += 30;
