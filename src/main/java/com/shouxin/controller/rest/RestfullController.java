@@ -537,14 +537,16 @@ public class RestfullController extends BaseController {
 		if (userId == null || "".equals(userId)) {
 			msg = "error";
 		} else {
-			logger.debug("根据用户ID 查询体检项目信息11");
+			//logger.debug("根据用户ID 查询体检项目信息11");
 			List<PageData> pageDate = this.checkupitemService.listAll(pd);
 			List<PageData> groupList = this.checkupitemService.findCIByGroup(pd);
 			if (pageDate != null && pageDate.size() > 0) {
 				msg = "success";
 				map.put("group", groupList);
 				map.put("data", pageDate);
+				System.out.println("youshuju");
 			} else {
+				System.out.println("meishuju");
 				msg = "no";
 			}
 		}
