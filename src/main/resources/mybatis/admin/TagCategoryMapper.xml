@@ -172,7 +172,6 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		 where PARENT_ID = 0
 	</select>
 	
 	<!-- 批量删除 -->

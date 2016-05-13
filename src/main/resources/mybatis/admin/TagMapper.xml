@@ -106,7 +106,7 @@
 		<include refid="Field1"></include>
 		from 
 		<include refid="tableName"></include> t
-		where t.TAGCATEGORY_ID IN (select tc.TAGCATEGORY_ID from admin_tagcategory tc where tc.parent_id = #{TAGCATEGORY_ID})
+		where t.TAGCATEGORY_ID =#{TAGCATEGORY_ID}
 	</select>
 	
 	<!-- 列表 -->
