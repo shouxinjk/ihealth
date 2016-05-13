@@ -521,7 +521,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "findCheckItems", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findCheckItems(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据用户ID获取体检项目信息");
+		logBefore(logger, "根据用户ID获取体检项目信息1");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -537,7 +537,7 @@ public class RestfullController extends BaseController {
 		if (userId == null || "".equals(userId)) {
 			msg = "error";
 		} else {
-			logger.debug("根据用户ID 查询体检项目信息");
+			logger.debug("根据用户ID 查询体检项目信息11");
 			List<PageData> pageDate = this.checkupitemService.listAll(pd);
 			List<PageData> groupList = this.checkupitemService.findCIByGroup(pd);
 			if (pageDate != null && pageDate.size() > 0) {
@@ -577,7 +577,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "getCheckItemsByGroup", method = RequestMethod.POST)
 	@ResponseBody
 	public Object getCheckItemsByGroup(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据用户ID获取体检项目信息");
+		logBefore(logger, "根据用户ID获取体检项目信息2");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -629,7 +629,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "getCheckItem", method = RequestMethod.POST)
 	@ResponseBody
 	public Object getCheckItem(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据用户ID获取体检项目信息");
+		logBefore(logger, "根据用户ID获取体检项目信息3");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
