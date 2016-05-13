@@ -125,7 +125,7 @@
 													</c:if>
 													<c:if test="${QX.edit == 1 and var.STATUS == '新建' or var.STATUS == '审核未通过'}">
 													<a class="btn btn-xs btn-success" onclick="sub('${var.ARTICLE_ID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="提交"></i>
+														<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
 													</a>
 													</c:if>
 													

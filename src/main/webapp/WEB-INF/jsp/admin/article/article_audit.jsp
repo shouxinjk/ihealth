@@ -113,13 +113,13 @@
 												<div class="hidden-sm hidden-xs btn-group">
 													<c:if test="${QX.edit == 1}">
 													<a class="btn btn-xs btn-success" onclick="auditSuccess('${var.ARTICLE_ID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="审核通过"></i>
+														<i class="ace-icon fa fa-check-circle-o bigger-120" title="审核通过"></i>
 													</a>
 													</c:if>
 													
 													<c:if test="${QX.del == 1 }">
 													<a class="btn btn-xs btn-danger" onclick="auditError('${var.ARTICLE_ID}');">
-														<i class="ace-icon fa fa-trash-o bigger-120" title="审核拒绝"></i>
+														<i class="ace-icon fa fa-times-circle-o bigger-120" title="审核拒绝"></i>
 													</a>
 													</c:if>
 												</div>
