@@ -22,6 +22,7 @@ import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
 import com.shouxin.service.system.appuser.AppuserManager;
 import com.shouxin.service.system.user.UserManager;
 import com.shouxin.util.AppUtil;
+import com.shouxin.util.DateUtil;
 import com.shouxin.util.DegreeEnum;
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.MarriageStatusEnum;
@@ -148,7 +149,7 @@ public class RestfullController extends BaseController {
 		pd.put("STATUS", "1");									//状态
 		pd.put("LAST_LOGIN", new Date());						//最后登录时间
 		pd.put("CREATEON", new Date());							//该记录的创建时间
-		// 判断手机号码是否存在
+		// 判断手机号码是否存在	如果当前手机号存在  则继续判断openID是否存在，如果都存在 则返回用户数据   如果不存在 则 添加openID和用户头像信息
 		if (null == this.appuserService.findByPhone(pd)) { 
 			logBefore(logger, "经过判断，手机号码在数据库中不存在，执行新增操作");
 			appuserService.saveU(pd); // 执行保存
@@ -156,8 +157,18 @@ public class RestfullController extends BaseController {
 			map.put("data", appuserService.findByUiId(pd));
 		} else {
 			logBefore(logger, "经过判断，手机号码存在：-------------------------------");
-			map.put("data", this.appuserService.findByPhone(pd));
-			msg = "existence";	
+			PageData pds = this.appuserService.findByPhone(pd);
+			String openid = pds.getString("OPENID");
+			//经过判断，手机号吗 存在，openID 不存在
+			if (Tools.isEmpty(openid)) {
+				pds.put("USER_ID", pds.getString("USER_ID"));
+				pds.put("NAME", name);
+				pds.put("OPENID", openId);
+				pds.put("AVATAR", avatar);
+				this.appuserService.editU(pds);
+			}
+			map.put("data", pds);
+			msg = "existence";
 		}
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
@@ -345,13 +356,13 @@ public class RestfullController extends BaseController {
 					pds.put("MARRIAGESTATUS", marriageStatus);
 				}
 				if (birthday != null && !"".equals(birthday)) {
-					pds.put("BIRTHDAY", birthday);
+					pds.put("BIRTHDAY", DateUtil.fomatDate(birthday));
 				}
 				if (height != null && !"".equals(height)) {
-					pds.put("HEIGHT", height);
+					pds.put("HEIGHT", Integer.parseInt(height));
 				}
 				if (weight != null && !"".equals(weight)) {
-					pds.put("WEIGHT", weight);
+					pds.put("WEIGHT", Integer.parseInt(weight));
 				}
 				
 				if (birthPlace != null && !"".equals(birthPlace)) {
