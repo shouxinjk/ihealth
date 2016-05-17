@@ -480,57 +480,6 @@ INSERT INTO `weixin_textmsg` VALUES ('695cd74779734231928a253107ab0eeb', '吃饭
 INSERT INTO `weixin_textmsg` VALUES ('d4738af7aea74a6ca1a5fb25a98f9acb', '关注', '这里是关注后回复的内容', '2015-05-11 02:12:36', '1', '关注回复');
 
 
-
--- ----------------------------
--- Table structure for `TB_MEDICALEXAMITEM`
--- ----------------------------
-DROP TABLE IF EXISTS `TB_MEDICALEXAMITEM`;
-CREATE TABLE `TB_MEDICALEXAMITEM` (
- 		`MEDICALEXAMITEM_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-		`PRICE` int(11) NOT NULL COMMENT '价格',
-		`PRICE2` int(11) NOT NULL COMMENT '建议价格',
-		`TIPS` varchar(255) DEFAULT NULL COMMENT '检查项目提示',
-		`STATUS` varchar(255) DEFAULT NULL COMMENT '状态',
-		`CREATEBY` int(11) NOT NULL COMMENT '创建记录员工id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
-		`MEDICALCENTER_ID` varchar(100) NOT NULL,
-  		PRIMARY KEY (`MEDICALEXAMITEM_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- ----------------------------
--- Table structure for `TB_MEDICALCENTER`
--- ----------------------------
-DROP TABLE IF EXISTS `TB_MEDICALCENTER`;
-CREATE TABLE `TB_MEDICALCENTER` (
- 		`MEDICALCENTER_ID` varchar(100) NOT NULL,
-		`STATUS` varchar(255) DEFAULT NULL COMMENT '状态',
-		`NAME` varchar(255) DEFAULT NULL COMMENT '名称',
-		`LOCATION` varchar(255) DEFAULT NULL COMMENT '地址描述',
-		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '体检中心介绍',
-		`LOGOURL` varchar(255) DEFAULT NULL COMMENT 'logo图片url',
-		`CREATEBY` int(11) NOT NULL COMMENT '创建该记录用户id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
-  		PRIMARY KEY (`MEDICALCENTER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- ----------------------------
--- Table structure for `TB_MEDICALCENERADMIN`
--- ----------------------------
-DROP TABLE IF EXISTS `TB_MEDICALCENERADMIN`;
-CREATE TABLE `TB_MEDICALCENERADMIN` (
- 		`MEDICALCENERADMIN_ID` varchar(100) NOT NULL,
-		`DEPARTMENT` varchar(255) DEFAULT NULL COMMENT '所属部门',
-		`TITLE` varchar(255) DEFAULT NULL COMMENT '职位 ',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录的员工id',
-		`CREATEON` varchar(32) DEFAULT NULL COMMENT '创建记录的时间',
-		`MEDICALCENTER_ID` varchar(255) DEFAULT NULL COMMENT '所属体检中心id',
-  		PRIMARY KEY (`MEDICALCENERADMIN_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 DROP TABLE IF EXISTS `tb_checkupitem`;
 CREATE TABLE `tb_checkupitem` (
   `CHECKUPITEM_ID` varchar(100) NOT NULL,
@@ -626,7 +575,7 @@ CREATE TABLE `admin_disease` (
   `ISINHERITABLE` int(11) NOT NULL COMMENT '是否遗传倾向',
   `ISHIGHINCIDENCE` int(11) NOT NULL COMMENT '是否高发',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
-  `CREATEON` date DEFAULT NULL COMMENT '创建记录时间',
+  `CREATEON` timestamp DEFAULT NULL COMMENT '创建记录时间',
   `DISEASECATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '疾病分类外键',
   PRIMARY KEY (`DISEASE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -645,7 +594,7 @@ CREATE TABLE `admin_diseasecategory` (
   `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
   `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建记录员工id',
-  `CREATEON` date DEFAULT NULL COMMENT '创建记录时间',
+  `CREATEON` timestamp DEFAULT NULL COMMENT '创建记录时间',
   `PARENT_ID` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`DISEASECATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -664,7 +613,7 @@ CREATE TABLE `admin_tag` (
   `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
   `EXPRESSION` varchar(255) DEFAULT NULL COMMENT '表达式',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '用户id',
-  `CREATEON` date DEFAULT NULL COMMENT '时间',
+  `CREATEON` timestamp DEFAULT NULL COMMENT '时间',
   `TAGCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '所属分类id',
   `DESCRIPTION` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`TAG_ID`)
@@ -684,7 +633,7 @@ CREATE TABLE `admin_tagcategory` (
   `MATETYPE` varchar(255) DEFAULT NULL COMMENT '特性',
   `ISEXCLUSIVE` int(11) NOT NULL COMMENT '是否多选',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '用户id',
-  `CREATEON` date DEFAULT NULL COMMENT '时间',
+  `CREATEON` timestamp DEFAULT NULL COMMENT '时间',
   `PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父级id',
   PRIMARY KEY (`TAGCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -699,7 +648,7 @@ CREATE TABLE `exam_examcategory` (
   `NAME` varchar(255) DEFAULT NULL COMMENT '检查项目分类名称',
   `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
-  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
+  `CREATEON` timestamp DEFAULT NULL COMMENT '创建该记录时间',
   `PARENT_ID` varchar(255) DEFAULT NULL COMMENT '父级id',
   PRIMARY KEY (`EXAMCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -718,7 +667,7 @@ CREATE TABLE `exam_examfrequency` (
   `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
   `EXPRESSION` varchar(255) DEFAULT NULL COMMENT 'CRON表达式，定义检查的间隔频率',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工的id',
-  `CREATEON` date DEFAULT NULL COMMENT '创建该记录的时间',
+  `CREATEON` timestamp DEFAULT NULL COMMENT '创建该记录的时间',
   PRIMARY KEY (`EXAMFREQUENCY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -742,7 +691,7 @@ CREATE TABLE `exam_examguideline` (
   `LOWRISKEXPRESSION` varchar(255) DEFAULT NULL COMMENT '普通人群识别脚本',
   `STATUS` int(255) DEFAULT '1' COMMENT '状态',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
-  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
+  `CREATEON` timestamp DEFAULT NULL COMMENT '创建该记录时间',
   `DISEASE_ID` varchar(32) DEFAULT NULL,
   `NAME` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`EXAMGUIDELINE_ID`)
@@ -761,7 +710,7 @@ CREATE TABLE `exam_examitem` (
   `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
   `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
-  `CREATEON` date DEFAULT NULL COMMENT '创建该记录时间',
+  `CREATEON` timestamp DEFAULT NULL COMMENT '创建该记录时间',
   `EXAMCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
   `EXAMITEM_PARENT_ID` varchar(32) DEFAULT NULL COMMENT '创建该记录时间',
   PRIMARY KEY (`EXAMITEM_ID`)
@@ -823,4 +772,76 @@ CREATE TABLE `sys_app_user_and_tag` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+-- ----------------------------
+-- Table structure for `TB_MEDICALCENTER`
+-- ----------------------------
+DROP TABLE IF EXISTS `TB_MEDICALCENTER`;
+CREATE TABLE `TB_MEDICALCENTER` (
+ 		`MEDICALCENTER_ID` varchar(100) NOT NULL,
+		`NAME` varchar(255) DEFAULT NULL COMMENT '体检中心名称',
+		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '体检中心描述',
+		`LOCATION` varchar(255) DEFAULT NULL COMMENT '体检中心地理位置',
+		`ABBREVIATION` varchar(255) DEFAULT NULL COMMENT '体检中心简介',
+		`TELEPHONE` varchar(255) DEFAULT NULL COMMENT '体检中心联系电话',
+		`STATUS` int(11) NOT NULL COMMENT '体检中心状态',
+		`LOGO` varchar(255) DEFAULT NULL COMMENT '体检中心logo图片地址',
+		`OPENINGTIME` varchar(32) DEFAULT NULL COMMENT '体检中心开业时间',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
+		`CREATEON` timestamp DEFAULT NULL COMMENT '创建该记录时间',
+  		PRIMARY KEY (`MEDICALCENTER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `TB_MEDICALEXAMITEM`
+-- ----------------------------
+DROP TABLE IF EXISTS `TB_MEDICALEXAMITEM`;
+CREATE TABLE `TB_MEDICALEXAMITEM` (
+ 		`MEDICALEXAMITEM_ID` varchar(100) NOT NULL,
+		`NAME` varchar(255) DEFAULT NULL COMMENT '体检项目名称',
+		`EXPLAIN` varchar(255) DEFAULT NULL COMMENT '体检项目说明',
+		`FEATURES` varchar(255) DEFAULT NULL COMMENT '体检项目特征',
+		`SELLINGPRICE` double NOT NULL COMMENT '体检项目销售价格',
+		`SETTLEMENTPRICE` double NOT NULL COMMENT '体检项目结算价格',
+		`LOGO` varchar(255) DEFAULT NULL COMMENT '体检项目logo图片url地址',
+		`STATUS` varchar(255) DEFAULT NULL COMMENT '体检项目状态',
+		`EFFECTIVETIME` timestamp DEFAULT NULL COMMENT '体检项目生效时间',
+		`INVELIBTIME` timestamp DEFAULT NULL COMMENT '体检项目失效时间',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
+		`CREATEON` timestamp DEFAULT NULL COMMENT '创建该记录时间',
+  		PRIMARY KEY (`MEDICALEXAMITEM_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `TB_MEDICALCENERADMIN`
+-- ----------------------------
+DROP TABLE IF EXISTS `TB_MEDICALCENERADMIN`;
+CREATE TABLE `TB_MEDICALCENERADMIN` (
+ 		`MEDICALCENERADMIN_ID` varchar(100) NOT NULL,
+		`DEPARTMENT` varchar(255) DEFAULT NULL COMMENT '所属科室部门',
+		`TITLE` varchar(255) DEFAULT NULL COMMENT '职位',
+		`CREATEON` timestamp DEFAULT NULL COMMENT '创建该记录时间',
+  		PRIMARY KEY (`MEDICALCENERADMIN_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for `TB_MEDICALORDER`
+-- ----------------------------
+DROP TABLE IF EXISTS `TB_MEDICALORDER`;
+CREATE TABLE `TB_MEDICALORDER` (
+ 		`MEDICALORDER_ID` varchar(100) NOT NULL,
+		`ORDERNO` varchar(255) DEFAULT NULL COMMENT '订单号',
+		`ORDERGENERATIONTIME` timestamp DEFAULT NULL COMMENT '订单生成时间',
+		`ORDERBOOKINGTIME` timestamp DEFAULT NULL COMMENT '订单预约时间',
+		`ORDEREXECUTIONTIME` timestamp DEFAULT NULL COMMENT '订单实际执行时间',
+		`TOTALAMOUNT` double NOT NULL COMMENT '订单总金额',
+		`STATUS` varchar(255) DEFAULT NULL COMMENT '订单状态',
+		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
+		`CREATEON` timestamp DEFAULT NULL COMMENT '创建该记录时间',
+  		PRIMARY KEY (`MEDICALORDER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
