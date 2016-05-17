@@ -29,7 +29,7 @@
 				<div class="page-content">
 					<div class="row">
 						<!-- tree show -->
-						<div style="margin:0 auto;width:100%;height: 200px;overflow: auto;">
+						<div id="treeShow"  style="display:none; margin:0 auto;width:100%;height: 200px;overflow: auto;">
 							<div style="width:25%; float:left;">
 								<span>标签信息</span>
 								<ul id="tagTree" class="tree" style="overflow:auto"></ul>
@@ -199,13 +199,18 @@
 	var personalTree;
 	var focusTree;
 	var familyTree;
+	var msg = $("#msg").val();
 	
-	$(document).ready(function(){
-		initTag();
-		initPersonalDisease();
-		initFocusDisease();
-		initFamilyDisease();
-	});
+	if (msg == "editU") {
+		$("#treeShow").css("display","block");
+		$(document).ready(function(){
+			initTag();
+			initPersonalDisease();
+			initFocusDisease();
+			initFamilyDisease();
+		});
+		
+	}
 	
 	//加载标签信息
 	function initTag(){
@@ -251,7 +256,7 @@
 			checkable: true, //带有复选框
 			checkType : { "Y": "s", "N": "s" }
 		}
-		var zns = '${zTreeNodess}';
+		var zns = '${ins}';
 		var zTreeNodess = eval(zns);
 		
 		familyTree = $("#familyTree").zTree(setting, zTreeNodess);
@@ -320,7 +325,6 @@
 	
 	var id = $("#user_id").val();
 	
-	var msg = $("#msg").val();
 	if(msg == "editU"){
 		//获取关联的标签
 		$.ajax({
@@ -328,11 +332,13 @@
 			type:"post",
 			dataType:"json",
 			success:function(data){
-				var tags = data.tagList;
+				var tags = eval(data.tagList);
 				for (var i = 0; i < tags.length; i++) {
 					var node = tagTree.getNodeByParam("id",tags[i].tag_id);
-					node.checked = true;
-					tagTree.updateNode(node);
+					if(node != null){
+						node.checked = true;
+						tagTree.updateNode(node);
+					}
 				}
 				
 			}
@@ -347,8 +353,11 @@
 				var diseases = data.pdiseaseList;
 				for (var i = 0; i < diseases.length; i++) {
 					var nodes = personalTree.getNodeByParam("id",diseases[i].disease_id);
-					nodes.checked = true;
-					personalTree.updateNode(nodes);
+					if (nodes != null) {
+						nodes.checked = true;
+						personalTree.updateNode(nodes);
+					}
+					
 				}
 			}
 		});
@@ -362,8 +371,11 @@
 				var diseases = data.fdiseaseList;
 				for (var i = 0; i < diseases.length; i++) {
 					var nodes = focusTree.getNodeByParam("id",diseases[i].disease_id);
-					nodes.checked = true;
-					focusTree.updateNode(nodes);
+					if (nodes != null) {
+						nodes.checked = true;
+						focusTree.updateNode(nodes);
+					}
+					
 				}
 				
 			}
@@ -378,8 +390,10 @@
 				var diseases = data.fhdiseaseList;
 				for (var i = 0; i < diseases.length; i++) {
 					var nodes = familyTree.getNodeByParam("id",diseases[i].disease_id);
-					nodes.checked = true;
-					familyTree.updateNode(nodes);
+					if(nodes!=null){
+						nodes.checked = true;
+						familyTree.updateNode(nodes);
+					}
 				}
 				
 			}
@@ -526,7 +540,9 @@
 		if($("#user_id").val()==""){
 			hasU();
 		}else{
-			che();
+			if (msg == "editU") {
+				 che();
+			}
 			$("#userForm").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();
@@ -544,7 +560,10 @@
 			cache: false,
 			success: function(data){
 				 if("success" == data.result){
-					 che();
+					 if (msg == "editU") {
+						 che();
+					}
+					 
 					$("#userForm").submit();
 					$("#zhongxin").hide();
 					$("#zhongxin2").show();

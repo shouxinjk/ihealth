@@ -40,26 +40,6 @@
 		SYS_ROLE
 	</sql>
 	
-	<!-- 用户关联关系表 -->
-	<sql id="useranduser">
-		SYS_USERANDUSER
-	</sql>
-	<!-- 用户关联关系表的字段 -->
-	<sql id="userAttribute">
-		useranduser_id,
-		user_id_one,
-		user_id_two,
-		connection
-	</sql>
-	
-	<!-- 用户关联关系表的值 -->
-	<sql id="userValue">
-		#{useranduser_id},
-		#{user_id_one},
-		#{user_id_two},
-		#{connection}
-	</sql>
-	
 	<!-- 字段 -->
 	<sql id="Field">
 		USER_ID,
@@ -71,23 +51,11 @@
 		LAST_LOGIN,
 		IP,
 		STATUS,
-		SKIN,
 		BZ,
-		NUMBER,
-		PHONE,
+		SKIN,
 		EMAIL,
-		OPENID,
-		ALIAS,
-		BIRTHDAY,
-		SEX,
-		BIRTHPLACE,
-		LIVEPLACE,
-		MARRIAGESTATUS,
-		CAREER,
-		DEGREE,
-		AVATAR,
-		HEIGHT,
-		WEIGHT
+		NUMBER,
+		PHONE
 	</sql>
 	
 	<!-- 字段值 -->
@@ -101,47 +69,12 @@
 		#{LAST_LOGIN},
 		#{IP},
 		#{STATUS},
-		#{SKIN},
 		#{BZ},
-		#{NUMBER},
-		#{PHONE},
+		#{SKIN},
 		#{EMAIL},
-		#{OPENID},
-		#{ALIAS},
-		#{BIRTHDAY},
-		#{SEX},
-		#{BIRTHPLACE},
-		#{LIVEPLACE},
-		#{MARRIAGESTATUS},
-		#{CAREER},
-		#{DEGREE},
-		#{AVATAR},
-		#{HEIGHT},
-		#{WEIGHT}
+		#{NUMBER},
+		#{PHONE}
 	</sql>
-	
-	<!-- 根据用户ID查询所有的关联用户 -->
-	<select id="findUserCastUser" parameterType="pd" resultType="pd">
-		SELECT 
-		  *
-		FROM
-		  sys_user u,
-		  sys_useranduser uu 
-		WHERE u.`USER_ID` = uu.`user_id_two` 
-		  AND uu.`user_id_one` = #{user_id_one}
-	</select>
-	
-	<!-- 查询关系是否存在 -->
-	<select id="findConnectionWhether" parameterType="pd" resultType="pd">
-		SELECT 
-		  * 
-		FROM
-		  sys_useranduser uu 
-		WHERE uu.`user_id_one` = #{user_id_one} 
-		  AND uu.`user_id_two` = #{user_id_two} 
-	</select>
-	
-	
 	
 	<!-- 判断用户名和密码 -->
 	<select id="getUserInfo" parameterType="pd" resultType="pd">
@@ -155,67 +88,6 @@
 		and USER_ID = #{USER_ID}
 		</if>
 	</select>
-	
-	<!-- 根据用户ID 查询文章推送信息 -->
-	<select id ="findArticlesById" parameterType="pd" resultType="pd">
-		SELECT * FROM tb_article a
-		<where>
-			<if test="CREATEBY != null and CREATEBY != ''">
-				and a.CREATEBY = #{CREATEBY}
-			</if>
-		</where>	
-	</select>
-	
-	
-	
-	<!-- 新增用户时，向admin_userandtag表新增信息 -->
-	<insert id="saveUserAndTag" parameterType="pd">
-		insert into admin_userandtag values(#{id},#{user_id},#{tag_id})
-	</insert>
-	
-	
-	<!-- 新增用户时，向admin_useranddisease(既往病史表)表新增信息 -->
-	<insert id="saveUserAndDisease" parameterType="pd">
-		insert into admin_useranddisease values(#{id},#{user_id},#{disease_id})
-	</insert>
-	
-	<!-- 新增用户时，向admin_userandfhdisease(家族遗传病表)表新增信息 -->
-	<insert id="saveUserAndFhDisease" parameterType="pd">
-		insert into admin_userandfhdisease values(#{id},#{user_id},#{disease_id})
-	</insert>
-	
-	
-	<!-- 根据用户ID 查询所有关联的标签信息 -->
-	<select id="findTagsByUserId" parameterType="pd" resultType="pd">
-		SELECT ut.tag_id FROM admin_userandtag ut WHERE ut.user_id = #{user_id}
-	</select>
-	
-	
-	<!-- 根据用户ID 查询所有关联的既往疾病信息 -->
-	<select id="findDiseaseByUserId" parameterType="pd" resultType="pd">
-		SELECT ud.disease_id FROM admin_useranddisease ud WHERE ud.user_id = #{user_id}
-	</select>
-	
-	<!-- 根据用户ID 查询所有关联的家族遗传疾病信息 -->
-	<select id="findFhDiseaseByUserId" parameterType="pd" resultType="pd">
-		SELECT ufd.disease_id FROM admin_userandfhdisease ufd WHERE ufd.user_id = #{user_id}
-	</select>
-	
-	
-	<!-- 根据用户ID 删除所有关联的标签信息 -->
-	<delete id="deleteTags" parameterType="pd">
-		DELETE FROM admin_userandtag WHERE user_id = #{user_id}
-	</delete>
-	
-	<!-- 根据用户ID 删除所有关联的既往疾病信息 -->
-	<delete id="deleteDiseases" parameterType="pd">
-		DELETE FROM admin_useranddisease WHERE user_id = #{user_id}
-	</delete>
-	
-	<!-- 根据用户ID 删除所有关联的家族遗传疾病信息 -->
-	<delete id="deleteFhDiseases" parameterType="pd">
-		DELETE FROM admin_userandfhdisease WHERE user_id = #{user_id}
-	</delete>
 	
 	<!-- 更新登录时间 -->
 	<update id="updateLastLogin" parameterType="pd" >
@@ -256,33 +128,6 @@
 			USERNAME = #{USERNAME}
 	</select>
 	
-	<!-- 通过用户名或者电话号码获取模糊查询数据 -->
-	<select id="findLike" parameterType="pd" resultType="pd" >
-		select 
-			<include refid="Field"></include>
-		from 
-			<include refid="tableName"></include>
-		<where>
-			<if test="NAME != null and NAME != ''">
-				and NAME like CONCAT(CONCAT('%',#{NAME}),'%')
-			</if>
-			<if test="PHONE != null and PHONE != ''">
-				and PHONE like CONCAT(CONCAT('%',#{PHONE}),'%')
-			</if>
-		</where>
-	</select>
-	
-	<!-- 通过Phone获取数据 -->
-	<select id="findByPhone" parameterType="pd" resultType="pd" >
-		select 
-			<include refid="Field"></include>
-		from 
-			<include refid="tableName"></include>
-		where 
-			PHONE = #{PHONE}
-	</select>
-	
-	
 	<!-- 存入IP -->
 	<update id="saveIP" parameterType="pd" >
 		update 
@@ -313,22 +158,6 @@
 				u.EMAIL,
 				u.NUMBER,
 				u.PHONE,
-				u.RIGHTS,
-				u.STATUS,
-				u.SKIN,
-				u.BZ,
-				u.OPENID,
-				u.ALIAS,
-				u.BIRTHDAY,
-				u.SEX,
-				u.BIRTHPLACE,
-				u.LIVEPLACE,
-				u.MARRIAGESTATUS,
-				u.CAREER,
-				u.DEGREE,
-				u.AVATAR,
-				u.HEIGHT,
-				u.WEIGHT,
 				r.ROLE_ID,
 				r.ROLE_NAME
 		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r 
@@ -347,10 +176,6 @@
 					 u.NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
 					 or
 					 u.PHONE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-					 or
-					 u.BIRTHPLACE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-					 or
-					 u.LIVEPLACE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
 				)
 		</if>
 		<if test="pd.ROLE_ID != null and pd.ROLE_ID != ''"><!-- 角色检索 -->
@@ -397,15 +222,8 @@
 			<include refid="Field"></include>
 		from 
 			<include refid="tableName"></include>
-		<where>
-			<if test="USER_ID != null and USER_ID != ''">
-				and USER_ID = #{USER_ID}
-			</if>
-			<if test="OPENID != null and OPENID != ''">
-				and OPENID = #{OPENID}
-			</if>
-		</where>
-			
+		where 
+			USER_ID = #{USER_ID}
 	</select>
 	
 	<!-- 新增用户 -->
@@ -414,15 +232,6 @@
 			<include refid="Field"></include>
 		) values (
 			<include refid="FieldValue"></include>
-		)
-	</insert>
-	
-	<!-- 新增关联用户 -->
-	<insert id="saveRelationUser" parameterType="pd" >
-		insert into <include refid="useranduser"></include> (
-			<include refid="userAttribute"></include>
-		) values (
-			<include refid="userValue"></include>
 		)
 	</insert>
 	
@@ -435,19 +244,7 @@
 				BZ						= #{BZ},
 				EMAIL					= #{EMAIL},
 				NUMBER					= #{NUMBER},
-				PHONE					= #{PHONE},
-				BIRTHDAY				= #{BIRTHDAY},
-				ALIAS					= #{ALIAS},
-				OPENID                  = #{OPENID},
-				LIVEPLACE				= #{LIVEPLACE},
-				BIRTHPLACE				= #{BIRTHPLACE},
-				MARRIAGESTATUS			= #{MARRIAGESTATUS},
-				CAREER					= #{CAREER},
-				DEGREE					= #{DEGREE},
-				AVATAR					= #{AVATAR},
-				HEIGHT					= #{HEIGHT},
-				WEIGHT					= #{WEIGHT},
-				SEX						= #{SEX}
+				PHONE					= #{PHONE}
 			<if test="PASSWORD != null and PASSWORD != ''">
 				,PASSWORD				= #{PASSWORD}
 			</if>
@@ -460,14 +257,6 @@
 		delete from <include refid="tableName"></include>
 		where 
 			USER_ID = #{USER_ID}
-	</delete>
-	
-	<!-- 删除我关心的人 -->
-	<delete id="deleteRelationUser" parameterType="pd" flushCache="false">
-		DELETE 
-		FROM
-		  sys_useranduser 
-		WHERE sys_useranduser.`useranduser_id` = #{useranduser_id}
 	</delete>
 	
 	<!-- 批量删除用户 -->
@@ -491,22 +280,6 @@
 				u.EMAIL,
 				u.NUMBER,
 				u.PHONE,
-				u.RIGHTS,
-				u.STATUS,
-				u.SKIN,
-				u.BZ,
-				u.OPENID,
-				u.ALIAS,
-				u.BIRTHDAY,
-				u.SEX,
-				u.BIRTHPLACE,
-				u.LIVEPLACE,
-				u.MARRIAGESTATUS,
-				u.CAREER,
-				u.DEGREE,
-				u.AVATAR,
-				u.HEIGHT,
-				u.WEIGHT,
 				r.ROLE_ID,
 				r.ROLE_NAME
 		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r 
@@ -538,28 +311,6 @@
 		</if>
 		order by u.LAST_LOGIN desc
 	</select>
-	
-	<select id="findUsers" resultType="pd" parameterType="pd">
-		select * from sys_user u
-		<where>
-			<if test="keywords!= null and keywords != ''">
-				u.PHONE LIKE CONCAT(CONCAT('%', #{keywords}),'%')
-			</if>
-		</where>
-	</select>
-	
-	<!-- 通过openID获取用户数据 -->
-	<select id="findAllUserByOpenId" resultType="pd">
-		SELECT 
-		  * 
-		FROM
-		  sys_user u 
-		WHERE u.`OPENID` IS NOT NULL 
-		<if test="keywords!= null and keywords != ''">
-			and u.PHONE LIKE CONCAT(CONCAT('%', #{keywords}),'%')
-		</if>
-	</select>
-	
 	
 	<!-- 获取总数 -->
 	<select id="getUserCount" parameterType="String" resultType="pd">

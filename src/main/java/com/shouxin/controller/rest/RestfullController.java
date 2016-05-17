@@ -359,10 +359,10 @@ public class RestfullController extends BaseController {
 					pds.put("BIRTHDAY", DateUtil.fomatDate(birthday));
 				}
 				if (height != null && !"".equals(height)) {
-					pds.put("HEIGHT", Integer.parseInt(height));
+					pds.put("HEIGHT", Double.parseDouble(height));
 				}
 				if (weight != null && !"".equals(weight)) {
-					pds.put("WEIGHT", Integer.parseInt(weight));
+					pds.put("WEIGHT", Double.parseDouble(weight));
 				}
 				
 				if (birthPlace != null && !"".equals(birthPlace)) {
@@ -419,7 +419,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "/findCheckPackage", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findCheckPackage(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据用户ID获取体检套餐信息");
+		logBefore(logger, "查询-----------根据ID查询体检套餐");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -436,7 +436,6 @@ public class RestfullController extends BaseController {
 		if (null == userId || "".equals(userId)) {
 			msg = "error";
 		} else {
-			logger.debug("根据用户ID查询体检套餐信息");
 			PageData data = this.checkuppackageService.findById(pd);
 			if (data != null && data.size() > 0) {
 				msg = "success";
@@ -463,7 +462,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "editCheckItem", method = RequestMethod.POST)
 	@ResponseBody
 	public Object editCheckItem(@RequestBody String check) throws Exception {
-		logBefore(logger, "根据体检项目ID获取体检项目信息");
+		logBefore(logger, "修改----------------体检项目信息");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -533,7 +532,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "findCheckItems", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findCheckItems(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据用户ID获取体检项目信息1");
+		logBefore(logger, "查询-----------根据userID获取用体检项目信息");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -591,7 +590,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "getCheckItemsByGroup", method = RequestMethod.POST)
 	@ResponseBody
 	public Object getCheckItemsByGroup(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据用户ID获取体检项目信息2");
+		logBefore(logger, "查询--------根据用户ID，获取体检项目信息");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -643,7 +642,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "getCheckItem", method = RequestMethod.POST)
 	@ResponseBody
 	public Object getCheckItem(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据用户ID获取体检项目信息3");
+		logBefore(logger, "查询------------根据体检项目ID查询体检项目信息");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -703,7 +702,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "findUserById", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findUserById(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据用户ID获取用户信息-----" + u);
+		logBefore(logger, "查询-----------根据用户ID，查询用户信息");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -764,7 +763,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "findUserByOpenId", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findUserByOpenId(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据openID获取用户信息");
+		logBefore(logger, "查询--------根据openID获取用户信息");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -816,7 +815,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "findByTopTwenty", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findByTopTwenty() throws Exception{
-		logBefore(logger, "获取前20篇文章信息！");
+		logBefore(logger, "查询---------获取前20篇文章信息！");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -858,7 +857,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "findAllArticles", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findAllArticles() throws Exception{
-		logBefore(logger, "获取所有文章信息！");
+		logBefore(logger, "查询----------获取所有文章信息！");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -877,59 +876,7 @@ public class RestfullController extends BaseController {
 		return AppUtil.returnObject(new PageData(), map);
 	}
 
-	/**
-	 * 根据用户ID 获取文章信息 
-	 * url:http://localhost:8080/ihealth/rest/findArticleByUserId
-	 * type:post
-	 * 
-	 * @param {"userId":"用户ID"}
-	 * @return 用户ID不为空 返回： 
-	 * 		{ 
-	 * 		"result": "success", 
-	 * 		"data": [ { 
-	 * 					"LOGOURL": 照片url,	"PUBLISHTIME": 发布时间 ,
-	 * 					"SUMMARY": "摘要", 	"CREATEBY": "创建记录员工id",
-	 *         			"TITLE": "标题", 		"ARTICLE_ID": "ID", 
-	 *         			"AUTHOR": "作者", 	"CREATEON":创建记录时间 ,
-	 *         			"URL": 内容url 
-	 *         		} ] 
-	 *      }
-	 * 
-	 * 当userID为空： 返回{ "result": "error"} 
-	 * 当根据userID查询出的数据为null时 返回{"result": "no"}
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "findArticleByUserId", method = RequestMethod.POST)
-	@ResponseBody
-	public Object findArticleByUserId(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据userId获取文章信息");
-		
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		String msg = null;
-		PageData pd = new PageData();
-		pd = this.getPageData();
-		
-		// 将String类型的数据转换为json
-		JSONObject jasonObject = JSONObject.fromObject(u);
-		String userId = (String) jasonObject.get("userId");
-		
-		pd.put("CREATEBY", userId);
-		
-		logger.debug("userId为空,获取文章信息！");
-		if (null == userId || "".equals(userId)) {
-			msg = "error";
-		} else {
-			List<PageData> data = this.userService.findArticlesById(pd);
-			if (data != null && data.size() > 0) {
-				msg = "success";
-				map.put("data", data);
-			} else {
-				msg = "no";
-			}
-		}
-		map.put("result", msg);
-		return AppUtil.returnObject(new PageData(), map);
-	}
+	
 	
 	/**
 	 * 根据文章信息ID 获取文章信息 
@@ -953,7 +900,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "findArticleById", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findArticleById(@RequestBody String a) throws Exception{
-		logBefore(logger, "根据文章ID获取文章信息！");
+		logBefore(logger, "查询-----------------根据文章ID获取文章信息！");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -1016,7 +963,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "findUsersById", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findUsersById(@RequestBody String u) throws Exception {
-		logBefore(logger, "根据userId获取关联的用户信息");
+		logBefore(logger, "查询--------------根据userId获取关联的用户信息");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -1058,7 +1005,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "deleteRelationUser", method = RequestMethod.POST)
 	@ResponseBody
 	public Object deleteRelationUser(@RequestBody String u) {
-		logBefore(logger, "根据用户关系表中的主键 ID(useranduser_id)删除关联的用户信息");
+		logBefore(logger, "删除---------------------根据用户关系表中的主键 ID(useranduser_id)删除关联的用户信息");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -1201,7 +1148,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "saveUserAndUser", method = RequestMethod.POST)
 	@ResponseBody
 	public Object saveUserAndUser(@RequestBody String u) throws Exception {
-		logBefore(logger, "保存用户关系");
+		logBefore(logger, "新增-----------保存用户关系");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;
@@ -1267,7 +1214,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "findMessageIntegrity", method = RequestMethod.POST)
 	@ResponseBody
 	public Object findMessageIntegrity(@RequestBody String u) throws Exception {
-		logBefore(logger, "查询信息完整度");
+		logBefore(logger, "查询-------------根据userID查询信息完整度");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null;

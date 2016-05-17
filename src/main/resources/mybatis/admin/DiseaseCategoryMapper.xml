@@ -65,29 +65,33 @@
 	
 	<!-- 获取所有疾病分类  并获取疾病信息 -->
 	<select id="findAllDiseases" resultMap="diseaseAndDCResultMap">
-		SELECT 
-		  dc.`DISEASECATEGORY_ID` AS dc_diseasecategory,
-		  dc.`NAME` AS dc_name,
-		  d.`DISEASE_ID` AS d_disease,
-		  d.`NAME` AS d_name 
-		FROM
-		  admin_diseasecategory dc 
-		  LEFT JOIN admin_disease d 
-		    ON dc.`DISEASECATEGORY_ID` = d.`DISEASECATEGORY_ID` 
+		
+		    
+		    SELECT 
+			  d.`DISEASE_ID` d_disease,
+			  d.`NAME` d_name,
+			  dc.`DISEASECATEGORY_ID` dc_diseasecategory,
+			  dc.`NAME` dc_name 
+			FROM
+			  admin_disease d,
+			  admin_diseasecategory dc 
+			WHERE d.`DISEASECATEGORY_ID` = dc.`DISEASECATEGORY_ID` 
+			ORDER BY dc.`DISEASECATEGORY_ID` 
 	</select>
 	
 	<!-- 查询所有遗传疾病 -->
 	<select id="findAllIsInheritabl" resultMap="diseaseAndDCResultMap">
 		SELECT 
-		  dc.`DISEASECATEGORY_ID` AS dc_diseasecategory,
-		  dc.`NAME` AS dc_name,
-		  d.`DISEASE_ID` AS d_disease,
-		  d.`NAME` AS d_name 
+		  d.`DISEASE_ID` d_disease,
+		  d.`NAME` d_name,
+		  dc.`DISEASECATEGORY_ID` dc_diseasecategory,
+		  dc.`NAME` dc_name  
 		FROM
+		  admin_disease d,
 		  admin_diseasecategory dc 
-		  LEFT JOIN admin_disease d 
-		    ON dc.`DISEASECATEGORY_ID` = d.`DISEASECATEGORY_ID` 
-		 WHERE d.`ISINHERITABLE` = '1' 
+		WHERE d.`DISEASECATEGORY_ID` = dc.`DISEASECATEGORY_ID` 
+		  AND d.`ISINHERITABLE` = '1' 
+		  ORDER BY dc.`DISEASECATEGORY_ID` 
 	</select>
 	
 	

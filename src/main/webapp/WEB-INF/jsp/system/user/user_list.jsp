@@ -19,19 +19,6 @@
 <%@ include file="../index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
-<style type="text/css">
-	.autocut{
-	    width:40px;  
-	    overflow:hidden;  
-	    white-space:nowrap;  
-	    text-overflow:ellipsis;  
-	    -o-text-overflow:ellipsis;  
-	    -icab-text-overflow: ellipsis;  
-	    -khtml-text-overflow: ellipsis;  
-	    -moz-text-overflow: ellipsis;  
-	    -webkit-text-overflow: ellipsis;  
-	}
-</style>
 </head>
 <body class="no-skin">
 
@@ -51,14 +38,14 @@
 								<td>
 									<div class="nav-search">
 									<span class="input-icon">
-										<input class="nav-search-input" autocomplete="off" id="nav-search-input" type="text" name="keywords" value="${pd.keywords }" placeholder="这里可以输入电话号码哦" />
+										<input class="nav-search-input" autocomplete="off" id="nav-search-input" type="text" name="keywords" value="${pd.keywords }" placeholder="这里输入关键词" />
 										<i class="ace-icon fa fa-search nav-search-icon"></i>
 									</span>
 									</div>
 								</td>
-								<%-- <td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart"  value="${pd.lastLoginStart}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="最近登录开始"/></td>
+								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart"  value="${pd.lastLoginStart}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="最近登录开始"/></td>
 								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginEnd" name="lastLoginEnd"  value="${pd.lastLoginEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期" title="最近登录结束"/></td>
-								 --%><%-- <td style="vertical-align:top;padding-left:2px;">
+								<td style="vertical-align:top;padding-left:2px;">
 								 	<select class="chosen-select form-control" name="ROLE_ID" id="role_id" data-placeholder="请选择角色" style="vertical-align:top;width: 120px;">
 									<option value=""></option>
 									<option value="">全部</option>
@@ -66,7 +53,7 @@
 										<option value="${role.ROLE_ID }" <c:if test="${pd.ROLE_ID==role.ROLE_ID}">selected</c:if>>${role.ROLE_NAME }</option>
 									</c:forEach>
 								  	</select>
-								</td> --%>
+								</td>
 								<c:if test="${QX.cha == 1 }">
 								<td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="searchs();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 								<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
@@ -83,16 +70,13 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
+									<th class="center">编号</th>
+									<th class="center">用户名</th>
 									<th class="center">姓名</th>
+									<th class="center">角色</th>
 									<th class="center"><i class="ace-icon fa fa-envelope-o"></i>邮箱</th>
-									<th class="center">电话</th>
-									<th class="center">昵称</th>
-									<th class="center">性别</th>
-									<th class="center">居住地</th>
-									<th class="center">婚姻状态</th>
-									<th class="center">职业</th>
-									<th class="center">身高</th>
-									<th class="center">体重</th>
+									<th class="center"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>最近登录</th>
+									<th class="center">上次登录IP</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -111,26 +95,18 @@
 												<c:if test="${user.USERNAME == 'admin'}"><label><input type='checkbox' disabled="disabled" class="ace" /><span class="lbl"></span></label></c:if>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
+											<td class="center">${user.NUMBER }</td>
+											<td class="center"><a onclick="viewUser('${user.USERNAME}')" style="cursor:pointer;">${user.USERNAME }</a></td>
 											<td class="center">${user.NAME }</td>
+											<td class="center">${user.ROLE_NAME }</td>
 											<td class="center"><a title="发送电子邮件" style="text-decoration:none;cursor:pointer;" <c:if test="${QX.email == 1 }">onclick="sendEmail('${user.EMAIL }');"</c:if>>${user.EMAIL }&nbsp;<i class="ace-icon fa fa-envelope-o"></i></a></td>
-											<td class="center">${user.PHONE}</td>
-											<td class="center">${user.ALIAS}</td>
-											<td class="center">${user.SEX}</td>
-											<td class="center"><div class="autocut">${user.LIVEPLACE}</div></td>
-											<td class="center">${user.MARRIAGESTATUS}</td>
-											<td class="center">${user.CAREER}</td>
-											<td class="center">${user.HEIGHT}</td>
-											<td class="center">${user.WEIGHT}</td>
+											<td class="center">${user.LAST_LOGIN}</td>
+											<td class="center">${user.IP}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<c:if test="${QX.cha == 1 }">
-													<a class="btn btn-xs btn-info" title='查看我关心的人' onclick="iCareAbout('${user.USER_ID}');">
-														<i class="ace-icon fa fa-search nav-search-icon" title="查看我关心的人"></i>
-													</a>
-													</c:if>
 													<c:if test="${QX.FHSMS == 1 }">
 													<a class="btn btn-xs btn-info" title='发送站内信' onclick="sendFhsms('${user.USERNAME }');">
 														<i class="ace-icon fa fa-envelope-o bigger-120" title="发送站内信"></i>
@@ -158,15 +134,6 @@
 															<i class="ace-icon fa fa-cog icon-only bigger-110"></i>
 														</button>
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-															<c:if test="${QX.cha == 1 }">
-															<li>
-																<a style="cursor:pointer;" onclick="iCareAbout('${user.USER_ID}');" class="tooltip-info" data-rel="tooltip" title="查看我关心的人">
-																	<span class="green">
-																		<i class="ace-icon fa fa-search nav-search-icon"></i>
-																	</span>
-																</a>
-															</li>
-															</c:if>
 															<c:if test="${QX.FHSMS == 1 }">
 															<li>
 																<a style="cursor:pointer;" onclick="sendFhsms('${user.USERNAME }');" class="tooltip-info" data-rel="tooltip" title="发送站内信">
@@ -213,13 +180,13 @@
 									</c:if>
 									<c:if test="${QX.cha == 0 }">
 										<tr>
-											<td colspan="22" class="center">您无权查看</td>
+											<td colspan="10" class="center">您无权查看</td>
 										</tr>
 									</c:if>
 								</c:when>
 								<c:otherwise>
 									<tr class="main_info">
-										<td colspan="22" class="center">没有相关数据</td>
+										<td colspan="10" class="center">没有相关数据</td>
 									</tr>
 								</c:otherwise>
 							</c:choose>
@@ -295,27 +262,11 @@ function delUser(userId,msg){
 			top.jzts();
 			var url = "<%=basePath%>user/deleteU.do?USER_ID="+userId+"&tm="+new Date().getTime();
 			$.get(url,function(data){
-				nextPage('${page.currentPage}');
+				nextPage(${page.currentPage});
 			});
 		};
 	});
 }
-
-//去我关心的人页面
-function iCareAbout(user_id){
-	top.jzts();
-	 var diag = new top.Dialog();
-	 diag.Drag=true;
-	 diag.Title ="我关心的人";
-	 diag.URL = '<%=basePath%>user/goICareAbout.do?user_id_one='+user_id;
-	 diag.Width = 500;
-	 diag.Height = 510;
-	 diag.CancelEvent = function(){ //关闭事件
-		diag.close();
-	 };
-	 diag.show();
-}
-
 
 //新增
 function add(){
@@ -332,7 +283,7 @@ function add(){
 				 top.jzts();
 				 setTimeout("self.location=self.location",100);
 			 }else{
-				 nextPage('${page.currentPage}');
+				 nextPage(${page.currentPage});
 			 }
 		}
 		diag.close();
@@ -351,7 +302,7 @@ function editUser(user_id){
 	 diag.Height = 510;
 	 diag.CancelEvent = function(){ //关闭事件
 		 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-			nextPage('${page.currentPage}');
+			nextPage(${page.currentPage});
 		}
 		diag.close();
 	 };
@@ -401,14 +352,14 @@ function makeAll(msg){
 					top.jzts();
 					$.ajax({
 						type: "POST",
-						url: "<%=basePath%>user/deleteAllU.do?tm="+new Date().getTime(),
+						url: '<%=basePath%>user/deleteAllU.do?tm='+new Date().getTime(),
 				    	data: {USER_IDS:str},
 						dataType:'json',
 						//beforeSend: validateData,
 						cache: false,
 						success: function(data){
 							 $.each(data.list, function(i, list){
-									nextPage('${page.currentPage}');
+									nextPage(${page.currentPage});
 							 });
 						}
 					});
@@ -536,7 +487,7 @@ function fromExcel(){
 				 top.jzts();
 				 setTimeout("self.location.reload()",100);
 			 }else{
-				 nextPage('${page.currentPage}');
+				 nextPage(${page.currentPage});
 			 }
 		}
 		diag.close();

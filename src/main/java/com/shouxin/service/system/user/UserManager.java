@@ -40,8 +40,6 @@ public interface UserManager {
 	 */
 	public PageData findByUsername(PageData pd)throws Exception;
 	
-	public PageData findByPhone(PageData pd)throws Exception;
-	
 	/**列出某角色下的所有用户
 	 * @param pd
 	 * @return
@@ -101,13 +99,6 @@ public interface UserManager {
 	 */
 	public void deleteU(PageData pd)throws Exception;
 	
-	/**
-	 * 根据用户关联关系表中的useranduser_id删除用户关联
-	 * @param pd useranduser_id
-	 * @throws Exception
-	 */
-	public void deleteRelationUser(PageData pd)throws Exception;
-	
 	/**批量删除用户
 	 * @param USER_IDS
 	 * @throws Exception
@@ -121,131 +112,10 @@ public interface UserManager {
 	 */
 	public List<PageData> listAllUser(PageData pd)throws Exception;
 	
-	/**
-	 * 查询所有
-	 * @param pd
-	 * @return
-	 * @throws Exception
-	 */
-	public List<PageData> findUsers(PageData pd)throws Exception;
-	
-	/**
-	 * 查询所有通过微信端注册的用户
-	 * @param pd
-	 * @return
-	 * @throws Exception
-	 */
-	public List<PageData> findAllUserByOpenId(PageData pd)throws Exception;
-	
-	/**
-	 * 根据输入的值 模糊查询
-	 * @param pd
-	 * @return
-	 * @throws Exception
-	 */
-	public List<PageData> findLike(PageData pd)throws Exception;
-	
 	/**获取总数
 	 * @param pd
 	 * @throws Exception
 	 */
 	public PageData getUserCount(String value)throws Exception;
 	
-	/**
-	 * 根据用户ID查询文章信息
-	 * @param pd
-	 * @return
-	 * @throws Exception
-	 */
-	public List<PageData> findArticlesById(PageData pd)throws Exception;
-	
-	/**
-	 * 根据用户ID获取标签信息
-	 * @param pd
-	 * @return
-	 * @throws Exception
-	 */
-	public List<PageData> findTagById(PageData pd)throws Exception;
-	
-	/**
-	 * 根据用户ID 获取疾病信息
-	 * @param pd
-	 * @return
-	 * @throws Exception
-	 */
-	public List<PageData> findDiseaseById(PageData pd)throws Exception;
-	
-	/**
-	 * 根据用户ID 获取家族疾病信息
-	 * @param pd
-	 * @return
-	 * @throws Exception
-	 */
-	public List<PageData> findFhDiseaseByUserId(PageData pd)throws Exception;
-	
-	/**
-	 * 通过传入的用户ID  获取关联的用户信息
-	 * @param pd
-	 * @return
-	 * @throws Exception
-	 */
-	public List<PageData> findUsersById(PageData pd)throws Exception;
-	
-	
-	/**
-	 * 新增关联用户
-	 * @param pd
-	 * @throws Exception
-	 */
-	public void saveRelationUser(PageData pd)throws Exception;
-	
-	/**
-	 * 新增标签跟用户的关系
-	 * @param pd
-	 * @throws Exception
-	 */
-	public void saveUserAndTag(PageData pd)throws Exception;
-	
-	/**
-	 * 新增既往疾病跟用户的关系
-	 * @param pd
-	 * @throws Exception
-	 */
-	public void saveUserAndDisease(PageData pd)throws Exception;
-	
-	/**
-	 * 新增家族遗传疾病跟用户的关系
-	 * @param pd
-	 * @throws Exception
-	 */
-	public void saveUserAndFhDisease(PageData pd)throws Exception;
-	
-	/**
-	 * 根据用户ID 查询所关联的标签信息
-	 * @param pd
-	 * @return
-	 * @throws Exception
-	 */
-	public List<PageData> findTagsByUserId(PageData pd)throws Exception;
-	
-	/**
-	 * 根据用户ID 查询所关联的疾病信息
-	 * @param pd
-	 * @return
-	 * @throws Exception
-	 */
-	public List<PageData> findDiseaseByUserId(PageData pd)throws Exception;
-	
-	
-	public void deleteTags(PageData pd)throws Exception;
-	
-	
-	public void deleteDiseases(PageData pd)throws Exception;
-	
-	public void deleteFhDiseases(PageData pd)throws Exception;
-	
-	/**
-	 * 查询当前用户关系是否存在
-	 */
-	public PageData findConnectionWhether(PageData pd)throws Exception;
 }

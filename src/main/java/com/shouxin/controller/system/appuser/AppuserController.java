@@ -33,11 +33,13 @@ import com.shouxin.service.admin.tagcategory.TagCategoryManager;
 import com.shouxin.service.system.appuser.AppuserManager;
 import com.shouxin.service.system.role.RoleManager;
 import com.shouxin.util.AppUtil;
+import com.shouxin.util.DateUtil;
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.MD5;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
 import com.shouxin.util.StringUtil;
+import com.shouxin.util.Tools;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -321,11 +323,18 @@ public class AppuserController extends BaseController {
 		 */
 		try{
 			//加载疾病信息
-			JSONArray diseasearr = JSONArray.fromObject(diseasecategoryService.listSubDiseaseCategoryByParentId("0"));
+			JSONArray diseasearr = JSONArray.fromObject(this.diseasecategoryService.findAllDiseases());
 			String diseaseJson = diseasearr.toString();
 			logBefore(logger, diseaseJson+"列表DiseaseCategory=======");
-			diseaseJson = diseaseJson.replaceAll("DISEASECATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("ISINHERITABLE", "yic").replaceAll("subDiseaseCategory", "nodes").replaceAll("hasDiseaseCategory", "checked");
+			diseaseJson = diseaseJson.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
 			model.addAttribute("zTreeNodess", diseaseJson);
+			
+			//加载遗传疾病信息
+			JSONArray ind = JSONArray.fromObject(this.diseasecategoryService.findAllIsInheritabl());
+			String indiseaseJson = ind.toString();
+			logBefore(logger, indiseaseJson+"列表DiseaseCategory=======");
+			indiseaseJson = indiseaseJson.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseasess", "nodes");
+			model.addAttribute("ins", indiseaseJson);
 			
 			//加载标签信息
 			List<TagCategory> list = this.tagcategoryService.findTagsList();
@@ -356,12 +365,12 @@ public class AppuserController extends BaseController {
 		pd = this.getPageData();
 		
 		//生成 用户信息的ID
-		String user_id = this.get32UUID();
+		//String user_id = this.get32UUID();
 		
 		//获取前段页面传入的多个标签的ID 并按,拆分
-		String tagIds = pd.getString("tagIds");
+		//String tagIds = pd.getString("tagIds");
 		
-		if(tagIds != null && !"".equals(tagIds)){
+		/*if(tagIds != null && !"".equals(tagIds)){
 			logger.debug("多个标签的ID为："+tagIds);
 			//按,进行拆分  保存数据到数据库中
 			String[] tags = StringUtil.StrList(tagIds);
@@ -413,13 +422,25 @@ public class AppuserController extends BaseController {
 				pd.put("disease_id", fDiseases[i]);
 				this.appuserService.saveAppUserAndFamily(pd);
 			}
+		}*/
+		
+		pd.put("USER_ID", this.get32UUID());	//ID
+		pd.put("RIGHTS", "");	
+		pd.put("LAST_LOGIN", DateUtil.getTime());				//最后登录时间
+		pd.put("IP", "");						//IP
+		pd.put("CREATEON", DateUtil.getTime());
+		if (Tools.isEmpty(pd.getString("BIRTHDAY"))) {
+			pd.put("BIRTHDAY", DateUtil.getTime());
 		}
 		
-		pd.put("USER_ID", user_id);	//ID
-		pd.put("RIGHTS", "");					
-		pd.put("LAST_LOGIN", "");				//最后登录时间
-		pd.put("IP", "");						//IP
-		pd.put("CREATEON", new Date());
+		if(Tools.isEmpty(pd.getString("HEIGHT"))){
+			pd.put("HEIGHT", 170);
+		}
+		
+		if(Tools.isEmpty(pd.getString("WEIGHT"))){
+			pd.put("WEIGHT", 50);
+		}
+		
 		pd.put("CREATEBY", Jurisdiction.getUserId());
 		pd.put("PASSWORD", MD5.md5(pd.getString("PASSWORD")));
 		if(null == appuserService.findByUsername(pd)){
@@ -617,18 +638,24 @@ public class AppuserController extends BaseController {
 			 */
 			
 			//加载疾病信息
-			JSONArray diseasearr = JSONArray.fromObject(diseasecategoryService.listSubDiseaseCategoryByParentId("0"));
+			JSONArray diseasearr = JSONArray.fromObject(this.diseasecategoryService.findAllDiseases());
 			String diseaseJson = diseasearr.toString();
 			logBefore(logger, diseaseJson+"列表DiseaseCategory=======");
-			diseaseJson = diseaseJson.replaceAll("DISEASECATEGORY_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("ISINHERITABLE", "yic").replaceAll("subDiseaseCategory", "nodes").replaceAll("hasDiseaseCategory", "checked");
+			diseaseJson = diseaseJson.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
 			model.addAttribute("zTreeNodess", diseaseJson);
+			
+			//加载遗传疾病信息
+			JSONArray ind = JSONArray.fromObject(this.diseasecategoryService.findAllIsInheritabl());
+			String indiseaseJson = ind.toString();
+			logBefore(logger, indiseaseJson+"列表DiseaseCategory=======");
+			indiseaseJson = indiseaseJson.replaceAll("DISEASE_ID", "id").replaceAll("DISEASECATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("diseases", "nodes");
+			model.addAttribute("ins", indiseaseJson);
 			
 			//加载标签信息
 			List<TagCategory> list = this.tagcategoryService.findTagsList();
 			String json = JSONArray.fromObject(list).toString();
 			json = json.replaceAll("TAG_ID", "id").replaceAll("TAGCATEGORY_ID", "pid").replaceAll("NAME", "name").replaceAll("tags", "nodes");
 			model.addAttribute("zTreeNodes", json);
-			
 			
 			
 			pd = appuserService.findByUiId(pd);						//根据ID读取

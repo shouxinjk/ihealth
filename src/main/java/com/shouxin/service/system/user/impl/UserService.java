@@ -96,11 +96,6 @@ public class UserService implements UserManager{
 		return (PageData)dao.findForObject("UserMapper.findByUE", pd);
 	}
 	
-	public PageData findByPhone(PageData pd) throws Exception {
-		
-		return (PageData) dao.findForObject("UserMapper.findByPhone", pd);
-	}
-	
 	/**通过编号获取数据
 	 * @param pd
 	 * @return
@@ -167,114 +162,5 @@ public class UserService implements UserManager{
 	public PageData getUserCount(String value)throws Exception{
 		return (PageData)dao.findForObject("UserMapper.getUserCount", value);
 	}
-
-	/**
-	 * 根据用户ID查询文章信息
-	 */
-	@SuppressWarnings("unchecked")
-	public List<PageData> findArticlesById(PageData pd) throws Exception {
-		return (List<PageData>) dao.findForList("UserMapper.findArticlesById", pd);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<PageData> findTagById(PageData pd) throws Exception {
-		return (List<PageData>) dao.findForList("UserMapper.findTagById", pd);
-	}
-
-	/**
-	 * 根据用户ID 获取疾病信息
-	 */
-	@SuppressWarnings("unchecked")
-	public List<PageData> findDiseaseById(PageData pd) throws Exception {
-		return (List<PageData>) dao.findForList("UserMapper.findDiseaseById", pd);
-	}
-
-	/**
-	 * 根据用户ID  获取所有的关联用户信息
-	 */
-	@SuppressWarnings("unchecked")
-	public List<PageData> findUsersById(PageData pd) throws Exception {
-		return (List<PageData>) dao.findForList("UserMapper.findUserCastUser", pd);
-	}
-
-	/**
-	 * 根据用户关联关系表中的useranduser_id删除用户关联
-	 */
-	public void deleteRelationUser(PageData pd) throws Exception {
-		dao.delete("UserMapper.deleteRelationUser", pd);
-	}
-
-	/**
-	 * 新增关联用户
-	 */
-	public void saveRelationUser(PageData pd) throws Exception {
-		dao.save("UserMapper.saveRelationUser", pd);
-	}
-
-	public void saveUserAndTag(PageData pd) throws Exception {
-		dao.save("UserMapper.saveUserAndTag", pd);
-		
-	}
-
-	public void saveUserAndDisease(PageData pd) throws Exception {
-		dao.save("UserMapper.saveUserAndDisease", pd);
-		
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<PageData> findTagsByUserId(PageData pd) throws Exception {
-		return (List<PageData>) dao.findForList("UserMapper.findTagsByUserId", pd);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<PageData> findDiseaseByUserId(PageData pd) throws Exception {
-		return (List<PageData>) dao.findForList("UserMapper.findDiseaseByUserId", pd);
-	}
-
-	public void deleteTags(PageData pd) throws Exception {
-		dao.delete("UserMapper.deleteTags", pd);
-	}
-
-	public void deleteDiseases(PageData pd) throws Exception {
-		dao.delete("UserMapper.deleteDiseases", pd);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<PageData> findFhDiseaseByUserId(PageData pd) throws Exception {
-		// TODO Auto-generated method stub
-		return (List<PageData>) dao.findForList("UserMapper.findFhDiseaseByUserId", pd);
-	}
-
-	public void deleteFhDiseases(PageData pd) throws Exception {
-		// TODO Auto-generated method stub
-		dao.delete("UserMapper.deleteFhDiseases", pd);
-	}
-
-	public void saveUserAndFhDisease(PageData pd) throws Exception {
-		dao.save("UserMapper.saveUserAndFhDisease", pd);
-		
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<PageData> findLike(PageData pd) throws Exception {
-		
-		return (List<PageData>) dao.findForList("UserMapper.findLike", pd);
-	}
-
-	public PageData findConnectionWhether(PageData pd) throws Exception {
-		
-		return (PageData)dao.findForObject("UserMapper.findConnectionWhether", pd);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<PageData> findUsers(PageData pd) throws Exception {
-		
-		return (List<PageData>) dao.findForList("UserMapper.findUsers", pd);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<PageData> findAllUserByOpenId(PageData pd) throws Exception {
-		// TODO Auto-generated method stub
-		return (List<PageData>) dao.findForList("UserMapper.findAllUserByOpenId",pd);
-	}
+	
 }
