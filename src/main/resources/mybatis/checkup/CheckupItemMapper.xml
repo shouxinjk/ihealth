@@ -66,7 +66,14 @@
 		SYSFLAG,	
 		CHECKUPITEM_ID,
 		CREATEBY,
-		CREATEON
+		CREATEON,
+		concernedfactors,
+		disease_name,
+		riskType,
+		solution_id,
+		riskDefine,
+		startage,
+		endage
 	</sql>
 	
 	<!-- 字段值 -->
@@ -84,7 +91,14 @@
 		#{SYSFLAG},	
 		#{CHECKUPITEM_ID},
 		#{CREATEBY},
-		#{CREATEON}
+		#{CREATEON},
+		#{concernedfactors},
+		#{disease_name},
+		#{riskType},
+		#{solution_id},
+		#{riskDefine},
+		#{startage},
+		#{endage}
 	</sql>
 	
 	<!-- 根据userID获取体检项目 -->
@@ -140,6 +154,13 @@
 			SYSFLAG = #{SYSFLAG},
 			CREATEBY = #{CREATEBY},
 			CREATEON = #{CREATEON},
+			concernedfactors = #{concernedfactors},
+			disease_name = #{disease_name},
+			riskType = #{riskType},
+			solution_id = #{solution_id},
+			riskDefine = #{riskDefine},
+			startage = #{startage},
+			endage = #{endage},
 		CHECKUPITEM_ID = CHECKUPITEM_ID
 		<where>
 			<if test="CHECKUPITEM_ID != null and CHECKUPITEM_ID != ''">
