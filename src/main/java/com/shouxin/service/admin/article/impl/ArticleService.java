@@ -145,12 +145,12 @@ public class ArticleService implements ArticleManager{
 
 	@SuppressWarnings("unchecked")
 	public List<PageData> auditListPage(Page page) throws Exception {
-		return (List<PageData>)dao.findForList("ArticleMapper.auditListPage", page);
+		return (List<PageData>)dao.findForList("ArticleMapper.auditlistPage", page);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<PageData> articleReleasePage(Page page) throws Exception {
-		return (List<PageData>)dao.findForList("ArticleMapper.articleReleasePage", page);
+		return (List<PageData>)dao.findForList("ArticleMapper.articlelistPage", page);
 	}
 
 	

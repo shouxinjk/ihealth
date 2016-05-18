@@ -55,7 +55,7 @@
 										<td class="center">${user.connection }</td>
 										<td class="center">
 											<a class="btn btn-xs btn-info" title='删除我关心的人' onclick="delConnection('${user.useranduser_id}');">
-												<i class="ace-icon fa fa-search nav-search-icon" title="删除我关心的人"></i>
+												<i class="ace-icon fa fa-times-circle-o bigger-120" title="删除我关心的人"></i>
 											</a>
 										</td>
 									</tr>
