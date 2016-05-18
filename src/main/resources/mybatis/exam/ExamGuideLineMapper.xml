@@ -210,7 +210,7 @@
 	</select>
 	
 	<!-- 发布管理列表 -->
-	<select id="datalistReleasePage" parameterType="page" resultType="pd">
+	<select id="dataReleaselistPage" parameterType="page" resultType="pd">
 		select g.STATUS AS STATUS,g.EXAMGUIDELINE_ID AS EXAMGUIDELINE_ID,g.NAME AS GNAME,g.ORIGINATE as ORIGINATE,c.NAME 
 		as CNAME,d.NAME as DNAME,g.CONCERNEDFACTORS as CONCERNEDFACTORS
 		 ,g.DESCRIPTION as DESCRIPTION,i.NAME as INAME,s.FEATURES as FEATURES,g.HIGHRISKDEFINE as HIGHRISKDEFINE,
@@ -234,7 +234,7 @@
 	</select>
 	
 	<!-- 指南管理审核列表 -->
-	<select id="datalistVerfiyPage" parameterType="page" resultType="pd">
+	<select id="dataVerfiylistPage" parameterType="page" resultType="pd">
 		select g.STATUS AS STATUS,g.EXAMGUIDELINE_ID AS EXAMGUIDELINE_ID,g.NAME AS GNAME,g.ORIGINATE as ORIGINATE,c.NAME 
 		as CNAME,d.NAME as DNAME,g.CONCERNEDFACTORS as CONCERNEDFACTORS
 		 ,g.DESCRIPTION as DESCRIPTION,i.NAME as INAME,s.FEATURES as FEATURES,g.HIGHRISKDEFINE as HIGHRISKDEFINE,
@@ -258,7 +258,7 @@
 	</select>
 	
 	<!-- 指南管理审核列表 -->
-	<select id="datalistRelVerfiyPage" parameterType="page" resultType="pd">
+	<select id="dataRelVerfiylistPage" parameterType="page" resultType="pd">
 		select g.STATUS AS STATUS,g.EXAMGUIDELINE_ID AS EXAMGUIDELINE_ID,g.NAME AS GNAME,g.ORIGINATE as ORIGINATE,c.NAME 
 		as CNAME,d.NAME as DNAME,g.CONCERNEDFACTORS as CONCERNEDFACTORS
 		 ,g.DESCRIPTION as DESCRIPTION,i.NAME as INAME,s.FEATURES as FEATURES,g.HIGHRISKDEFINE as HIGHRISKDEFINE,

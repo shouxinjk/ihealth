@@ -112,7 +112,7 @@ public class ExamGuideLineService implements ExamGuideLineManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<PageData> listRelease(Page page) throws Exception {
-		return (List<PageData>) dao.findForList("ExamGuideLineMapper.datalistReleasePage", page);
+		return (List<PageData>) dao.findForList("ExamGuideLineMapper.dataReleaselistPage", page);
 	}
 	
 	/**
@@ -130,7 +130,7 @@ public class ExamGuideLineService implements ExamGuideLineManager {
 	@SuppressWarnings("unchecked")
 	public List<PageData> listRelVerfiy(Page page) throws Exception {
 		// TODO Auto-generated method stub
-		return (List<PageData>) dao.findForList("ExamGuideLineMapper.datalistRelVerfiyPage", page);
+		return (List<PageData>) dao.findForList("ExamGuideLineMapper.dataRelVerfiylistPage", page);
 	}
 
 }
