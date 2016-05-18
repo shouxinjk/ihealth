@@ -92,18 +92,20 @@
 														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
 															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 														</a>
-													</c:if>
-													<c:if test="${QX.del == 1 && var.STATUS eq '新建'}">
 														<a class="btn btn-xs btn-danger" onclick="del('${var.EXAMGUIDELINE_ID}');">
 															<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 														</a>
-													</c:if>
-													<c:if test="${QX.del == 1 && var.STATUS eq '新建'}">
 														<a class="btn btn-xs btn-danger" onclick="auditing('${var.EXAMGUIDELINE_ID}');">
 															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
 														</a>
 													</c:if>
 													<c:if test="${QX.del == 1 && var.STATUS eq '医生审核未通过'}">
+													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
+															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
+														</a>
+														<a class="btn btn-xs btn-danger" onclick="del('${var.EXAMGUIDELINE_ID}');">
+															<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
+														</a>
 														<a class="btn btn-xs btn-danger" onclick="auditing('${var.EXAMGUIDELINE_ID}');">
 															<i class="ace-icon fa fa-twitter-square bigger-120" title="重新提交"></i>
 														</a>
