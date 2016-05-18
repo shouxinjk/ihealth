@@ -193,7 +193,7 @@
 		</if>
 	</select>
 	
-	<select id="auditListPage" parameterType="page" resultType="pd">
+	<select id="auditlistPage" parameterType="page" resultType="pd">
 		select
 		<include refid="Field"></include>
 		from 
@@ -212,7 +212,7 @@
 		</if>
 	</select>
 	
-	<select id="articleReleasePage" parameterType="page" resultType="pd">
+	<select id="articlelistPage" parameterType="page" resultType="pd">
 		select
 		<include refid="Field"></include>
 		from 
