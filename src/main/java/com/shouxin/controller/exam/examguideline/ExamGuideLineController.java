@@ -197,6 +197,7 @@ public class ExamGuideLineController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 		page.setPd(pd);
+		System.out.println(page.isEntityOrField()+"=======");
 		List<PageData>	varList = examguidelineService.list(page);	//列出ExamGuideLine列表
 		for (PageData p : varList) {
 			if(p.get("STATUS")!=null){
@@ -226,6 +227,7 @@ public class ExamGuideLineController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 		page.setPd(pd);
+		System.out.println(page.isEntityOrField()+"=======");
 		List<PageData>	varList = examguidelineService.listRelease(page);	//列出ExamGuideLine列表
 		for (PageData p : varList) {
 			p.put("STATUS", StatusEnum.getNameByIndex(Integer.parseInt(p.get("STATUS").toString())));
