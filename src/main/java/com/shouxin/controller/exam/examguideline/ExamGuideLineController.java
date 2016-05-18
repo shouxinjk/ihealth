@@ -126,7 +126,7 @@ public class ExamGuideLineController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		logBefore(logger, pd.get("DISEASE_ID").toString()+"修改table");
+		//logBefore(logger, pd.get("DISEASE_ID").toString()+"修改table");
 		examguidelineService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -335,7 +335,7 @@ public class ExamGuideLineController extends BaseController {
 		List<PageData> varSouAndItem = examsolutionService.listAllExamSolutionAndExamItem(pd);//查询所有的检查手段
 		List<PageData> varFreqList = examfrequencyService.listAll(pd);//查询所有检查频率
 		List<PageData> varSouList = examsolutionService.listExamSolutionByExamGuidelineID(pd.get("EXAMGUIDELINE_ID").toString());
-		logBefore(logger, pds.get(1).get("DISEASECATEGORY_ID")+"列表EXAM  ==== DISEASE");
+		//logBefore(logger, pds.get(1).get("DISEASECATEGORY_ID")+"列表EXAM  ==== DISEASE");
 		logBefore(logger, varSouList+"列表EXAM  ==== DISEASE_ID");
 		mv.setViewName("exam/examguideline/examguideline_edit");
 		mv.addObject("msg", "edit");
