@@ -121,7 +121,7 @@ public class ExamGuideLineService implements ExamGuideLineManager {
 	@SuppressWarnings("unchecked")
 	public List<PageData> listVerfiy(Page page) throws Exception {
 		// TODO Auto-generated method stub
-		return (List<PageData>) dao.findForList("ExamGuideLineMapper.datalistVerfiyPage", page);
+		return (List<PageData>) dao.findForList("ExamGuideLineMapper.dataVerfiylistPage", page);
 	}
 
 	/**
