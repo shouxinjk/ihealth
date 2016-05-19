@@ -58,8 +58,8 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">名称</th>
 									<th class="center">表达式</th>
-									<th class="center">文本名称</th>
-									<th class="center">文本属性</th>
+									<th class="center">字段名称</th>
+									<th class="center">字段类型</th>
 									<th class="center">描述</th>
 									<th class="center">操作</th>
 								</tr>
