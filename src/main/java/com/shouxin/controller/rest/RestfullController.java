@@ -1154,11 +1154,11 @@ public class RestfullController extends BaseController {
 				if (Tools.notEmpty(pds.getString("LIVEPLACE"))) {
 					userNumber += 10;
 				}
-				Object objH = pds.get("BIRTHDAY");
+				Object objH = pds.get("HEIGHT");
 				if (objH != null && !"".equals(objH) && !"null".equals(objH)) {
 					userNumber += 10;
 				}
-				Object objW = pds.get("BIRTHDAY");
+				Object objW = pds.get("WEIGHT");
 				if (objW != null && !"".equals(objW) && !"null".equals(objW)) {
 					userNumber += 10;
 				}
