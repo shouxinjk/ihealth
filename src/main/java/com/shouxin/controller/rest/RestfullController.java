@@ -447,6 +447,7 @@ public class RestfullController extends BaseController {
 						msg = "error";
 					}
 				}else{
+					checkItemId = jasonObject.getString("checkupItemId").trim();	//获取当前项目ID
 					//根据当前ID  修改当前状态信息为已选中
 					if (Tools.notEmpty(checkItemId)) {
 						pd.put("CHECKUPITEM_ID", checkItemId);
