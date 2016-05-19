@@ -103,20 +103,20 @@ public class RestfullController extends BaseController {
 		JSONObject jasonObject = JSONObject.fromObject(userVO);
 		try {
 			// 获取json中的key并赋值给字符串 
-			if (Tools.notEmpty(jasonObject.getString("phone"))) {
+			if (jasonObject.get("phone")!=null) {
 				phone = jasonObject.getString("phone").trim();
 				pd.put("PHONE", phone); 
 				pd.put("USERNAME", phone);	
 			}
-			if (Tools.notEmpty(jasonObject.getString("openId"))) {
+			if (jasonObject.get("openId")!=null) {
 				openId = jasonObject.getString("openId").trim();
 				pd.put("OPENID", openId); 
 			}
-			if (Tools.notEmpty(jasonObject.getString("avatar"))) {
+			if (jasonObject.get("avatar")!=null) {
 				avatar = jasonObject.getString("avatar").trim();
 				pd.put("AVATAR", avatar);
 			}
-			if (Tools.notEmpty(jasonObject.getString("name"))) {
+			if (jasonObject.get("name")!=null) {
 				name = jasonObject.getString("name").trim();
 				pd.put("NAME", name);
 			}
