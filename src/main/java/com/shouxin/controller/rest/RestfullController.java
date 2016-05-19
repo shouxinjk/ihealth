@@ -1126,6 +1126,7 @@ public class RestfullController extends BaseController {
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		String msg = null,userId = null;
 		PageData pd = new PageData();
+		PageData pds = new PageData();
 		pd = this.getPageData();
 		Integer userNumber = 0,tagNumber = 0,diseaseNumber = 0,connectionNumber = 0;
 		
@@ -1136,40 +1137,43 @@ public class RestfullController extends BaseController {
 				userId = jasonObject.getString("userId").trim();
 				pd.put("USER_ID", userId);
 				//根据用户ID 查询用户信息
-				PageData pds = this.appuserService.findByUiId(pd);
-				if (Tools.notEmpty(pds.getString("PHONE"))) {
-					userNumber += 10;
+				pds = this.appuserService.findByUiId(pd);
+				if (pds != null) {
+					if (Tools.notEmpty(pds.getString("PHONE"))) {
+						userNumber += 10;
+					}
+					Object objB = pds.get("BIRTHDAY");
+					if (objB != null && !"".equals(objB) && !"null".equals(objB)) {
+						userNumber += 10;
+					}
+					if (Tools.notEmpty(pds.getString("SEX"))) {
+						userNumber += 10;
+					}
+					if (Tools.notEmpty(pds.getString("MARRIAGESTATUS"))) {
+						userNumber += 10;
+					}
+					if (Tools.notEmpty(pds.getString("BIRTHPLACE"))) {
+						userNumber += 10;
+					}
+					if (Tools.notEmpty(pds.getString("LIVEPLACE"))) {
+						userNumber += 10;
+					}
+					Object objH = pds.get("HEIGHT");
+					if (objH != null && !"".equals(objH) && !"null".equals(objH)) {
+						userNumber += 10;
+					}
+					Object objW = pds.get("WEIGHT");
+					if (objW != null && !"".equals(objW) && !"null".equals(objW)) {
+						userNumber += 10;
+					}
+					if (Tools.notEmpty(pds.getString("CAREER"))) {
+						userNumber += 10;
+					}
+					if (Tools.notEmpty(pds.getString("DEGREE"))) {
+						userNumber += 10;
+					}
 				}
-				Object objB = pds.get("BIRTHDAY");
-				if (objB != null && !"".equals(objB) && !"null".equals(objB)) {
-					userNumber += 10;
-				}
-				if (Tools.notEmpty(pds.getString("SEX"))) {
-					userNumber += 10;
-				}
-				if (Tools.notEmpty(pds.getString("MARRIAGESTATUS"))) {
-					userNumber += 10;
-				}
-				if (Tools.notEmpty(pds.getString("BIRTHPLACE"))) {
-					userNumber += 10;
-				}
-				if (Tools.notEmpty(pds.getString("LIVEPLACE"))) {
-					userNumber += 10;
-				}
-				Object objH = pds.get("HEIGHT");
-				if (objH != null && !"".equals(objH) && !"null".equals(objH)) {
-					userNumber += 10;
-				}
-				Object objW = pds.get("WEIGHT");
-				if (objW != null && !"".equals(objW) && !"null".equals(objW)) {
-					userNumber += 10;
-				}
-				if (Tools.notEmpty(pds.getString("CAREER"))) {
-					userNumber += 10;
-				}
-				if (Tools.notEmpty(pds.getString("DEGREE"))) {
-					userNumber += 10;
-				}
+				
 				if (userNumber>=100) {
 					userNumber =100;
 				}
@@ -1178,10 +1182,11 @@ public class RestfullController extends BaseController {
 				if (Tools.notEmpty(userId)) {
 					pd.put("user_id_one", userId);
 					List<PageData> list = this.appuserService.findUserCastUser(pd);
-					for (int i = 0; i < list.size(); i++) {
-						connectionNumber += 40;
+					if (list.size() > 0) {
+						for (int i = 0; i < list.size(); i++) {
+							connectionNumber += 40;
+						}
 					}
-					
 					if (connectionNumber >= 100) {
 						connectionNumber = 100;
 					}
@@ -1189,6 +1194,7 @@ public class RestfullController extends BaseController {
 				
 				//获取标签信息
 				List<PageData> tagList = this.tagService.findALLByGroup(pd);
+				
 				if (tagList.size() > 0 && tagList != null) {
 					tagNumber = 10 * tagList.size();
 				}
