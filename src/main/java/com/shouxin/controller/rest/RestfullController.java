@@ -103,20 +103,20 @@ public class RestfullController extends BaseController {
 		JSONObject jasonObject = JSONObject.fromObject(userVO);
 		try {
 			// 获取json中的key并赋值给字符串 
-			if (jasonObject.get("phone")!=null) {
+			if (jasonObject.get("phone") != null && !"".equals(jasonObject.get("phone")) && !"null".equals(jasonObject.get("phone"))) {
 				phone = jasonObject.getString("phone").trim();
 				pd.put("PHONE", phone); 
 				pd.put("USERNAME", phone);	
 			}
-			if (jasonObject.get("openId")!=null) {
+			if (jasonObject.get("openId") != null && !"".equals(jasonObject.get("openId")) && !"null".equals(jasonObject.get("openId"))) {
 				openId = jasonObject.getString("openId").trim();
 				pd.put("OPENID", openId); 
 			}
-			if (jasonObject.get("avatar")!=null) {
+			if (jasonObject.get("avatar") != null && !"".equals(jasonObject.get("avatar")) && !"null".equals(jasonObject.get("avatar"))) {
 				avatar = jasonObject.getString("avatar").trim();
 				pd.put("AVATAR", avatar);
 			}
-			if (jasonObject.get("name")!=null) {
+			if (jasonObject.get("name") != null && !"".equals(jasonObject.get("name")) && !"null".equals(jasonObject.get("name"))) {
 				name = jasonObject.getString("name").trim();
 				pd.put("NAME", name);
 			}
@@ -183,11 +183,11 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json 
 		JSONObject jasonObject = JSONObject.fromObject(message);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("phone"))) {
+			if (jasonObject.get("phone") != null && !"".equals(jasonObject.get("phone")) && !"null".equals(jasonObject.get("phone"))) {
 				phone = jasonObject.getString("phone").trim();
 				pd.put("PHONE", phone);
 			}
-			if (Tools.notEmpty(jasonObject.getString("userId"))) {
+			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				user_id_one = jasonObject.getString("userId").trim();
 				pd.put("user_id_one", user_id_one);
 			}
@@ -263,7 +263,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		try {
 			JSONObject jasonObject = JSONObject.fromObject(users);
-			if (Tools.notEmpty(jasonObject.getString("userId"))) {
+			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				userId = jasonObject.getString("userId").trim();
 				logBefore(logger, "执行根据用户ID，修改用户信息的方法：用户ID为："+userId);
 				
@@ -271,11 +271,11 @@ public class RestfullController extends BaseController {
 				//根据用户ID查询用户信息
 				pds = this.appuserService.findByUiId(pd);
 				
-				if (Tools.notEmpty(jasonObject.getString("name"))) {
+				if (jasonObject.get("name") != null && !"".equals(jasonObject.get("name")) && !"null".equals(jasonObject.get("name"))) {
 					name = jasonObject.getString("name").trim();
 					pds.put("NAME", name);
 				}
-				if (Tools.notEmpty(jasonObject.getString("sex"))) {
+				if (jasonObject.get("sex") != null && !"".equals(jasonObject.get("sex")) && !"null".equals(jasonObject.get("sex"))) {
 					sex =  jasonObject.getString("sex").trim();
 					// 判断性别，并赋值
 					if (sex.equals(SexEnum.BOY.getValue())) {
@@ -287,43 +287,43 @@ public class RestfullController extends BaseController {
 					}
 					pds.put("SEX", sex);
 				}
-				if (Tools.notEmpty(jasonObject.getString("marriageStatus"))) {
+				if (jasonObject.get("marriageStatus") != null && !"".equals(jasonObject.get("marriageStatus")) && !"null".equals(jasonObject.get("marriageStatus"))) {
 					marriageStatus =  jasonObject.getString("marriageStatus").trim();
 					// 判断婚姻状态 传入下拉列表中的value 1 未婚 2 已婚 3 同居 4 离异 5寡居
 					marriageStatus = MarriageStatusEnum.getNameByIndex(Integer.parseInt(marriageStatus));
 					pds.put("MARRIAGESTATUS", marriageStatus);
 				}
-				if (Tools.notEmpty(jasonObject.getString("birthday"))) {
+				if (jasonObject.get("birthday") != null && !"".equals(jasonObject.get("birthday")) && !"null".equals(jasonObject.get("birthday"))) {
 					birthday = jasonObject.getString("birthday").trim();
 					pds.put("BIRTHDAY", DateUtil.fomatDate(birthday));
 				}
-				if (Tools.notEmpty(jasonObject.getString("height"))) {
+				if (jasonObject.get("height") != null && !"".equals(jasonObject.get("height")) && !"null".equals(jasonObject.get("height"))) {
 					height = jasonObject.getString("height").trim();
 					pds.put("HEIGHT", Double.parseDouble(height));
 				}
-				if (Tools.notEmpty(jasonObject.getString("weight"))) {
+				if (jasonObject.get("weight") != null && !"".equals(jasonObject.get("weight")) && !"null".equals(jasonObject.get("weight"))) {
 					weight = jasonObject.getString("weight").trim();
 					pds.put("WEIGHT", Double.parseDouble(weight));
 				}
-				if (Tools.notEmpty(jasonObject.getString("birthPlace"))) {
+				if (jasonObject.get("birthPlace") != null && !"".equals(jasonObject.get("birthPlace")) && !"null".equals(jasonObject.get("birthPlace"))) {
 					birthPlace = jasonObject.getString("birthPlace").trim();
 					pds.put("BIRTHPLACE", birthPlace);
 				}
-				if (Tools.notEmpty(jasonObject.getString("livePlace"))) {
+				if (jasonObject.get("livePlace") != null && !"".equals(jasonObject.get("livePlace")) && !"null".equals(jasonObject.get("livePlace"))) {
 					livePlace = jasonObject.getString("livePlace").trim();
 					pds.put("LIVEPLACE", livePlace);
 				}
-				if (Tools.notEmpty(jasonObject.getString("career"))) {
+				if (jasonObject.get("career") != null && !"".equals(jasonObject.get("career")) && !"null".equals(jasonObject.get("career"))) {
 					career = jasonObject.getString("career").trim();
 					pds.put("CAREER", career);
 				}
-				if (Tools.notEmpty(jasonObject.getString("degree"))) {
+				if (jasonObject.get("degree") != null && !"".equals(jasonObject.get("degree")) && !"null".equals(jasonObject.get("degree"))) {
 					degree = jasonObject.getString("degree").trim();
 					// 判断学历
 					degree = DegreeEnum.getNameByIndex(Integer.parseInt(degree));
 					pds.put("DEGREE", degree);
 				}
-				if (Tools.notEmpty(jasonObject.getString("avatar"))) {
+				if (jasonObject.get("avatar") != null && !"".equals(jasonObject.get("avatar")) && !"null".equals(jasonObject.get("avatar"))) {
 					avatar = jasonObject.getString("avatar").trim();
 					pds.put("AVATAR", avatar);
 					logBefore(logger, "执行根据用户ID，修改用户信息的方法：用户头像地址为：======"+avatar);
@@ -382,7 +382,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("userId"))) {
+			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				userId = jasonObject.get("userId").toString().trim();
 				pd.put("USER_ID", userId);
 				
@@ -430,7 +430,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(check);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("subGroup"))) {
+			if (jasonObject.get("subGroup") != null && !"".equals(jasonObject.get("subGroup")) && !"null".equals(jasonObject.get("subGroup"))) {
 				subGroup = jasonObject.getString("subGroup");	//获取分组名
 				pd.put("SUBGROUP", subGroup);
 				this.checkupitemService.removeStatus(pd);
@@ -439,11 +439,11 @@ public class RestfullController extends BaseController {
 				msg = "error";
 			}
 			
-			if (Tools.notEmpty(jasonObject.getString("stauts"))) {
+			if (jasonObject.get("stauts") != null && !"".equals(jasonObject.get("stauts")) && !"null".equals(jasonObject.get("stauts"))) {
 				status = jasonObject.getString("stauts").trim();		//获取状态
 				//如果当前状态为已选中 则将当前状态修改为 已删除
 				if (status.equals(StatusEnum.ALREADYENABLED.getName())) {
-					if (Tools.notEmpty(jasonObject.getString("checkupItemId"))) {
+					if (jasonObject.get("checkupItemId") != null && !"".equals(jasonObject.get("checkupItemId")) && !"null".equals(jasonObject.get("checkupItemId"))) {
 						checkItemId = jasonObject.getString("checkupItemId").trim();	//获取当前项目ID
 						pd.put("CHECKUPITEM_ID", checkItemId);
 						this.checkupitemService.editAllStatus(pd);
@@ -454,7 +454,7 @@ public class RestfullController extends BaseController {
 				}else{
 					checkItemId = jasonObject.getString("checkupItemId").trim();	//获取当前项目ID
 					//根据当前ID  修改当前状态信息为已选中
-					if (Tools.notEmpty(checkItemId)) {
+					if (jasonObject.get("checkupItemId") != null && !"".equals(jasonObject.get("checkupItemId")) && !"null".equals(jasonObject.get("checkupItemId"))) {
 						pd.put("CHECKUPITEM_ID", checkItemId);
 						this.checkupitemService.editStatus(pd);
 						msg = "success";
@@ -508,7 +508,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("userId"))) {
+			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				userId = jasonObject.getString("userId").trim();
 				pd.put("USER_ID", userId);
 				List<PageData> pageDate = this.checkupitemService.listAll(pd);
@@ -569,7 +569,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("userId"))) {
+			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				userId = jasonObject.getString("userId").trim();
 				pd.put("USER_ID", userId);
 				logger.debug("根据用户ID 查询体检项目信息");
@@ -627,7 +627,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("id"))) {
+			if (jasonObject.get("id") != null && !"".equals(jasonObject.get("id")) && !"null".equals(jasonObject.get("id"))) {
 				id = jasonObject.getString("id").trim();
 				pd.put("CHECKUPITEM_ID", id);
 				logger.debug("根据用户ID 查询体检项目信息");
@@ -693,7 +693,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("userId"))) {
+			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				userId = jasonObject.getString("userId").trim();
 				pd.put("USER_ID", userId);
 				PageData data = this.appuserService.findByUiId(pd);
@@ -758,7 +758,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("openId"))) {
+			if (jasonObject.get("openId") != null && !"".equals(jasonObject.get("openId")) && !"null".equals(jasonObject.get("openId"))) {
 				openId = jasonObject.getString("openId").trim();
 				pd.put("OPENID", openId);
 				PageData data = this.appuserService.findByUiId(pd);
@@ -902,7 +902,7 @@ public class RestfullController extends BaseController {
 		
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(a);
-		if (Tools.notEmpty(jasonObject.getString("articleId"))) {
+		if (jasonObject.get("articleId") != null && !"".equals(jasonObject.get("articleId")) && !"null".equals(jasonObject.get("articleId"))) {
 			articleId = jasonObject.getString("articleId").trim();
 			pd.put("ARTICLE_ID", articleId);
 			PageData data = this.articleService.findById(pd);
@@ -962,7 +962,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("userId"))) {
+			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				userId = jasonObject.getString("userId").trim();
 				pd.put("user_id_one", userId);
 				List<PageData> data = this.appuserService.findUserCastUser(pd);
@@ -1009,7 +1009,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("useranduser_id"))) {
+			if (jasonObject.get("useranduser_id") != null && !"".equals(jasonObject.get("useranduser_id")) && !"null".equals(jasonObject.get("useranduser_id"))) {
 				useranduser_id = jasonObject.getString("useranduser_id").trim();
 				pd.put("useranduser_id", useranduser_id);
 				try {
@@ -1061,11 +1061,11 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("connection"))) {
+			if (jasonObject.get("connection") != null && !"".equals(jasonObject.get("connection")) && !"null".equals(jasonObject.get("connection"))) {
 				connection = jasonObject.getString("connection").trim();
 			}
 			
-			if (Tools.notEmpty(jasonObject.getString("userId")) && Tools.notEmpty(jasonObject.getString("user_Id"))) {
+			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId")) && jasonObject.get("user_Id") != null && !"".equals(jasonObject.get("user_Id")) && !"null".equals(jasonObject.get("user_Id"))) {
 				userId = jasonObject.getString("userId").trim();
 				user_Id = jasonObject.getString("user_Id").trim();
 				pd.put("user_id_one", userId);
@@ -1136,7 +1136,7 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
 		try {
-			if (Tools.notEmpty(jasonObject.getString("userId"))) {
+			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				userId = jasonObject.getString("userId").trim();
 				pd.put("USER_ID", userId);
 				//根据用户ID 查询用户信息
