@@ -112,6 +112,7 @@ public class DiseaseRestController extends BaseController {
 				pd.put("USER_ID", userId);
 				pd.put("DISEASE_ID", diseaseIDS[i]);
 				diseaseService.userSavepPersonalDisease(pd);
+				//TODO hook analysis interface
 			}
 			msg = "success";
 		} else {
@@ -179,6 +180,7 @@ public class DiseaseRestController extends BaseController {
 				pd.put("USER_ID", userID);
 				pd.put("DISEASE_ID", personalDiseaseID[i]);
 				diseaseService.userSavepPersonalDisease(pd);
+				//TODO hook analysis interface
 				msg = "success";
 			}
 		}else{
@@ -192,6 +194,7 @@ public class DiseaseRestController extends BaseController {
 				pd.put("USER_ID", userID);
 				pd.put("DISEASE_ID", familyDiseaseID[i]);
 				diseaseService.userSavepFamilyDisease(pd);
+				//TODO hook analysis interface
 				msg = "success";
 			}
 		}else{
@@ -205,6 +208,7 @@ public class DiseaseRestController extends BaseController {
 				pd.put("USER_ID", userID);
 				pd.put("DISEASE_ID", focusDiseaseID[i]);
 				diseaseService.userSavepFocusDisease(pd);
+				//TODO hook analysis interface
 				msg = "success";
 			}
 		}else {

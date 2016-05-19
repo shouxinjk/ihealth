@@ -444,6 +444,7 @@ public class AppuserController extends BaseController {
 		pd.put("CREATEBY", Jurisdiction.getUserId());
 		pd.put("PASSWORD", MD5.md5(pd.getString("PASSWORD")));
 		if(null == appuserService.findByUsername(pd)){
+			//TODO hook analysis interface
 			appuserService.saveU(pd);			//判断新增权限
 			mv.addObject("msg","success");
 		}else{
@@ -622,6 +623,7 @@ public class AppuserController extends BaseController {
 		}
 		
 		appuserService.editU(pd);
+		//TODO hook analysis interface
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;

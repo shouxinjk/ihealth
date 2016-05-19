@@ -130,6 +130,7 @@ public class RestfullController extends BaseController {
 			if (null == this.appuserService.findByPhone(pd)) { 
 				logBefore(logger, "经过判断，手机号码在数据库中不存在，执行新增操作");
 				appuserService.saveU(pd); // 执行保存
+				//TODO hook analysis interface
 				msg = "success";
 				map.put("data", appuserService.findByUiId(pd));
 			} else {
@@ -328,6 +329,7 @@ public class RestfullController extends BaseController {
 				pds.put("STATUS", "1");
 				logBefore(logger, "执行根据ID，修改用户信息的方法--------------------------------++++++++");
 				this.appuserService.editU(pds);
+				//TODO hook analysis interface
 				PageData pageData = this.appuserService.findByUiId(pds);
 				map.put("data", pageData);
 				msg = "suceess";

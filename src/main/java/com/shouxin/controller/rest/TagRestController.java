@@ -120,6 +120,7 @@ public class TagRestController extends BaseController {
 				pd.put("USER_ID", userId);
 				pd.put("TAG_ID", tagIDS[i]);
 				tagService.addAll(pd);
+				//TODO hook analysis interface
 			}
 			msg = "success";
 		} else {
@@ -159,6 +160,7 @@ public class TagRestController extends BaseController {
 				pd.put("USER_ID", userID);
 				pd.put("TAG_ID", allTagID[i]);
 				tagService.addAll(pd);
+				//TODO hook analysis interface
 				msg = "success";
 			}
 		} else {

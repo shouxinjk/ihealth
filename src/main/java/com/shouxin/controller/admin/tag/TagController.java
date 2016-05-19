@@ -63,6 +63,7 @@ public class TagController extends BaseController {
 		pd.put("CREATEBY", Jurisdiction.getUserId());
 		pd.put("CREATEON", new Date());
 		tagService.save(pd);
+		//TODO hook analysis interface
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -95,6 +96,7 @@ public class TagController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		tagService.edit(pd);
+		//TODO hook analysis interface
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
