@@ -25,7 +25,7 @@
 		TAG_ID,
 		DESCRIPTION,
 		fieldName,
-		fieldProperties
+		fieldType
 	</sql>
 	
 	<!-- 字段值 -->
@@ -37,7 +37,7 @@
 		#{TAG_ID},
 		#{DESCRIPTION},
 		#{fieldName},
-		#{fieldProperties}
+		#{fieldType}
 	</sql>
 	
 	<!-- 字段 -->
@@ -50,7 +50,7 @@
 		TAGCATEGORY_ID,
 		DESCRIPTION,
 		fieldName,
-		fieldProperties
+		fieldType
 	</sql>
 	
 	<!-- 字段值 -->
@@ -63,7 +63,7 @@
 		#{TAGCATEGORY_ID},
 		#{DESCRIPTION},
 		#{fieldName},
-		#{fieldProperties}
+		#{fieldType}
 	</sql>
 	
 	<!-- 新增-->
@@ -94,7 +94,7 @@
 			EXPRESSION = #{EXPRESSION},
 			DESCRIPTION = #{DESCRIPTION},
 			fieldName = #{fieldName},
-			fieldProperties = #{fieldProperties},
+			fieldType = #{fieldType},
 			TAG_ID = TAG_ID
 		where 
 		TAG_ID = #{TAG_ID}
@@ -126,7 +126,7 @@
 		t.EXPRESSION AS EXPRESSION,	
 		t.TAG_ID as TAG_ID,
 		t.fieldName AS fieldName,
-		t.fieldProperties AS fieldProperties,
+		t.fieldType AS fieldType,
 		t.DESCRIPTION as DESCRIPTION,
 		tc.ISEXCLUSIVE as ISEXCLUSIVE
 		from 
@@ -178,7 +178,7 @@
 		<!-- 通过用户id获取tag数据 -->
 	<select id="findALLByUserID" parameterType="pd" resultType="pd">
 		select 
-		t.DESCRIPTION as TDESCRIPTION,t.fieldName as fieldName,t.fieldProperties as fieldProperties,t.TAG_ID AS TAG_ID,t.NAME AS NAME,t.TAGCATEGORY_ID AS TAGCATEGORY_ID,t.EXPRESSION AS EXPRESSION
+		t.DESCRIPTION as TDESCRIPTION,t.fieldName as fieldName,t.fieldType as fieldType,t.TAG_ID AS TAG_ID,t.NAME AS NAME,t.TAGCATEGORY_ID AS TAGCATEGORY_ID,t.EXPRESSION AS EXPRESSION
 		 from admin_tag t,sys_app_user_and_tag ut where t.TAG_ID=ut.tag_id and ut.user_id=#{USER_ID}
 	</select>
 	
@@ -189,7 +189,7 @@
 		  t.TAG_ID AS TAG_ID,
 		  t.NAME AS NAME,
 		  t.fieldName AS fieldName,
-		  t.fieldProperties AS fieldProperties,
+		  t.fieldType AS fieldType,
 		  t.TAGCATEGORY_ID AS TAGCATEGORY_ID,
 		  t.EXPRESSION AS EXPRESSION 
 		FROM
@@ -208,7 +208,7 @@
 		  t.NAME AS NAME,
 		  t.TAGCATEGORY_ID AS TAGCATEGORY_ID,
 		  t.fieldName AS fieldName,
-		  t.fieldProperties AS fieldProperties,
+		  t.fieldType AS fieldType,
 		  t.EXPRESSION AS EXPRESSION 
 		FROM
 		  admin_tag t,

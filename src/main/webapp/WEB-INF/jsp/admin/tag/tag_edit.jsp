@@ -54,8 +54,8 @@
 								<td><input type="text" name="fieldName" id="fieldName" value="${pd.fieldName}" maxlength="512" placeholder="这里输入字段名称" title="字段名称" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">字段属性:</td>
-								<td><input type="text" name="fieldProperties" id="fieldProperties" value="${pd.fieldProperties}" maxlength="512" placeholder="这里输入字段属性" title="字段属性" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">字段类型:</td>
+								<td><input type="text" name="fieldType" id="fieldType" value="${pd.fieldType}" maxlength="512" placeholder="这里输入字段属性" title="字段属性" style="width:98%;"/></td>
 							</tr>
 							
 							<tr>

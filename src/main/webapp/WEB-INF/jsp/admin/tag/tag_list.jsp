@@ -79,7 +79,7 @@
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.EXPRESSION}</td>
 											<td class='center'>${var.fieldName}</td>
-											<td class='center'>${var.fieldProperties}</td>
+											<td class='center'>${var.fieldType}</td>
 											<td class='center'>${var.DESCRIPTION}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
