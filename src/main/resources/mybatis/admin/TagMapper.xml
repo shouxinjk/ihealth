@@ -23,7 +23,9 @@
 		CREATEBY,	
 		CREATEON,	
 		TAG_ID,
-		DESCRIPTION
+		DESCRIPTION,
+		fieldName,
+		fieldProperties
 	</sql>
 	
 	<!-- 字段值 -->
@@ -33,7 +35,9 @@
 		#{CREATEBY},	
 		#{CREATEON},	
 		#{TAG_ID},
-		#{DESCRIPTION}
+		#{DESCRIPTION},
+		#{fieldName},
+		#{fieldProperties}
 	</sql>
 	
 	<!-- 字段 -->
@@ -44,7 +48,9 @@
 		CREATEON,	
 		TAG_ID,
 		TAGCATEGORY_ID,
-		DESCRIPTION
+		DESCRIPTION,
+		fieldName,
+		fieldProperties
 	</sql>
 	
 	<!-- 字段值 -->
@@ -55,7 +61,9 @@
 		#{CREATEON},	
 		#{TAG_ID},
 		#{TAGCATEGORY_ID},
-		#{DESCRIPTION}
+		#{DESCRIPTION},
+		#{fieldName},
+		#{fieldProperties}
 	</sql>
 	
 	<!-- 新增-->
@@ -85,7 +93,9 @@
 			NAME = #{NAME},
 			EXPRESSION = #{EXPRESSION},
 			DESCRIPTION = #{DESCRIPTION},
-		TAG_ID = TAG_ID
+			fieldName = #{fieldName},
+			fieldProperties = #{fieldProperties},
+			TAG_ID = TAG_ID
 		where 
 		TAG_ID = #{TAG_ID}
 	</update>
@@ -115,6 +125,8 @@
 		t.NAME as NAME,	
 		t.EXPRESSION AS EXPRESSION,	
 		t.TAG_ID as TAG_ID,
+		t.fieldName AS fieldName,
+		t.fieldProperties AS fieldProperties,
 		t.DESCRIPTION as DESCRIPTION,
 		tc.ISEXCLUSIVE as ISEXCLUSIVE
 		from 
@@ -166,7 +178,7 @@
 		<!-- 通过用户id获取tag数据 -->
 	<select id="findALLByUserID" parameterType="pd" resultType="pd">
 		select 
-		t.DESCRIPTION as TDESCRIPTION,t.TAG_ID AS TAG_ID,t.NAME AS NAME,t.TAGCATEGORY_ID AS TAGCATEGORY_ID,t.EXPRESSION AS EXPRESSION
+		t.DESCRIPTION as TDESCRIPTION,t.fieldName as fieldName,t.fieldProperties as fieldProperties,t.TAG_ID AS TAG_ID,t.NAME AS NAME,t.TAGCATEGORY_ID AS TAGCATEGORY_ID,t.EXPRESSION AS EXPRESSION
 		 from admin_tag t,sys_app_user_and_tag ut where t.TAG_ID=ut.tag_id and ut.user_id=#{USER_ID}
 	</select>
 	
@@ -176,6 +188,8 @@
 		  t.DESCRIPTION AS TDESCRIPTION,
 		  t.TAG_ID AS TAG_ID,
 		  t.NAME AS NAME,
+		  t.fieldName AS fieldName,
+		  t.fieldProperties AS fieldProperties,
 		  t.TAGCATEGORY_ID AS TAGCATEGORY_ID,
 		  t.EXPRESSION AS EXPRESSION 
 		FROM
@@ -193,6 +207,8 @@
 		  t.TAG_ID AS TAG_ID,
 		  t.NAME AS NAME,
 		  t.TAGCATEGORY_ID AS TAGCATEGORY_ID,
+		  t.fieldName AS fieldName,
+		  t.fieldProperties AS fieldProperties,
 		  t.EXPRESSION AS EXPRESSION 
 		FROM
 		  admin_tag t,

@@ -204,7 +204,7 @@
 		DELETE 
 		FROM
 		  sys_app_user_and_personal_disease 
-		WHERE user_id = #{user_id} 
+		WHERE user_id = #{user_id}  
 	</delete>
 	
 	<!-- 根据会员ID 删除会员跟关注疾病的关系 -->

@@ -527,6 +527,12 @@ public class AppuserController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		appuserService.deleteU(pd);
+		
+		pd.put("user_id", pd.getString("USER_ID"));
+		this.appuserService.deleteTag(pd);
+		this.appuserService.deletePersonal(pd);
+		this.appuserService.deleteFocus(pd);
+		this.appuserService.deleteFamily(pd);
 		out.write("success");
 		out.close();
 	}

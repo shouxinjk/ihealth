@@ -616,6 +616,8 @@ CREATE TABLE `admin_tag` (
   `CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建记录时间',
   `TAGCATEGORY_ID` varchar(32) DEFAULT NULL COMMENT '所属分类id',
   `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `fieldName` varchar(512) DEFAULT NULL COMMENT '字段名称',
+  `fieldProperties` varchar(512) DEFAULT NULL COMMENT '字段属性',
   PRIMARY KEY (`TAG_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
