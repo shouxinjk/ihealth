@@ -150,8 +150,10 @@ public class RestfullController extends BaseController {
 			}
 		} catch (Exception e) {
 			msg = "error";
-			logBefore(logger, "程序异常--请检查参数列表");
+			logger.debug(e);
+			logBefore(logger, "程序异常--请检查参数列表" + e.getMessage());
 		}
+		
 		
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
