@@ -150,6 +150,7 @@ public class RestfullController extends BaseController {
 			}
 		} catch (Exception e) {
 			msg = "error";
+			e.printStackTrace();
 			logger.debug(e);
 			logBefore(logger, "程序异常--请检查参数列表" + e.getMessage());
 		}
