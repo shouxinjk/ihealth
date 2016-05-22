@@ -121,7 +121,11 @@ public class DiseaseRestController extends BaseController {
 			msg = "no";
 		}
 		map.put("msg", msg);
-
+		
+		//qchzhu: hook analysis interface
+		Transfer transfer = new Transfer();
+		transfer.transferUserDiseases(userId);
+		//end
 		return AppUtil.returnObject(new PageData(), map);
 	}
 
