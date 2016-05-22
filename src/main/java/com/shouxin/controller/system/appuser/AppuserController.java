@@ -40,6 +40,7 @@ import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
 import com.shouxin.util.StringUtil;
 import com.shouxin.util.Tools;
+import com.shouxinjk.ihealth.data.Transfer;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -444,7 +445,6 @@ public class AppuserController extends BaseController {
 		pd.put("CREATEBY", Jurisdiction.getUserId());
 		pd.put("PASSWORD", MD5.md5(pd.getString("PASSWORD")));
 		if(null == appuserService.findByUsername(pd)){
-			//TODO hook analysis interface
 			appuserService.saveU(pd);			//判断新增权限
 			mv.addObject("msg","success");
 		}else{
@@ -623,7 +623,11 @@ public class AppuserController extends BaseController {
 		}
 		
 		appuserService.editU(pd);
-		//TODO hook analysis interface
+		//qchzhu: hook analysis interface
+		Transfer transfer = new Transfer();
+		transfer.transferUserTags(user_id);
+		transfer.transferUserDiseases(user_id);
+		//end hook analysis interface
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
