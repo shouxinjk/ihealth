@@ -2,10 +2,14 @@ package com.shouxin.service.exam.examguideline.impl;
 
 import java.util.List;
 import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
 import com.shouxin.util.PageData;
+import com.shouxin.util.StatusEnum;
+import com.shouxinjk.ihealth.data.Transfer;
 import com.shouxin.service.exam.examguideline.ExamGuideLineManager;
 
 /**
@@ -15,7 +19,7 @@ import com.shouxin.service.exam.examguideline.ExamGuideLineManager;
  */
 @Service("examguidelineService")
 public class ExamGuideLineService implements ExamGuideLineManager {
-
+	Logger logger = Logger.getLogger(ExamGuideLineService.class);
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
 
@@ -103,8 +107,20 @@ public class ExamGuideLineService implements ExamGuideLineManager {
 	 * 修改指南状态
 	 */
 	public void auditing(PageData pd) throws Exception {
-		// TODO Auto-generated method stub
 		dao.update("ExamGuideLineMapper.auditing", pd);
+		//qchzhu: hook analysis interface
+		Transfer transfer = new Transfer();
+		String guideLineId = pd.getString("EXAMGUIDELINE_ID");
+		String status = pd.getString("STATUS");
+		logger.debug("try to tranfer guideLine to analysis system.[guideLineId]"+guideLineId+"[targte status]"+status);
+		if(StatusEnum.PUBLISH.getIndex() == Integer.parseInt(status)){
+			logger.debug("try to release new guideLine.[guideLineId]"+guideLineId);
+			transfer.releaseGuideLine(guideLineId);
+		}else if(StatusEnum.EXPIRED.getIndex() == Integer.parseInt(status)){
+			logger.debug("try to disable guideLine.[guideLineId]"+guideLineId);
+			transfer.cancelGuideLine(guideLineId);
+		}
+		//end
 	}
 
 	/**

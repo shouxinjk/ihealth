@@ -274,6 +274,19 @@
 			<artifactId>wsdl4j</artifactId>
 			<version>1.6.3</version>
 		</dependency>
+		<!-- ihealth-interface -->
+		<dependency>
+			<groupId>com.shouxinjk.ihealth</groupId>
+			<artifactId>ihealth-interface</artifactId>
+			<version>0.9</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ihealth-interface-0.9.jar</systemPath>
+		</dependency>	
+		<dependency>
+		    <groupId>com.zaxxer</groupId>
+		    <artifactId>HikariCP</artifactId>
+		    <version>2.4.6</version>
+		</dependency> 				
 		<!-- axis-ant -->
 		<dependency>
 			<groupId>axis-ant</groupId>

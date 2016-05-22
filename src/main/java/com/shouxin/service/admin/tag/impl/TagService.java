@@ -3,9 +3,12 @@ package com.shouxin.service.admin.tag.impl;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.testng.log4testng.Logger;
+
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
 import com.shouxin.util.PageData;
+import com.shouxinjk.ihealth.data.Transfer;
 import com.shouxin.service.admin.tag.TagManager;
 
 /**
@@ -16,6 +19,7 @@ import com.shouxin.service.admin.tag.TagManager;
 @Service("tagService")
 public class TagService implements TagManager {
 
+	Logger logger = Logger.getLogger(TagService.class);
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
 
@@ -28,6 +32,14 @@ public class TagService implements TagManager {
 	// @Override
 	public void save(PageData pd) throws Exception {
 		dao.save("TagMapper.save", pd);
+		//qchzhu: hook analysis interface
+		Transfer transfer = new Transfer();
+		try{
+			transfer.transferTag(pd.getString("fieldName"), pd.getString("fieldType"));
+		}catch(Exception ex){
+			logger.error("fail to transfer tag.",ex);
+		}
+		//end hook analysis interface
 	}
 
 	/**
@@ -50,6 +62,14 @@ public class TagService implements TagManager {
 	// @Override
 	public void edit(PageData pd) throws Exception {
 		dao.update("TagMapper.edit", pd);
+		//qchzhu: hook analysis interface
+		Transfer transfer = new Transfer();
+		try{
+			transfer.transferTag(pd.getString("fieldName"), pd.getString("fieldType"));
+		}catch(Exception ex){
+			logger.error("fail to transfer tag.",ex);
+		}
+		//end hook analysis interface
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package com.shouxin.controller.rest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,8 @@ import com.shouxin.service.admin.tag.TagManager;
 import com.shouxin.service.admin.tagcategory.TagCategoryManager;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.PageData;
+import com.shouxinjk.ihealth.data.Transfer;
+import com.shouxinjk.ihealth.data.pojo.UserDisease;
 
 import net.sf.json.JSONObject;
 
@@ -112,7 +115,6 @@ public class DiseaseRestController extends BaseController {
 				pd.put("USER_ID", userId);
 				pd.put("DISEASE_ID", diseaseIDS[i]);
 				diseaseService.userSavepPersonalDisease(pd);
-				//TODO hook analysis interface
 			}
 			msg = "success";
 		} else {
@@ -172,6 +174,12 @@ public class DiseaseRestController extends BaseController {
 		personalDiseaseID = (String[]) tr.toArray(new String[0]);
 		familyDiseaseID = (String[]) ftr.toArray(new String[0]);
 		focusDiseaseID = (String[]) foctr.toArray(new String[0]);
+		
+		//qchzhu: hook analysis interface
+		UserDisease userDisease = new UserDisease();
+		userDisease.setUser_id(userID);
+		//end
+		
 		if (personalDiseaseIDStr != null && personalDiseaseID.length > 0 && userID != null) {
 			pd.put("USER_ID", userID);
 			diseaseService.deleteDiseaseByUserID(pd);
@@ -180,7 +188,8 @@ public class DiseaseRestController extends BaseController {
 				pd.put("USER_ID", userID);
 				pd.put("DISEASE_ID", personalDiseaseID[i]);
 				diseaseService.userSavepPersonalDisease(pd);
-				//TODO hook analysis interface
+				//qchzhu: hook analysis interface
+				userDisease.addSufferedDisease(personalDiseaseID[i]);
 				msg = "success";
 			}
 		}else{
@@ -194,7 +203,8 @@ public class DiseaseRestController extends BaseController {
 				pd.put("USER_ID", userID);
 				pd.put("DISEASE_ID", familyDiseaseID[i]);
 				diseaseService.userSavepFamilyDisease(pd);
-				//TODO hook analysis interface
+				//qchzhu: hook analysis interface
+				userDisease.addInheritDisease(familyDiseaseID[i]);
 				msg = "success";
 			}
 		}else{
@@ -208,13 +218,19 @@ public class DiseaseRestController extends BaseController {
 				pd.put("USER_ID", userID);
 				pd.put("DISEASE_ID", focusDiseaseID[i]);
 				diseaseService.userSavepFocusDisease(pd);
-				//TODO hook analysis interface
+				//qchzhu: hook analysis interface
+				userDisease.addConcernDisease(focusDiseaseID[i]);
 				msg = "success";
 			}
 		}else {
 			msg = "no";
 		}
 		map.put("msg", msg);
+		
+		//qchzhu: hook analysis interface
+		Transfer transfer = new Transfer();
+		transfer.transferUserDisease(userDisease);
+		//end hook analysis interface
 
 		return AppUtil.returnObject(new PageData(), map);
 	}

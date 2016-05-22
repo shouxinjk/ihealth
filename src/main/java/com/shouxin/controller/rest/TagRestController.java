@@ -12,6 +12,8 @@ import com.shouxin.service.admin.tagcategory.TagCategoryManager;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.PageData;
+import com.shouxinjk.ihealth.data.Transfer;
+import com.shouxinjk.ihealth.data.pojo.UserTag;
 
 import net.sf.json.JSONObject;
 
@@ -120,12 +122,23 @@ public class TagRestController extends BaseController {
 				pd.put("USER_ID", userId);
 				pd.put("TAG_ID", tagIDS[i]);
 				tagService.addAll(pd);
-				//TODO hook analysis interface
 			}
 			msg = "success";
 		} else {
 			msg = "no";
 		}
+		//qchzhu: hook analysis interface
+		Transfer transfer = new Transfer();
+		UserTag userTag = new UserTag();
+		userTag.setUser_id(userId);
+		PageData pdTemp = new PageData();
+		pdTemp.put("USER_ID", userId);
+		List<PageData> tags = tagService.listTagByUserID(pdTemp);
+		for(PageData pdTag:tags){
+			userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
+		}
+		transfer.transferUserTags(userTag);
+		//end
 		map.put("msg", msg);
 
 		return AppUtil.returnObject(new PageData(), map);
@@ -160,12 +173,23 @@ public class TagRestController extends BaseController {
 				pd.put("USER_ID", userID);
 				pd.put("TAG_ID", allTagID[i]);
 				tagService.addAll(pd);
-				//TODO hook analysis interface
 				msg = "success";
 			}
 		} else {
 			msg = "no";
 		}
+		//qchzhu: hook analysis interface
+		Transfer transfer = new Transfer();
+		UserTag userTag = new UserTag();
+		userTag.setUser_id(userID);
+		PageData pdTemp = new PageData();
+		pdTemp.put("USER_ID", userID);
+		List<PageData> tags = tagService.listTagByUserID(pdTemp);
+		for(PageData pdTag:tags){
+			userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
+		}
+		transfer.transferUserTags(userTag);
+		//end
 		map.put("msg", msg);
 
 		return AppUtil.returnObject(new PageData(), map);

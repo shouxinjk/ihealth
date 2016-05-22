@@ -1,15 +1,20 @@
 package com.shouxin.service.system.appuser.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
 import com.shouxin.service.system.appuser.AppuserManager;
 import com.shouxin.util.PageData;
+import com.shouxinjk.ihealth.data.Transfer;
 
 
 /**类名称：AppuserService
@@ -19,6 +24,7 @@ import com.shouxin.util.PageData;
 @Service("appuserService")
 public class AppuserService implements AppuserManager{
 
+	Logger logger = Logger.getLogger(AppuserService.class);
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
 	
@@ -69,12 +75,55 @@ public class AppuserService implements AppuserManager{
 		return (PageData)dao.findForObject("AppuserMapper.findByNumber", pd);
 	}
 	
+	/**
+	 * transfer user from business system to analysis system
+	 * 
+	 * @param pd to query user info from
+	 */
+	private void transferUser(PageData pd){
+		Transfer transfer = new Transfer();
+		com.shouxinjk.ihealth.data.pojo.User user = new com.shouxinjk.ihealth.data.pojo.User();
+		 user.setUser_id(pd.getString("USER_ID"));
+		 user.setUserName(pd.getString("USERNAME"));
+		 user.setName(pd.getString("NAME"));
+		 user.setIp(pd.getString("IP"));
+		 user.setPhone(pd.getString("PHONE"));
+		 user.setEmail(pd.getString("EMAIL"));
+		 user.setOpenid(pd.getString("OPENID"));
+		 user.setAlias(pd.getString("ALIAS"));
+		 user.setBirthday(pd.getString("BIRTHDAY"));
+		 user.setSex(pd.getString("SEX"));
+		 user.setBirthPlace(pd.getString("BIRTHPLACE"));
+		 user.setLivePlace(pd.getString("LIVEPLACE"));
+		 user.setMarriageStatus(pd.getString("MARRIAGESTATUS"));
+		 user.setCareer(pd.getString("CAREER"));
+		 user.setDegree(pd.getString("DEGREE"));
+		 user.setAvatar(pd.getString("AVATAR"));
+		 user.setHeight(Integer.parseInt(pd.getString("HEIGHT")));
+		 user.setWeight(Integer.parseInt(pd.getString("WEIGHT")));
+		 SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+		 int age = -1;
+		 try {
+			Date birthDate = format.parse(pd.getString("BIRTHDAY"));
+			int year1 = birthDate.getYear();
+			Date now = new Date();
+			int year2 = now.getYear();
+			age = year2-year1+1;
+		} catch (ParseException e) {
+			logger.error("cannot calcuate user age.",e);
+		}
+		user.setAge(age);
+		transfer.transferUser(user);
+	}
+	
 	/**保存用户
 	 * @param pd
 	 * @throws Exception
 	 */
 	public void saveU(PageData pd)throws Exception{
 		dao.save("AppuserMapper.saveU", pd);
+		//qchzhu: hook analysis interface
+		transferUser(pd);
 	}
 	
 	/**删除用户
@@ -91,6 +140,8 @@ public class AppuserService implements AppuserManager{
 	 */
 	public void editU(PageData pd)throws Exception{
 		dao.update("AppuserMapper.editU", pd);
+		//qchzhu: hook analysis interface
+		transferUser(pd);
 	}
 	
 	/**通过id获取数据
