@@ -113,10 +113,10 @@ public class ExamGuideLineService implements ExamGuideLineManager {
 		String guideLineId = pd.getString("EXAMGUIDELINE_ID");
 		String status = pd.getString("STATUS");
 		logger.debug("try to tranfer guideLine to analysis system.[guideLineId]"+guideLineId+"[targte status]"+status);
-		if(StatusEnum.PUBLISH.getIndex() == Integer.parseInt(status)){
+		if(StatusEnum.PUBLISH.getName().equals(status)){
 			logger.debug("try to release new guideLine.[guideLineId]"+guideLineId);
 			transfer.releaseGuideLine(guideLineId);
-		}else if(StatusEnum.EXPIRED.getIndex() == Integer.parseInt(status)){
+		}else if(StatusEnum.EXPIRED.getName().equals(status)){
 			logger.debug("try to disable guideLine.[guideLineId]"+guideLineId);
 			transfer.cancelGuideLine(guideLineId);
 		}

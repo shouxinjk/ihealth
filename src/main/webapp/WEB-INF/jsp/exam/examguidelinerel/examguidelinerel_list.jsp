@@ -86,18 +86,18 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<c:if test="${QX.edit == 1&&var.STATUS eq '运维已审核'}">
-														<a class="btn btn-xs btn-success" title="发布" onclick="auditing1('${var.EXAMGUIDELINE_ID}','5')">
+													<c:if test="${QX.edit == 1&&var.STATUS eq '运维审核'}">
+														<a class="btn btn-xs btn-success" title="发布" onclick="auditing1('${var.EXAMGUIDELINE_ID}','已发布')">
 															<i class="ace-icon fa fa-folder bigger-120" title="发布"></i>
 														</a>
 													</c:if>
 													<c:if test="${QX.edit == 1&& var.STATUS eq '已发布'}">
-														<a class="btn btn-xs" title="失效" onclick="auditing1('${var.EXAMGUIDELINE_ID}','6');">
+														<a class="btn btn-xs" title="失效" onclick="auditing1('${var.EXAMGUIDELINE_ID}','已失效');">
 															<i class="menu-icon fa fa-retweet blue" title="失效"></i>
 														</a>
 													</c:if>
 													<c:if test="${QX.edit == 1&& var.STATUS eq '已失效'}">
-														<a class="btn btn-xs btn-success" title="重新发布" onclick="auditing1('${var.EXAMGUIDELINE_ID}','5');">
+														<a class="btn btn-xs btn-success" title="重新发布" onclick="auditing1('${var.EXAMGUIDELINE_ID}','已发布');">
 															<i class="ace-icon fa fa-folder-open bigger-120" title="重新发布"></i>
 														</a>
 													</c:if>

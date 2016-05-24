@@ -65,4 +65,12 @@ public class ExamItem implements Serializable{
 		this.cotegory = cotegory;
 	}
 
+	@Override
+	public String toString() {
+		return "ExamItem [EXAMITEM_ID=" + EXAMITEM_ID + ", NAME=" + NAME + ", DESCRIPTION=" + DESCRIPTION
+				+ ", CREATEBY=" + CREATEBY + ", CREATEON=" + CREATEON + ", cotegory=" + cotegory + "]";
+	}
+	
+	
+
 }

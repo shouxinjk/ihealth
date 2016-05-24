@@ -86,19 +86,19 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<c:if test="${QX.edit == 1&&var.STATUS eq '医生已审核'}">
+													<c:if test="${QX.edit == 1&&var.STATUS eq '已审核'}">
 														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
 															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 														</a>
-														<a class="btn btn-xs btn-success" title="运维补充" onclick="auditing('${var.EXAMGUIDELINE_ID}','3');">
+														<a class="btn btn-xs btn-success" title="运维补充" onclick="auditing('${var.EXAMGUIDELINE_ID}','已补充');">
 															<i class="ace-icon fa fa-th-large bigger-120" title="运维补充"></i>
 														</a>
 													</c:if>
-													<c:if test="${QX.edit == 1&& var.STATUS eq '运维审核未通过'}">
+													<c:if test="${QX.edit == 1&& var.STATUS eq '运维审核失败'}">
 														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
 															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 														</a>
-														<a class="btn btn-xs btn-success" title="运维补充" onclick="auditing('${var.EXAMGUIDELINE_ID}','3');">
+														<a class="btn btn-xs btn-success" title="运维补充" onclick="auditing('${var.EXAMGUIDELINE_ID}','已补充');">
 															<i class="ace-icon fa fa-check-circle-o bigger-120" title="运维补充"></i>
 														</a>
 													</c:if>

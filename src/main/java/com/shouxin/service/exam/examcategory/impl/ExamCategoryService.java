@@ -91,6 +91,22 @@ public class ExamCategoryService implements ExamCategoryManager{
 		return (List<ExamCategory>) dao.findForList("ExamCategoryMapper.listSubExamCategoryByID", parentID);
 	}
 	
+
+
+	public List<ExamCategory> listAllExamCategory(String parentID) throws Exception {
+		// TODO Auto-generated method stub
+		List<ExamCategory> examCategory = this.listSubExamCategoryByParentID(parentID);
+		for (ExamCategory cate : examCategory) {
+			cate.setTreeUrl("examcategory/list.do?EXAMCATEGORY_ID="+cate.getEXAMCATEGORY_ID());
+			cate.setTarget("treeFrame");
+			cate.setSubExamCategory(this.listAllExamCategory(cate.getEXAMCATEGORY_ID()));
+		}
+		return examCategory;
+	}
+	
+	/**
+	 * 指南管理模拟树状结构展示
+	 */
 	public List<ExamCategory> listSubExamCategoryByParentID2(String parentID,String prefix) throws Exception {
 		// TODO Auto-generated method stub
 		List<ExamCategory> c = (List<ExamCategory>) dao.findForList("ExamCategoryMapper.listSubExamCategoryByID", parentID);
@@ -104,18 +120,10 @@ public class ExamCategoryService implements ExamCategoryManager{
 		}
 		return c;
 	}
-
-	public List<ExamCategory> listAllExamCategory(String parentID) throws Exception {
-		// TODO Auto-generated method stub
-		List<ExamCategory> examCategory = this.listSubExamCategoryByParentID(parentID);
-		for (ExamCategory cate : examCategory) {
-			cate.setTreeUrl("examcategory/list.do?EXAMCATEGORY_ID="+cate.getEXAMCATEGORY_ID());
-			cate.setTarget("treeFrame");
-			cate.setSubExamCategory(this.listAllExamCategory(cate.getEXAMCATEGORY_ID()));
-		}
-		return examCategory;
-	}
 	
+	/**
+	 * 指南管理模拟树状结构展示
+	 */
 	public List<ExamCategory> listAllExamCategory2(String parentID,String prefix) throws Exception {
 		// TODO Auto-generated method stub
 		List<ExamCategory> examCategory = this.listSubExamCategoryByParentID2(parentID,prefix);

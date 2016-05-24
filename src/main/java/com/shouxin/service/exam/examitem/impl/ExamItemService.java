@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.exam.ExamCategory;
+import com.shouxin.entity.exam.ExamItem;
 import com.shouxin.util.PageData;
 import com.shouxin.service.exam.examcategory.ExamCategoryManager;
 import com.shouxin.service.exam.examitem.ExamItemManager;
@@ -118,6 +119,11 @@ public class ExamItemService implements ExamItemManager{
 	public List<PageData> listItemByExamCategoryID(String EXAMCATEGORY_ID) throws Exception {
 		// TODO Auto-generated method stub
 		return (List<PageData>) dao.findForList("ExamItemMapper.listItemByItemCategory_id", EXAMCATEGORY_ID);
+	}
+
+	public ExamItem findById(String EXAMITEM_ID) throws Exception {
+		// TODO Auto-generated method stub
+		return (ExamItem) dao.findForObject("ExamItemMapper.findByIdMap", EXAMITEM_ID);
 	}
 	
 	

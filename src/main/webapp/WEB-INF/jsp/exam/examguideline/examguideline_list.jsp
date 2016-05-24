@@ -95,18 +95,18 @@
 														<a class="btn btn-xs btn-danger" onclick="del('${var.EXAMGUIDELINE_ID}');">
 															<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 														</a>
-														<a class="btn btn-xs btn-danger" onclick="auditing('${var.EXAMGUIDELINE_ID}');">
+														<a class="btn btn-xs btn-danger" onclick="auditing('${var.EXAMGUIDELINE_ID}','已提交');">
 															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
 														</a>
 													</c:if>
-													<c:if test="${QX.del == 1 && var.STATUS eq '医生审核未通过'}">
+													<c:if test="${QX.del == 1 && var.STATUS eq '审核失败'}">
 													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
 															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 														</a>
 														<a class="btn btn-xs btn-danger" onclick="del('${var.EXAMGUIDELINE_ID}');">
 															<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 														</a>
-														<a class="btn btn-xs btn-danger" onclick="auditing('${var.EXAMGUIDELINE_ID}');">
+														<a class="btn btn-xs btn-danger" onclick="auditing('${var.EXAMGUIDELINE_ID}','已提交');">
 															<i class="ace-icon fa fa-twitter-square bigger-120" title="重新提交"></i>
 														</a>
 													</c:if>
@@ -297,11 +297,11 @@
 		}
 		
 		//医生审核
-		function auditing(Id){
+		function auditing(Id,status){
 			bootbox.confirm("确定要操作吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>examguideline/auditing.do?EXAMGUIDELINE_ID="+Id+"&STATUS=18&tm="+new Date().getTime();
+					var url = "<%=basePath%>examguideline/auditing.do?EXAMGUIDELINE_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage(${page.currentPage});
 					});

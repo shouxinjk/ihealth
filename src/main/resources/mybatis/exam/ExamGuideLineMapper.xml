@@ -230,7 +230,7 @@
 				-->
 				)
 		</if>
-		 and g.STATUS IN (4,5,6)  GROUP BY g.EXAMGUIDELINE_ID
+		 and g.STATUS IN ('运维审核','已发布','已失效')  GROUP BY g.EXAMGUIDELINE_ID
 	</select>
 	
 	<!-- 指南管理审核列表 -->
@@ -254,7 +254,7 @@
 				-->
 				)
 		</if>
-		 and g.STATUS = 18  GROUP BY g.EXAMGUIDELINE_ID
+		 and g.STATUS = '已提交'  GROUP BY g.EXAMGUIDELINE_ID
 	</select>
 	
 	<!-- 指南管理审核列表 -->
@@ -278,7 +278,7 @@
 				-->
 				)
 		</if>
-		 and g.STATUS = 3  GROUP BY g.EXAMGUIDELINE_ID
+		 and g.STATUS = '已补充'  GROUP BY g.EXAMGUIDELINE_ID
 	</select>
 	
 	<!-- 列表(全部) -->
