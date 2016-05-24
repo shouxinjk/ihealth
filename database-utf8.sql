@@ -869,11 +869,11 @@ INSERT INTO `tb_medicalceneradmin` VALUES ('1', '院长', '院长', '', '2016-05
 DROP TABLE IF EXISTS `tb_medicalorder`;
 CREATE TABLE `tb_medicalorder` (
   `MEDICALORDER_ID` varchar(100) NOT NULL,
-  `ORDERNO` varchar(255) DEFAULT NULL COMMENT '订单号',
-  `ORDERGENERATIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单生成时间',
-  `ORDERBOOKINGTIME` timestamp NULL DEFAULT NULL COMMENT '订单预约时间',
-  `ORDEREXECUTIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单实际执行时间',
-  `TOTALAMOUNT` double NOT NULL COMMENT '订单总金额',
+  `MEDICALORDERNO` varchar(255) DEFAULT NULL COMMENT '订单号',
+  `MEDICALORDERGENERATIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单生成时间',
+  `MEDICALORDERBOOKINGTIME` timestamp NULL DEFAULT NULL COMMENT '订单预约时间',
+  `MEDICALORDEREXECUTIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单实际执行时间',
+  `MEDICALTOTALAMOUNT` double NOT NULL COMMENT '订单总金额',
   `STATUS` set('审核','提交','新建') DEFAULT '新建' COMMENT '订单状态',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
   `CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
@@ -884,7 +884,7 @@ CREATE TABLE `tb_medicalorder` (
 -- ----------------------------
 -- Records of tb_medicalorder
 -- ----------------------------
-INSERT INTO `tb_medicalorder` VALUES ('1', '111111', '2016-04-27 10:27:26', '2016-05-10 10:27:28', '2016-05-02 10:27:31', '222', '新建', '11', '2016-04-29 10:27:37', '5b901194b7cc42c0b6a95a54a1cd7350');
+INSERT INTO `tb_medicalorder` VALUES ('1', '222222', '2016-04-27 10:27:26', '2016-05-10 10:27:28', '2016-05-02 10:27:31', '222', '新建', '11', '2016-04-29 10:27:37', '5b901194b7cc42c0b6a95a54a1cd7350');
 INSERT INTO `tb_medicalorder` VALUES ('2', '111', '2016-05-28 10:27:56', '2016-05-07 10:27:53', '2016-05-04 10:27:49', '22222', '新建', '11', '2016-04-29 10:27:42', '1');
 INSERT INTO `tb_medicalorder` VALUES ('3', '222', '2016-05-25 10:28:10', '2016-05-09 10:28:16', '2016-04-25 10:28:19', '333', '新建', '22', '2016-05-19 10:28:29', '2');
 
@@ -933,12 +933,12 @@ INSERT INTO `tb_orderitem` VALUES ('4', 'ddb62967f06c4f558dadff0c06dcafe9', '2')
 DROP TABLE IF EXISTS `tb_order`;
 CREATE TABLE `tb_order` (
   `ORDER_ID` varchar(100) NOT NULL,
-  `MEDICALORDERNO` varchar(255) DEFAULT NULL COMMENT '订单号',
-  `MEDICALORDERGENERATIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单生成时间',
-  `MEDICALORDERBOOKINGTIME` timestamp NULL DEFAULT NULL COMMENT '订单预约时间',
-  `MEDICALORDEREXECUTIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单实际执行时间',
-  `MEDICALORDERTOTALAMOUNT` double(11,0) DEFAULT NULL COMMENT '订单总金额',
-  `MEDICALORDERSTATUS` set('审核','提交','新建') DEFAULT '新建' COMMENT '订单状态',
+  `ORDERNO` varchar(255) DEFAULT NULL COMMENT '订单号',
+  `ORDERGENERATIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单生成时间',
+  `ORDERBOOKINGTIME` timestamp NULL DEFAULT NULL COMMENT '订单预约时间',
+  `ORDEREXECUTIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单实际执行时间',
+  `ORDERTOTALAMOUNT` double(11,0) DEFAULT NULL COMMENT '订单总金额',
+  `STATUS` set('审核','提交','新建') DEFAULT '新建' COMMENT '订单状态',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户',
   `CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
   PRIMARY KEY (`ORDER_ID`)
@@ -947,7 +947,7 @@ CREATE TABLE `tb_order` (
 -- ----------------------------
 -- Records of tb_order
 -- ----------------------------
-INSERT INTO `tb_order` VALUES ('1', 'aaaa', '2016-05-04 10:00:49', '2016-05-17 10:00:52', '2016-05-18 10:00:55', '222', '新建', '111', '2016-04-29 10:01:36');
+INSERT INTO `tb_order` VALUES ('1', null, null, null, null, '333', '新建', null, null);
 INSERT INTO `tb_order` VALUES ('2', 'bbb', '2016-04-27 10:01:50', '2016-05-06 10:01:53', '2016-05-03 10:01:56', '2222', '新建', '11', '2016-05-05 10:02:04');
 
 
