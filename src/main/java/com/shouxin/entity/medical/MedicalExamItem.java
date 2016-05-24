@@ -1,30 +1,29 @@
 package com.shouxin.entity.medical;
 
-import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 
- * 类名称：医学检查项目 类描述：
- * 
- * @author shouxin 作者单位： 联系方式： 修改时间：2015年12月16日
- * @version 2.0
- */
+public class MedicalExamItem {
 
-public class MedicalExamItem implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private String MEDICALEXAMITEM_ID; // 检查项目id
-	private String NAME; // '名称',
-	private double PRICE; // '价格',
-	private double PRICE2; // '建议价格',
-	private String TIPS; // '检查项目提示',
-	private String STATUS; // '状态',
-	private String createBY; // 创建该项目用户id
-	private Date createON; // 创建该记录时间
-	private MedicalCenter center; // 体检中心或医院
+	private String MEDICALEXAMITEM_ID;	// varchar(100) NOT NULL,
+	private String NAME;				// varchar(255) DEFAULT NULL COMMENT '体检项目名称',
+	private String DESCRIPTION;			// varchar(255) DEFAULT NULL COMMENT '体检项目说明',
+	private String FEATURES;			// varchar(255) DEFAULT NULL COMMENT '体检项目特征',
+	private double SELLINGPRICE;		// double(11,0) DEFAULT NULL COMMENT '体检项目销售价格',
+	private double SETTLEMENTPRICE;		// double(11,0) DEFAULT NULL COMMENT '体检项目结算价格',
+	private String LOGO;				// varchar(255) DEFAULT NULL COMMENT '体检项目logo图片url地址',
+	private String STATUS;				// set('审核','提交','新建') DEFAULT '新建' COMMENT '体检项目状态',
+	private Date EFFECTIVETIME;			// varchar(32) DEFAULT NULL COMMENT '体检项目生效时间',
+	private Date EXPIRETIME;			// varchar(32) DEFAULT NULL COMMENT '体检项目失效时间',
+	private String CREATEBY;			// varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
+	private Date CREATEON;				// timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
+
+	public String getMEDICALEXAMITEM_ID() {
+		return MEDICALEXAMITEM_ID;
+	}
+
+	public void setMEDICALEXAMITEM_ID(String mEDICALEXAMITEM_ID) {
+		MEDICALEXAMITEM_ID = mEDICALEXAMITEM_ID;
+	}
 
 	public String getNAME() {
 		return NAME;
@@ -34,28 +33,44 @@ public class MedicalExamItem implements Serializable{
 		NAME = nAME;
 	}
 
-	public double getPRICE() {
-		return PRICE;
+	public String getDESCRIPTION() {
+		return DESCRIPTION;
 	}
 
-	public void setPRICE(double pRICE) {
-		PRICE = pRICE;
+	public void setDESCRIPTION(String dESCRIPTION) {
+		DESCRIPTION = dESCRIPTION;
 	}
 
-	public double getPRICE2() {
-		return PRICE2;
+	public String getFEATURES() {
+		return FEATURES;
 	}
 
-	public void setPRICE2(double pRICE2) {
-		PRICE2 = pRICE2;
+	public void setFEATURES(String fEATURES) {
+		FEATURES = fEATURES;
 	}
 
-	public String getTIPS() {
-		return TIPS;
+	public double getSELLINGPRICE() {
+		return SELLINGPRICE;
 	}
 
-	public void setTIPS(String tIPS) {
-		TIPS = tIPS;
+	public void setSELLINGPRICE(double sELLINGPRICE) {
+		SELLINGPRICE = sELLINGPRICE;
+	}
+
+	public double getSETTLEMENTPRICE() {
+		return SETTLEMENTPRICE;
+	}
+
+	public void setSETTLEMENTPRICE(double sETTLEMENTPRICE) {
+		SETTLEMENTPRICE = sETTLEMENTPRICE;
+	}
+
+	public String getLOGO() {
+		return LOGO;
+	}
+
+	public void setLOGO(String lOGO) {
+		LOGO = lOGO;
 	}
 
 	public String getSTATUS() {
@@ -66,36 +81,45 @@ public class MedicalExamItem implements Serializable{
 		STATUS = sTATUS;
 	}
 
-	public MedicalCenter getCenter() {
-		return center;
+	public Date getEFFECTIVETIME() {
+		return EFFECTIVETIME;
 	}
 
-	public void setCenter(MedicalCenter center) {
-		this.center = center;
+	public void setEFFECTIVETIME(Date eFFECTIVETIME) {
+		EFFECTIVETIME = eFFECTIVETIME;
 	}
 
-	public String getMEDICALEXAMITEM_ID() {
-		return MEDICALEXAMITEM_ID;
+	public Date getEXPIRETIME() {
+		return EXPIRETIME;
 	}
 
-	public void setMEDICALEXAMITEM_ID(String mEDICALEXAMITEM_ID) {
-		MEDICALEXAMITEM_ID = mEDICALEXAMITEM_ID;
+	public void setEXPIRETIME(Date eXPIRETIME) {
+		EXPIRETIME = eXPIRETIME;
 	}
 
-	public String getCreateBY() {
-		return createBY;
+	public String getCREATEBY() {
+		return CREATEBY;
 	}
 
-	public void setCreateBY(String createBY) {
-		this.createBY = createBY;
+	public void setCREATEBY(String cREATEBY) {
+		CREATEBY = cREATEBY;
 	}
 
-	public Date getCreateON() {
-		return createON;
+	public Date getCREATEON() {
+		return CREATEON;
 	}
 
-	public void setCreateON(Date createON) {
-		this.createON = createON;
+	public void setCREATEON(Date cREATEON) {
+		CREATEON = cREATEON;
 	}
 
+	@Override
+	public String toString() {
+		return "MedicalExamItem [MEDICALEXAMITEM_ID=" + MEDICALEXAMITEM_ID + ", NAME=" + NAME + ", DESCRIPTION="
+				+ DESCRIPTION + ", FEATURES=" + FEATURES + ", SELLINGPRICE=" + SELLINGPRICE + ", SETTLEMENTPRICE="
+				+ SETTLEMENTPRICE + ", LOGO=" + LOGO + ", STATUS=" + STATUS + ", EFFECTIVETIME=" + EFFECTIVETIME
+				+ ", EXPIRETIME=" + EXPIRETIME + ", CREATEBY=" + CREATEBY + ", CREATEON=" + CREATEON + "]";
+	}
+	
+	
 }
