@@ -84,10 +84,13 @@ public class OrderService implements OrderManager{
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("OrderMapper.deleteAll", ArrayDATA_IDS);
 	}
-
+	
+	/**
+	 * 查询该订单下所有体检项目
+	 */
 	public PageData findExamItemByOrderId(PageData pd) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return (PageData) dao.findForObject("OrderMapper.findExamItemByOrderId", pd);
 	}
 	
 }

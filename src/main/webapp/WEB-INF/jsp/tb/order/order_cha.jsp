@@ -33,32 +33,32 @@
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单号:</td>
-								<td><input type="text" name="ORDERNO" id="ORDERNO" value="${pd.ORDERNO}" maxlength="255" placeholder="这里输入订单号" title="订单号" style="width:98%;"/></td>
+								<td><input type="text" name="ORDERNO" id="ORDERNO" value="${pd.ORDERNO}" maxlength="255" placeholder="这里输入订单号" title="订单号" style="width:98%;" readonly="readonly"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单生成时间:</td>
-								<td><input class="span10 date-picker" name="ORDERGENERATIONTIME" id="ORDERGENERATIONTIME" value="${pd.ORDERGENERATIONTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="订单生成时间" title="订单生成时间" style="width:98%;"/></td>
+								<td><input name="ORDERGENERATIONTIME" id="ORDERGENERATIONTIME" value="${pd.ORDERGENERATIONTIME}" type="text" readonly="readonly" placeholder="订单生成时间" title="订单生成时间" style="width:98%;" readonly="readonly"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单预约时间:</td>
-								<td><input class="span10 date-picker" name="ORDERBOOKINGTIME" id="ORDERBOOKINGTIME" value="${pd.ORDERBOOKINGTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="订单预约时间" title="订单预约时间" style="width:98%;"/></td>
+								<td><input name="ORDERBOOKINGTIME" id="ORDERBOOKINGTIME" value="${pd.ORDERBOOKINGTIME}" type="text" readonly="readonly" placeholder="订单预约时间" title="订单预约时间" style="width:98%;" readonly="readonly"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单实际执行时间:</td>
-								<td><input class="span10 date-picker" name="ORDEREXECUTIONTIME" id="ORDEREXECUTIONTIME" value="${pd.ORDEREXECUTIONTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="订单实际执行时间" title="订单实际执行时间" style="width:98%;"/></td>
+								<td><input name="ORDEREXECUTIONTIME" id="ORDEREXECUTIONTIME" value="${pd.ORDEREXECUTIONTIME}" type="text" readonly="readonly" placeholder="订单实际执行时间" title="订单实际执行时间" style="width:98%;" readonly="readonly"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单总金额:</td>
-								<td><input type="number" name="TOTALAMOUNT" id="TOTALAMOUNT" value="${pd.TOTALAMOUNT}" maxlength="32" placeholder="这里输入订单总金额" title="订单总金额" style="width:98%;"/></td>
+								<td><input type="number" name="ORDERTOTALAMOUNT" id="ORDERTOTALAMOUNT" value="${pd.ORDERTOTALAMOUNT}" maxlength="32" placeholder="这里输入订单总金额" title="订单总金额" style="width:98%;"/ readonly="readonly"></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单状态:</td>
-								<td><input type="text" name="STATUS" id="STATUS" value="${pd.STATUS}" maxlength="255" placeholder="这里输入订单状态" title="订单状态" style="width:98%;"/></td>
+								<td><input type="text" name="STATUS" id="STATUS" value="${pd.STATUS}" maxlength="255" placeholder="这里输入订单状态" title="订单状态" style="width:98%;" readonly="readonly"/></td>
 							</tr>
 							<tr>
 								<td></td>
 								<td>
-									<table>
+									<table border="1" id="item" style="border:1px solid #dddddd;">
 										<thead>
 											<tr>
 												<th>名称</th>
@@ -82,7 +82,6 @@
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">
-									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
 									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
 								</td>
 							</tr>

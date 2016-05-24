@@ -152,6 +152,7 @@ public class OrderController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd = orderService.findById(pd);	//根据ID读取
+		
 		logBefore(logger, pd+"查询单个订单信息");
 		mv.setViewName("tb/order/order_cha");
 		mv.addObject("msg", "edit");

@@ -56,7 +56,6 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">订单编号</th>
 									<th class="center">订单号</th>
 									<th class="center">订单生成时间</th>
 									<th class="center">订单预约时间</th>

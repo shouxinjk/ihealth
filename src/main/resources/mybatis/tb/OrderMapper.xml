@@ -74,6 +74,7 @@
 			ORDER_ID = #{ORDER_ID}
 	</select>
 	
+	<!-- 查询该订单的所有体检项目 -->
 	<select id="findExamItemByOrderId" parameterType="pd" resultType="pd">
 		select ei.MEDICALEXAMITEM_ID as MEDICALEXAMITEM_ID,ei.`NAME` AS NAME,ei.DESCRIPTION AS
 		 DISCRIPTION , ei.FEATURES AS FEATURES,ei.SELLINGPRICE AS SELLINCPRICE,ei.SETTLEMENTPRICE 
