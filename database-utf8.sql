@@ -784,75 +784,172 @@ CREATE TABLE `sys_app_user_and_tag` (
 
 
 -- ----------------------------
--- Table structure for `TB_MEDICALCENTER`
+-- Table structure for tb_medicalcenter
 -- ----------------------------
-DROP TABLE IF EXISTS `TB_MEDICALCENTER`;
-CREATE TABLE `TB_MEDICALCENTER` (
- 		`MEDICALCENTER_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '体检中心名称',
-		`DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '体检中心描述',
-		`LOCATION` varchar(255) DEFAULT NULL COMMENT '体检中心地理位置',
-		`ABBREVIATION` varchar(255) DEFAULT NULL COMMENT '体检中心简介',
-		`TELEPHONE` varchar(255) DEFAULT NULL COMMENT '体检中心联系电话',
-		`STATUS` int(11) NOT NULL COMMENT '体检中心状态',
-		`LOGO` varchar(255) DEFAULT NULL COMMENT '体检中心logo图片地址',
-		`OPENINGTIME` varchar(32) DEFAULT NULL COMMENT '体检中心开业时间',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
-		`CREATEON`  timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
-  		PRIMARY KEY (`MEDICALCENTER_ID`)
+DROP TABLE IF EXISTS `tb_medicalcenter`;
+CREATE TABLE `tb_medicalcenter` (
+  `MEDICALCENTER_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '体检中心名称',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '体检中心描述',
+  `LOCATION` varchar(255) DEFAULT NULL COMMENT '体检中心地理位置',
+  `ABBREVIATION` varchar(255) DEFAULT NULL COMMENT '体检中心简介',
+  `TELEPHONE` varchar(255) DEFAULT NULL COMMENT '体检中心联系电话',
+  `STATUS` set('发布','审核','提交','新建') NOT NULL DEFAULT '新建' COMMENT '体检中心状态',
+  `LOGO` varchar(255) DEFAULT NULL COMMENT '体检中心logo图片地址',
+  `OPENINGTIME` varchar(32) DEFAULT NULL COMMENT '体检中心开业时间',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
+  `CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
+  `ACCESSORY` varchar(255) DEFAULT NULL COMMENT '体检中心或医院附件信息',
+  `POSITION` varchar(255) DEFAULT NULL COMMENT '体检中心或医院经纬度地理位置',
+  `PARENTID` varchar(255) DEFAULT NULL COMMENT '体检中心或医院分支机构',
+  PRIMARY KEY (`MEDICALCENTER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of tb_medicalcenter
+-- ----------------------------
+INSERT INTO `tb_medicalcenter` VALUES ('2', 'vbbb', 'bbb', 'bb', 'bbb', 'bbbb', '新建', 'bbbb', null, 'bbbb', null, 'bbbbb', 'bbbbb', '5b901194b7cc42c0b6a95a54a1cd7350');
+INSERT INTO `tb_medicalcenter` VALUES ('3', 'vbbb', 'bbb', 'bb', 'bbb', 'bbbb', '新建', 'bbbb', '', 'bbbb', '2016-05-03 14:57:10', 'bbbbb', 'bbbbb', '3');
+INSERT INTO `tb_medicalcenter` VALUES ('5b901194b7cc42c0b6a95a54a1cd7350', 'aaaa', 'AA', 'aaa', 'aaaa', 'aaaaaa', '新建', 'aaaaa', '2016-05-16', '', '2016-05-19 14:34:00', 'aaaa', 'aaa', '0');
+
 
 -- ----------------------------
--- Table structure for `TB_MEDICALEXAMITEM`
+-- Table structure for tb_medicalexamitem
 -- ----------------------------
-DROP TABLE IF EXISTS `TB_MEDICALEXAMITEM`;
-CREATE TABLE `TB_MEDICALEXAMITEM` (
- 		`MEDICALEXAMITEM_ID` varchar(100) NOT NULL,
-		`NAME` varchar(255) DEFAULT NULL COMMENT '体检项目名称',
-		`EXPLAIN` varchar(255) DEFAULT NULL COMMENT '体检项目说明',
-		`FEATURES` varchar(255) DEFAULT NULL COMMENT '体检项目特征',
-		`SELLINGPRICE` double NOT NULL COMMENT '体检项目销售价格',
-		`SETTLEMENTPRICE` double NOT NULL COMMENT '体检项目结算价格',
-		`LOGO` varchar(255) DEFAULT NULL COMMENT '体检项目logo图片url地址',
-		`STATUS` varchar(255) DEFAULT NULL COMMENT '体检项目状态',
-		`EFFECTIVETIME`  timestamp NULL DEFAULT NULL COMMENT '体检项目生效时间',
-		`INVELIBTIME`  timestamp NULL DEFAULT NULL COMMENT '体检项目失效时间',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
-		`CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
-  		PRIMARY KEY (`MEDICALEXAMITEM_ID`)
+DROP TABLE IF EXISTS `tb_medicalexamitem`;
+CREATE TABLE `tb_medicalexamitem` (
+  `MEDICALEXAMITEM_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '体检项目名称',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '体检项目说明',
+  `FEATURES` varchar(255) DEFAULT NULL COMMENT '体检项目特征',
+  `SELLINGPRICE` double(11,0) DEFAULT NULL COMMENT '体检项目销售价格',
+  `SETTLEMENTPRICE` double(11,0) DEFAULT NULL COMMENT '体检项目结算价格',
+  `LOGO` varchar(255) DEFAULT NULL COMMENT '体检项目logo图片url地址',
+  `STATUS` set('审核','提交','新建') DEFAULT '新建' COMMENT '体检项目状态',
+  `EFFECTIVETIME` varchar(32) DEFAULT NULL COMMENT '体检项目生效时间',
+  `EXPIRETIME` varchar(32) DEFAULT NULL COMMENT '体检项目失效时间',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
+  `CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
+  `EXAMITEM_ID` varchar(100) DEFAULT NULL,
+  `MEDICALCENTER_ID` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`MEDICALEXAMITEM_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of tb_medicalexamitem
+-- ----------------------------
+INSERT INTO `tb_medicalexamitem` VALUES ('0673d0a7814345e892d28c3ce9d1a586', 'Aaaaaa', 'aa', 'aaa', '22', '3', 'bb', '新建', '2016-05-18', '2016-05-28', null, '2016-05-19 18:22:00', null, '5b901194b7cc42c0b6a95a54a1cd7350');
+INSERT INTO `tb_medicalexamitem` VALUES ('9aada469eefd44b4bfc27b4f3fc81f6b', '男男女女', '男男女女', '男男女女', '11', '22', 'nn', '新建', '2016-05-25', '2016-05-18', null, '2016-05-20 10:43:55', '1', '3');
+INSERT INTO `tb_medicalexamitem` VALUES ('ddb62967f06c4f558dadff0c06dcafe9', 'bbv1', 'bbv', 'bbv', '22', '22', 'bbv', '新建', '2016-05-03', '2016-05-06', 'bbnv', '2016-05-19 14:44:13', '1', '5b901194b7cc42c0b6a95a54a1cd7350');
+
 
 -- ----------------------------
--- Table structure for `TB_MEDICALCENERADMIN`
+-- Table structure for tb_medicalceneradmin
 -- ----------------------------
-DROP TABLE IF EXISTS `TB_MEDICALCENERADMIN`;
-CREATE TABLE `TB_MEDICALCENERADMIN` (
- 		`MEDICALCENERADMIN_ID` varchar(100) NOT NULL,
-		`DEPARTMENT` varchar(255) DEFAULT NULL COMMENT '所属科室部门',
-		`TITLE` varchar(255) DEFAULT NULL COMMENT '职位',
-		`CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
-  		PRIMARY KEY (`MEDICALCENERADMIN_ID`)
+DROP TABLE IF EXISTS `tb_medicalceneradmin`;
+CREATE TABLE `tb_medicalceneradmin` (
+  `MEDICALCENERADMIN_ID` varchar(100) NOT NULL,
+  `DEPARTMENT` varchar(255) DEFAULT NULL COMMENT '所属科室部门',
+  `TITLE` varchar(255) DEFAULT NULL COMMENT '职位',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
+  `CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
+  `SYS_USER_ID` varchar(100) DEFAULT NULL,
+  `MEDICALCENTER_ID` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`MEDICALCENERADMIN_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of tb_medicalceneradmin
+-- ----------------------------
+INSERT INTO `tb_medicalceneradmin` VALUES ('1', '院长', '院长', '', '2016-05-03 09:47:19', '69177258a06e4927b4639ab1684c3320', '5b901194b7cc42c0b6a95a54a1cd7350');
 
 -- ----------------------------
--- Table structure for `TB_MEDICALORDER`
+-- Table structure for tb_medicalorder
 -- ----------------------------
-DROP TABLE IF EXISTS `TB_MEDICALORDER`;
-CREATE TABLE `TB_MEDICALORDER` (
- 		`MEDICALORDER_ID` varchar(100) NOT NULL,
-		`ORDERNO` varchar(255) DEFAULT NULL COMMENT '订单号',
-		`ORDERGENERATIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单生成时间',
-		`ORDERBOOKINGTIME` timestamp NULL DEFAULT NULL COMMENT '订单预约时间',
-		`ORDEREXECUTIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单实际执行时间',
-		`TOTALAMOUNT` double NOT NULL COMMENT '订单总金额',
-		`STATUS` varchar(255) DEFAULT NULL COMMENT '订单状态',
-		`CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
-		`CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
-  		PRIMARY KEY (`MEDICALORDER_ID`)
+DROP TABLE IF EXISTS `tb_medicalorder`;
+CREATE TABLE `tb_medicalorder` (
+  `MEDICALORDER_ID` varchar(100) NOT NULL,
+  `ORDERNO` varchar(255) DEFAULT NULL COMMENT '订单号',
+  `ORDERGENERATIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单生成时间',
+  `ORDERBOOKINGTIME` timestamp NULL DEFAULT NULL COMMENT '订单预约时间',
+  `ORDEREXECUTIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单实际执行时间',
+  `TOTALAMOUNT` double NOT NULL COMMENT '订单总金额',
+  `STATUS` set('审核','提交','新建') DEFAULT '新建' COMMENT '订单状态',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
+  `CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
+  `MEDICALCENTER_ID` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`MEDICALORDER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_medicalorder
+-- ----------------------------
+INSERT INTO `tb_medicalorder` VALUES ('1', '111111', '2016-04-27 10:27:26', '2016-05-10 10:27:28', '2016-05-02 10:27:31', '222', '新建', '11', '2016-04-29 10:27:37', '5b901194b7cc42c0b6a95a54a1cd7350');
+INSERT INTO `tb_medicalorder` VALUES ('2', '111', '2016-05-28 10:27:56', '2016-05-07 10:27:53', '2016-05-04 10:27:49', '22222', '新建', '11', '2016-04-29 10:27:42', '1');
+INSERT INTO `tb_medicalorder` VALUES ('3', '222', '2016-05-25 10:28:10', '2016-05-09 10:28:16', '2016-04-25 10:28:19', '333', '新建', '22', '2016-05-19 10:28:29', '2');
+
+-- ----------------------------
+-- Table structure for tb_medicalorderitem
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_medicalorderitem`;
+CREATE TABLE `tb_medicalorderitem` (
+  `MEDICALORDERITEM_ID` varchar(100) NOT NULL,
+  `MEDICALEXAMITEM_ID` varchar(100) DEFAULT NULL,
+  `MEDICALORDER_ID` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`MEDICALORDERITEM_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_medicalorderitem
+-- ----------------------------
+INSERT INTO `tb_medicalorderitem` VALUES ('1', '0673d0a7814345e892d28c3ce9d1a586', '1');
+INSERT INTO `tb_medicalorderitem` VALUES ('2', '0673d0a7814345e892d28c3ce9d1a586', '2');
+INSERT INTO `tb_medicalorderitem` VALUES ('3', '9aada469eefd44b4bfc27b4f3fc81f6b', '1');
+INSERT INTO `tb_medicalorderitem` VALUES ('4', 'ddb62967f06c4f558dadff0c06dcafe9', '2');
+
+
+-- ----------------------------
+-- Table structure for tb_orderitem
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_orderitem`;
+CREATE TABLE `tb_orderitem` (
+  `ORDERITEM_ID` varchar(100) NOT NULL,
+  `MEDICALEXAMITEM_ID` varchar(100) DEFAULT NULL,
+  `ORDER_ID` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`ORDERITEM_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_orderitem
+-- ----------------------------
+INSERT INTO `tb_orderitem` VALUES ('1', '0673d0a7814345e892d28c3ce9d1a586', '1');
+INSERT INTO `tb_orderitem` VALUES ('2', '9aada469eefd44b4bfc27b4f3fc81f6b', '1');
+INSERT INTO `tb_orderitem` VALUES ('3', '0673d0a7814345e892d28c3ce9d1a586', '2');
+INSERT INTO `tb_orderitem` VALUES ('4', 'ddb62967f06c4f558dadff0c06dcafe9', '2');
+
+-- ----------------------------
+-- Table structure for tb_order
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_order`;
+CREATE TABLE `tb_order` (
+  `ORDER_ID` varchar(100) NOT NULL,
+  `MEDICALORDERNO` varchar(255) DEFAULT NULL COMMENT '订单号',
+  `MEDICALORDERGENERATIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单生成时间',
+  `MEDICALORDERBOOKINGTIME` timestamp NULL DEFAULT NULL COMMENT '订单预约时间',
+  `MEDICALORDEREXECUTIONTIME` timestamp NULL DEFAULT NULL COMMENT '订单实际执行时间',
+  `MEDICALORDERTOTALAMOUNT` double(11,0) DEFAULT NULL COMMENT '订单总金额',
+  `MEDICALORDERSTATUS` set('审核','提交','新建') DEFAULT '新建' COMMENT '订单状态',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户',
+  `CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
+  PRIMARY KEY (`ORDER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_order
+-- ----------------------------
+INSERT INTO `tb_order` VALUES ('1', 'aaaa', '2016-05-04 10:00:49', '2016-05-17 10:00:52', '2016-05-18 10:00:55', '222', '新建', '111', '2016-04-29 10:01:36');
+INSERT INTO `tb_order` VALUES ('2', 'bbb', '2016-04-27 10:01:50', '2016-05-06 10:01:53', '2016-05-03 10:01:56', '2222', '新建', '11', '2016-05-05 10:02:04');
+
 
 DROP TABLE IF EXISTS `ta_user`;
 CREATE TABLE `ta_user` (
