@@ -621,14 +621,16 @@ public class AppuserController extends BaseController {
 				this.appuserService.saveAppUserAndFamily(pd);
 			}
 		}
-		if (Tools.isEmpty(pd.getString("BIRTHDAY"))) {
-			pd.put("BIRTHDAY", "1990-01-01");
+		if (pd.getString("BIRTHDAY") == null || "".equals(pd.getString("BIRTHDAY"))) {
+			pd.put("BIRTHDAY", DateUtil.getTime());
 		}
-		if (Tools.isEmpty(pd.getString("WEIGHT"))) {
-			pd.put("WEIGHT", 50);
+		
+		if(pd.getString("HEIGHT") == null || "".equals(pd.getString("HEIGHT"))){
+			pd.put("HEIGHT", 170 + "");
 		}
-		if (Tools.isEmpty(pd.getString("HEIGHT"))) {
-			pd.put("HEIGHT", 170);
+		
+		if(pd.getString("WEIGHT") == null || "".equals(pd.getString("WEIGHT"))){
+			pd.put("WEIGHT", 50 + "");
 		}
 		appuserService.editU(pd);
 		
