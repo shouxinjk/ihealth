@@ -40,8 +40,8 @@ CREATE TABLE `sys_app_user` (
   `SEX` varchar(255) DEFAULT NULL COMMENT '性别',
   `BIRTHDAY` date DEFAULT NULL COMMENT '生日',
   `MARRIAGESTATUS` varchar(255) DEFAULT NULL COMMENT '婚姻状况',
-  `HEIGHT` double DEFAULT '170' COMMENT '身高',
-  `WEIGHT` double DEFAULT '50' COMMENT '体重',
+  `HEIGHT` int(11) DEFAULT '170' COMMENT '身高',
+  `WEIGHT` int(11) DEFAULT '50' COMMENT '体重',
   `BIRTHPLACE` varchar(255) DEFAULT NULL COMMENT '出生地',
   `LIVEPLACE` varchar(255) DEFAULT NULL COMMENT '居住地',
   `CAREER` varchar(255) DEFAULT NULL COMMENT '职业',
@@ -299,19 +299,21 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '系统管理组', '2251798773489606', '0', '1', '1', '1', '1');
-INSERT INTO `sys_role` VALUES ('115b386ff04f4352b060dffcd2b5d1da', '中级会员', '498', '2', '0', '0', '0', '0');
-INSERT INTO `sys_role` VALUES ('1b67fc82ce89457a8347ae53e43a347e', '初级会员', '498', '2', '0', '0', '0', '0');
-INSERT INTO `sys_role` VALUES ('2', '会员组', '498', '0', '0', '0', '0', '1');
-INSERT INTO `sys_role` VALUES ('3264c8e83d0248bb9e3ea6195b4c0216', '一级管理员', '2251798773489606', '1', '2251798773489606', '2251798773489606', '1125898866646982', '2251798773489606');
-INSERT INTO `sys_role` VALUES ('46294b31a71c4600801724a6eb06bb26', '职位组', '', '0', '0', '0', '0', '0');
-INSERT INTO `sys_role` VALUES ('5466347ac07044cb8d82990ec7f3a90e', '主管', '', '46294b31a71c4600801724a6eb06bb26', '0', '0', '0', '0');
-INSERT INTO `sys_role` VALUES ('68f8e4a39efe47c7bb869e9d15ab925d', '二级管理员', '2251798773489606', '1', '0', '0', '2251798773489606', '0');
-INSERT INTO `sys_role` VALUES ('856849f422774ad390a4e564054d8cc8', '经理', '', '46294b31a71c4600801724a6eb06bb26', '0', '0', '0', '0');
-INSERT INTO `sys_role` VALUES ('8b70a7e67f2841e7aaba8a4d92e5ff6f', '高级会员', '498', '2', '0', '0', '0', '0');
-INSERT INTO `sys_role` VALUES ('c21cecf84048434b93383182b1d98cba', '组长', '', '46294b31a71c4600801724a6eb06bb26', '0', '0', '0', '0');
-INSERT INTO `sys_role` VALUES ('d449195cd8e7491080688c58e11452eb', '总监', '', '46294b31a71c4600801724a6eb06bb26', '0', '0', '0', '0');
-INSERT INTO `sys_role` VALUES ('de9de2f006e145a29d52dfadda295353', '三级管理员', '2251798773489606', '1', '0', '0', '0', '0');
+
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('1','系统管理组','2251798773489606','0','1','1','1','1');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('115b386ff04f4352b060dffcd2b5d1da','中级会员','498','2','0','0','0','0');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('1b67fc82ce89457a8347ae53e43a347e','初级会员','498','2','0','0','0','0');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('2','会员组','498','0','0','0','0','1');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('3264c8e83d0248bb9e3ea6195b4c0216','一级管理员','118571198322457521683259327569727595184370969558060170687607043651933702855843782','1','118571198322457521683259327569727595184370969558060170687607043651933702855843782','118571198322457521683259327569727595184370969558060170687607043651933702855843782','118571198322457521683259327569727595184370969558060170687607043651933702855843782','118571198322457521683259327569727595184370969558060170687607043651933702855843782');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('46294b31a71c4600801724a6eb06bb26','职位组','','0','0','0','0','0');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('5466347ac07044cb8d82990ec7f3a90e','主管','','46294b31a71c4600801724a6eb06bb26','0','0','0','0');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('68f8e4a39efe47c7bb869e9d15ab925d','二级管理员','2251798773489606','1','0','0','2251798773489606','0');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('856849f422774ad390a4e564054d8cc8','经理','','46294b31a71c4600801724a6eb06bb26','0','0','0','0');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('8b70a7e67f2841e7aaba8a4d92e5ff6f','高级会员','498','2','0','0','0','0');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('c21cecf84048434b93383182b1d98cba','组长','','46294b31a71c4600801724a6eb06bb26','0','0','0','0');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('d449195cd8e7491080688c58e11452eb','总监','','46294b31a71c4600801724a6eb06bb26','0','0','0','0');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('de9de2f006e145a29d52dfadda295353','三级管理员','2251798773489606','1','0','0','0','0');
+insert  into `sys_role`(`ROLE_ID`,`ROLE_NAME`,`RIGHTS`,`PARENT_ID`,`ADD_QX`,`DEL_QX`,`EDIT_QX`,`CHA_QX`) values ('e32c2f37d1744d10a76813eee4a882ae','医生','118571198322457521683259327569727595184370969558060170687607043650807803989196992','1','118571198322457521683259327569727595184370969558060170687607043650807803989196992','118571198322457521683259327569727595184370969558060170687607043650807803989196992','118571198322457521683259327569727595184370969558060170687607043650807803989196992','118571198322457521683259327569727595184370969558060170687607043650807803989196992');
 
 -- ----------------------------
 -- Table structure for sys_role_fhbutton
@@ -364,15 +366,14 @@ CREATE TABLE `sys_user` (
   PRIMARY KEY (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `sys_user` */
-INSERT  INTO `sys_user` VALUES ('1','admin','de41b7fb99201d8334c23c014db35ecd92df81bc','系统管理员','1133671055321055258374707980945218933803269864762743594642571294','1','2016-01-27 23:45:53','127.0.0.1','0','最高统治者','default','QQ313596790@main.com','001','18788888888');
-INSERT  INTO `sys_user` VALUES ('69177258a06e4927b4639ab1684c3320','san','47c4a8dc64ac2f0bb46bbd8813b037c9718f9349','三','','3264c8e83d0248bb9e3ea6195b4c0216','2016-05-17 14:20:07','127.0.0.1','0','111','default','978336446@qq.com','333','13562202556');
-INSERT  INTO `sys_user` VALUES ('9991f4d7782a4ccfb8a65bd96ea7aafa','lisi','2612ade71c1e48cd7150b5f4df152faa699cedfe','李四','','3264c8e83d0248bb9e3ea6195b4c0216','2016-01-06 01:24:26','127.0.0.1','0','小李','default','313596790@qq.com','1102','13566233663');
-INSERT  INTO `sys_user` VALUES ('e29149962e944589bb7da23ad18ddeed','zhangsan','c2da1419caf053885c492e10ebde421581cdc03f','张三','','3264c8e83d0248bb9e3ea6195b4c0216','2016-05-17 14:20:39','','0','小张','default','zhangsan@www.com','1101','2147483647');
-INSERT  INTO `sys_user` VALUES ('f5c882b90236479d803369bd580c2ae2','maqin','0e4d1168ea3a929297c350338f7be98c892efdb9','马钦','','3264c8e83d0248bb9e3ea6195b4c0216','2016-05-17 14:22:45','','0','','default','maqin@shouxinjk.com','S00001','13880615408');
--- ----------------------------
--- Table structure for tb_pictures
--- ----------------------------
+insert  into `sys_user`(`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS`,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`) values ('1','admin','de41b7fb99201d8334c23c014db35ecd92df81bc','系统管理员','1133671055321055258374707980945218933803269864762743594642571294','1','2016-05-19 18:02:56','222.211.175.23','0','最高统治者','default','QQ313596790@main.com','001','18788888888');
+insert  into `sys_user`(`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS`,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`) values ('69177258a06e4927b4639ab1684c3320','san','47c4a8dc64ac2f0bb46bbd8813b037c9718f9349','三','','3264c8e83d0248bb9e3ea6195b4c0216','2016-05-23 14:35:59','221.237.114.67','0','111','default','978336446@qq.com','333','13562202556');
+insert  into `sys_user`(`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS`,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`) values ('7e444063e18b4c059c7346bb11f26f6d','qchzhu','9b74b644687479cb3b258a5701e530e279986ed2','Zhuqingchun','','3264c8e83d0248bb9e3ea6195b4c0216','2016-05-23 11:06:07','222.211.175.23','0','管理员','default','zhuqingchun@shouxinjk.com','admin001','13678189382');
+insert  into `sys_user`(`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS`,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`) values ('9991f4d7782a4ccfb8a65bd96ea7aafa','lisi','2612ade71c1e48cd7150b5f4df152faa699cedfe','李四','','3264c8e83d0248bb9e3ea6195b4c0216','2016-05-19 18:11:45','221.237.114.67','0','小李','default','313596790@qq.com','1102','13566233663');
+insert  into `sys_user`(`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS`,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`) values ('e29149962e944589bb7da23ad18ddeed','zhangsan','c2da1419caf053885c492e10ebde421581cdc03f','张三','','3264c8e83d0248bb9e3ea6195b4c0216','2016-05-17 14:20:39','','0','小张','default','zhangsan@www.com','1101','2147483647');
+insert  into `sys_user`(`USER_ID`,`USERNAME`,`PASSWORD`,`NAME`,`RIGHTS`,`ROLE_ID`,`LAST_LOGIN`,`IP`,`STATUS`,`BZ`,`SKIN`,`EMAIL`,`NUMBER`,`PHONE`) values ('f5c882b90236479d803369bd580c2ae2','maqin','0e4d1168ea3a929297c350338f7be98c892efdb9','马钦','','e32c2f37d1744d10a76813eee4a882ae','2016-05-23 14:37:26','221.237.114.67','0','','default','maqin@shouxinjk.com','S00001','13880615408');
+
+
 DROP TABLE IF EXISTS `tb_pictures`;
 CREATE TABLE `tb_pictures` (
   `PICTURES_ID` varchar(100) NOT NULL,
@@ -879,11 +880,11 @@ CREATE TABLE `ta_user` (
   `inheritDiseases` varchar(1024) DEFAULT '',
   `concernDiseases` varchar(1024) DEFAULT '',  
   `tags` varchar(1024) DEFAULT '',
-  `lastModifiedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `lastPreparedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `lastMatchedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `lastGeneratedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `lastEvaluatedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,  
+  `lastModifiedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
+  `lastPreparedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
+  `lastMatchedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
+  `lastGeneratedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
+  `lastEvaluatedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',  
   PRIMARY KEY (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -901,8 +902,8 @@ CREATE TABLE `ta_userrule` (
   `riskType` varchar(20) DEFAULT 'low',
   `ruleExpression` varchar(1024) DEFAULT '1=1',
   `status` varchar(20) DEFAULT 'pending',
-  `createdOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modifiedOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
+  `modifiedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
   `worker` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`rule_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

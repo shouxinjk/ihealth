@@ -302,11 +302,11 @@ public class RestfullController extends BaseController {
 				}
 				if (jasonObject.get("height") != null && !"".equals(jasonObject.get("height")) && !"null".equals(jasonObject.get("height"))) {
 					height = jasonObject.getString("height").trim();
-					pds.put("HEIGHT", Double.parseDouble(height));
+					pds.put("HEIGHT", Integer.parseInt(height));
 				}
 				if (jasonObject.get("weight") != null && !"".equals(jasonObject.get("weight")) && !"null".equals(jasonObject.get("weight"))) {
 					weight = jasonObject.getString("weight").trim();
-					pds.put("WEIGHT", Double.parseDouble(weight));
+					pds.put("WEIGHT", Integer.parseInt(weight));
 				}
 				if (jasonObject.get("birthPlace") != null && !"".equals(jasonObject.get("birthPlace")) && !"null".equals(jasonObject.get("birthPlace"))) {
 					birthPlace = jasonObject.getString("birthPlace").trim();
