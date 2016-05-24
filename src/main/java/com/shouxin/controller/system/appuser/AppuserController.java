@@ -621,8 +621,18 @@ public class AppuserController extends BaseController {
 				this.appuserService.saveAppUserAndFamily(pd);
 			}
 		}
-		
+		if (Tools.isEmpty(pd.getString("BIRTHDAY"))) {
+			pd.put("BIRTHDAY", "1990-01-01");
+		}
+		if (Tools.isEmpty(pd.getString("WEIGHT"))) {
+			pd.put("WEIGHT", 50);
+		}
+		if (Tools.isEmpty(pd.getString("HEIGHT"))) {
+			pd.put("HEIGHT", 170);
+		}
 		appuserService.editU(pd);
+		
+		
 		//qchzhu: hook analysis interface
 		Transfer transfer = new Transfer();
 		transfer.transferUserTags(user_id);

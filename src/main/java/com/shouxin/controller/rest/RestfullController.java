@@ -360,7 +360,7 @@ public class RestfullController extends BaseController {
 	 * @return 当用户ID不为空时，返回： { 
 	 * 								"result": "success", 
 	 * 								"data": { 
-	 * 									"REVISION": "版本","STATUS": "状态", 
+	 * 									"REVISION": "版本","STATUS": "状态 pending / ready", 
 	 * 									"GENERATEDTIME": 该记录生成时间, "EFFECTIVEFROM":开始生效时间, 
 	 * 									"EXPIREON": 失效时间, "WORKER": "生成该记录的标记",
 	 *         							"CHECKUPPACKAGE_ID": "1001", "SYSFLAG": "系统标记" 

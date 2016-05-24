@@ -98,13 +98,13 @@
 								<tr>
 									<td style="width:79px;text-align: right;padding-top: 13px;">性别:</td>
 									<td><input type="text" name="SEX" id="SEX" value="${pd.SEX }" placeholder="这里输入性别" title="性别" style="width:98%;" /></td>
-									<td style="width:79px;text-align: right;padding-top: 13px;">生日:</td>
+									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;生日:</td>
 									<td><input type="text" name="BIRTHDAY" id="BIRTHDAY" value="${pd.BIRTHDAY }" placeholder="这里输入生日" title="生日" style="width:98%;" /></td>
 								</tr>
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">身高:</td>
+									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;身高:</td>
 									<td><input type="text" name="HEIGHT" id="HEIGHT" value="${pd.HEIGHT }" placeholder="这里输入身高" title="身高" style="width:98%;" /></td>
-									<td style="width:79px;text-align: right;padding-top: 13px;">体重:</td>
+									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;体重:</td>
 									<td><input type="text" name="WEIGHT" id="WEIGHT" value="${pd.WEIGHT }" placeholder="这里输入体重" title="体重" style="width:98%;" /></td>
 								</tr>
 								<tr>
