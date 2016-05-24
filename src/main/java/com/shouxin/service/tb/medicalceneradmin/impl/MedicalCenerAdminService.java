@@ -14,7 +14,7 @@ import com.shouxin.service.tb.medicalceneradmin.MedicalCenerAdminManager;
  * 创建时间：2016-05-17
  * @version
  */
-@Service("medicalceneradminService")
+@Service("medicalceneradminServices")
 public class MedicalCenerAdminService implements MedicalCenerAdminManager{
 
 	@Resource(name = "daoSupport")

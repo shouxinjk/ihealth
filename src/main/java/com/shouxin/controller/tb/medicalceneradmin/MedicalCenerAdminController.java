@@ -34,7 +34,7 @@ import com.shouxin.service.tb.medicalceneradmin.MedicalCenerAdminManager;
 public class MedicalCenerAdminController extends BaseController {
 	
 	String menuUrl = "medicalceneradmin/list.do"; //菜单地址(权限用)
-	@Resource(name="medicalceneradminService")
+	@Resource(name="medicalceneradminServices")
 	private MedicalCenerAdminManager medicalceneradminService;
 	
 	/**保存
