@@ -45,7 +45,7 @@ import com.shouxin.service.tb.medicalexamitem.MedicalExamItemManager;
 public class MedicalExamItemController extends BaseController {
 	
 	String menuUrl = "medicalexamitem/list.do"; //菜单地址(权限用)
-	@Resource(name="medicalexamitemService")
+	@Resource(name="medicalexamitemServices")
 	private MedicalExamItemManager medicalexamitemService;
 	@Resource(name="examitemService")
 	private ExamItemManager examitemService;

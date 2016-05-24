@@ -38,7 +38,7 @@ public class MedicalOrderController extends BaseController {
 	String menuUrl = "medicalorder/list.do"; //菜单地址(权限用)
 	@Resource(name="medicalorderService")
 	private MedicalOrderManager medicalorderService;
-	@Resource(name="medicalexamitemService")
+	@Resource(name="medicalexamitemServices")
 	private MedicalExamItemManager medicalexamitemService;
 	
 	/**保存

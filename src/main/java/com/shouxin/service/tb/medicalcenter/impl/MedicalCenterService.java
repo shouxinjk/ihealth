@@ -14,7 +14,7 @@ import com.shouxin.service.tb.medicalcenter.MedicalCenterManager;
  * 创建时间：2016-05-19
  * @version
  */
-@Service("medicalcenterService")
+@Service("medicalcenterServices")
 public class MedicalCenterService implements MedicalCenterManager{
 
 	@Resource(name = "daoSupport")

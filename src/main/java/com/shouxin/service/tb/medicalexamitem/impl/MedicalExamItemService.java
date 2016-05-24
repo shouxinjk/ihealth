@@ -14,7 +14,7 @@ import com.shouxin.service.tb.medicalexamitem.MedicalExamItemManager;
  * 创建时间：2016-05-19
  * @version
  */
-@Service("medicalexamitemService")
+@Service("medicalexamitemServices")
 public class MedicalExamItemService implements MedicalExamItemManager{
 
 	@Resource(name = "daoSupport")
