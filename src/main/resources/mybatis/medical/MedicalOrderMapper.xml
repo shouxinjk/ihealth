@@ -79,6 +79,17 @@
 			MEDICALORDER_ID = #{MEDICALORDER_ID}
 	</select>
 	
+	<!-- 通过订单ID，查询所有体检项目信息 -->
+	<select id="findItemsById" parameterType="pd" resultType="pd">
+		SELECT 
+		  mei.*
+		FROM
+		  TB_MEDICALORDERITEM moi 
+		  LEFT JOIN TB_MEDICALEXAMITEM mei 
+		    ON moi.`MEDICALEXAMITEM_ID` = mei.`MEDICALEXAMITEM_ID` 
+		WHERE moi.`MEDICALORDER_ID` = #{MEDICALORDER_ID}
+	</select>
+	
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select

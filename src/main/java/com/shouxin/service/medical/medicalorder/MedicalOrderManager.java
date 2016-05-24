@@ -54,5 +54,13 @@ public interface MedicalOrderManager{
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
 	
+	/**
+	 * 通过订单ID，查询所有体检项目信息
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findItemsById(PageData pd)throws Exception;
+	
 }
 

@@ -120,6 +120,7 @@ public class MedicalOrderController extends BaseController {
 		return mv;
 	}
 	
+	
 	/**去新增页面
 	 * @param
 	 * @throws Exception
@@ -150,6 +151,26 @@ public class MedicalOrderController extends BaseController {
 		mv.addObject("pd", pd);
 		return mv;
 	}	
+	
+	/**
+	 * 去查看订单详情页面
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/lookdetails")
+	public ModelAndView lookdDtails()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		logBefore(logger, pd.getString("MEDICALORDER_ID") + "----------根据订单ID，获取体检项目详细信息start--------");
+		List<PageData> varList = this.medicalorderService.findItemsById(pd);
+		pd = medicalorderService.findById(pd);	//根据ID读取
+		mv.setViewName("medical/medicalorder/lookdetails");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		return mv;
+	}	
+	
 	
 	 /**批量删除
 	 * @param

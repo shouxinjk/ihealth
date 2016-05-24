@@ -99,7 +99,7 @@
 									<td style="width:79px;text-align: right;padding-top: 13px;">性别:</td>
 									<td><input type="text" name="SEX" id="SEX" value="${pd.SEX }" placeholder="这里输入性别" title="性别" style="width:98%;" /></td>
 									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;生日:</td>
-									<td><input type="text" name="BIRTHDAY" id="BIRTHDAY" value="${pd.BIRTHDAY }" placeholder="这里输入生日" title="生日" style="width:98%;" /></td>
+									<td><input class="span10 date-picker" name="BIRTHDAY" id="BIRTHDAY" value="${pd.BIRTHDAY }" type="text" data-date-format="yyyy-mm-dd" placeholder="这里输入生日" title="生日" style="width:98%;" /></td>
 								</tr>
 								<tr>
 									<td style="width:79px;text-align: right;padding-top: 13px;"><span style="color:red;">*</span>&nbsp;身高:</td>

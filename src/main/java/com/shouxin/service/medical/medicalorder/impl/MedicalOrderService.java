@@ -85,5 +85,16 @@ public class MedicalOrderService implements MedicalOrderManager{
 		dao.delete("MedicalOrderMapper.deleteAll", ArrayDATA_IDS);
 	}
 	
+	/**
+	 * 通过订单ID，查询所有体检项目信息
+	 * @param MEDICALORDER_ID 体检项目ID
+	 * @return 体检项目详情
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> findItemsById(PageData pd) throws Exception {
+		
+		return (List<PageData>) dao.findForList("MedicalOrderMapper.findItemsById", pd);
+	}
+	
 }
 

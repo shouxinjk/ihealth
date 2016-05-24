@@ -88,6 +88,11 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
+													<c:if test="${QX.cha == 1 }">
+													<a class="btn btn-xs btn-info" title='查看订单详情' onclick="lookDetails('${var.MEDICALORDER_ID}');">
+														<i class="ace-icon fa fa-search nav-search-icon" title="查看订单详情"></i>
+													</a>
+													</c:if>
 													<c:if test="${QX.edit == 1 }">
 													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MEDICALORDER_ID}');">
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
@@ -263,12 +268,26 @@
 						 top.jzts();
 						 setTimeout("self.location=self.location",100);
 					 }else{
-						 nextPage(${page.currentPage});
+						 nextPage('${page.currentPage}');
 					 }
 				}
 				diag.close();
-			 };
+			 }
 			 diag.show();
+		}
+		//查看订单详情
+		function lookDetails(id){
+			top.jzts();
+			var diag = new top.Dialog();
+			diag.Drag=true;
+			diag.Title ="订单详情";
+			diag.URL = '<%=basePath%>medicalorder/lookdetails.do?MEDICALORDER_ID='+id;
+			diag.Width = 800;
+			diag.Height = 600;
+			diag.CancelEvent = function(){ //关闭事件
+			 	diag.close();
+			};
+			diag.show();
 		}
 		
 		//删除
@@ -278,7 +297,7 @@
 					top.jzts();
 					var url = "<%=basePath%>medicalorder/delete.do?MEDICALORDER_ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
-						nextPage(${page.currentPage});
+						nextPage('${page.currentPage}');
 					});
 				}
 			});
@@ -295,7 +314,7 @@
 			 diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 nextPage(${page.currentPage});
+					 nextPage('${page.currentPage}');
 				}
 				diag.close();
 			 };
@@ -338,7 +357,7 @@
 								cache: false,
 								success: function(data){
 									 $.each(data.list, function(i, list){
-											nextPage(${page.currentPage});
+											nextPage('${page.currentPage}');
 									 });
 								}
 							});
