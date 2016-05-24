@@ -124,7 +124,7 @@ public class MedicalExamItemController extends BaseController {
 		pd.put("userId", Jurisdiction.getUserId());
 		page.setPd(pd);
 		List<PageData>	varList = medicalexamitemService.list(page);	//列出MedicalExamItem列表
-		mv.setViewName("medicla/medicalexamitem/medicalexamitem_list");
+		mv.setViewName("medical/medicalexamitem/medicalexamitem_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
