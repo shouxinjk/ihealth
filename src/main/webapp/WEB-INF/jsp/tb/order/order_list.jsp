@@ -77,12 +77,12 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.ORDER_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'>${var.MEDICALORDERNO}</td>
-											<td class='center'>${var.MEDICALORDERGENERATIONTIME}</td>
-											<td class='center'>${var.MEDICALORDERBOOKINGTIME}</td>
-											<td class='center'>${var.MEDICALORDEREXECUTIONTIME}</td>
-											<td class='center'>${var.MEDICALORDERTOTALAMOUNT}</td>
-											<td class='center'>${var.MEDICALORDERSTATUS}</td>
+											<td class='center'>${var.ORDERNO}</td>
+											<td class='center'>${var.ORDERGENERATIONTIME}</td>
+											<td class='center'>${var.ORDERBOOKINGTIME}</td>
+											<td class='center'>${var.ORDEREXECUTIONTIME}</td>
+											<td class='center'>${var.ORDERTOTALAMOUNT}</td>
+											<td class='center'>${var.STATUS}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

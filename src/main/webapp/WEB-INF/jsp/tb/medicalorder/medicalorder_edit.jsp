@@ -32,28 +32,24 @@
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">订单编号:</td>
-								<td><input type="text" name="MEDICALORDER_ID" id="MEDICALORDER_ID" value="${pd.MEDICALORDER_ID}" maxlength="255" placeholder="这里输入订单编号" title="订单编号" style="width:98%;"/></td>
-							</tr>
-							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单号:</td>
-								<td><input type="text" name="ORDERNO" id="ORDERNO" value="${pd.ORDERNO}" maxlength="255" placeholder="这里输入订单号" title="订单号" style="width:98%;"/></td>
+								<td><input type="text" name="MEDICALORDERNO" id="MEDICALORDERNO" value="${pd.MEDICALORDERNO}" maxlength="255" placeholder="这里输入订单号" title="订单号" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单生成时间:</td>
-								<td><input class="span10 date-picker" name="ORDERGENERATIONTIME" id="ORDERGENERATIONTIME" value="${pd.ORDERGENERATIONTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="订单生成时间" title="订单生成时间" style="width:98%;"/></td>
+								<td><input class="span10 date-picker" name="MEDICALORDERGENERATIONTIME" id="MEDICALORDERGENERATIONTIME" value="${pd.MEDICALORDERGENERATIONTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="订单生成时间" title="订单生成时间" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单预约时间:</td>
-								<td><input class="span10 date-picker" name="ORDERBOOKINGTIME" id="ORDERBOOKINGTIME" value="${pd.ORDERBOOKINGTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="订单预约时间" title="订单预约时间" style="width:98%;"/></td>
+								<td><input class="span10 date-picker" name="MEDICALORDERBOOKINGTIME" id="MEDICALORDERBOOKINGTIME" value="${pd.MEDICALORDERBOOKINGTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="订单预约时间" title="订单预约时间" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单实际执行时间:</td>
-								<td><input class="span10 date-picker" name="ORDEREXECUTIONTIME" id="ORDEREXECUTIONTIME" value="${pd.ORDEREXECUTIONTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="订单实际执行时间" title="订单实际执行时间" style="width:98%;"/></td>
+								<td><input class="span10 date-picker" name="MEDICALORDEREXECUTIONTIME" id="MEDICALORDEREXECUTIONTIME" value="${pd.MEDICALORDEREXECUTIONTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="订单实际执行时间" title="订单实际执行时间" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单总金额:</td>
-								<td><input type="number" name="TOTALAMOUNT" id="TOTALAMOUNT" value="${pd.TOTALAMOUNT}" maxlength="32" placeholder="这里输入订单总金额" title="订单总金额" style="width:98%;"/></td>
+								<td><input type="number" name="MEDICALTOTALAMOUNT" id="MEDICALTOTALAMOUNT" value="${pd.MEDICALTOTALAMOUNT}" maxlength="32" placeholder="这里输入订单总金额" title="订单总金额" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单状态:</td>

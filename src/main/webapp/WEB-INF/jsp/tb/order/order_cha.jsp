@@ -32,10 +32,6 @@
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">订单编号:</td>
-								<td><input type="text" name="MEDICALORDER_ID" id="MEDICALORDER_ID" value="${pd.MEDICALORDER_ID}" maxlength="255" placeholder="这里输入订单编号" title="订单编号" style="width:98%;"/></td>
-							</tr>
-							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单号:</td>
 								<td><input type="text" name="ORDERNO" id="ORDERNO" value="${pd.ORDERNO}" maxlength="255" placeholder="这里输入订单号" title="订单号" style="width:98%;"/></td>
 							</tr>

@@ -78,12 +78,11 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MEDICALORDER_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'>${var.MEDICALORDER_ID}</td>
-											<td class='center'>${var.ORDERNO}</td>
-											<td class='center'>${var.ORDERGENERATIONTIME}</td>
-											<td class='center'>${var.ORDERBOOKINGTIME}</td>
-											<td class='center'>${var.ORDEREXECUTIONTIME}</td>
-											<td class='center'>${var.TOTALAMOUNT}</td>
+											<td class='center'>${var.MEDICALORDERNO}</td>
+											<td class='center'>${var.MEDICALORDERGENERATIONTIME}</td>
+											<td class='center'>${var.MEDICALORDERBOOKINGTIME}</td>
+											<td class='center'>${var.MEDICALORDEREXECUTIONTIME}</td>
+											<td class='center'>${var.MEDICALTOTALAMOUNT}</td>
 											<td class='center'>${var.STATUS}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
