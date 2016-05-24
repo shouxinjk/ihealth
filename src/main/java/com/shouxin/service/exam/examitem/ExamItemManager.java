@@ -3,6 +3,7 @@ package com.shouxin.service.exam.examitem;
 import java.util.List;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.exam.ExamCategory;
+import com.shouxin.entity.exam.ExamItem;
 import com.shouxin.util.PageData;
 
 /** 
@@ -48,6 +49,13 @@ public interface ExamItemManager{
 	 * @throws Exception
 	 */
 	public PageData findById(PageData pd)throws Exception;
+	
+
+	/**通过id获取数据
+	 * @param pd
+	 * @throws Exception
+	 */
+	public ExamItem findById(String EXAMITEM_ID)throws Exception;
 	
 	/**批量删除
 	 * @param ArrayDATA_IDS

@@ -168,12 +168,6 @@ public class ExamGuideLineController extends BaseController {
 		page.setPd(pd);
 		List<PageData>	varList = examguidelineService.list(page);	//列出ExamGuideLine列表
 		logBefore(logger,StatusEnum.getNameByIndex(1)+"enum+++++++++++");
-		for (PageData p : varList) {
-			if(p.get("STATUS")!=null){
-				p.put("STATUS", StatusEnum.getNameByIndex(Integer.parseInt(p.get("STATUS").toString())));
-			}
-			
-		}
 		mv.setViewName("exam/examguideline/examguideline_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -199,11 +193,6 @@ public class ExamGuideLineController extends BaseController {
 		page.setPd(pd);
 		System.out.println(page.isEntityOrField()+"=======");
 		List<PageData>	varList = examguidelineService.list(page);	//列出ExamGuideLine列表
-		for (PageData p : varList) {
-			if(p.get("STATUS")!=null){
-				p.put("STATUS", StatusEnum.getNameByIndex(Integer.parseInt(p.get("STATUS").toString())));
-			}
-		}
 		mv.setViewName("exam/examguideline/examguidelinerule_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -229,9 +218,6 @@ public class ExamGuideLineController extends BaseController {
 		page.setPd(pd);
 		System.out.println(page.isEntityOrField()+"=======");
 		List<PageData>	varList = examguidelineService.listRelease(page);	//列出ExamGuideLine列表
-		for (PageData p : varList) {
-			p.put("STATUS", StatusEnum.getNameByIndex(Integer.parseInt(p.get("STATUS").toString())));
-		}
 		mv.setViewName("exam/examguidelinerel/examguidelinerel_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -256,9 +242,6 @@ public class ExamGuideLineController extends BaseController {
 		}
 		page.setPd(pd);
 		List<PageData>	varList = examguidelineService.listVerfiy(page);	//列出ExamGuideLine列表
-		for (PageData p : varList) {
-			p.put("STATUS", StatusEnum.getNameByIndex(Integer.parseInt(p.get("STATUS").toString())));
-		}
 		mv.setViewName("exam/examguidelineverify/examguidelineverify_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -283,9 +266,6 @@ public class ExamGuideLineController extends BaseController {
 		}
 		page.setPd(pd);
 		List<PageData>	varList = examguidelineService.listRelVerfiy(page);	//列出ExamGuideLine列表
-		for (PageData p : varList) {
-			p.put("STATUS", StatusEnum.getNameByIndex(Integer.parseInt(p.get("STATUS").toString())));
-		}
 		mv.setViewName("exam/examguidelinerelverify/examguidelinerelverify_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);

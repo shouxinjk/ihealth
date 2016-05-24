@@ -100,6 +100,17 @@
 			EXAMITEM_ID = #{EXAMITEM_ID}
 	</select>
 	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findByIdMap" parameterType="java.lang.String" resultMap="examItemResultMap">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			EXAMITEM_ID = #{EXAMITEM_ID}
+	</select>
+	
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select

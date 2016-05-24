@@ -87,10 +87,10 @@
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
 													<c:if test="${QX.edit == 1&&var.STATUS eq '已提交'}">
-														<a class="btn btn-xs btn-success" title="审核" onclick="auditing1('${var.EXAMGUIDELINE_ID}','2')">
+														<a class="btn btn-xs btn-success" title="审核" onclick="auditing1('${var.EXAMGUIDELINE_ID}','已审核')">
 															<i class="ace-icon fa fa-check-circle-o bigger-120" title="审核"></i>
 														</a>
-														<a class="btn btn-xs btn-danger" title="不合格" onclick="auditing1('${var.EXAMGUIDELINE_ID}','19')">
+														<a class="btn btn-xs btn-danger" title="不合格" onclick="auditing1('${var.EXAMGUIDELINE_ID}','审核失败')">
 															<i class="ace-icon fa fa-times-circle-o bigger-120" title="不合格"></i>
 														</a>
 													</c:if>

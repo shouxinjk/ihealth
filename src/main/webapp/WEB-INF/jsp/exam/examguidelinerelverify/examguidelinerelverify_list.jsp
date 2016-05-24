@@ -86,11 +86,11 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<c:if test="${QX.edit == 1&&var.STATUS eq '运维已补充'}">
-														<a class="btn btn-xs btn-success" title="审核" onclick="auditing1('${var.EXAMGUIDELINE_ID}','4')">
+													<c:if test="${QX.edit == 1&&var.STATUS eq '已补充'}">
+														<a class="btn btn-xs btn-success" title="审核" onclick="auditing1('${var.EXAMGUIDELINE_ID}','运维审核')">
 															<i class="ace-icon fa fa-check-circle-o bigger-120" title="审核"></i>
 														</a>
-														<a class="btn btn-xs btn-danger" title="不合格" onclick="auditing1('${var.EXAMGUIDELINE_ID}','20')">
+														<a class="btn btn-xs btn-danger" title="不合格" onclick="auditing1('${var.EXAMGUIDELINE_ID}','运维审核失败')">
 															<i class="ace-icon fa fa-times-circle-o bigger-120" title="不合格"></i>
 														</a>
 													</c:if>
