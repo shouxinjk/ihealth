@@ -258,22 +258,28 @@ INSERT INTO `sys_menu` VALUES ('47', '八级菜单', 'login_default.do', '45', '
 INSERT INTO `sys_menu` VALUES ('48', '图表报表', ' tool/fusionchartsdemo.do', '9', '5', 'menu-icon fa fa-bar-chart-o black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('49', '组织机构', 'department/listAllDepartment.do?DEPARTMENT_ID=0', '1', '5', 'menu-icon fa fa-users blue', '1', '1');
 INSERT INTO `sys_menu` VALUES ('50', '站内信', 'fhsms/list.do', '6', '2', 'menu-icon fa fa-envelope green', '1', '1');
+INSERT INTO `sys_menu` VALUES ('51', '文章信息管理', 'article/list.do', '6', '1', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('73', '指南管理', 'examguideline/list.do', '6', '4', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('75', '体检套餐管理', 'checkuppackage/listAll.do', '6', '2', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('94', '疾病管理', 'disease/listAllDiseasecategory.do', '6', '5', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('95', '标签管理', 'tag/listAllTagCategory.do', '6', '6', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('116', '标签分类管理', 'tagcategory/listAllTagCategoryTree.do?TAGCATEGORY_ID=0', '6', '7', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('137', '疾病分类管理', 'diseasecategory/listAllDiseaseCategoryTree.do?DISEASECATEGORY_ID=0', '6', '8', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('158', '医学检查分类管理', 'examcategory/listAllExamCategory.do?EXAMCATEGORY_ID=0', '6', '9', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('177', '查看微信注册用户', 'user/getUsers.do', '40', '3', 'menu-icon fa fa-users brown', '1', '1');
 INSERT INTO `sys_menu` VALUES ('179', '医学检查项目管理', 'examitem/listAllExamCategory.do', '6', '10', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('221', '指南规则管理', 'examguideline/listRule.do', '6', '12', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('222', '检查频率', 'examfrequency/list.do', '6', '14', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('243', '指南发布管理', 'examguideline/listRelease.do', '6', '13', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('51','文章信息管理','article/list.do','6','1','menu-icon fa fa-leaf black','1',1);
-INSERT INTO `sys_menu` VALUES ('75','体检套餐管理','checkuppackage/listAll.do','6','2','menu-icon fa fa-leaf black','1',1);
-INSERT INTO `sys_menu` VALUES ('244','文章审核','article/auditList.do','6','15','menu-icon fa fa-leaf black','1',1);
-INSERT INTO `sys_menu` VALUES ('266','文章发布','article/articleRelease.do','6','16','menu-icon fa fa-leaf black','1',1);
+INSERT INTO `sys_menu` VALUES ('244', '文章审核', 'article/auditList.do', '6', '15', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('245', '指南审核', 'examguideline/listVerify.do', '6', '14', 'menu-icon fa fa-leaf black', '1', '1');
-
+INSERT INTO `sys_menu` VALUES ('266', '文章发布', 'article/articleRelease.do', '6', '16', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('267', '指南运维审核', 'examguideline/listRelVerify.do', '6', '18', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('288', '体检中心管理', 'medicalcenter/list.do', '372', '19', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('309', '体检项目管理', 'medicalexamitem/list.do', '372', '21', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('330', '用户订单管理', 'order/list.do', '372', '20', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('351', '体检中心订单管理', 'medicalorder/list.do', '372', '22', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('372', '体检中心(医院)', '#', '0', '7', 'menu-icon fa fa-leaf black', '2', '1');
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
@@ -691,7 +697,7 @@ CREATE TABLE `exam_examguideline` (
   `HIGHRISKEXPRESSION` varchar(255) DEFAULT '1=1' COMMENT '高危人群识别脚本',
   `LOWRISKDEFINE` varchar(512) DEFAULT '' COMMENT '普通人群识别',
   `LOWRISKEXPRESSION` varchar(255) DEFAULT '1=1' COMMENT '普通人群识别脚本',
-  `STATUS` int(11) DEFAULT '1' COMMENT '状态',
+  `STATUS` set('已失效','已发布','运维审核失败','运维审核','已补充','审核失败','已审核','已提交','新建') DEFAULT '新建' COMMENT '状态',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录员工id',
   `CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
   `DISEASE_ID` varchar(32) DEFAULT NULL,
