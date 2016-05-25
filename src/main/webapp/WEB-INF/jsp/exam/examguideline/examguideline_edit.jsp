@@ -53,18 +53,19 @@
 										<tr>
 											<td
 												style="width: 75px; text-align: right; padding-top: 13px;">疾病类别:</td>
-											<td><select id="DISEASECATEGORY" name="DISEASECATEGORY"
-												style="width: 40%"
-												onchange="diseaseChange('${pd.EXAMGUIDELINE_ID}')">
-													<c:forEach items="${pds }" var="disc" varStatus="va">
-														<c:if
-															test="${disc.DISEASECATEGORY_ID eq pd.DISEASECATEGORY_ID}">
-															<option value="${disc.DISEASECATEGORY_ID }"
-																selected="selected">${disc.NAME}</option>
-														</c:if>
-														<option value="${disc.DISEASECATEGORY_ID }">${disc.NAME}</option>
-													</c:forEach>
-											</select></td>
+											<td>
+												<select id="DISEASECATEGORY" name="DISEASECATEGORY" style="width: 40%" onchange="diseaseChange('${pd.EXAMGUIDELINE_ID}')">
+														<%-- <c:forEach items="${pds }" var="disc" varStatus="va">
+															<c:if
+																test="${disc.DISEASECATEGORY_ID eq pd.DISEASECATEGORY_ID}">
+																<option value="${disc.DISEASECATEGORY_ID }"
+																	selected="selected">${disc.NAME}</option>
+															</c:if>
+															<option value="${disc.DISEASECATEGORY_ID }">${disc.NAME}</option>
+														</c:forEach> --%>
+												</select>
+												
+											</td>
 										</tr>
 										<tr>
 											<td
@@ -290,9 +291,28 @@
 				listCategory(d);
 			}
 		});
+		$.ajax({
+			url:"<%=basePath%>examguideline/listDisease.do",
+			type:"post",
+			success:function(data){
+				var d = eval(data);
+				listDisease(d);
+			}
+		});
 	})
 		$(top.hangge());
 		
+		function listDisease(data){
+			for(var i=0;i<data.length;i++){
+				var str = "<option value='"+data[i].DISEASECATEGORY_ID+"'>"+data[i].NAME+"</option>";
+				$("#DISEASECATEGORY").append(str);
+				$("#DISEASECATEGORY2").append(str);
+				if(data[i].subDiseaseCategory != undefined){
+					listDisease(data[i].subDiseaseCategory);
+				}
+			}
+		}
+	
 		function listCategory(data){
 			for(var i=0;i<data.length;i++){
 				var str = "<option value='"+data[i].EXAMCATEGORY_ID+"'>"+data[i].NAME+"</option>";

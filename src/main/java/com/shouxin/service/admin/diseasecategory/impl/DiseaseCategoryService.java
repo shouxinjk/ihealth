@@ -132,7 +132,44 @@ public class DiseaseCategoryService implements DiseaseCategoryManager{
 				}
 				return diseaseCategory;
 	}
-
+	/**
+	 * 模拟树状结构
+	 * @param parentID
+	 * @param prefix
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DiseaseCategory> listAllDiseaseByTree(String parentID,String prefix)throws Exception{
+		@SuppressWarnings("unchecked")
+		List<DiseaseCategory> c = (List<DiseaseCategory>) dao.findForList("DiseaseCategoryMapper.listSubDiseaseCategorybyParentID", parentID);
+		if(!parentID.equals("0")){
+			prefix += "--";
+		}
+		for (DiseaseCategory di : c) {
+			
+			di.setNAME(prefix+di.getNAME());
+			di.setPrefix(prefix);
+		}
+		return c;
+	}
+	/**
+	 * 模拟树状结构
+	 * @param parentID
+	 * @param prefix
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DiseaseCategory> listAllDiseaseByTree2(String parentID,String prefix) throws Exception {
+		List<DiseaseCategory> diseaseCategories = this.listAllDiseaseByTree(parentID, prefix);
+		for (DiseaseCategory cate : diseaseCategories) {
+			cate.setTreeUrl("diseasecategory/list.do?DISEASECATEGORY_ID="+cate.getDISEASECATEGORY_ID());
+			cate.setTarget("treeFrame");
+			List<DiseaseCategory> diseaseCategories2 = this.listAllDiseaseByTree2(cate.getDISEASECATEGORY_ID(),cate.getPrefix());
+			cate.setSubDiseaseCategory(diseaseCategories2);
+		}
+		return diseaseCategories;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<DiseaseCategory> findAllDiseases() throws Exception {
 		// TODO Auto-generated method stub

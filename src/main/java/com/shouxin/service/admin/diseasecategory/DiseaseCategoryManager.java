@@ -83,5 +83,9 @@ public interface DiseaseCategoryManager{
 	public List<DiseaseCategory> findAllDiseases() throws Exception;
 	
 	public List<DiseaseCategory> findAllIsInheritabl() throws Exception;
+	
+	public List<DiseaseCategory> listAllDiseaseByTree(String parentID,String prefix)throws Exception;
+	
+	public List<DiseaseCategory> listAllDiseaseByTree2(String parentID,String prefix)throws Exception;
 }
 
