@@ -107,7 +107,7 @@ public class DiseaseCategoryService implements DiseaseCategoryManager{
 		// TODO Auto-generated method stub
 		List<DiseaseCategory> diseaseCategory = this.listAllDiseaseCategory(parentID);
 		for (DiseaseCategory cate : diseaseCategory) {
-			List<DiseaseCategory> dis = this.listAllDiseaseCategory(cate.getDISEASECATEGORY_ID());
+			List<DiseaseCategory> dis = this.listSubDiseaseCategoryByParentId(cate.getDISEASECATEGORY_ID());
 			cate.setTreeUrl("disease/list.do?DISEASECATEGORY_ID="+cate.getDISEASECATEGORY_ID());
 			cate.setTarget("treeFrame");
 			cate.setSubDiseaseCategory(dis);	
