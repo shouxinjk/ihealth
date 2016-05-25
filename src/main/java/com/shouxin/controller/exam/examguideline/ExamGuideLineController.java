@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.admin.Disease;
+import com.shouxin.entity.admin.DiseaseCategory;
 import com.shouxin.entity.exam.ExamCategory;
 import com.shouxin.entity.exam.ExamItem;
 import com.shouxin.util.AppUtil;
@@ -344,6 +345,17 @@ public class ExamGuideLineController extends BaseController {
 		resp.setContentType("text/html;charset=utf-8");
 		PrintWriter out = resp.getWriter();
 		out.println(array);
+		out.close();
+	}
+	
+	@RequestMapping(value="/listDisease")
+	public void listDiseaseCategory(HttpServletResponse resp) throws Exception{
+		List<DiseaseCategory> varDisease = diseasecategoryService.listAllDiseaseByTree2("0","");//查询所有检查项目分类
+		JSONArray array2 = JSONArray.fromObject(varDisease);
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/html;charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.println(array2);
 		out.close();
 	}
 	

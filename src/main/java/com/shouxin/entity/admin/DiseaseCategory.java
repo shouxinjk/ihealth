@@ -21,6 +21,7 @@ public class DiseaseCategory implements Serializable{
 	private boolean hasDiseaseCategory = false;
 	private String treeUrl;
 	private String PARENT_ID;
+	private String prefix;
 	
 	@Override
 	public String toString() {
@@ -127,6 +128,14 @@ public class DiseaseCategory implements Serializable{
 
 	public void setDiseases(List<Disease> diseases) {
 		this.diseases = diseases;
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
 	}
 
 }

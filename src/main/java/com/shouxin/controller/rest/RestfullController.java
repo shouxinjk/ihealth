@@ -66,7 +66,7 @@ public class RestfullController extends BaseController {
 	 * 用户注册，通过手机号码
 	 * url : http://localhost:8080/ihealth/rest/register 
 	 * type:post
-	 * @param {phone:"xx",openId:"xxx","name":"姓名","avatar","用户头像"}
+	 * @param {phone:"xx",openId:"xxx","name":"姓名","avatar":"用户头像"}
 	 * @return 当手号码不存在时，执行新增用户并返回用户信息:
 	 * 				{"result": "success","data": {"OPENID":"OPENID","PHONE": "电话","USER_ID": "USER_ID","ROLE_ID": "用户权限"}}
 	 * 		         当用户执行添加关心的人的操作时，关系存在返回的数据
@@ -121,31 +121,30 @@ public class RestfullController extends BaseController {
 				pd.put("NAME", name);
 			}
 			
-			pd.put("USER_ID", this.get32UUID()); 
-			pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
-			pd.put("STATUS", "1");									//状态
-			pd.put("BIRTHDAY", "1992-01-01");
-			pd.put("HEIGHT", "170");
-			pd.put("WEIGHT", "50");
-			pd.put("AVATAR", "../images/defaultimg.png");
-			pd.put("LAST_LOGIN", new Date());						//最后登录时间
-			pd.put("CREATEON", new Date());							//该记录的创建时间
+			
 			// 判断手机号码是否存在	如果当前手机号存在  则继续判断openID是否存在，如果都存在 则返回用户数据   如果不存在 则 添加openID和用户头像信息
 			if (null == this.appuserService.findByPhone(pd)) { 
 				logBefore(logger, "经过判断，手机号码在数据库中不存在，执行新增操作");
+				pd.put("USER_ID", this.get32UUID()); 
+				pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
+				pd.put("STATUS", "1");									//状态
+				pd.put("BIRTHDAY", "1992-01-01");
+				pd.put("HEIGHT", "170");
+				pd.put("WEIGHT", "50");
+				pd.put("LAST_LOGIN", new Date());						//最后登录时间
+				pd.put("CREATEON", new Date());							//该记录的创建时间
 				appuserService.saveU(pd); // 执行保存
 				msg = "success";
 				map.put("data", appuserService.findByUiId(pd));
 			} else {
 				logBefore(logger, "经过判断，手机号码存在：-------------------------------");
 				PageData pds = this.appuserService.findByPhone(pd);
-				String openid = pds.getString("OPENID");
 				//经过判断，手机号吗 存在，openID 不存在
-				if (Tools.isEmpty(openid)) {
+				if (pds.getString("OPENID") == null || "".equals(pds.getString("OPENID")) || "null".equals(pds.getString("OPENID"))) {
 					pds.put("USER_ID", pds.getString("USER_ID"));
-					pds.put("NAME", name);
 					pds.put("OPENID", openId);
 					pds.put("AVATAR", avatar);
+					pds.put("NAME", name);
 					this.appuserService.editU(pds);
 				}
 				map.put("data", pds);
