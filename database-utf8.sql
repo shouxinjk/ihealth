@@ -977,11 +977,11 @@ CREATE TABLE `ta_user` (
   `inheritDiseases` varchar(1024) DEFAULT '',
   `concernDiseases` varchar(1024) DEFAULT '',  
   `tags` varchar(1024) DEFAULT '',
-  `lastModifiedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
-  `lastPreparedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
-  `lastMatchedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
-  `lastGeneratedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
-  `lastEvaluatedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',  
+  `lastModifiedOn` timestamp NOT NULL DEFAULT '1990-01-01 00:00:00',
+  `lastPreparedOn` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00',
+  `lastMatchedOn` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00',
+  `lastGeneratedOn` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00',
+  `lastEvaluatedOn` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00',  
   PRIMARY KEY (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -991,7 +991,7 @@ CREATE TABLE `ta_userrule` (
   `rule_id` varchar(100) NOT NULL,
   `user_id` varchar(100) NOT NULL,
   `guideline_id` varchar(100) NOT NULL,
-  `originate` varchar(100) DEFAULT '',
+  `originate` varchar(255) DEFAULT '',
   `description` varchar(512) DEFAULT '',
   `concernedfactors` varchar(512) DEFAULT '',
   `riskDefine` varchar(512) DEFAULT '',
@@ -999,8 +999,18 @@ CREATE TABLE `ta_userrule` (
   `riskType` varchar(20) DEFAULT 'low',
   `ruleExpression` varchar(1024) DEFAULT '1=1',
   `status` varchar(20) DEFAULT 'pending',
-  `createdOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
-  `modifiedOn` timestamp NOT NULL DEFAULT '1971-01-01 00:00:00',
+  `sysflag` varchar(20) DEFAULT 'toPrepare',  
+  `createdOn` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00',
+  `modifiedOn` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00',
   `worker` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`rule_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ta_statistics`;
+CREATE TABLE `ta_statistics` (
+  `checkuppackage_id` varchar(100) NOT NULL,
+  `matchedRules` int(11) NOT NULL default 0,
+  `generatedRules` int(11) NOT NULL default 0,
+  `status` varchar(20) NOT NULL default 'inprocess',  
+  PRIMARY KEY (`checkuppackage_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
