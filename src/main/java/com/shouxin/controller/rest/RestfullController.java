@@ -376,8 +376,9 @@ public class RestfullController extends BaseController {
 		logBefore(logger, "查询-----------根据ID查询体检套餐");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
-		String msg = null,userId = null;
+		String msg = null,userId = null,status = null;
 		PageData pd = new PageData();
+		PageData data = new PageData();
 		pd = this.getPageData();
 		
 		// 将String类型的数据转换为json
@@ -386,12 +387,17 @@ public class RestfullController extends BaseController {
 			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				userId = jasonObject.get("userId").toString().trim();
 				pd.put("USER_ID", userId);
-				
-				PageData data = this.checkuppackageService.findById(pd);
-				if (data != null && data.size() > 0) {
-					msg = "success";
-					map.put("data", data);
-				} else {
+
+				data = this.checkuppackageService.findById(pd);
+				status = data.getString("STATUS");
+				if (status.equals("ready")) {
+					if (data != null && data.size() > 0) {
+						msg = "success";
+						map.put("data", data);
+					} else {
+						msg = "no";
+					}
+				}else{
 					msg = "no";
 				}
 			}else{
@@ -401,8 +407,6 @@ public class RestfullController extends BaseController {
 			msg = "error";
 			logBefore(logger, "程序异常--请检查参数列表");
 		}
-		
-		
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
