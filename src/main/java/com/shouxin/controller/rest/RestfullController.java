@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shouxin.controller.base.BaseController;
+import com.shouxin.entity.Page;
 import com.shouxin.service.admin.article.ArticleManager;
 import com.shouxin.service.admin.disease.DiseaseManager;
 import com.shouxin.service.admin.tag.TagManager;
@@ -120,8 +121,6 @@ public class RestfullController extends BaseController {
 				name = jasonObject.getString("name").trim();
 				pd.put("NAME", name);
 			}
-			
-			
 			// 判断手机号码是否存在	如果当前手机号存在  则继续判断openID是否存在，如果都存在 则返回用户数据   如果不存在 则 添加openID和用户头像信息
 			if (null == this.appuserService.findByPhone(pd)) { 
 				logBefore(logger, "经过判断，手机号码在数据库中不存在，执行新增操作");
@@ -139,14 +138,6 @@ public class RestfullController extends BaseController {
 			} else {
 				logBefore(logger, "经过判断，手机号码存在：-------------------------------");
 				PageData pds = this.appuserService.findByPhone(pd);
-				//经过判断，手机号吗 存在，openID 不存在
-				if (pds.getString("OPENID") == null || "".equals(pds.getString("OPENID")) || "null".equals(pds.getString("OPENID"))) {
-					pds.put("USER_ID", pds.getString("USER_ID"));
-					pds.put("OPENID", openId);
-					pds.put("AVATAR", avatar);
-					pds.put("NAME", name);
-					this.appuserService.editU(pds);
-				}
 				map.put("data", pds);
 				msg = "existence";
 			}
@@ -158,6 +149,84 @@ public class RestfullController extends BaseController {
 		}
 		
 		
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 根据手机号码添加关心的人--判断关心的人是否存在
+	 * url:http://localhost:8080/ihealth/rest/saveByPhone 
+	 * @param {"userId":"当前用户ID","phone":"电话号码"}
+	 * @return 
+	 * 		手机号码为空，返回	{"result":"no"}
+	 * 		关系已存在，返回		{"result":"existence"}
+	 * 		关系不存在，返回		{
+	 * 							"result":"success"
+	 * 							"data": { 
+	 *        						"NUMBER": "编号",					"RIGHTS": "权限", 
+	 *         						"IP": "IP地址", 					"PHONE": "电话", 
+	 *         						"ALIAS": "昵称",					"SEX": "性别", 
+	 *         						"USER_ID": "ID",				"MARRIAGESTATUS": "婚姻状况",
+	 *         						"LAST_LOGIN": "最后登录时间",		"EMAIL": "邮箱地址", 
+	 *         						"HEIGHT": 身高,					"BIRTHPLACE": "出生地", 
+	 *         						"NAME": "姓名", 					"CAREER": "职业", 
+	 *         						"STATUS": "0",					"OPENID": "openId", 
+	 *         						"PASSWORD": "密码", 				"BZ": "333", 
+	 *         						"USERNAME":"用户名", 				"DEGREE": "学历", 
+	 *         						"LIVEPLACE": "常住地", 			"AVATAR": "头像地址",
+	 *         						"WEIGHT": 体重, 					"BIRTHDAY": "生日" 
+	 *         					} 
+	 * 						}
+	 * 	
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "/saveByPhone", method = RequestMethod.POST)
+	@ResponseBody
+	public Object saveByPhone(@RequestBody(required = true) String message) throws Exception{
+			logBefore(logger, "通过手机号码注册+++++++++++++start");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String msg = null, phone = null,user_id_two = null,user_id_one;
+		JSONObject jasonObject = JSONObject.fromObject(message);
+		if (jasonObject.get("phone") == null || "" == jasonObject.get("phone")||jasonObject.get("userId") == null || "" == jasonObject.get("userId")) {
+			msg = "no";
+		}else{
+			phone = jasonObject.getString("phone");
+			user_id_one = jasonObject.getString("userId");
+			pd.put("PHONE", phone);
+			//根据手机号码   获取当前用户信息
+			PageData pageData = this.appuserService.findByPhone(pd);
+			if (pageData != null) {
+				//获取当前用户ID
+				user_id_two = pageData.getString("USER_ID");
+				pd.put("user_id_one", user_id_one);
+				pd.put("user_id_two", user_id_two);
+				//查询关系是否存在
+				PageData pds = this.appuserService.findConnectionWhether(pd);
+				if (pds != null && pds.size()>0) {
+					//关系存在
+					msg = "existence";
+				}else{
+					pd.put("USER_ID", user_id_two);
+					msg = "success";
+					map.put("data", this.appuserService.findByUiId(pd));
+				}
+			}else{
+				pd.put("USER_ID", this.get32UUID());
+				pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
+				pd.put("STATUS", "1");									//状态
+				pd.put("BIRTHDAY", "1992-01-01");
+				pd.put("HEIGHT", "170");
+				pd.put("WEIGHT", "50");
+				pd.put("LAST_LOGIN", new Date());						//最后登录时间
+				pd.put("CREATEON", new Date());							//该记录的创建时间
+				appuserService.saveU(pd); // 执行保存
+				map.put("data", appuserService.findByUiId(pd));
+				msg = "success";
+			}		
+		}
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
