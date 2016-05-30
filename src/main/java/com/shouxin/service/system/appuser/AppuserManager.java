@@ -222,5 +222,9 @@ public interface AppuserManager {
 	 * @throws Exception
 	 */
 	public List<PageData> findLike(PageData pd)throws Exception;
+	
+	public PageData findByUserId(PageData pd)throws Exception;
+	
+	public PageData findByOpenId(PageData pd)throws Exception;
 }
 

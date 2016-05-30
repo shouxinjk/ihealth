@@ -134,7 +134,7 @@ public class RestfullController extends BaseController {
 				pd.put("CREATEON", new Date());							//该记录的创建时间
 				appuserService.saveU(pd); // 执行保存
 				msg = "success";
-				map.put("data", appuserService.findByUiId(pd));
+				map.put("data", appuserService.findByUserId(pd));
 			} else {
 				logBefore(logger, "经过判断，手机号码存在：-------------------------------");
 				PageData pds = this.appuserService.findByPhone(pd);
@@ -211,7 +211,7 @@ public class RestfullController extends BaseController {
 				}else{
 					pd.put("USER_ID", user_id_two);
 					msg = "success";
-					map.put("data", this.appuserService.findByUiId(pd));
+					map.put("data", this.appuserService.findByUserId(pd));
 				}
 			}else{
 				pd.put("USER_ID", this.get32UUID());
@@ -223,7 +223,7 @@ public class RestfullController extends BaseController {
 				pd.put("LAST_LOGIN", new Date());						//最后登录时间
 				pd.put("CREATEON", new Date());							//该记录的创建时间
 				appuserService.saveU(pd); // 执行保存
-				map.put("data", appuserService.findByUiId(pd));
+				map.put("data", appuserService.findByUserId(pd));
 				msg = "success";
 			}		
 		}
@@ -340,7 +340,7 @@ public class RestfullController extends BaseController {
 				
 				pd.put("USER_ID", userId);
 				//根据用户ID查询用户信息
-				pds = this.appuserService.findByUiId(pd);
+				pds = this.appuserService.findByUserId(pd);
 				
 				if (jasonObject.get("name") != null && !"".equals(jasonObject.get("name")) && !"null".equals(jasonObject.get("name"))) {
 					name = jasonObject.getString("name").trim();
@@ -403,7 +403,7 @@ public class RestfullController extends BaseController {
 				pds.put("STATUS", "1");
 				logBefore(logger, "执行根据ID，修改用户信息的方法--------------------------------++++++++");
 				this.appuserService.editU(pds);
-				PageData pageData = this.appuserService.findByUiId(pds);
+				PageData pageData = this.appuserService.findByUserId(pds);
 				map.put("data", pageData);
 				msg = "suceess";
 				
@@ -770,7 +770,7 @@ public class RestfullController extends BaseController {
 			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				userId = jasonObject.getString("userId").trim();
 				pd.put("USER_ID", userId);
-				PageData data = this.appuserService.findByUiId(pd);
+				PageData data = this.appuserService.findByUserId(pd);
 				if (data != null && data.size() > 0) {
 					msg = "success";
 					map.put("data", data);
@@ -835,7 +835,7 @@ public class RestfullController extends BaseController {
 			if (jasonObject.get("openId") != null && !"".equals(jasonObject.get("openId")) && !"null".equals(jasonObject.get("openId"))) {
 				openId = jasonObject.getString("openId").trim();
 				pd.put("OPENID", openId);
-				PageData data = this.appuserService.findByUiId(pd);
+				PageData data = this.appuserService.findByOpenId(pd);
 				if (data != null && data.size() > 0) {
 					msg = "success";
 					map.put("data", data);
@@ -1214,7 +1214,7 @@ public class RestfullController extends BaseController {
 				userId = jasonObject.getString("userId").trim();
 				pd.put("USER_ID", userId);
 				//根据用户ID 查询用户信息
-				pds = this.appuserService.findByUiId(pd);
+				pds = this.appuserService.findByUserId(pd);
 				if (pds != null) {
 					if (Tools.notEmpty(pds.getString("PHONE"))) {
 						userNumber += 10;

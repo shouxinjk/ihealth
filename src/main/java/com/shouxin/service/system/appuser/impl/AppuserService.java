@@ -274,6 +274,14 @@ public class AppuserService implements AppuserManager{
 		
 		return (List<PageData>) dao.findForList("AppuserMapper.findLike", pd);
 	}
+
+	public PageData findByUserId(PageData pd) throws Exception {
+		return (PageData)dao.findForObject("AppuserMapper.findByUserId", pd);
+	}
+
+	public PageData findByOpenId(PageData pd) throws Exception {
+		return (PageData)dao.findForObject("AppuserMapper.findByOpenId", pd);
+	}
 	
 }
 

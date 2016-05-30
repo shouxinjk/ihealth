@@ -439,6 +439,22 @@
 		</where>
 	</select>
 	
+	<select id="findByUserId" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where USER_ID = #{USER_ID}
+	</select>
+	
+	<select id="findByOpenId" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where OPENID = #{OPENID}
+	</select>
+	
 	<!-- 通过手机号码查询用户数据 -->
 	<select id="findByPhone" parameterType="pd" resultType="pd">
 		select 
