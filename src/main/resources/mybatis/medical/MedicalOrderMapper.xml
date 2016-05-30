@@ -33,6 +33,28 @@
 		#{CREATEON}
 	</sql>
 	
+	<!-- 批量增加体检中心订单 -->
+	<insert id="insertAll" parameterType="MedicalOrder">
+		insert into 
+		<include refid="tableName"></include> 
+		(MEDICALORDER_ID,MEDICALORDERNO,MEDICALORDERGENERATIONTIME,MEDICALORDERBOOKINGTIME,MEDICALORDEREXECUTIONTIME,MEDICALCENTER_ID)
+		values 
+		<foreach item="item" index="index" collection="list" separator="," close=";">
+                 (#{item.MEDICALORDER_ID},#{item.MEDICALORDERNO},#{item.MEDICALORDERGENERATIONTIME},#{item.MEDICALORDERBOOKINGTIME},#{item.MEDICALORDEREXECUTIONTIME},#{item.MEDICALCENTER_ID})
+		</foreach>
+	</insert>
+	
+		<!-- 批量增加体检中心订单下面的体检项目 -->
+	<insert id="insertItemAll" parameterType="MedicalOrder">
+		insert into 
+		TB_MEDICALORDERITEM 
+		(MEDICALORDERITEM_ID,MEDICALORDER_ID,MEDICALEXAMITEM_ID)
+		values 
+		<foreach item="item" index="index" collection="list" separator="," close=";">
+                 (#{item.MEDICALORDERITEM_ID},#{item.MEDICALORDER_ID},#{item.MEDICALEXAMITEM_ID})
+		</foreach>
+	</insert>
+	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
 		insert into 

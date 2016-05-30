@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.medical.MedicalExamItem;
+import com.shouxin.entity.medical.Order;
 import com.shouxin.service.medical.order.OrderManager;
 import com.shouxin.util.PageData;
 
@@ -93,6 +94,30 @@ public class OrderService implements OrderManager{
 	public List<MedicalExamItem> findExamItemByOrderId(String pd) throws Exception {
 		// TODO Auto-generated method stub
 		return (List<MedicalExamItem>) dao.findForList("OrderMapper.findExamItemByOrderId", pd);
+	}
+	
+	/**
+	 * 修改订单状态
+	 */
+	public void updateOrderStatus(PageData pd) throws Exception {
+		dao.update("OrderMapper.auditing", pd);
+	}
+	
+	/**
+	 * 通过id获取数据
+	 */
+	public Order findByIdString(String ORDER_ID) throws Exception {
+		// TODO Auto-generated method stub
+		return (Order)dao.findForObject("OrderMapper.findByIdString", ORDER_ID);
+	}
+
+	/**
+	 * 查询该订单有多少个体检中心的体检项目
+	 */
+	@SuppressWarnings("unchecked")
+	public List<MedicalExamItem> findCenterIDByOrderId(String pd) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<MedicalExamItem>) dao.findForList("OrderMapper.findCenterIDByOrderId", pd);
 	}
 	
 }

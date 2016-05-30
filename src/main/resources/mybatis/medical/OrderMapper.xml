@@ -64,6 +64,12 @@
 		ORDER_ID = #{ORDER_ID}
 	</update>
 	
+	<update id="auditing" parameterType="pd">
+		update 
+		<include refid="tableName"></include> 
+		set STATUS = #{STATUS} where ORDER_ID = #{ORDER_ID}
+	</update>
+	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
@@ -74,13 +80,29 @@
 			ORDER_ID = #{ORDER_ID}
 	</select>
 	
+		<!-- 通过ID获取数据 -->
+	<select id="findByIdString" parameterType="java.lang.String" resultType="Order">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ORDER_ID = #{ORDER_ID}
+	</select>
+	
 	<!-- 查询该订单的所有体检项目 -->
 	<select id="findExamItemByOrderId" parameterType="java.lang.String" resultType="MedicalExamItem">
-		select ei.MEDICALEXAMITEM_ID as MEDICALEXAMITEM_ID,ei.NAME AS NAME,ei.DESCRIPTION AS
+		select ei.MEDICALCENTER_ID AS MEDICALCENTER_ID,ei.MEDICALEXAMITEM_ID as MEDICALEXAMITEM_ID,ei.NAME AS NAME,ei.DESCRIPTION AS
 		 DESCRIPTION , ei.FEATURES AS FEATURES,ei.SELLINGPRICE AS SELLINCPRICE,ei.SETTLEMENTPRICE 
 		 AS SETTLEMENTPRICE,ei.LOGO AS LOGO,ei.STATUS AS STATUS,ei.EFFECTIVETIME AS EFFECTIVETIME,
 		 ei.EXPIRETIME AS EXPIRETIME from tb_medicalexamitem ei,tb_orderitem oi where 
 		 ei.MEDICALEXAMITEM_ID = oi.MEDICALEXAMITEM_ID and oi.ORDER_ID = #{ORDER_ID}
+	</select>
+	
+	<!-- 查询该订单下有多少个体检中心体检项目 -->
+	<select id="findCenterIDByOrderId" parameterType="java.lang.String" resultType="MedicalExamItem">
+		select ei.MEDICALCENTER_ID AS MEDICALCENTER_ID from tb_medicalexamitem ei,tb_orderitem oi where 
+		 ei.MEDICALEXAMITEM_ID = oi.MEDICALEXAMITEM_ID and oi.ORDER_ID = #{ORDER_ID} group by ei.MEDICALCENTER_ID
 	</select>
 	
 	<!-- 列表 -->

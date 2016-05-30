@@ -5,6 +5,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.medical.MedicalOrder;
+import com.shouxin.entity.medical.MedicalOrderItem;
 import com.shouxin.service.medical.medicalorder.MedicalOrderManager;
 import com.shouxin.util.PageData;
 
@@ -94,6 +96,22 @@ public class MedicalOrderService implements MedicalOrderManager{
 	public List<PageData> findItemsById(PageData pd) throws Exception {
 		
 		return (List<PageData>) dao.findForList("MedicalOrderMapper.findItemsById", pd);
+	}
+
+	/**
+	 * 批量增加体检中心订单
+	 */
+	public void saveAll(List<MedicalOrder> medicalOrder) throws Exception {
+		// TODO Auto-generated method stub
+		dao.save("MedicalOrderMapper.insertAll", medicalOrder);
+	}
+	
+	/**
+	 * 批量增加体检中心订单体检项目
+	 */
+	public void saveItemAll(List<MedicalOrderItem> medicalOrderItem) throws Exception {
+		// TODO Auto-generated method stub
+		dao.save("MedicalOrderMapper.insertItemAll", medicalOrderItem);
 	}
 	
 }

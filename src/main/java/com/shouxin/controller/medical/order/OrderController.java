@@ -19,6 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.medical.MedicalExamItem;
+import com.shouxin.entity.medical.MedicalOrder;
+import com.shouxin.entity.medical.MedicalOrderItem;
+import com.shouxin.entity.medical.Order;
+import com.shouxin.service.medical.medicalorder.MedicalOrderManager;
 import com.shouxin.service.medical.order.OrderManager;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
@@ -37,6 +41,8 @@ public class OrderController extends BaseController {
 	String menuUrl = "order/list.do"; //菜单地址(权限用)
 	@Resource(name="orderService")
 	private OrderManager orderService;
+	@Resource(name="medicalorderService")
+	private MedicalOrderManager medicalorderService;
 	
 	/**保存
 	 * @param
@@ -70,6 +76,51 @@ public class OrderController extends BaseController {
 		out.write("success");
 		out.close();
 	}
+	
+	/**修改状态
+	 * @param out
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/auditing")
+	public void auditing(PrintWriter out) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"审核ExamGuideLine");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String id = pd.getString("ORDER_ID");
+		Order order = orderService.findByIdString(id);	//根据ID读取
+		List<MedicalExamItem> item = orderService.findCenterIDByOrderId(id);
+		List<MedicalExamItem> items = orderService.findExamItemByOrderId(id);
+		List<MedicalOrder> medicalOrder = new ArrayList<MedicalOrder>();
+		List<MedicalOrderItem> medicalOrderItem = new ArrayList<MedicalOrderItem>();
+		for (MedicalExamItem m : item) {
+			MedicalOrder o = new MedicalOrder();
+			String medicalOrder_id = this.get32UUID();
+			o.setMEDICALORDER_ID(medicalOrder_id);
+			o.setMEDICALCENTER_ID(m.getMEDICALCENTER_ID());
+			o.setMEDICALORDERBOOKINGTIME(order.getORDERBOOKINGTIME());
+			o.setMEDICALORDEREXECUTIONTIME(order.getORDEREXECUTIONTIME());
+			o.setMEDICALORDERNO(order.getORDERNO());
+			o.setMEDICALORDERGENERATIONTIME(order.getORDERGENERATIONTIME());
+			medicalOrder.add(o);
+			for (MedicalExamItem i : items) {
+				if(i.getMEDICALCENTER_ID().equals(m.getMEDICALCENTER_ID())){
+					MedicalOrderItem moi = new MedicalOrderItem();
+					moi.setMEDICALORDERITEM_ID(this.get32UUID());
+					moi.setMEDICALORDER_ID(medicalOrder_id);
+					moi.setMEDICALEXAMITEM_ID(i.getMEDICALEXAMITEM_ID());
+					medicalOrderItem.add(moi);
+				}
+			}
+		}
+		medicalorderService.saveAll(medicalOrder);
+		medicalorderService.saveItemAll(medicalOrderItem);
+		logBefore(logger, item.get(0).getMEDICALCENTER_ID()+"medicalcenter_id==");
+		orderService.updateOrderStatus(pd);
+		out.write("success");
+		out.close();
+	}
+	
 	
 	/**修改
 	 * @param

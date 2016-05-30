@@ -103,6 +103,11 @@
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 													</c:if>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '新建'}">
+														<a class="btn btn-xs btn-success" title="提交" onclick="auditing('${var.ORDER_ID}','已提交');">
+															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
+														</a>
+													</c:if>
 												</div>
 												<div class="hidden-md hidden-lg">
 													<div class="inline pos-rel">
@@ -289,6 +294,19 @@
 				if(result) {
 					top.jzts();
 					var url = "<%=basePath%>order/delete.do?ORDER_ID="+Id+"&tm="+new Date().getTime();
+					$.get(url,function(data){
+						nextPage(${page.currentPage});
+					});
+				}
+			});
+		}
+		
+		//医生审核
+		function auditing(Id,status){
+			bootbox.confirm("确定要操作吗?", function(result) {
+				if(result) {
+					top.jzts();
+					var url = "<%=basePath%>order/auditing.do?ORDER_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage(${page.currentPage});
 					});
