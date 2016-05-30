@@ -434,7 +434,7 @@
 				and USER_ID = #{USER_ID}
 			</if>
 			<if test="OPENID != null and OPENID != ''">
-				and OPENID = #{OPENID}
+				or OPENID = #{OPENID}
 			</if>
 		</where>
 	</select>
