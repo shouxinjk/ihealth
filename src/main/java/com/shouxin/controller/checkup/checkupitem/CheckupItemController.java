@@ -102,12 +102,8 @@ public class CheckupItemController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		String keywords = pd.getString("keywords");				//关键词检索条件
-		if(null != keywords && !"".equals(keywords)){
-			pd.put("keywords", keywords.trim());
-		}
-		page.setPd(pd);
-		List<PageData>	varList = checkupitemService.list(page);	//列出CheckupItem列表
+		pd.put("CHECKUPPACKAGE_ID", pd.get("id"));
+		List<PageData>	varList = checkupitemService.listAll(pd);	//列出CheckupItem列表
 		mv.setViewName("checkup/checkupitem/checkupitem_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -227,9 +223,10 @@ public class CheckupItemController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/lists/{id}")
-	public ModelAndView lists(@PathVariable String id) throws Exception{
+	public ModelAndView lists(Page page,@PathVariable String id) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表CheckupItem");
 		ModelAndView mv = this.getModelAndView();
+		
 		List<CheckupItem>	varList = checkupitemService.findAllById(id);	//列出CheckupItem列表
 		mv.setViewName("checkup/checkupitem/checkupitem_list");
 		mv.addObject("varList", varList);

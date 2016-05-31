@@ -91,7 +91,7 @@
 											<td class='center'>${var.EXPIREON}</td>
 											<td class='center'>${var.STATUS}</td>
 											<td class="center">
-												<a href="checkupitem/lists/${var.CHECKUPPACKAGE_ID}">详细信息</a>
+												<a href="checkupitem/list?id=${var.CHECKUPPACKAGE_ID}">详细信息</a>
 											</td>
 										</tr>
 									
@@ -112,16 +112,16 @@
 							</tbody>
 						</table>
 						<div class="page-header position-relative">
-						<%-- <table style="width:100%;">
+						<table style="width:100%;">
 							<tr>
-								<td style="vertical-align:top;">
+								<%-- <td style="vertical-align:top;">
 									<c:if test="${QX.add == 1 }">
 									<a class="btn btn-sm btn-success" onclick="add();">新增</a>
 									</c:if>
-								</td>
+								</td> --%>
 								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 							</tr>
-						</table> --%>
+						</table>
 						</div>
 						</form>
 					

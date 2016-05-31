@@ -92,7 +92,7 @@ public class CheckupItemService implements CheckupItemManager{
 	 */
 	@SuppressWarnings("unchecked")
 	public List<CheckupItem> findAllById(String id) throws Exception {
-		return (List<CheckupItem>) dao.findForList("CheckupItemMapper.findAllById", id);
+		return (List<CheckupItem>) dao.findForList("CheckupItemMapper.findAllByIdlistPage", id);
 	}
 
 	/**
@@ -135,6 +135,12 @@ public class CheckupItemService implements CheckupItemManager{
 
 	public void removeStatus(PageData pd) throws Exception {
 		dao.update("CheckupItemMapper.removeStatus", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findlistPage(Page page) throws Exception {
+		
+		return (List<PageData>) dao.findForList("CheckupItemMapper.findlistPage", page);
 	}
 	
 }

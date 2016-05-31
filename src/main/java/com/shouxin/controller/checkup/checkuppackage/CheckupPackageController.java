@@ -34,7 +34,7 @@ import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
 @RequestMapping(value="/checkuppackage")
 public class CheckupPackageController extends BaseController {
 	
-	String menuUrl = "checkuppackage/listAll.do"; //菜单地址(权限用)
+	String menuUrl = "checkuppackage/list.do"; //菜单地址(权限用)
 	@Resource(name="checkuppackageService")
 	private CheckupPackageManager checkuppackageService;
 	
@@ -218,17 +218,17 @@ public class CheckupPackageController extends BaseController {
 		String id = Jurisdiction.getUserId();
 		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		ModelAndView mv = this.getModelAndView();
-		//PageData pd = new PageData();
-		//pd = this.getPageData();
-		//String keywords = pd.getString("keywords");				//关键词检索条件
-		//if(null != keywords && !"".equals(keywords)){
-			//pd.put("keywords", keywords.trim());
-		//}
-		//page.setPd(pd);
-		List<CheckupPackage>	varList = checkuppackageService.listAllById(id);	//列出CheckupPackage列表
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		page.setPd(pd);
+		List<PageData>	varList = checkuppackageService.list(page);	//列出CheckupPackage列表
 		mv.setViewName("checkup/checkuppackage/checkuppackage_list");
 		mv.addObject("varList", varList);
-		//mv.addObject("pd", pd);
+		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
 	}

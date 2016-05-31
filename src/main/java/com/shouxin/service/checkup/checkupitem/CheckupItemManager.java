@@ -107,5 +107,8 @@ public interface CheckupItemManager{
 	 * @throws Exception
 	 */
 	public void removeStatus(PageData pd) throws Exception;
+	
+	
+	public List<PageData> findlistPage(Page page)throws Exception;
 }
 

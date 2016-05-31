@@ -25,20 +25,22 @@
 	
 	<!-- 字段 -->
 	<sql id="Field">
+		CHECKUPPACKAGE_ID,
 		WORKER,	
 		GENERATEDTIME,	
 		EFFECTIVEFROM,	
 		EXPIREON,	
 		STATUS,	
 		REVISION,	
-		SYSFLAG,	
-		CHECKUPPACKAGE_ID,
+		SYSFLAG,
+		USER_ID,	
 		CREATEBY,	
 		CREATEON
 	</sql>
 	
 	<!-- 字段值 -->
 	<sql id="FieldValue">
+		#{CHECKUPPACKAGE_ID},
 		#{WORKER},	
 		#{GENERATEDTIME},	
 		#{EFFECTIVEFROM},	
@@ -46,7 +48,7 @@
 		#{STATUS},	
 		#{REVISION},	
 		#{SYSFLAG},	
-		#{CHECKUPPACKAGE_ID},
+		#{USER_ID},
 		#{CREATEBY},
 		#{CREATEON}
 	</sql>
