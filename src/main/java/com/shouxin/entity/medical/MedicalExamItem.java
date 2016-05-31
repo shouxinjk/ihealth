@@ -16,6 +16,15 @@ public class MedicalExamItem {
 	private Date EXPIRETIME;			// varchar(32) DEFAULT NULL COMMENT '体检项目失效时间',
 	private String CREATEBY;			// varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
 	private Date CREATEON;				// timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
+	private String MEDICALCENTER_ID;//
+
+	public String getMEDICALCENTER_ID() {
+		return MEDICALCENTER_ID;
+	}
+
+	public void setMEDICALCENTER_ID(String mEDICALCENTER_ID) {
+		MEDICALCENTER_ID = mEDICALCENTER_ID;
+	}
 
 	public String getMEDICALEXAMITEM_ID() {
 		return MEDICALEXAMITEM_ID;
@@ -118,7 +127,8 @@ public class MedicalExamItem {
 		return "MedicalExamItem [MEDICALEXAMITEM_ID=" + MEDICALEXAMITEM_ID + ", NAME=" + NAME + ", DESCRIPTION="
 				+ DESCRIPTION + ", FEATURES=" + FEATURES + ", SELLINGPRICE=" + SELLINGPRICE + ", SETTLEMENTPRICE="
 				+ SETTLEMENTPRICE + ", LOGO=" + LOGO + ", STATUS=" + STATUS + ", EFFECTIVETIME=" + EFFECTIVETIME
-				+ ", EXPIRETIME=" + EXPIRETIME + ", CREATEBY=" + CREATEBY + ", CREATEON=" + CREATEON + "]";
+				+ ", EXPIRETIME=" + EXPIRETIME + ", CREATEBY=" + CREATEBY + ", CREATEON=" + CREATEON
+				+ ", MEDICALCENTER_ID=" + MEDICALCENTER_ID + "]";
 	}
 	
 	

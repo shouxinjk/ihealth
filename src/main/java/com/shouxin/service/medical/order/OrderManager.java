@@ -3,6 +3,7 @@ package com.shouxin.service.medical.order;
 import java.util.List;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.medical.MedicalExamItem;
+import com.shouxin.entity.medical.Order;
 import com.shouxin.util.PageData;
 
 /** 
@@ -49,6 +50,12 @@ public interface OrderManager{
 	 */
 	public PageData findById(PageData pd)throws Exception;
 	
+	/**通过id获取数据
+	 * @param pd
+	 * @throws Exception
+	 */
+	public Order findByIdString(String ORDER_ID)throws Exception;
+	
 	/**批量删除
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
@@ -63,5 +70,21 @@ public interface OrderManager{
 	 */
 	public List<MedicalExamItem> findExamItemByOrderId(String pd) throws Exception;
 	
+	/**
+	 * 修改订单状态
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void updateOrderStatus(PageData pd) throws Exception;
+	
+	/**
+	 * 查询该订单下有多少个体检中心的体检项目
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<MedicalExamItem> findCenterIDByOrderId(String pd)throws Exception;
+	
 }
 
+ 

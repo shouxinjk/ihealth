@@ -2,6 +2,8 @@ package com.shouxin.service.medical.medicalorder;
 
 import java.util.List;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.medical.MedicalOrder;
+import com.shouxin.entity.medical.MedicalOrderItem;
 import com.shouxin.util.PageData;
 
 /** 
@@ -17,6 +19,20 @@ public interface MedicalOrderManager{
 	 * @throws Exception
 	 */
 	public void save(PageData pd)throws Exception;
+	
+	/**
+	 * 批量增加体检中心订单
+	 * @param medicalOrder
+	 * @throws Exception
+	 */
+	public void saveAll(List<MedicalOrder> medicalOrder )throws Exception;
+	
+	/**
+	 * 批量增加体检中心订单的体检项目
+	 * @param medicalOrder
+	 * @throws Exception
+	 */
+	public void saveItemAll(List<MedicalOrderItem> medicalOrderItem )throws Exception;
 	
 	/**删除
 	 * @param pd

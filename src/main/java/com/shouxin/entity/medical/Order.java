@@ -85,4 +85,14 @@ public class Order {
 	public void setCREATEON(Date cREATEON) {
 		CREATEON = cREATEON;
 	}
+
+	@Override
+	public String toString() {
+		return "Order [ORDER_ID=" + ORDER_ID + ", ORDERNO=" + ORDERNO + ", ORDERGENERATIONTIME=" + ORDERGENERATIONTIME
+				+ ", ORDERBOOKINGTIME=" + ORDERBOOKINGTIME + ", ORDEREXECUTIONTIME=" + ORDEREXECUTIONTIME
+				+ ", ORDERTOTALAMOUNT=" + ORDERTOTALAMOUNT + ", STATUS=" + STATUS + ", CREATEBY=" + CREATEBY
+				+ ", CREATEON=" + CREATEON + "]";
+	}
+	
+	
 }
