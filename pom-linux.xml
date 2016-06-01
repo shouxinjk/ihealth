@@ -524,6 +524,12 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
+		<!-- http://mvnrepository.com/artifact/org.apache.solr/solr-solrj -->
+		<dependency>
+		    <groupId>org.apache.solr</groupId>
+		    <artifactId>solr-solrj</artifactId>
+		    <version>6.0.0</version>
+		</dependency>		
 	</dependencies>
 	<build>
 		<finalName>ihealth</finalName>
