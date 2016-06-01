@@ -64,6 +64,7 @@
 		ORDER_ID = #{ORDER_ID}
 	</update>
 	
+	<!-- 修改体检中心状态 -->
 	<update id="auditing" parameterType="pd">
 		update 
 		<include refid="tableName"></include> 

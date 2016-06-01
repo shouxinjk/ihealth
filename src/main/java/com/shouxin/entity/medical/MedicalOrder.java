@@ -1,6 +1,7 @@
 package com.shouxin.entity.medical;
 
 import java.util.Date;
+import java.util.List;
 
 public class MedicalOrder {
 
@@ -14,6 +15,20 @@ public class MedicalOrder {
 	private String  CREATEBY;			// varchar(255) DEFAULT NULL COMMENT '创建该记录用户',
 	private Date  CREATEON;				// timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
 	private String MEDICALCENTER_ID;
+	private String NAME;//
+	private List<MedicalExamItem> items;
+	public List<MedicalExamItem> getItems() {
+		return items;
+	}
+	public void setItems(List<MedicalExamItem> items) {
+		this.items = items;
+	}
+	public String getNAME() {
+		return NAME;
+	}
+	public void setNAME(String nAME) {
+		NAME = nAME;
+	}
 	public String getMEDICALORDER_ID() {
 		return MEDICALORDER_ID;
 	}

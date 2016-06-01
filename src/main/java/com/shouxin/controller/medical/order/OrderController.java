@@ -81,8 +81,8 @@ public class OrderController extends BaseController {
 	 * @param out
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/auditing")
-	public void auditing(PrintWriter out) throws Exception{
+	@RequestMapping(value="/submitted")
+	public void submitted(PrintWriter out) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"审核ExamGuideLine");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
 		PageData pd = new PageData();
@@ -117,6 +117,23 @@ public class OrderController extends BaseController {
 		medicalorderService.saveItemAll(medicalOrderItem);
 		logBefore(logger, item.get(0).getMEDICALCENTER_ID()+"medicalcenter_id==");
 		orderService.updateOrderStatus(pd);
+		out.write("success");
+		out.close();
+	}
+	
+	/**修改状态
+	 * @param out
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/auditing")
+	public void auditing(PrintWriter out) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改体检中心订单状态");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		logBefore(logger, pd.getString("STATUS")+"status+++++++++++++++");
+		orderService.updateOrderStatus(pd);
+		medicalorderService.auditingAll(pd);
 		out.write("success");
 		out.close();
 	}
@@ -156,6 +173,20 @@ public class OrderController extends BaseController {
 		}
 		page.setPd(pd);
 		List<PageData>	varList = orderService.list(page);	//列出Order列表
+		for(int i=0;i<varList.size();i++){
+			List<MedicalOrder> medicalOrders = 
+					medicalorderService.listMedicalOrderByOrderNo(varList.get(i).getString("ORDERNO"));
+			System.out.println(medicalOrders.size());
+			if(medicalOrders.size()>0){
+				varList.get(i).put("ISCONFIRM", false);
+			}else if(medicalOrders.size()==0){
+				varList.get(i).put("ISCONFIRM", true);
+//				pd.put("STATUS", "体检中心确认");
+//				pd.put("ORDER_ID", varList.get(i).getString("ORDER_ID"));
+//				orderService.updateOrderStatus(pd);
+//				medicalorderService.auditingAll(pd);
+			}
+		}
 		mv.setViewName("medical/order/order_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -206,9 +237,15 @@ public class OrderController extends BaseController {
 		String id = pd.getString("ORDER_ID");
 		pd = orderService.findById(pd);	//根据ID读取
 		List<MedicalExamItem> item = orderService.findExamItemByOrderId(id);
+		List<MedicalOrder> medicalOrders = medicalorderService.listAllMedicalOrderByOrderNo(pd.getString("ORDERNO"));
+		for (MedicalOrder medicalOrder : medicalOrders) {
+			List<MedicalExamItem> items = medicalorderService.listExamItemByMedicalOrderID(medicalOrder.getMEDICALORDER_ID());
+			medicalOrder.setItems(items);
+		}
 		logBefore(logger, item+"查询单个订单信息");
 		mv.setViewName("medical/order/order_cha");
 		mv.addObject("msg", "edit");
+		mv.addObject("medicalOrders",medicalOrders);
 		mv.addObject("item", item);
 		mv.addObject("pd", pd);
 		return mv;

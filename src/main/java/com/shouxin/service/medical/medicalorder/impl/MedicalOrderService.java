@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.medical.MedicalExamItem;
 import com.shouxin.entity.medical.MedicalOrder;
 import com.shouxin.entity.medical.MedicalOrderItem;
 import com.shouxin.service.medical.medicalorder.MedicalOrderManager;
@@ -102,7 +103,6 @@ public class MedicalOrderService implements MedicalOrderManager{
 	 * 批量增加体检中心订单
 	 */
 	public void saveAll(List<MedicalOrder> medicalOrder) throws Exception {
-		// TODO Auto-generated method stub
 		dao.save("MedicalOrderMapper.insertAll", medicalOrder);
 	}
 	
@@ -110,8 +110,47 @@ public class MedicalOrderService implements MedicalOrderManager{
 	 * 批量增加体检中心订单体检项目
 	 */
 	public void saveItemAll(List<MedicalOrderItem> medicalOrderItem) throws Exception {
-		// TODO Auto-generated method stub
 		dao.save("MedicalOrderMapper.insertItemAll", medicalOrderItem);
+	}
+	
+	/**
+	 * 修改体检中心订单状态
+	 */
+	public void auditing(PageData pd) throws Exception {
+		dao.update("MedicalOrderMapper.auditing", pd);
+	}
+
+	/**
+	 * 查询体检中心订单是否确认完毕
+	 */
+	@SuppressWarnings("unchecked")
+	public List<MedicalOrder> listMedicalOrderByOrderNo(String ORDERNO) throws Exception {
+		return (List<MedicalOrder>) dao.findForList("MedicalOrderMapper.listMedicalOrderByOrderNo", ORDERNO);
+	}
+	
+	/**
+	 * 修改平台订单的时候下属的体检中心订单一并需改
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void auditingAll(PageData pd) throws Exception {
+		dao.update("MedicalOrderMapper.auditingALL", pd);
+	}
+	
+	/**
+	 * 查询平台订单下所有体检中心订单
+	 */
+	@SuppressWarnings("unchecked")
+	public List<MedicalOrder> listAllMedicalOrderByOrderNo(String ORDERNO) throws Exception {
+		return (List<MedicalOrder>) dao.findForList("MedicalOrderMapper.listAllMedicalOrderByOrderNo", ORDERNO);
+	}
+	
+	/**
+	 * 查询平台订单下体检项目信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<MedicalExamItem> listExamItemByMedicalOrderID(String MEDICALORDER_ID) throws Exception {
+		return (List<MedicalExamItem>) dao.findForList("MedicalOrderMapper.listExamItemByMedicalOrderID", MEDICALORDER_ID);
 	}
 	
 }

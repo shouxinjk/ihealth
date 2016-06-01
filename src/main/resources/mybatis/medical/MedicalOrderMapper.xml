@@ -55,6 +55,26 @@
 		</foreach>
 	</insert>
 	
+	<select id="listMedicalOrderByOrderNo" parameterType="java.lang.String" resultType="MedicalOrder">
+		select MEDICALORDER_ID,MEDICALORDERNO,MEDICALORDERGENERATIONTIME,MEDICALORDERBOOKINGTIME,
+		MEDICALORDEREXECUTIONTIME,MEDICALCENTER_ID,STATUS  from tb_medicalorder where MEDICALORDERNO 
+		= #{ORDERNO} and STATUS != '已确认'
+	</select>
+	
+	<!-- 查询该平台订单下的所有体检中心订单 -->
+	<select id="listAllMedicalOrderByOrderNo" parameterType="java.lang.String" resultType="MedicalOrder">
+		select mo.MEDICALORDER_ID as MEDICALORDER_ID,mo.MEDICALORDERNO as MEDICALORDERNO,mo.MEDICALORDERGENERATIONTIME as MEDICALORDERGENERATIONTIME,MEDICALORDERBOOKINGTIME as MEDICALORDERBOOKINGTIME,
+		mo.MEDICALORDEREXECUTIONTIME as MEDICALORDEREXECUTIONTIME,mo.MEDICALCENTER_ID as MEDICALCENTER_ID,mo.STATUS as STATUS,mc.NAME as NAME  from tb_medicalorder mo,tb_medicalcenter mc where mo.MEDICALCENTER_ID = mc.MEDICALCENTER_ID and MEDICALORDERNO 
+		= #{ORDERNO}
+	</select>
+	
+	<!-- 查询体检订单下的体检项目 -->
+	<select id="listExamItemByMedicalOrderID" parameterType="java.lang.String" resultType="MedicalExamItem">
+		select mei.NAME as NAME,mei.FEATURES AS FEATURES,mei.SELLINGPRICE as SELLINGPRICE,mei.SETTLEMENTPRICE as 
+		SETTLEMENTPRICE from tb_medicalexamitem mei,tb_medicalorderitem moi where mei.MEDICALEXAMITEM_ID
+		 = moi.MEDICALEXAMITEM_ID and moi.MEDICALORDER_ID=#{MEDICALORDER_ID}
+	</select>
+	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
 		insert into 
@@ -73,6 +93,21 @@
 		where 
 			MEDICALORDER_ID = #{MEDICALORDER_ID}
 	</delete>
+	
+	<!-- 修改体检中心订单状态 -->
+	<update id="auditing" parameterType="pd">
+		update 
+		<include refid="tableName"></include> 
+		set STATUS = #{STATUS} where MEDICALORDER_ID = #{MEDICALORDER_ID}
+	</update>
+	
+	<!-- 修改体检中心订单状态 -->
+	<update id="auditingALL" parameterType="pd">
+		update 
+		<include refid="tableName"></include> 
+		set STATUS = #{STATUS} where MEDICALORDERNO = #{ORDERNO}
+	</update>
+	
 	
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">

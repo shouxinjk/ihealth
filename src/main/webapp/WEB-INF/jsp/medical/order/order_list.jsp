@@ -104,8 +104,13 @@
 													</a>
 													</c:if>
 													<c:if test="${QX.edit == 1 && var.STATUS eq '新建'}">
-														<a class="btn btn-xs btn-success" title="提交" onclick="auditing('${var.ORDER_ID}','已提交');">
+														<a class="btn btn-xs btn-success" title="提交" onclick="auditing1('${var.ORDER_ID}','已提交');">
 															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '已提交' && var.ISCONFIRM}">
+														<a class="btn btn-xs btn-success" title="确认" onclick="auditing('${var.ORDER_ID}','等待付款','${var.ORDERNO }');">
+															<i class="ace-icon fa fa-twitter-square bigger-120" title="确认"></i>
 														</a>
 													</c:if>
 												</div>
@@ -301,18 +306,32 @@
 			});
 		}
 		
-		//医生审核
-		function auditing(Id,status){
+		//修改状态
+		function auditing1(Id,status){
 			bootbox.confirm("确定要操作吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>order/auditing.do?ORDER_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
+					var url = "<%=basePath%>order/submitted.do?ORDER_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage(${page.currentPage});
 					});
 				}
 			});
 		}
+		
+		//修改状态
+		function auditing(Id,status,ORDERNO){
+			bootbox.confirm("确定要操作吗?", function(result) {
+				if(result) {
+					top.jzts();
+					var url = "<%=basePath%>order/auditing.do?ORDER_ID="+Id+"&STATUS="+status+"&ORDERNO="+ORDERNO+"&tm="+new Date().getTime();
+					$.get(url,function(data){
+						nextPage(${page.currentPage});
+					});
+				}
+			});
+		}
+		
 		
 		//修改
 		function edit(Id){
@@ -332,7 +351,7 @@
 			 diag.show();
 		}
 		
-		//修改
+		//查看单个信息
 		function find(Id){
 			 top.jzts();
 			 var diag = new top.Dialog();

@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.medical.MedicalExamItem;
+import com.shouxin.entity.medical.MedicalOrder;
+import com.shouxin.entity.medical.MedicalOrderItem;
+import com.shouxin.entity.medical.Order;
 import com.shouxin.service.medical.medicalexamitem.MedicalExamItemManager;
 import com.shouxin.service.medical.medicalorder.MedicalOrderManager;
 import com.shouxin.util.AppUtil;
@@ -72,6 +76,21 @@ public class MedicalOrderController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		medicalorderService.delete(pd);
+		out.write("success");
+		out.close();
+	}
+	
+	/**修改状态
+	 * @param out
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/auditing")
+	public void auditing(PrintWriter out) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改体检中心订单状态");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		medicalorderService.auditing(pd);
 		out.write("success");
 		out.close();
 	}

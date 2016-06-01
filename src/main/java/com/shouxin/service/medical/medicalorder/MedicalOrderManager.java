@@ -2,6 +2,7 @@ package com.shouxin.service.medical.medicalorder;
 
 import java.util.List;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.medical.MedicalExamItem;
 import com.shouxin.entity.medical.MedicalOrder;
 import com.shouxin.entity.medical.MedicalOrderItem;
 import com.shouxin.util.PageData;
@@ -77,6 +78,44 @@ public interface MedicalOrderManager{
 	 * @throws Exception
 	 */
 	public List<PageData> findItemsById(PageData pd)throws Exception;
+	
+	/**
+	 * 修改体检中心订单状态
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void auditing(PageData pd)throws Exception;
+	
+	/**
+	 * 修改平台订单的时候下属的体检中心订单一并需改
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void auditingAll(PageData pd)throws Exception;
+	
+	/**
+	 * 查询体检中心订单是否已经确认完
+	 * @param ORDERNO
+	 * @return
+	 * @throws Exception
+	 */
+	public List<MedicalOrder> listMedicalOrderByOrderNo(String ORDERNO) throws Exception;
+	
+	/**
+	 * 查询平台订单下所有体检中心订单
+	 * @param ORDERNO
+	 * @return
+	 * @throws Exception
+	 */
+	public List<MedicalOrder> listAllMedicalOrderByOrderNo(String ORDERNO) throws Exception;
+	
+	/**
+	 * 查询体检订单下的体检项目信息
+	 * @param MEDICALORDER_ID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<MedicalExamItem> listExamItemByMedicalOrderID(String MEDICALORDER_ID) throws Exception;
 	
 }
 

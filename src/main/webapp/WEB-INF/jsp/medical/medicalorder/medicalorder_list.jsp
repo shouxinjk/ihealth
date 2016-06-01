@@ -94,9 +94,14 @@
 													</a>
 													</c:if>
 													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MEDICALORDER_ID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
-													</a>
+														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MEDICALORDER_ID}');">
+															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
+														</a>
+														<c:if test="${var.STATUS eq '已提交' }">
+															<a class="btn btn-xs btn-success" title="确认" onclick="auditing('${var.MEDICALORDER_ID}','已确认');">
+																<i class="ace-icon fa fa-pencil-square-o bigger-120" title="确认"></i>
+															</a>
+														</c:if>
 													</c:if>
 													<c:if test="${QX.del == 1 }">
 													<a class="btn btn-xs btn-danger" onclick="del('${var.MEDICALORDER_ID}');">
@@ -298,6 +303,19 @@
 					var url = "<%=basePath%>medicalorder/delete.do?MEDICALORDER_ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage('${page.currentPage}');
+					});
+				}
+			});
+		}
+		
+		//修改状态
+		function auditing(Id,status){
+			bootbox.confirm("确定要操作吗?", function(result) {
+				if(result) {
+					top.jzts();
+					var url = "<%=basePath%>medicalorder/auditing.do?MEDICALORDER_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
+					$.get(url,function(data){
+						nextPage(${page.currentPage});
 					});
 				}
 			});
