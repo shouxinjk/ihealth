@@ -26,9 +26,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.druid.stat.TableStat.Mode;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Article;
 import com.shouxin.entity.admin.DiseaseCategory;
 import com.shouxin.entity.admin.Tag;
 import com.shouxin.entity.admin.TagCategory;
+import com.shouxin.entity.solr.ArticleSolr;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
@@ -41,8 +43,11 @@ import net.sf.json.JSONObject;
 
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.service.admin.article.ArticleManager;
+import com.shouxin.service.admin.disease.DiseaseManager;
 import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
+import com.shouxin.service.admin.tag.TagManager;
 import com.shouxin.service.admin.tagcategory.TagCategoryManager;
+import com.shouxin.service.solrj.impl.SolrManagerImpl;
 
 /** 
  * 说明：文章信息管理
@@ -59,12 +64,18 @@ public class ArticleController extends BaseController {
 
 	@Resource(name="tagcategoryService")
 	private TagCategoryManager tagcategoryService;
-	
-	
+	@Resource(name="tagService")
+	private TagManager tagService;
+	@Resource(name="diseaseService")
+	private DiseaseManager diseaseService;
 
 	@Resource(name="diseasecategoryService")
 	private DiseaseCategoryManager diseasecategoryService;
+	private String url = "http://localhost:8983/solr/gettingstarted";
 	
+	ArticleSolr articleSolr = null;
+	SolrManagerImpl smi = new SolrManagerImpl(url);
+
 	/**保存
 	 * @param
 	 * @throws Exception
@@ -76,11 +87,13 @@ public class ArticleController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("ARTICLE_ID", this.get32UUID());	//主键
+		String id = this.get32UUID();
+		pd.put("ARTICLE_ID",id );	//主键
 		pd.put("PUBLISHTIME", new Date()); //发布时间
 		pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
 		pd.put("CREATEON", new Date());//改记录创建时间
 		pd.put("STATUS", StatusEnum.NEW);
+		
 		articleService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -267,6 +280,10 @@ public class ArticleController extends BaseController {
 				status = StatusEnum.CANCELTHERELEASE.getName();
 				pd.put("STATUS", status);
 				System.out.println("---------------"+pd);
+				
+				//根据ID删除solr服务器索引
+				smi.delArticle(id);
+				
 				this.articleService.edit(pd);
 				msg = "success";
 			}else{
@@ -290,6 +307,10 @@ public class ArticleController extends BaseController {
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		
+		//根据ID删除solr服务器索引
+		smi.delArticle(pd.getString("ARTICLE_ID"));
+		
 		articleService.delete(pd);
 		out.write("success");
 		out.close();
@@ -614,7 +635,7 @@ public class ArticleController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		
+		StringBuffer sb = null;
 		//生成 新增文章信息的ID
 		String articleId = this.get32UUID();
 		
@@ -645,12 +666,51 @@ public class ArticleController extends BaseController {
 			}
 		}
 		
+		
+		
 		pd.put("ARTICLE_ID", articleId);	//主键
 		pd.put("PUBLISHTIME", new Date()); //发布时间
 		pd.put("CREATEBY", Jurisdiction.getUserId());//当前登录用户
 		pd.put("CREATEON", new Date());//改记录创建时间
 		pd.put("STATUS", StatusEnum.NEW.getName()); //设置新增的文章状态  为  新增
 		articleService.save(pd);
+		//将文章索引添加到solr服务器
+		articleSolr = new ArticleSolr();
+		
+		//设置标签信息
+		if (tagIds != null && !"".equals(tagIds)) {
+			String[] tags = StringUtil.StrList(tagIds);
+			PageData tagsPd = new PageData();
+			sb = new StringBuffer();
+			for (int i = 0; i < tags.length; i++) {
+				tagsPd.put("TAG_ID", tags[i]);
+				sb.append(this.tagService.findById(tagsPd).getString("NAME")+" ");
+			}
+			articleSolr.setTags(sb.toString().substring(0,sb.length()-1).trim());
+		}
+		//设置疾病信息
+		if (!"".equals(diseaseId) && diseaseId != null) {
+			String[] str = StringUtil.StrList(diseaseId);
+			PageData disPd = new PageData();
+			sb = new StringBuffer();
+			for (int i = 0; i < str.length; i++) {
+				disPd.put("DISEASE_ID", str[i]);
+				sb.append(this.diseaseService.findById(disPd).getString("NAME") + " ");
+			}
+			articleSolr.setPersonalDiseases(sb.toString().substring(0,sb.length()-1).trim());
+			articleSolr.setConcernDiseases(sb.toString().substring(0,sb.length()-1).trim());
+			articleSolr.setFamilyDiseases(sb.toString().substring(0,sb.length()-1).trim());
+		}
+		
+		articleSolr.setTITLE(pd.getString("TITLE"));
+		articleSolr.setURL(pd.getString("URL"));
+		articleSolr.setSUMMARY(pd.getString("SUMMARY"));
+		articleSolr.setARTICLE_ID(articleId);
+		
+		if (smi.saveArticle(articleSolr)) {
+			logBefore(logger, "新增文章索引成功！--------文章ID为：" + articleId);
+		} 
+		
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
