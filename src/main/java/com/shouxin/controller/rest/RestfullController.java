@@ -1,5 +1,6 @@
 package com.shouxin.controller.rest;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Article;
+import com.shouxin.entity.solr.ArticleSolr;
 import com.shouxin.service.admin.article.ArticleManager;
 import com.shouxin.service.admin.disease.DiseaseManager;
 import com.shouxin.service.admin.tag.TagManager;
 import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.checkup.checkuppackage.CheckupPackageManager;
+import com.shouxin.service.solrj.impl.SolrManagerImpl;
 import com.shouxin.service.system.appuser.AppuserManager;
 import com.shouxin.service.system.user.UserManager;
 import com.shouxin.util.AppUtil;
@@ -29,6 +33,7 @@ import com.shouxin.util.MarriageStatusEnum;
 import com.shouxin.util.PageData;
 import com.shouxin.util.SexEnum;
 import com.shouxin.util.StatusEnum;
+import com.shouxin.util.StringUtil;
 import com.shouxin.util.Tools;
 
 import net.sf.json.JSONObject;
@@ -61,6 +66,10 @@ public class RestfullController extends BaseController {
 	
 	@Resource(name="diseaseService")
 	private DiseaseManager diseaseService;
+	
+	private String url = "http://localhost:8983/solr/gettingstarted";
+	
+	SolrManagerImpl smi = new SolrManagerImpl(url);
 
 	
 	/**
@@ -504,14 +513,14 @@ public class RestfullController extends BaseController {
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(check);
 		try {
-			if (jasonObject.get("subGroup") != null && !"".equals(jasonObject.get("subGroup")) && !"null".equals(jasonObject.get("subGroup"))) {
+			//if (jasonObject.get("subGroup") != null && !"".equals(jasonObject.get("subGroup")) && !"null".equals(jasonObject.get("subGroup"))) {
 				subGroup = jasonObject.getString("subGroup");	//获取分组名
 				pd.put("SUBGROUP", subGroup);
 				this.checkupitemService.removeStatus(pd);
 				msg = "success";
-			}else{
-				msg = "error";
-			}
+			//}else{
+				//msg = "error";
+			//}
 			
 			if (jasonObject.get("stauts") != null && !"".equals(jasonObject.get("stauts")) && !"null".equals(jasonObject.get("stauts"))) {
 				status = jasonObject.getString("stauts").trim();		//获取状态
@@ -704,7 +713,7 @@ public class RestfullController extends BaseController {
 			if (jasonObject.get("id") != null && !"".equals(jasonObject.get("id")) && !"null".equals(jasonObject.get("id"))) {
 				id = jasonObject.getString("id").trim();
 				pd.put("CHECKUPITEM_ID", id);
-				logger.debug("根据用户ID 查询体检项目信息");
+				logger.debug("根据体检项目ID 查询体检项目信息");
 				PageData pageDate = this.checkupitemService.findById(pd);
 				if (pageDate != null) {
 					msg = "success";
@@ -1313,5 +1322,107 @@ public class RestfullController extends BaseController {
 		return AppUtil.returnObject(new PageData(), map);
 	}
 	
+	
+	/**
+	 * 根据用户ID 获取匹配的文章信息
+	 * @param u {userId:"当前用户ID"}
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "findArticleByParams", method = RequestMethod.POST)
+	@ResponseBody
+	public Object findArticleByParams(@RequestBody String u) throws Exception{
+		logBefore(logger, "查询-------------根据userID获取匹配的文章信息");
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null,userId = null,tags = null,personalDiseases = null,familyDiseases = null,concernDiseases = null;
+		PageData pd = new PageData();		
+		pd = this.getPageData();
+		
+		// 将String类型的数据转换为json
+		JSONObject jasonObject = JSONObject.fromObject(u);
+		
+		//判断userId 是否为空
+		if (jasonObject.get("userId")!=null && jasonObject.get("userId") != "null" && jasonObject.get("userId") != "") {
+			userId = jasonObject.get("userId").toString();
+			pd.put("user_id", userId);
+			//根据userID 获取用户标签信息
+			List<PageData> tagList = this.appuserService.findTagsById(pd);
+			if (tagList != null && tagList.size() > 0) {
+				StringBuffer sb = new StringBuffer();
+				for (PageData pageData : tagList) {
+					PageData pds = new PageData();
+					pds.put("TAG_ID", pageData.getString("tag_id"));
+					//根据得到的tag_id 查询标签名称 并拼接字符串
+					sb.append(this.tagService.findById(pds).getString("NAME")+" ");
+				}
+				tags = sb.toString().trim();
+				logBefore(logger, "-----------------------------标签名为："+tags);
+			}
+			//根据userID 获取个人疾病信息
+			List<PageData> personalList = this.appuserService.findPersonalDiseasesById(pd);
+			if (personalList != null && personalList.size() > 0) {
+				StringBuffer sb = new StringBuffer();
+				for (PageData pageData : personalList) {
+					PageData pds = new PageData();
+					pds.put("DISEASE_ID", pageData.getString("disease_id"));
+					//根据得到的disease_id 查询疾病名称 并拼接字符串
+					sb.append(this.diseaseService.findById(pds).getString("NAME")+" ");
+				}
+				personalDiseases = sb.toString().trim();
+				logBefore(logger, "-----------------------------个人疾病为：" + personalDiseases);
+			}
+			//根据userID 获取家族遗传疾病信息
+			List<PageData> familyList = this.appuserService.findFamilyDiseasesById(pd);
+			if (familyList != null && familyList.size() > 0) {
+				StringBuffer sb = new StringBuffer();
+				for (PageData pageData : familyList) {
+					PageData pds = new PageData();
+					pds.put("DISEASE_ID", pageData.getString("disease_id"));
+					//根据得到的disease_id 查询疾病名称 并拼接字符串
+					sb.append(this.diseaseService.findById(pds).getString("NAME")+" ");
+				}
+				familyDiseases = sb.toString().trim();
+				logBefore(logger, "-----------------------------家族遗传疾病为：" + familyDiseases);
+			}
+			//根据userID 获取关注疾病信息
+			List<PageData> focusList = this.appuserService.findFocusDiseasesById(pd);
+			if (focusList != null && focusList.size() > 0) {
+				StringBuffer sb = new StringBuffer();
+				for (PageData pageData : focusList) {
+					PageData pds = new PageData();
+					pds.put("DISEASE_ID", pageData.getString("disease_id"));
+					//根据得到的disease_id 查询疾病名称 并拼接字符串
+					sb.append(this.diseaseService.findById(pds).getString("NAME")+" ");
+				}
+				concernDiseases = sb.toString().trim();
+				logBefore(logger, "-----------------------------家族遗传疾病为：" + concernDiseases);
+			}
+			//将获取到的值，设置到封装类
+			ArticleSolr as = new ArticleSolr();
+			as.setTags(tags);
+			as.setPersonalDiseases(personalDiseases);
+			as.setFamilyDiseases(familyDiseases);
+			as.setConcernDiseases(concernDiseases);
+			//获取
+			StringBuffer sb = smi.findByParams(as);
+			String content = sb.toString().substring(0,sb.length()-1);
+			String[] str = StringUtil.StrList(content);
+			pd = new PageData();
+			List<PageData> list = new ArrayList<PageData>();
+			for (int i = 0; i < str.length; i++) {
+				pd.put("ARTICLE_ID", str[i]);
+				list.add(i,this.articleService.findById(pd));	
+			}
+			if (list!= null && list.size()>0) {
+				map.put("data", list);
+				msg = "success";
+			}else{
+				msg = "no";
+			}
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
 
 }
