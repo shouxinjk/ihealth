@@ -373,6 +373,7 @@ public class ExamGuideLineController extends BaseController {
 		if(pd.get("STARTAGE").equals("")){
 			pd.put("STARTAGE", 0);
 		}
+		System.out.println(pd.getString("SUBGROUP")+"+++++++++++++++++++++++");
 		examsolutionService.save(pd);
 		List<PageData> varSouList = examsolutionService.listExamSolutionByExamGuidelineID(pd.get("EXAMGUIDELINE_ID").toString());
 		JSONArray array = JSONArray.fromObject(varSouList);

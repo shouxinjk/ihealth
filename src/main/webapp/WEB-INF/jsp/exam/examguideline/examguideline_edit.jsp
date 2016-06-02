@@ -111,6 +111,7 @@
 																<th>检查手段</th>
 																<th>检查特性</th>
 																<th>开始年龄</th>
+																<th>分组</th>
 																<th>频率</th>
 																<th></th>
 															</tr>
@@ -123,6 +124,7 @@
 																		<td><span>${sou.FEATURES}</span><input
 																			type="hidden" value="${sou.EXAMITEM_ID }" /></td>
 																		<td><span>${sou.STARTAGE}</span></td>
+																		<td><span>${sou.SUBGROUP}</span></td>
 																		<td>${sou.FNAME}<input type="hidden"
 																			value="${sou.EXAMFREQUENCY_ID}"></td>
 																		<td><a onclick="delSou('${sou.EXAMSOLUTION_ID}','DANGERTBODY','high');">删除</a><input type="hidden"
@@ -146,13 +148,21 @@
 															<td> <input type="checkbox" name="FEATURESG" value="经济" />经济
 																<input type="checkbox" name="FEATURESG" value="全面" />全面
 																<input type="checkbox" name="FEATURESG" value="安全" />安全</td>
-															<td><input type="text" id="STARTAGEG"
-																style="width: 30px" /></td>
-															<td><select name="FREQSELECT" id="FREQSELECTG">
+															<td>
+																<input type="text" id="STARTAGEG"
+																	style="width: 30px" />
+															</td>
+															<td>
+																<input type="text" id="SUBGROUPG"
+																	style="width: 60px" />
+															</td>
+															<td>
+																<select name="FREQSELECT" id="FREQSELECTG">
 																	<c:forEach items="${varFreqList }" var="freq">
 																		<option value="${freq.EXAMFREQUENCY_ID }">${freq.NAME }</option>
 																	</c:forEach>
-															</select></td>
+																</select>
+															</td>
 															<td><a id="addTableTr"
 																onclick="addTabelg('DANGERTBODY','high')">增加</a> <input
 																type="hidden" name="EXAMSOLUTION_IDG"
@@ -186,6 +196,7 @@
 																<th>检查手段</th>
 																<th>检查特性</th>
 																<th>开始年龄</th>
+																<th>分组</th>
 																<th>频率</th>
 																<th></th>
 															</tr>
@@ -199,6 +210,7 @@
 																		<td>${sou.FEATURES}<input
 																			type="hidden" value="${sou.EXAMITEM_ID }" /></td>
 																		<td><span>${sou.STARTAGE}</span></td>
+																		<td><span>${sou.SUBGROUP}</span></td>
 																		<td><span>${sou.FNAME}</span> <input
 																			type="hidden" value="${sou.EXAMFREQUENCY_ID}"></td>
 																		<td><a onclick="delSou('${sou.EXAMSOLUTION_ID}','ORDINARYTBODY','low');">删除</a><input type="hidden"
@@ -224,8 +236,14 @@
 															 <input type="checkbox" name="FEATURES" value="经济" />经济
 																<input type="checkbox" name="FEATURES" value="全面" />全面
 																<input type="checkbox" name="FEATURES" value="安全" />安全</td>
-															<td><input type="text" id="STARTAGE"
-																style="width: 30px" /></td>
+															<td>
+																<input type="text" id="STARTAGE"
+																	style="width: 30px" />
+															</td>
+															<td>
+																<input type="text" id="SUBGROUP"
+																	style="width: 60px" />
+															</td>
 															<td><select name="FREQSELECT" id="FREQSELECT">
 																	<c:forEach items="${varFreqList }" var="freq">
 																		<option value="${freq.EXAMFREQUENCY_ID }">${freq.NAME }</option>
@@ -336,10 +354,12 @@
 			var STARTAGE = $("#STARTAGE").val();
 			var FREQSELECT = $("#FREQSELECT").get(0).options[$("#FREQSELECT").get(0).selectedIndex].text;
 			var FREQSELECT_ID = $("#FREQSELECT").get(0).options[$("#FREQSELECT").get(0).selectedIndex].value;
+			var SUBGROUP = $("#SUBGROUP").val();
+			
 			$.ajax({
 				url:'<%=basePath%>examguideline/addSou.do',
 				type:'post',
-				data:{"FEATURES":FEATURES,"STARTAGE":STARTAGE,"EXAMITEM_ID":ITEMSELECT_ID,"EXAMFREQUENCY_ID":FREQSELECT_ID,"RISKTYPE":"low","EXAMGUIDELINE_ID":EXAMGUIDELINE_ID},
+				data:{"SUBGROUP":SUBGROUP,"FEATURES":FEATURES,"STARTAGE":STARTAGE,"EXAMITEM_ID":ITEMSELECT_ID,"EXAMFREQUENCY_ID":FREQSELECT_ID,"RISKTYPE":"low","EXAMGUIDELINE_ID":EXAMGUIDELINE_ID},
 				success:function(data){
 					var json = eval(data);
 					var str = '';
@@ -351,6 +371,7 @@
 							str+='<tr>'+
 							'<td>'+json[i].INAME+'</td><td>'+json[i].FEATURES+'<input type="hidden" value="'+json[i].EXAMITEM_ID+'"/></td>'+
 							'<td><span>'+json[i].STARTAGE+'</span></td>'+
+							'<td><span>'+json[i].SUBGROUP+'</span></td>'+
 							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
 							'<td><a onclick="delSou(\''+json[i].EXAMSOLUTION_ID+'\',\''+id+'\',\''+status+'\')">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
 							'</tr>';
@@ -386,10 +407,11 @@
 			var NAME = $("#NAME").val();
 			var FREQSELECT = $("#FREQSELECTG").get(0).options[$("#FREQSELECTG").get(0).selectedIndex].text;
 			var FREQSELECT_ID = $("#FREQSELECTG").get(0).options[$("#FREQSELECTG").get(0).selectedIndex].value;
+			var SUBGROUP = $("#SUBGROUPG").val();
 			$.ajax({
 				url:'<%=basePath%>examguideline/addSou.do',
 				type:'post',
-				data:{"FEATURES":FEATURES,"STARTAGE":STARTAGE,"EXAMITEM_ID":ITEMSELECT_ID,"EXAMFREQUENCY_ID":FREQSELECT_ID,"RISKTYPE":"high","EXAMGUIDELINE_ID":EXAMGUIDELINE_ID},
+				data:{"SUBGROUP":SUBGROUP,"FEATURES":FEATURES,"STARTAGE":STARTAGE,"EXAMITEM_ID":ITEMSELECT_ID,"EXAMFREQUENCY_ID":FREQSELECT_ID,"RISKTYPE":"high","EXAMGUIDELINE_ID":EXAMGUIDELINE_ID},
 				success:function(data){
 					var json = eval(data);
 					var str = '';
@@ -401,6 +423,7 @@
 							str+='<tr>'+
 							'<td>'+json[i].INAME+'</td><td>'+json[i].FEATURES+'<input type="hidden" value="'+json[i].EXAMITEM_ID+'"/></td>'+
 							'<td><span>'+json[i].STARTAGE+'</span></td>'+
+							'<td><span>'+json[i].SUBGROUP+'</span></td>'+
 							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
 							'<td><a onclick="delSou(\''+json[i].EXAMSOLUTION_ID+'\',\''+id+'\',\''+status+'\')">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
 							'</tr>';
@@ -427,6 +450,7 @@
 							str+='<tr>'+
 							'<td>'+json[i].INAME+'</td><td>'+json[i].FEATURES+'<input type="hidden" value="'+json[i].EXAMITEM_ID+'" /></td>'+
 							'<td><span>'+json[i].STARTAGE+'</span></td>'+
+							'<td><span>'+json[i].SUBGROUP+'</span></td>'+
 							'<td>'+json[i].FNAME+'<input type="hidden" value="'+json[i].EXAMFREQUENCY_ID+'"></td>'+
 							'<td><a onclick="delSou(\''+json[i].EXAMSOLUTION_ID+'\',\''+tbodyID+'\',\''+status+'\')">删除</a><input type="hidden" name="EXAMSOLUTION_ID" id="EXAMSOLUTION_ID" value="'+json[i].EXAMSOLUTION_ID+'" /></td>'+
 							'</tr>';
