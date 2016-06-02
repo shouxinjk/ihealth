@@ -69,14 +69,14 @@ public class SolrManagerImpl implements SolrManager {
 		doc.addField("summary", articleSolr.getSUMMARY());
 		doc.addField("url", articleSolr.getURL());
 		doc.addField("content", null);
-		/*doc.addField("tags", articleSolr.getTags());
+		doc.addField("tags", articleSolr.getTags());
 		doc.addField("personalDiseases", articleSolr.getPersonalDiseases());
 		doc.addField("familyDiseases", articleSolr.getFamilyDiseases());
-		doc.addField("concernDiseases", articleSolr.getConcernDiseases());*/
-		doc.addField("tags", null);
+		doc.addField("concernDiseases", articleSolr.getConcernDiseases());
+		/*doc.addField("tags", null);
 		doc.addField("personalDiseases", null);
 		doc.addField("familyDiseases", null);
-		doc.addField("concernDiseases", null);
+		doc.addField("concernDiseases", null);*/
 		try {
 			response = cilent.add(doc);
 			cilent.commit();
