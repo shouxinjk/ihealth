@@ -92,5 +92,22 @@ public class MedicalExamItemService implements MedicalExamItemManager{
 		return (String) dao.findForObject("MedicalExamItemMapper.findadminbyuserid", userId);
 	}
 	
+	/**
+	 * 跟据体检项目id修改体检项目状态
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void auditing(PageData pd) throws Exception {
+		dao.update("MedicalExamItemMapper.auditing", pd);
+	}
+	/**列表
+	 * @param page
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listrel(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("MedicalExamItemMapper.datarellistPage", page);
+	}
+	
 }
 

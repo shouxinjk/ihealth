@@ -99,17 +99,33 @@
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 													</a>
 													</c:if>
+													
+													<c:if test="${QX.edit == 1 && var.STATUS eq '提交' }">
+													<a class="btn btn-xs btn-success" title="审核" onclick="auditing('${var.MEDICALEXAMITEM_ID}','审核');">
+														<i class="ace-icon fa fa-check-circle-o bigger-120" title="审核"></i>
+													</a>
+													<a class="btn btn-xs btn-success" title="审核失败" onclick="auditing('${var.MEDICALEXAMITEM_ID}','审核失败');">
+														<i class="ace-icon fa fa-times-circle-o bigger-120" title="审核失败"></i>
+													</a>
+													</c:if>
+													
+													<c:if test="${QX.edit == 1 && (var.STATUS eq '审核' || var.STATUS eq '失效') }">
+													<a class="btn btn-xs btn-success" title="发布" onclick="auditing('${var.MEDICALEXAMITEM_ID}','发布');">
+														<i class="ace-icon fa fa-folder bigger-120" title="发布"></i>
+													</a>
+													</c:if>
+													
+													<c:if test="${QX.edit == 1 && var.STATUS eq '发布' }">
+													<a class="btn btn-xs btn-success" title="失效" onclick="auditing('${var.MEDICALEXAMITEM_ID}','失效');">
+														<i class="ace-icon fa fa-retweet bigger-120" title="失效"></i>
+													</a>
+													</c:if>
+													
 													<c:if test="${QX.del == 1 }">
 													<a class="btn btn-xs btn-danger" onclick="del('${var.MEDICALEXAMITEM_ID}');">
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 													</c:if>
-													<c:if test="${QX.edit == 1 && (var.STATUS eq '新建' || var.STATUS eq '审核失败') }">
-													<a class="btn btn-xs btn-success" title="提交" onclick="auditing('${var.MEDICALEXAMITEM_ID}','提交');">
-														<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
-													</a>
-													</c:if>
-													
 												</div>
 												<div class="hidden-md hidden-lg">
 													<div class="inline pos-rel">
@@ -296,7 +312,7 @@
 			});
 		}
 		
-
+		
 		//状态修改
 		function auditing(Id,status){
 			bootbox.confirm("确定要操作吗?", function(result) {
@@ -304,11 +320,12 @@
 					top.jzts();
 					var url = "<%=basePath%>medicalexamitem/auditing.do?MEDICALEXAMITEM_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
 					$.get(url,function(data){
-						nextPage(${page.currentPage});
+						location.href="<%=basePath%>medicalexamitem/listrel.do?dnowPage=${page.currentPage}";
 					});
 				}
 			});
 		}
+		
 		
 		//修改
 		function edit(Id){

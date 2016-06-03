@@ -41,6 +41,14 @@ public interface MedicalCenterManager{
 	 * @throws Exception
 	 */
 	public List<PageData> listAll(PageData pd)throws Exception;
+
+	/**
+	 * 
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listRelAll(Page page) throws Exception;
 	
 	/**通过id获取数据
 	 * @param pd
@@ -53,6 +61,13 @@ public interface MedicalCenterManager{
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
+	
+	/**
+	 * 修改体检中心状态
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void auditing(PageData pd)throws Exception;
 	
 }
 

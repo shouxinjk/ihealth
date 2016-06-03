@@ -36,6 +36,12 @@ public interface MedicalExamItemManager{
 	 */
 	public List<PageData> list(Page page)throws Exception;
 	
+	/**审核体检项目列表
+	 * @param page
+	 * @throws Exception
+	 */
+	public List<PageData> listrel(Page page)throws Exception;
+	
 	/**列表(全部)
 	 * @param pd
 	 * @throws Exception
@@ -61,6 +67,13 @@ public interface MedicalExamItemManager{
 	 * @throws Exception
 	 */
 	public String findAdminByUserId(String userId) throws Exception;
+	
+	/**
+	 * 跟据体检项目id修改体检项目状态
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void auditing(PageData pd)throws Exception;
 	
 }
 

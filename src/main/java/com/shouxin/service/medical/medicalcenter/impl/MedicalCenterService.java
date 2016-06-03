@@ -85,5 +85,22 @@ public class MedicalCenterService implements MedicalCenterManager{
 		dao.delete("MedicalCenterMapper.deleteAll", ArrayDATA_IDS);
 	}
 	
+	/**
+	 * 修改体检中心状态
+	 */
+	public void auditing(PageData pd) throws Exception {
+		dao.update("MedicalCenterMapper.auditing", pd);
+		
+	}
+	
+	/**
+	 * 查询审核页面列表
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listRelAll(Page page) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("MedicalCenterMapper.datarellistPage", page);
+	}
+	
 }
 
