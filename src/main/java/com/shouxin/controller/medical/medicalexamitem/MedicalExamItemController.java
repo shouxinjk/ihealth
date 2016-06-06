@@ -88,6 +88,8 @@ public class MedicalExamItemController extends BaseController {
 		out.close();
 	}
 	
+	
+	
 	/**修改
 	 * @param
 	 * @throws Exception
@@ -104,6 +106,24 @@ public class MedicalExamItemController extends BaseController {
 		mv.setViewName("save_result");
 		return mv;
 	}
+	
+	/**修改体检项目状态
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/auditing")
+	public ModelAndView auditing() throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改MedicalExamItem");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		medicalexamitemService.auditing(pd);
+		mv.addObject("msg","success");
+		mv.setViewName("save_result");
+		return mv;
+	}
+	
 	
 	/**列表
 	 * @param page
@@ -125,6 +145,32 @@ public class MedicalExamItemController extends BaseController {
 		page.setPd(pd);
 		List<PageData>	varList = medicalexamitemService.list(page);	//列出MedicalExamItem列表
 		mv.setViewName("medical/medicalexamitem/medicalexamitem_list");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	
+	/**列表
+	 * @param page
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/listrel")
+	public ModelAndView listrel(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表MedicalExamItem");
+		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		logBefore(logger, Jurisdiction.getUserId()+"userID_+++++++++++++++");
+		pd.put("userId", Jurisdiction.getUserId());
+		page.setPd(pd);
+		List<PageData>	varList = medicalexamitemService.listrel(page);	//列出MedicalExamItem列表
+		mv.setViewName("medical/medicalexamitem/medicalexamitemrel_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限

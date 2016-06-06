@@ -97,14 +97,24 @@
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
 													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MEDICALCENTER_ID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
-													</a>
+														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MEDICALCENTER_ID}');">
+															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '新建' }">
+														<a class="btn btn-xs btn-success" title="提交" onclick="auditing('${var.MEDICALCENTER_ID}','提交');">
+															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '审核失败' }">
+														<a class="btn btn-xs btn-success" title="提交" onclick="auditing('${var.MEDICALCENTER_ID}','提交');">
+															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
+														</a>
 													</c:if>
 													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.MEDICALCENTER_ID}');">
-														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
-													</a>
+														<a class="btn btn-xs btn-danger" onclick="del('${var.MEDICALCENTER_ID}');">
+															<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
+														</a>
 													</c:if>
 												</div>
 												<div class="hidden-md hidden-lg">
@@ -291,6 +301,20 @@
 				}
 			});
 		}
+		
+		//状态修改
+		function auditing(Id,status){
+			bootbox.confirm("确定要操作吗?", function(result) {
+				if(result) {
+					top.jzts();
+					var url = "<%=basePath%>medicalcenter/auditing.do?MEDICALCENTER_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
+					$.get(url,function(data){
+						nextPage(${page.currentPage});
+					});
+				}
+			});
+		}
+		
 		
 		//修改
 		function edit(Id){

@@ -31,7 +31,7 @@
 						<div class="col-xs-12">
 							
 						<!-- 检索  -->
-						<form action="medicalexamitem/list.do" method="post" name="Form" id="Form">
+						<form action="medicalcenter/list.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
 								<td>
@@ -57,14 +57,15 @@
 									</th>
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">名称</th>
-									<th class="center">说明</th>
-									<th class="center">特征</th>
-									<th class="center">销售价格</th>
-									<th class="center">结算价格</th>
-									<th class="center">LOGO</th>
+									<th class="center">描述</th>
+									<th class="center">地理位置</th>
+									<th class="center">简介</th>
+									<th class="center">联系电话</th>
 									<th class="center">状态</th>
-									<th class="center">生效时间</th>
-									<th class="center">失效时间</th>
+									<th class="center">LOGO</th>
+									<th class="center">开业时间</th>
+									<th class="center">附件信息</th>
+									<th class="center">经纬度地理位置</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -77,39 +78,57 @@
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
 											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MEDICALEXAMITEM_ID}" class="ace" /><span class="lbl"></span></label>
+												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MEDICALCENTER_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.DESCRIPTION}</td>
-											<td class='center'>${var.FEATURES}</td>
-											<td class='center'>${var.SELLINGPRICE}</td>
-											<td class='center'>${var.SETTLEMENTPRICE}</td>
-											<td class='center'>${var.LOGO}</td>
+											<td class='center'>${var.LOCATION}</td>
+											<td class='center'>${var.ABBREVIATION}</td>
+											<td class='center'>${var.TELEPHONE}</td>
 											<td class='center'>${var.STATUS}</td>
-											<td class='center'>${var.EFFECTIVETIME}</td>
-											<td class='center'>${var.EXPIRETIME}</td>
+											<td class='center'>${var.LOGO}</td>
+											<td class='center'>${var.OPENINGTIME}</td>
+											<td class='center'>${var.ACCESSORY}</td>
+											<td class='center'>${var.POSITION}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
 													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MEDICALEXAMITEM_ID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
-													</a>
+														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MEDICALCENTER_ID}');">
+															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '提交' }">
+														<a class="btn btn-xs btn-success" title="审核" onclick="auditing('${var.MEDICALCENTER_ID}','审核');">
+															<i class="ace-icon fa fa-check-circle-o bigger-120" title="审核"></i>
+														</a>
+														<a class="btn btn-xs btn-success" title="审核失败" onclick="auditing('${var.MEDICALCENTER_ID}','审核失败');">
+															<i class="ace-icon fa fa-times-circle-o bigger-120" title="审核失败"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '审核' }">
+														<a class="btn btn-xs btn-success" title="发布" onclick="auditing('${var.MEDICALCENTER_ID}','发布');">
+															<i class="ace-icon fa fa-folder bigger-120" title="发布"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '发布' }">
+														<a class="btn btn-xs btn-success" title="失效" onclick="auditing('${var.MEDICALCENTER_ID}','失效');">
+															<i class="ace-icon fa fa-retweet bigger-120" title="失效"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '失效' }">
+														<a class="btn btn-xs btn-success" title="重新发布" onclick="auditing('${var.MEDICALCENTER_ID}','发布');">
+															<i class="ace-icon fa fa-folder-open bigger-120" title="重新发布"></i>
+														</a>
 													</c:if>
 													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.MEDICALEXAMITEM_ID}');">
-														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
-													</a>
+														<a class="btn btn-xs btn-danger" onclick="del('${var.MEDICALCENTER_ID}');">
+															<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
+														</a>
 													</c:if>
-													<c:if test="${QX.edit == 1 && (var.STATUS eq '新建' || var.STATUS eq '审核失败') }">
-													<a class="btn btn-xs btn-success" title="提交" onclick="auditing('${var.MEDICALEXAMITEM_ID}','提交');">
-														<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
-													</a>
-													</c:if>
-													
 												</div>
 												<div class="hidden-md hidden-lg">
 													<div class="inline pos-rel">
@@ -120,7 +139,7 @@
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 															<c:if test="${QX.edit == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="edit('${var.MEDICALEXAMITEM_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
+																<a style="cursor:pointer;" onclick="edit('${var.MEDICALCENTER_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
 																	<span class="green">
 																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																	</span>
@@ -129,7 +148,7 @@
 															</c:if>
 															<c:if test="${QX.del == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="del('${var.MEDICALEXAMITEM_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
+																<a style="cursor:pointer;" onclick="del('${var.MEDICALCENTER_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
 																	<span class="red">
 																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																	</span>
@@ -266,7 +285,7 @@
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>medicalexamitem/goAdd.do';
+			 diag.URL = '<%=basePath%>medicalcenter/goAdd.do';
 			 diag.Width = 800;
 			 diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
@@ -288,7 +307,7 @@
 			bootbox.confirm("确定要删除吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>medicalexamitem/delete.do?MEDICALEXAMITEM_ID="+Id+"&tm="+new Date().getTime();
+					var url = "<%=basePath%>medicalcenter/delete.do?MEDICALCENTER_ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						nextPage(${page.currentPage});
 					});
@@ -296,19 +315,19 @@
 			});
 		}
 		
-
 		//状态修改
 		function auditing(Id,status){
 			bootbox.confirm("确定要操作吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>medicalexamitem/auditing.do?MEDICALEXAMITEM_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
+					var url = "<%=basePath%>medicalcenter/auditing.do?MEDICALCENTER_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
 					$.get(url,function(data){
-						nextPage(${page.currentPage});
+						location.href="<%=basePath%>medicalcenter/listrel.do?dnowPage=${page.currentPage}";
 					});
 				}
 			});
 		}
+		
 		
 		//修改
 		function edit(Id){
@@ -316,7 +335,7 @@
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>medicalexamitem/goEdit.do?MEDICALEXAMITEM_ID='+Id;
+			 diag.URL = '<%=basePath%>medicalcenter/goEdit.do?MEDICALCENTER_ID='+Id;
 			 diag.Width = 800;
 			 diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
@@ -357,7 +376,7 @@
 							top.jzts();
 							$.ajax({
 								type: "POST",
-								url: '<%=basePath%>medicalexamitem/deleteAll.do?tm='+new Date().getTime(),
+								url: '<%=basePath%>medicalcenter/deleteAll.do?tm='+new Date().getTime(),
 						    	data: {DATA_IDS:str},
 								dataType:'json',
 								//beforeSend: validateData,
@@ -376,7 +395,7 @@
 		
 		//导出excel
 		function toExcel(){
-			window.location.href='<%=basePath%>medicalexamitem/excel.do';
+			window.location.href='<%=basePath%>medicalcenter/excel.do';
 		}
 	</script>
 

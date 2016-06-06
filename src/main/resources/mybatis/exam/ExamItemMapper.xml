@@ -100,7 +100,6 @@
 			EXAMITEM_ID = #{EXAMITEM_ID}
 	</select>
 	
-	
 	<!-- 通过ID获取数据 -->
 	<select id="findByIdMap" parameterType="java.lang.String" resultMap="examItemResultMap">
 		select 

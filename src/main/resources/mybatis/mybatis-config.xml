@@ -20,6 +20,7 @@
 		<typeAlias type="com.shouxin.entity.medical.MedicalCenter" alias="MedicalCenter"/>
 		<typeAlias type="com.shouxin.entity.medical.MedicalExamItem" alias="MedicalExamItem"/>
 		<typeAlias type="com.shouxin.entity.medical.Order" alias="Order"/>
+		<typeAlias type="com.shouxin.entity.medical.OrderItem" alias="OrderItem"/>
 		<typeAlias type="com.shouxin.entity.medical.MedicalOrder" alias="MedicalOrder"/>
 		<typeAlias type="com.shouxin.entity.exam.ExamCategory" alias="ExamCategory"/>
 		<typeAlias type="com.shouxin.entity.exam.ExamFrequency" alias="ExamFrequency"/>
