@@ -70,7 +70,7 @@
 										<tr>
 											<td
 												style="width: 75px; text-align: right; padding-top: 13px;">疾病名称:</td>
-											<td><select id="DISEASE" name="DISEASE_ID"
+											<td><select id="DISEASE_ID" name="DISEASE_ID"
 												style="width: 40%">
 													<c:forEach items="${varDisList}" var="dis" varStatus="vs">
 														<c:if test="${dis.DISEASE_ID eq pd.DISEASE_ID }">
@@ -476,7 +476,7 @@
 						str += "<option value="+msg[i].DISEASE_ID+">"
 								+ msg[i].NAME + "</option>";
 					}
-					$("#DISEASE").html(str);
+					$("#DISEASE_ID").html(str);
 				}
 			});
 		}
