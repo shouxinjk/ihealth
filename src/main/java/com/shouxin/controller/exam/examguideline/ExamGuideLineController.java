@@ -311,6 +311,9 @@ public class ExamGuideLineController extends BaseController {
 		pd = this.getPageData();
 		pd = examguidelineService.findById(pd);	//根据ID读取
 		logBefore(logger, pd+"列表EXAM  ==== exanmm");
+		//根据ID查询当前指南选中的疾病信息（疾病分类、疾病名称）
+		
+		
 		List<PageData> pds = diseasecategoryService.listAll(pd);//查询出所有的疾分类
 		List<PageData> varDisList = diseaseService.listAll(pd);//查询出所有疾病
 		List<ExamCategory> varItemCategoryList = examcategoryService.listAllExamCategory("0");//查询所有检查项目分类
