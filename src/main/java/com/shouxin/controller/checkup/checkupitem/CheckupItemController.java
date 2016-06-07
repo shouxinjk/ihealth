@@ -120,8 +120,8 @@ public class CheckupItemController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd = this.checkupitemService.findById(pd);
 		mv.setViewName("checkup/checkupitem/checkupitem_edit");
-		mv.addObject("msg", "save");
 		mv.addObject("pd", pd);
 		return mv;
 	}	

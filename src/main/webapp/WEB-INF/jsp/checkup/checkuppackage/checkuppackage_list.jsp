@@ -67,10 +67,10 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">生成该记录的标记</th>
-									<th class="center">开始生效时间</th>
-									<th class="center">失效时间</th>
+									<th class="center">所属用户</th>
+									<th class="center">生成时间</th>
 									<th class="center">状态</th>
+									<th class="center">版本</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -86,10 +86,10 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.CHECKUPPACKAGE_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'>${var.WORKER}</td>
-											<td class='center'>${var.EFFECTIVEFROM}</td>
-											<td class='center'>${var.EXPIREON}</td>
+											<td class='center'>${var.NAME}</td>
+											<td class='center'>${var.GENERATEDTIME}</td>
 											<td class='center'>${var.STATUS}</td>
+											<td class='center'>${var.REVISION}</td>
 											<td class="center">
 												<a href="checkupitem/list?id=${var.CHECKUPPACKAGE_ID}">详细信息</a>
 											</td>
@@ -233,7 +233,7 @@
 			 diag.show();
 		} --%>
 		
-		//删除
+		
 		<%-- function del(Id){
 			bootbox.confirm("确定要删除吗?", function(result) {
 				if(result) {

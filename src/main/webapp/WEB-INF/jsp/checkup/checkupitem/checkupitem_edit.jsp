@@ -27,66 +27,73 @@
 				<div class="row">
 					<div class="col-xs-12">
 					
-					<form action="checkupitem/${msg }.do" name="Form" id="Form" method="post">
-						<input type="hidden" name="CHECKUPITEM_ID" id="CHECKUPITEM_ID" value="${pd.CHECKUPITEM_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">检查项目分组:</td>
-								<td><input type="text" name="SUBGROUP" id="SUBGROUP" value="${pd.SUBGROUP}" maxlength="255" placeholder="这里输入检查项目分组" title="检查项目分组" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">检查项目分组</td>
+								<td>${pd.SUBGROUP}</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">检查项目名称</td>
+								<td>${pd.NAME}</td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">检查项目名称:</td>
-								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入检查项目名称" title="检查项目名称" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">特性</td>
+								<td>${pd.FEATURES}</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">检查频率</td>
+								<td>${pd.FREQUENCY}</td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">特性:</td>
-								<td><input type="text" name="FEATURES" id="FEATURES" value="${pd.FEATURES}" maxlength="255" placeholder="这里输入特性" title="特性" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">状态</td>
+								<td>${pd.STATUS}</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">指南来源</td>
+								<td>${pd.ORIGINATE}</td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">检查频率:</td>
-								<td><input type="text" name="FREQUENCY" id="FREQUENCY" value="${pd.FREQUENCY}" maxlength="255" placeholder="这里输入检查频率" title="检查频率" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">详细描述</td>
+								<td colspan="3">${pd.DESCRIPTION}</td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">状态:</td>
-								<td><input type="text" name="STATUS" id="STATUS" value="${pd.STATUS}" maxlength="255" placeholder="这里输入状态" title="状态" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">指南来源:</td>
-								<td><input type="text" name="ORIGINATE" id="ORIGINATE" value="${pd.ORIGINATE}" maxlength="255" placeholder="这里输入指南来源" title="指南来源" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">详细描述:</td>
-								<td><input type="text" name="DESCRIPTION" id="DESCRIPTION" value="${pd.DESCRIPTION}" maxlength="255" placeholder="这里输入详细描述" title="详细描述" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">该记录生成时间:</td>
-								<td><input class="span10 date-picker" name="GENERATEDTIME" id="GENERATEDTIME" value="${pd.GENERATEDTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="该记录生成时间" title="该记录生成时间" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">用于产生该记录的标记:</td>
-								<td><input type="text" name="WORKER" id="WORKER" value="${pd.WORKER}" maxlength="255" placeholder="这里输入用于产生该记录的标记" title="用于产生该记录的标记" style="width:98%;"/></td>
-							</tr>
-							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">用于产生该记录的标记</td>
+								<td>${pd.WORKER}</td>
 								<td style="width:75px;text-align: right;padding-top: 13px;">版本:</td>
-								<td><input type="number" name="REVISION" id="REVISION" value="${pd.REVISION}" maxlength="32" placeholder="这里输入版本" title="版本" style="width:98%;"/></td>
+								<td>${pd.REVISION}</td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">系统标记:</td>
-								<td><input type="text" name="SYSFLAG" id="SYSFLAG" value="${pd.SYSFLAG}" maxlength="255" placeholder="这里输入系统标记" title="系统标记" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">系统标记</td>
+								<td>${pd.SYSFLAG}</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">创建该记录的时间</td>
+								<td>${pd.CREATEON}</td>
+							</tr>
+							
+							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">concernedfactors</td>
+								<td>${pd.concernedfactors}</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">disease_name：</td>
+								<td>${pd.disease_name}</td>
 							</tr>
 							<tr>
-								<td style="text-align: center;" colspan="10">
-									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
-								</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">riskType</td>
+								<td>${pd.riskType}</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">solution_id</td>
+								<td>${pd.solution_id}</td>
 							</tr>
+							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">riskDefine</td>
+								<td>${pd.riskDefine}</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">startage</td>
+								<td>${pd.startage}</td>
+							</tr>
+							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">endage</td>
+								<td>${pd.endage}</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">该记录生成时间:</td>
+								<td>${pd.GENERATEDTIME}</td>
+							</tr>
+							
 						</table>
 						</div>
 						
 						<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><br/><img src="static/images/jiazai.gif" /><br/><h4 class="lighter block green">提交中...</h4></div>
 						
-					</form>
 	
 					<div id="zhongxin2" class="center" style="display:none"><img src="static/images/jzx.gif" style="width: 50px;" /><br/><h4 class="lighter block green"></h4></div>
 					</div>

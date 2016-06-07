@@ -86,7 +86,7 @@
 									<th class="center">状态</th>
 									<th class="center">指南来源</th>
 									<th class="center">详细描述</th>
-									<th class="center">该记录生成时间</th>
+									<th class="center">操作</th>
 									
 									
 									<!-- <th class="center">操作</th> -->
@@ -111,23 +111,17 @@
 											<td class='center'>${var.STATUS}</td>
 											<td class='center'><div class="autocut">${var.ORIGINATE}</div></td>
 											<td class='center'><div class="autocut">${var.DESCRIPTION}</div></td>
-											<td class='center'>${var.GENERATEDTIME}</td>
-											<%-- <td class="center">
-												<c:if test="${QX.edit != 1 && QX.del != 1 }">
+											<td class='center'>
+												<c:if test="${QX.cha != 1 && QX.cha != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.CHECKUPITEM_ID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
+													<c:if test="${QX.cha == 1 }">
+													<a class="btn btn-xs btn-success" title="查看详情" onclick="finddetails('${var.CHECKUPITEM_ID}');">
+														<i class="ace-icon fa fa-search nav-search-icon" title="查看详情"></i>
 													</a>
 													</c:if>
-													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.CHECKUPITEM_ID}');">
-														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
-													</a>
-													</c:if>
-												</div>
+																						</div>
 												<div class="hidden-md hidden-lg">
 													<div class="inline pos-rel">
 														<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
@@ -135,27 +129,22 @@
 														</button>
 			
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-															<c:if test="${QX.edit == 1 }">
+															<c:if test="${QX.cha == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="edit('${var.CHECKUPITEM_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
+																<a style="cursor:pointer;" onclick="edit('${var.CHECKUPITEM_ID}');" class="tooltip-success" data-rel="tooltip" title="查看详情">
 																	<span class="green">
-																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																		<i class="ace-icon fa fa-search nav-search-icon"></i>
 																	</span>
 																</a>
 															</li>
 															</c:if>
-															<c:if test="${QX.del == 1 }">
-															<li>
-																<a style="cursor:pointer;" onclick="del('${var.CHECKUPITEM_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
-																	<span class="red">
-																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-															</c:if>
+															
 														</ul>
 													</div>
 												</div>
+											</td>
+											<%-- <td class="center">
+												
 											</td> --%>
 										</tr>
 									
@@ -229,6 +218,19 @@
 		function tosearch(){
 			top.jzts();
 			$("#Form").submit();
+		}
+		function finddetails(id){
+			top.jzts();
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="体检项目详情";
+			 diag.URL = '<%=basePath%>checkupitem/goEdit.do?CHECKUPITEM_ID='+id;
+			 diag.Width = 800;
+			  diag.Height = 600;
+			 diag.CancelEvent = function(){ //关闭事件
+				diag.close();
+			 };
+			 diag.show();
 		}
 		$(function() {
 		
