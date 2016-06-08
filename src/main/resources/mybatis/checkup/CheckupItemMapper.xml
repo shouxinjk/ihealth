@@ -87,6 +87,7 @@
 		NAME,
 		FEATURES,
 		FREQUENCY,
+		disease_name,		
 		STATUS
 	</sql>	
 	
