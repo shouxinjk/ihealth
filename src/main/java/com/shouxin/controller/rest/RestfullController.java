@@ -613,6 +613,7 @@ public class RestfullController extends BaseController {
 		} catch (Exception e) {
 			msg = "error";
 			logBefore(logger, "程序异常--请检查参数列表");
+			e.printStackTrace();
 		}
 		
 		map.put("result", msg);
