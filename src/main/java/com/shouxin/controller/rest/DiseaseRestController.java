@@ -123,7 +123,7 @@ public class DiseaseRestController extends BaseController {
 		map.put("msg", msg);
 		
 		//qchzhu: hook analysis interface
-		Transfer transfer = new Transfer();
+		Transfer transfer = Transfer.getInstance();
 		transfer.transferUserDiseases(userId);
 		//end
 		return AppUtil.returnObject(new PageData(), map);
@@ -232,7 +232,7 @@ public class DiseaseRestController extends BaseController {
 		map.put("msg", msg);
 		
 		//qchzhu: hook analysis interface
-		Transfer transfer = new Transfer();
+		Transfer transfer = Transfer.getInstance();
 		transfer.transferUserDisease(userDisease);
 		//end hook analysis interface
 

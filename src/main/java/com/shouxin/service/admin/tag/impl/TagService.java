@@ -33,7 +33,7 @@ public class TagService implements TagManager {
 	public void save(PageData pd) throws Exception {
 		dao.save("TagMapper.save", pd);
 		//qchzhu: hook analysis interface
-		Transfer transfer = new Transfer();
+		Transfer transfer = Transfer.getInstance();
 		try{
 			transfer.transferTag(pd.getString("fieldName"), pd.getString("fieldType"));
 		}catch(Exception ex){
@@ -63,7 +63,7 @@ public class TagService implements TagManager {
 	public void edit(PageData pd) throws Exception {
 		dao.update("TagMapper.edit", pd);
 		//qchzhu: hook analysis interface
-		Transfer transfer = new Transfer();
+		Transfer transfer = Transfer.getInstance();
 		try{
 			transfer.transferTag(pd.getString("fieldName"), pd.getString("fieldType"));
 		}catch(Exception ex){

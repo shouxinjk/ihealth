@@ -81,7 +81,7 @@ public class AppuserService implements AppuserManager{
 	 * @param pd to query user info from
 	 */
 	private void transferUser(PageData pd){
-		Transfer transfer = new Transfer();
+		Transfer transfer = Transfer.getInstance();
 		com.shouxinjk.ihealth.data.pojo.User user = new com.shouxinjk.ihealth.data.pojo.User();
 		 user.setUser_id(pd.getString("USER_ID"));
 		 user.setUserName(pd.getString("USERNAME"));

@@ -636,7 +636,7 @@ public class AppuserController extends BaseController {
 		
 		
 		//qchzhu: hook analysis interface
-		Transfer transfer = new Transfer();
+		Transfer transfer = Transfer.getInstance();
 		transfer.transferUserTags(user_id);
 		transfer.transferUserDiseases(user_id);
 		//end hook analysis interface

@@ -128,7 +128,7 @@ public class TagRestController extends BaseController {
 			msg = "no";
 		}
 		//qchzhu: hook analysis interface
-		Transfer transfer = new Transfer();
+		Transfer transfer = Transfer.getInstance();
 		UserTag userTag = new UserTag();
 		userTag.setUser_id(userId);
 		PageData pdTemp = new PageData();
@@ -179,7 +179,7 @@ public class TagRestController extends BaseController {
 			msg = "no";
 		}
 		//qchzhu: hook analysis interface
-		Transfer transfer = new Transfer();
+		Transfer transfer = Transfer.getInstance();
 		UserTag userTag = new UserTag();
 		userTag.setUser_id(userID);
 		PageData pdTemp = new PageData();

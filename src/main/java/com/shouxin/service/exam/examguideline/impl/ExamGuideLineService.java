@@ -109,7 +109,7 @@ public class ExamGuideLineService implements ExamGuideLineManager {
 	public void auditing(PageData pd) throws Exception {
 		dao.update("ExamGuideLineMapper.auditing", pd);
 		//qchzhu: hook analysis interface
-		Transfer transfer = new Transfer();
+		Transfer transfer = Transfer.getInstance();
 		String guideLineId = pd.getString("EXAMGUIDELINE_ID");
 		String status = pd.getString("STATUS");
 		logger.debug("try to tranfer guideLine to analysis system.[guideLineId]"+guideLineId+"[targte status]"+status);

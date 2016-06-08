@@ -467,16 +467,20 @@ public class RestfullController extends BaseController {
 				pd.put("USER_ID", userId);
 
 				data = this.checkuppackageService.findById(pd);
-				status = data.getString("STATUS");
-				if (status.equals("ready")) {
-					if (data != null && data.size() > 0) {
-						msg = "success";
-						map.put("data", data);
-					} else {
+				if(data == null){//return waiting status if checkuppackage is not exists
+					msg = "no";
+				}else{
+					status = data.getString("STATUS");
+					if (status.equals("ready")) {
+						if (data != null && data.size() > 0) {
+							msg = "success";
+							map.put("data", data);
+						} else {
+							msg = "no";
+						}
+					}else{
 						msg = "no";
 					}
-				}else{
-					msg = "no";
 				}
 			}else{
 				msg = "error";
