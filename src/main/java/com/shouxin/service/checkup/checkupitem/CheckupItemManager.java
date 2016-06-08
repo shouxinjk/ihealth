@@ -47,6 +47,14 @@ public interface CheckupItemManager{
 	 */
 	public List<PageData> listAll(PageData pd)throws Exception;
 	
+	/**
+	 * Query summarized checkup items by userId
+	 * @param pd
+	 * @throws Exception
+	 */
+	public List<PageData> listCheckupItemSummary(PageData pd)throws Exception;
+	
+	
 	/**通过id获取数据
 	 * @param pd
 	 * @throws Exception

@@ -68,6 +68,17 @@ public class CheckupItemService implements CheckupItemManager{
 		return (List<PageData>)dao.findForList("CheckupItemMapper.listAll", pd);
 	}
 	
+	/**
+	 * Query for all checkup items by UserId
+	 * @param pd
+	 * @throws Exception
+	 */
+	//@Override
+	@SuppressWarnings("unchecked")
+	public List<PageData> listCheckupItemSummary(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("CheckupItemMapper.listCheckupItemSummary", pd);
+	}
+	
 	/**通过id获取数据
 	 * @param pd
 	 * @throws Exception

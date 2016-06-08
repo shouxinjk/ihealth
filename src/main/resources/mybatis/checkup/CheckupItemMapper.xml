@@ -79,6 +79,17 @@
 		
 	</sql>
 	
+	
+	<!-- 字段 -->
+	<sql id="SummaryFields">
+		CHECKUPITEM_ID,
+		SUBGROUP,
+		NAME,
+		FEATURES,
+		FREQUENCY,
+		STATUS
+	</sql>	
+	
 	<!-- 字段值 -->
 	<sql id="FieldValue">
 		#{CHECKUPITEM_ID},
@@ -250,6 +261,25 @@
 	
 	<select id="findlistPage" parameterType="page" resultType="pd">
 		SELECT * FROM tb_checkupitem ci WHERE ci.`CHECKUPPACKAGE_ID` = #{CHECKUPPACKAGE_ID}
+	</select>
+
+	<!-- query summary fields by UserId -->
+	<select id="listCheckupItemSummary" parameterType="pd" resultType="pd">
+		select
+		<include refid="SummaryFields"></include>
+		from 
+		<include refid="tableName"></include>
+		<where>
+			<if test="CHECKUPITEM_ID != null and CHECKUPITEM_ID != ''">
+				and CHECKUPITEM_ID = #{CHECKUPITEM_ID}
+			</if>
+			<if test="USER_ID != null and USER_ID != ''">
+				and USER_ID = #{USER_ID}
+			</if>
+			<if test="CHECKUPPACKAGE_ID != null and CHECKUPPACKAGE_ID != ''">
+				and CHECKUPPACKAGE_ID = #{CHECKUPPACKAGE_ID}
+			</if>
+		</where>
 	</select>
 	
 	<!-- 列表(全部) -->

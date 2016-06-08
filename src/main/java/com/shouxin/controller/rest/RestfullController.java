@@ -594,7 +594,9 @@ public class RestfullController extends BaseController {
 			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				userId = jasonObject.getString("userId").trim();
 				pd.put("USER_ID", userId);
-				List<PageData> pageDate = this.checkupitemService.listAll(pd);
+				//Qingchun: for update query efficiency
+//				List<PageData> pageDate = this.checkupitemService.listAll(pd);
+				List<PageData> pageDate = this.checkupitemService.listCheckupItemSummary(pd);
 				List<PageData> groupList = this.checkupitemService.findCIByGroup(pd);
 				if (pageDate != null && pageDate.size() > 0) {
 					msg = "success";
