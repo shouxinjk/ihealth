@@ -691,7 +691,7 @@ CREATE TABLE `exam_examfrequency` (
 DROP TABLE IF EXISTS `exam_examguideline`;
 CREATE TABLE `exam_examguideline` (
   `EXAMGUIDELINE_ID` varchar(100) NOT NULL,
-  `ORIGINATE` varchar(255) DEFAULT NULL COMMENT '来源',
+  `ORIGINATE` varchar(255) DEFAULT '' COMMENT '来源',
   `DESCRIPTION` varchar(512) DEFAULT '' COMMENT '指南详细描述',
   `CONCERNEDFACTORS` varchar(1024) DEFAULT '' COMMENT '关注因素描述',
   `HIGHRISKDEFINE` varchar(512) DEFAULT '' COMMENT '高危人群识别',
