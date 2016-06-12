@@ -27,8 +27,9 @@ public class OrderRestController {
 		String solutionID = json.getString("solutionID").toString();
 		String[] solutionIDS = solutionID.split(",");
 		for(int i=0;i<solutionIDS.length;i++){
-			String examitemID
-			= orderService.findExamItemByExamSolutionId(solutionIDS[i]);
+//			String examitemID
+//			= orderService.findExamItemByExamSolutionId(solutionIDS[i]);
+			System.out.println(solutionIDS[i]);
 		}
 		return null;
 	}
