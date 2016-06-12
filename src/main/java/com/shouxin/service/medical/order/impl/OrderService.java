@@ -119,6 +119,16 @@ public class OrderService implements OrderManager{
 		// TODO Auto-generated method stub
 		return (List<MedicalExamItem>) dao.findForList("OrderMapper.findCenterIDByOrderId", pd);
 	}
+
+	/**
+	 * 根据体检手段id获取体检项目id
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public String findExamItemByExamSolutionId(String EXAMSOLUTION_ID) throws Exception {
+		return (String) dao.findForObject("OrderMapper.findExamItemByExamSolutionId", EXAMSOLUTION_ID);
+	}
 	
 }
 

@@ -87,7 +87,9 @@
 	
 	<!-- 根据体检手段id查询体检项目id -->
 	<select id="findExamItemByExamSolutionId" parameterType="java.lang.String" resultType="java.lang.String">
-		select mei.MEDICALEXAMITEM_ID from tb_medicalexamitem mei,exam_examitem eei, exam_examsolution ees where mei.EXAMITEM_ID = eei.EXAMITEM_ID  and eei.EXAMITEM_ID = ees.EXAMITEM_ID and ees.EXAMSOLUTION_ID = #{EXAMSOLUTION_ID} 
+		select mei.MEDICALEXAMITEM_ID from tb_medicalexamitem mei,exam_examitem eei, exam_examsolution ees where 
+		mei.EXAMITEM_ID = eei.EXAMITEM_ID  and eei.EXAMITEM_ID = ees.EXAMITEM_ID and ees.EXAMSOLUTION_ID = 
+		#{EXAMSOLUTION_ID} 
 	</select>
 	
 	<!-- 批量增加订单下的体检项目 -->

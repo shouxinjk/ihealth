@@ -85,6 +85,14 @@ public interface OrderManager{
 	 */
 	public List<MedicalExamItem> findCenterIDByOrderId(String pd)throws Exception;
 	
+	/**
+	 * 根据体检手段id获取体检项目id
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public String  findExamItemByExamSolutionId(String EXAMSOLUTION_ID)throws Exception;
+	
 }
 
  
