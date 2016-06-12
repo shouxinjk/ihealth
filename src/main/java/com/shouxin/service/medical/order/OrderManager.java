@@ -93,6 +93,13 @@ public interface OrderManager{
 	 */
 	public String  findExamItemByExamSolutionId(String EXAMSOLUTION_ID)throws Exception;
 	
+	/**
+	 * 为该订单添加购买的项目
+	 * @param items
+	 * @throws Exception
+	 */
+	public void saveOrderItem(List<String> items)throws Exception;
+	
 }
 
  

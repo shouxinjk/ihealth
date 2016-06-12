@@ -92,7 +92,6 @@ public class OrderService implements OrderManager{
 	 */
 	@SuppressWarnings("unchecked")
 	public List<MedicalExamItem> findExamItemByOrderId(String pd) throws Exception {
-		// TODO Auto-generated method stub
 		return (List<MedicalExamItem>) dao.findForList("OrderMapper.findExamItemByOrderId", pd);
 	}
 	
@@ -107,7 +106,6 @@ public class OrderService implements OrderManager{
 	 * 通过id获取数据
 	 */
 	public Order findByIdString(String ORDER_ID) throws Exception {
-		// TODO Auto-generated method stub
 		return (Order)dao.findForObject("OrderMapper.findByIdString", ORDER_ID);
 	}
 
@@ -116,7 +114,6 @@ public class OrderService implements OrderManager{
 	 */
 	@SuppressWarnings("unchecked")
 	public List<MedicalExamItem> findCenterIDByOrderId(String pd) throws Exception {
-		// TODO Auto-generated method stub
 		return (List<MedicalExamItem>) dao.findForList("OrderMapper.findCenterIDByOrderId", pd);
 	}
 
@@ -128,6 +125,15 @@ public class OrderService implements OrderManager{
 	 */
 	public String findExamItemByExamSolutionId(String EXAMSOLUTION_ID) throws Exception {
 		return (String) dao.findForObject("OrderMapper.findExamItemByExamSolutionId", EXAMSOLUTION_ID);
+	}
+	
+	/**
+	 * 为该订单添加购买的项目
+	 * @param items
+	 * @throws Exception
+	 */
+	public void saveOrderItem(List<String> items) throws Exception {
+		dao.save("OrderMapper.saveOrderItem", items);
 	}
 	
 }
