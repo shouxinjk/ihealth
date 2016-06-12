@@ -93,7 +93,7 @@ public class MedicalCenterController extends BaseController {
 		return mv;
 	}
 	
-	/**修改
+	/**修改体检中心状态
 	 * @param
 	 * @throws Exception
 	 */
