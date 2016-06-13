@@ -7,6 +7,7 @@ import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.medical.MedicalExamItem;
 import com.shouxin.entity.medical.Order;
+import com.shouxin.entity.medical.OrderItem;
 import com.shouxin.service.medical.order.OrderManager;
 import com.shouxin.util.PageData;
 
@@ -132,7 +133,7 @@ public class OrderService implements OrderManager{
 	 * @param items
 	 * @throws Exception
 	 */
-	public void saveOrderItem(List<String> items) throws Exception {
+	public void saveOrderItem(List<OrderItem> items) throws Exception {
 		dao.save("OrderMapper.saveOrderItem", items);
 	}
 	

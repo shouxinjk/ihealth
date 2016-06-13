@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shouxin.controller.base.BaseController;
+import com.shouxin.entity.medical.OrderItem;
 import com.shouxin.service.medical.medicalorder.MedicalOrderManager;
 import com.shouxin.service.medical.order.OrderManager;
 import com.shouxin.util.AppUtil;
@@ -44,11 +45,16 @@ public class OrderRestController extends BaseController {
 		JSONObject json = JSONObject.fromObject(souid);
 		String solutionID = json.getString("solutionID").toString();
 		String[] solutionIDS = solutionID.split(",");
-		List<String> itemIDs = new ArrayList<String>();
+		List<OrderItem> itemIDs = new ArrayList<OrderItem>();
 		for(int i=0;i<solutionIDS.length;i++){
+			OrderItem oi = new OrderItem();
+			String orderItemID = this.get32UUID();
 			String examitemID
 			= orderService.findExamItemByExamSolutionId(solutionIDS[i]);
-			itemIDs.add(examitemID);
+			oi.setORDER_ID(ORDER_ID);
+			oi.setORDERITEM_ID(orderItemID);
+			oi.setMEDICALEXAMITEM_ID(examitemID);
+			itemIDs.add(oi);
 		}
 		System.out.println(itemIDs.size()+"=============");
 		if(itemIDs.size()>0){

@@ -2,9 +2,9 @@ package com.shouxin.entity.medical;
 
 public class OrderItem {
 
-	private String ORDERITEM_ID;
-	private String ORDER_ID;
-	private String MEDICALEXAMITEM_ID;
+	private String ORDERITEM_ID;//订单项目id
+	private String ORDER_ID;//订单id
+	private String MEDICALEXAMITEM_ID;//体检项目id
 
 	public String getORDERITEM_ID() {
 		return ORDERITEM_ID;
