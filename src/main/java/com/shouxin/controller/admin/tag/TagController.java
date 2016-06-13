@@ -62,6 +62,7 @@ public class TagController extends BaseController {
 		pd.put("TAG_ID", this.get32UUID());	//主键
 		pd.put("CREATEBY", Jurisdiction.getUserId());
 		pd.put("CREATEON", new Date());
+		logBefore(logger, pd+"新增Tag+++++++");
 		tagService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");

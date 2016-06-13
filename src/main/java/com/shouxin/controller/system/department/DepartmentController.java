@@ -120,7 +120,7 @@ public class DepartmentController extends BaseController {
 			DEPARTMENT_ID = pd.get("id").toString();
 		}
 		pd.put("DEPARTMENT_ID", DEPARTMENT_ID);					//上级ID
-		logBefore(logger, pd.get(DEPARTMENT_ID)+"列表department");
+		logBefore(logger, pd.get("DEPARTMENT_ID")+"列表department");
 		page.setPd(pd);
 		List<PageData>	varList = departmentService.list(page);	//列出Dictionaries列表
 		mv.addObject("pd", departmentService.findById(pd));		//传入上级所有信息
