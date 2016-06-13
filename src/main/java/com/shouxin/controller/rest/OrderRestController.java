@@ -50,6 +50,7 @@ public class OrderRestController extends BaseController {
 			= orderService.findExamItemByExamSolutionId(solutionIDS[i]);
 			itemIDs.add(examitemID);
 		}
+		System.out.println(itemIDs.size()+"=============");
 		if(itemIDs.size()>0){
 			orderService.saveOrderItem(itemIDs);
 			allMap.put("msg", "yes");
