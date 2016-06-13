@@ -94,7 +94,7 @@
 	
 	<!-- 批量增加订单下的体检项目 -->
 	<insert id="saveOrderItem" parameterType="OrderItem">
-		insert into tb_orderitem(ORDERITEM_ID,ORDER_I,MEDICALEXAMITEM_ID) values
+		insert into tb_orderitem(ORDERITEM_ID,ORDER_ID,MEDICALEXAMITEM_ID) values
 		<foreach item="item" index="index" collection="list" separator="," close=";">
 		(
 			#{item.ORDERITEM_ID},#{item.ORDER_ID},#{item.MEDICALEXAMITEM_ID}
