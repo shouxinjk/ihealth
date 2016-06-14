@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shouxin.controller.base.BaseController;
+import com.shouxin.entity.medical.MedicalExamItem;
 import com.shouxin.entity.medical.OrderItem;
 import com.shouxin.service.medical.medicalorder.MedicalOrderManager;
 import com.shouxin.service.medical.order.OrderManager;
@@ -64,6 +65,24 @@ public class OrderRestController extends BaseController {
 			orderService.saveOrderItem(itemIDs);
 			allMap.put("msg", "success");
 			allMap.put("orderid", ORDER_ID);
+		}else{
+			allMap.put("msg", "no");
+		}
+		return AppUtil.returnObject(new PageData(), allMap);
+	}
+	
+	@RequestMapping(value="/listExamItem",method=RequestMethod.POST)
+	@ResponseBody
+	public Object listExamItem(@RequestBody String id) throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject json = JSONObject.fromObject(id);
+		String orderID = json.getString("orderId").toString();
+		List<MedicalExamItem> items = orderService.findExamItemByOrderId(orderID);
+		if(items.size()>0){
+			allMap.put("items", items);
+			allMap.put("msg", "success");
 		}else{
 			allMap.put("msg", "no");
 		}

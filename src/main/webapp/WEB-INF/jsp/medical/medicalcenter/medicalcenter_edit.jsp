@@ -66,8 +66,9 @@
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">经纬度地理位置:</td>
 								<td>
-									<div id="container" style="width:600px;height:400px;"></div>
-									<input type="text" name="POSITION" id="POSITION" value="${pd.POSITION}" maxlength="255" placeholder="这里输入体检中心或医院经纬度地理位置" title="体检中心或医院经纬度地理位置" style="width:98%;"/>
+									<input type="text" name="POSITION" id="POSITION" value="${pd.POSITION}" maxlength="255" placeholder="这里输入体检中心位置进行搜索" title="体检中心或医院经纬度地理位置" style="width:40%;"/>
+									<input type="button" value="查询" onclick="searchByStationName()" style="width:20%;">
+									<div id="container" style="width:600px;height:400px;display:none;"></div>
 								</td>
 							</tr>
 							<tr>
@@ -109,18 +110,33 @@
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 	<script type="text/javascript">
 		
-	 var map = new BMap.Map("container");        //在container容器中创建一个地图,参数container为div的id属性;
-	  var point = new BMap.Point(104.06,30.66);    //创建点坐标
-	    map.centerAndZoom(point, 12);                //初始化地图，设置中心点坐标和地图级别
-	    map.enableScrollWheelZoom();                //激活滚轮调整大小功能
-	    map.addControl(new BMap.NavigationControl());    //添加控件：缩放地图的控件，默认在左上角；
-	    map.addControl(new BMap.MapTypeControl());        //添加控件：地图类型控件，默认在右上方；
-	    map.addControl(new BMap.ScaleControl());        //添加控件：地图显示比例的控件，默认在左下方；
-	    map.addControl(new BMap.OverviewMapControl());  //添加控件：地图的缩略图的控件，默认在右下方； TrafficControl    
-	    var localSearch = new BMap.LocalSearch(map);
-	    localSearch.enableAutoViewport(); //允许自动调节窗体大小
-	    var marker = new BMap.Marker(new BMap.Point(point.lng, point.lat));  // 创建标注，为要查询的地址对应的经纬度
-	    map.addOverlay(marker);
+	    
+	   
+	    function searchByStationName(){
+	    	$("#container").css("display","block");
+	    	 var map = new BMap.Map("container");        //在container容器中创建一个地图,参数container为div的id属性;
+	   	 	 var point = new BMap.Point(104.06,30.66);    //创建点坐标
+	   	    map.centerAndZoom(point, 12);                //初始化地图，设置中心点坐标和地图级别
+	   	    map.enableScrollWheelZoom();                //激活滚轮调整大小功能
+	   	    map.addControl(new BMap.NavigationControl());    //添加控件：缩放地图的控件，默认在左上角；
+	   	    map.addControl(new BMap.MapTypeControl());        //添加控件：地图类型控件，默认在右上方；
+	   	    map.addControl(new BMap.ScaleControl());        //添加控件：地图显示比例的控件，默认在左下方；
+	   	    map.addControl(new BMap.OverviewMapControl());  //添加控件：地图的缩略图的控件，默认在右下方； TrafficControl
+	    	 var localSearch = new BMap.LocalSearch(map,{
+	 	    	renderOptions:{map: map}
+	 	    });
+	 	    localSearch.enableAutoViewport(); //允许自动调节窗体大小
+	    	var keyword = $("#POSITION").val();
+	    	/* localSearch.setSearchCompleteCallback(function (searchResult) {
+	    		var poi = searchResult.getPoi(0);
+	    		
+	    		map.centerAndZoom(poi.point, 16);
+	    		var marker = new BMap.Marker(new BMap.Point(poi.point.lng, poi.point.lat));  // 创建标注，为要查询的地址对应的经纬度
+	        	map.addOverlay(marker);	
+	    	}); */
+	    	localSearch.search(keyword);
+	    }
+	    
 	    $(top.hangge());
 		//保存
 		function save(){
