@@ -335,6 +335,42 @@ public class ExamGuideLineController extends BaseController {
 		return mv;
 	}
 	
+	 /**去修改页面
+		 * @param
+		 * @throws Exception
+		 */
+		@RequestMapping(value="/find")
+		public ModelAndView find()throws Exception{
+			ModelAndView mv = this.getModelAndView();
+			PageData pd = new PageData();
+			logBefore(logger, pd.get("EXAMGUIDELINE_ID")+"列表EXAM  ==== exanmmID");
+			pd = this.getPageData();
+			pd = examguidelineService.findById(pd);	//根据ID读取
+			logBefore(logger, pd+"列表EXAM  ==== exanmm");
+			//根据ID查询当前指南选中的疾病信息（疾病分类、疾病名称）
+			
+			
+			//List<PageData> pds = diseasecategoryService.listAll(pd);//查询出所有的疾分类
+			//List<PageData> varDisList = diseaseService.listAll(pd);//查询出所有疾病
+			//List<ExamCategory> varItemCategoryList = examcategoryService.listAllExamCategory("0");//查询所有检查项目分类
+			//logBefore(logger, varItemCategoryList+"查询所有检查项目分类");
+			List<PageData> varSouAndItem = examsolutionService.listAllExamSolutionAndExamItem(pd);//查询所有的检查手段
+			//List<PageData> varFreqList = examfrequencyService.listAll(pd);//查询所有检查频率
+			List<PageData> varSouList = examsolutionService.listExamSolutionByExamGuidelineID(pd.get("EXAMGUIDELINE_ID").toString());
+			//logBefore(logger, pds.get(1).get("DISEASECATEGORY_ID")+"列表EXAM  ==== DISEASE");
+			logBefore(logger, varSouList+"列表EXAM  ==== DISEASE_ID");
+			mv.setViewName("exam/examguidelineverify/examguidelineverify_edit");
+			mv.addObject("msg", "edit");
+			mv.addObject("pd", pd);
+			///mv.addObject("pds",pds);
+			//mv.addObject("varDisList",varDisList);
+			//mv.addObject("varItemCategoryList",varItemCategoryList);
+			mv.addObject("varSouList",varSouList);
+			mv.addObject("varItemList",varSouAndItem);
+			//mv.addObject("varFreqList",varFreqList);
+			return mv;
+		}
+	
 	/**
 	 * 查询检查项目分类
 	 * @param resp

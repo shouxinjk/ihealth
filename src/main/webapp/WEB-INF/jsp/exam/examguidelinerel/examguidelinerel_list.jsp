@@ -101,6 +101,9 @@
 															<i class="ace-icon fa fa-folder-open bigger-120" title="重新发布"></i>
 														</a>
 													</c:if>
+													<a class="btn btn-xs btn-danger" title="查看" onclick="find('${var.EXAMGUIDELINE_ID}')">
+															<i class="ace-icon fa fa-search bigger-120" title="查看"></i>
+														</a>
 												</div>
 												<div class="hidden-md hidden-lg">
 													<div class="inline pos-rel">
@@ -278,6 +281,24 @@
 				}
 			});
 		} --%>
+		
+		 //修改
+		function find(Id){
+			 top.jzts();
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="编辑";
+			 diag.URL = '<%=basePath%>examguideline/find.do?EXAMGUIDELINE_ID='+Id;
+			 diag.Width = 800;
+			  diag.Height = 600;
+			 diag.CancelEvent = function(){ //关闭事件
+				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+					 nextPage(${page.currentPage});
+				}
+				diag.close();
+			 };
+			 diag.show();
+		}
 		
 		//医生审核
 		function auditing1(Id,STATUS){

@@ -94,10 +94,8 @@ public class ExamItemService implements ExamItemManager{
 		List<ExamCategory> examCategory = examcategoryService.listSubExamCategoryByParentID(parentID);
 		for (ExamCategory cate : examCategory) {
 			List<ExamCategory> examCategory2 = examcategoryService.listSubExamCategoryByParentID(cate.getEXAMCATEGORY_ID());
-			for (ExamCategory exam : examCategory2) {
-				exam.setTarget("treeFrame");
-				exam.setTreeUrl("examitem/list.do?EXAMCATEGORY_ID="+exam.getEXAMCATEGORY_ID());
-			}
+			cate.setTarget("treeFrame");
+			cate.setTreeUrl("examitem/list.do?EXAMCATEGORY_ID="+cate.getEXAMCATEGORY_ID());
 			cate.setSubExamCategory(examCategory2);
 			
 		}

@@ -93,6 +93,9 @@
 														<a class="btn btn-xs btn-danger" title="不合格" onclick="auditing1('${var.EXAMGUIDELINE_ID}','审核失败')">
 															<i class="ace-icon fa fa-times-circle-o bigger-120" title="不合格"></i>
 														</a>
+														<a class="btn btn-xs btn-danger" title="查看" onclick="find('${var.EXAMGUIDELINE_ID}')">
+															<i class="ace-icon fa fa-search bigger-120" title="查看"></i>
+														</a>
 													</c:if>
 												</div>
 												<div class="hidden-md hidden-lg">
@@ -285,13 +288,13 @@
 			});
 		}
 		
-		<%-- //修改
-		function edit(Id){
+		 //修改
+		function find(Id){
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>examguideline/goEditRule.do?EXAMGUIDELINE_ID='+Id;
+			 diag.URL = '<%=basePath%>examguideline/find.do?EXAMGUIDELINE_ID='+Id;
 			 diag.Width = 800;
 			  diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
@@ -302,7 +305,7 @@
 			 };
 			 diag.show();
 		}
-		 --%>
+		 
 		<%-- //批量操作
 		function makeAll(msg){
 			bootbox.confirm(msg, function(result) {

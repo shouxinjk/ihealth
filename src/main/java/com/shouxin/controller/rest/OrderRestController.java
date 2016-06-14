@@ -51,15 +51,18 @@ public class OrderRestController extends BaseController {
 			String orderItemID = this.get32UUID();
 			String examitemID
 			= orderService.findExamItemByExamSolutionId(solutionIDS[i]);
-			oi.setORDER_ID(ORDER_ID);
-			oi.setORDERITEM_ID(orderItemID);
-			oi.setMEDICALEXAMITEM_ID(examitemID);
-			itemIDs.add(oi);
+			if(examitemID!=null && !examitemID.equals("")){
+				oi.setORDER_ID(ORDER_ID);
+				oi.setORDERITEM_ID(orderItemID);
+				oi.setMEDICALEXAMITEM_ID(examitemID);
+				itemIDs.add(oi);
+			}
 		}
 		System.out.println(itemIDs.size()+"=============");
 		if(itemIDs.size()>0){
 			orderService.saveOrderItem(itemIDs);
-			allMap.put("msg", "yes");
+			allMap.put("msg", "success");
+			allMap.put("orderid", ORDER_ID);
 		}else{
 			allMap.put("msg", "no");
 		}
