@@ -36,31 +36,32 @@
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入体检中心名称" title="体检中心名称" style="width:98%;"/></td>
 							</tr>
 							<c:if test="${msg eq 'save' }">
-							
-								<c:if test="${medicalcenterid eq '0' }">
-									<tr>
-										<td style="width:75px;text-align: right;padding-top: 13px;">上级医院:</td>
-										<td>
-											<select name="PARENTID" id="PARENTID">
-												<c:forEach items="${pds }" var="pd">
-													<option value="${pd.MEDICALCENTER_ID }">${pd.NAME }</option>
-												</c:forEach>
-											</select>
-										</td>
-									</tr>
-								</c:if>
-								
-									<tr>
-										<td style="width:75px;text-align: right;padding-top: 13px;">上级医院:</td>
-										<td>
-											<select name="PARENTID" id="PARENTID">
-												<c:forEach items="${centers }" var="cen">
-													<option value="${cen.MEDICALCENTER_ID }">${cen.NAME }</option>
-												</c:forEach>
-											</select>
-										</td>
-									</tr>
-								
+								<c:choose>
+									<c:when test="${medicalcenterid eq '0' }">
+										<tr>
+											<td style="width:75px;text-align: right;padding-top: 13px;">上级医院:</td>
+											<td>
+												<select name="PARENTID" id="PARENTID">
+													<c:forEach items="${pds }" var="pd">
+														<option value="${pd.MEDICALCENTER_ID }">${pd.NAME }</option>
+													</c:forEach>
+												</select>
+											</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<td style="width:75px;text-align: right;padding-top: 13px;">上级医院:</td>
+											<td>
+												<select name="PARENTID" id="PARENTID">
+													<c:forEach items="${centers }" var="cen">
+														<option value="${cen.MEDICALCENTER_ID }">${cen.NAME }</option>
+													</c:forEach>
+												</select>
+											</td>
+										</tr>
+									</c:otherwise>
+								</c:choose>
 							</c:if>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">描述:</td>

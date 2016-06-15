@@ -129,7 +129,11 @@ public class MedicalOrderController extends BaseController {
 		}
 		String userId = Jurisdiction.getUserId();
 		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
-		pd.put("MEDICALCENTER_ID", medicalcenterid);
+		if(medicalcenterid == null){
+			pd.put("MEDICALCENTER_ID", "");
+		}else{
+			pd.put("MEDICALCENTER_ID", medicalcenterid);
+		}
 		page.setPd(pd);
 		List<PageData>	varList = medicalorderService.list(page);	//列出MedicalOrder列表
 		mv.setViewName("medical/medicalorder/medicalorder_list");

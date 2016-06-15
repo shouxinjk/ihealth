@@ -93,7 +93,7 @@ public class ExamItemService implements ExamItemManager{
 		// TODO Auto-generated method stub
 		List<ExamCategory> examCategory = examcategoryService.listSubExamCategoryByParentID(parentID);
 		for (ExamCategory cate : examCategory) {
-			List<ExamCategory> examCategory2 = examcategoryService.listSubExamCategoryByParentID(cate.getEXAMCATEGORY_ID());
+			List<ExamCategory> examCategory2 = this.listAllExamCategory(cate.getEXAMCATEGORY_ID());
 			cate.setTarget("treeFrame");
 			cate.setTreeUrl("examitem/list.do?EXAMCATEGORY_ID="+cate.getEXAMCATEGORY_ID());
 			cate.setSubExamCategory(examCategory2);

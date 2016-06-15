@@ -140,9 +140,10 @@
 		<include refid="Field1"></include>
 		from 
 		 TB_MEDICALEXAMITEM item 
-		where 1=1 and item.MEDICALCENTER_ID = 
-		(SELECT admin.MEDICALCENTER_ID FROM tb_medicalceneradmin admin where admin.SYS_USER_ID 
-		=  #{pd.userId})	
+		where 1=1
+		<if test="pd.MEDICALCENTER_ID!= null and pd.MEDICALCENTER_ID != ''">
+			and item.MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID}	
+		</if>
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -161,9 +162,11 @@
 		<include refid="Field1"></include>
 		from 
 		 TB_MEDICALEXAMITEM item 
-		where 1=1 and item.MEDICALCENTER_ID = 
-		(SELECT admin.MEDICALCENTER_ID FROM tb_medicalceneradmin admin where admin.SYS_USER_ID 
-		=  #{pd.userId}) and item.STATUS !='新建' and item.STATUS !='审核失败'
+		where 1=1 
+		<if test="pd.MEDICALCENTER_ID!= null and pd.MEDICALCENTER_ID != ''">
+			and item.MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID}	
+		</if>
+		and item.STATUS !='新建' and item.STATUS !='审核失败'
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(

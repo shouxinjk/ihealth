@@ -85,7 +85,6 @@
 		  tc.`TAGCATEGORY_ID` AS tc_tagcetegory_id,
 		  tc.`MATETYPE` AS tc_matetype,
 		  tc.`ISEXCLUSIVE` AS tc_isexclusive,
-		  t.`EXPRESSION` AS t_expression,
 		  t.`NAME` AS t_name,
 		  t.`TAG_ID` AS t_tag_id
 		FROM

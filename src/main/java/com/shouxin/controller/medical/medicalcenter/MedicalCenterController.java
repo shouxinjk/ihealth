@@ -190,9 +190,10 @@ public class MedicalCenterController extends BaseController {
 		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
 		List<MedicalCenter> centers = new ArrayList<MedicalCenter>();
 		List<PageData> pds = new ArrayList<PageData>();
-		if(!medicalcenterid.equals("0")){
+		if(medicalcenterid!=null){
 			centers = medicalcenterService.listParentIDPage(medicalcenterid);
 		}else{
+			medicalcenterid ="0";
 			pds = medicalcenterService.listAll();
 		}
 		mv.setViewName("medical/medicalcenter/medicalcenter_edit");

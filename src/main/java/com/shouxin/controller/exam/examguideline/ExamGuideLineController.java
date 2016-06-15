@@ -241,6 +241,11 @@ public class ExamGuideLineController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
+		if(pd.get("downPage")!=null && !pd.get("downPage").equals("")){
+			int currentPage = (Integer) pd.get("downPage");
+			System.out.println(currentPage+"==============currentPage");
+			page.setCurrentPage(currentPage);
+		}
 		page.setPd(pd);
 		List<PageData>	varList = examguidelineService.listVerfiy(page);	//列出ExamGuideLine列表
 		mv.setViewName("exam/examguidelineverify/examguidelineverify_list");

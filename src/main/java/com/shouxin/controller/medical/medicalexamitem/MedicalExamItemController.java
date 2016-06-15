@@ -140,8 +140,14 @@ public class MedicalExamItemController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
-		logBefore(logger, Jurisdiction.getUserId()+"userID_+++++++++++++++");
-		pd.put("userId", Jurisdiction.getUserId());
+		String userId = Jurisdiction.getUserId();
+		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		logBefore(logger, medicalcenterid+"=====medicalcenterid");
+		if(medicalcenterid == null){
+			pd.put("MEDICALCENTER_ID", "");
+		}else{
+			pd.put("MEDICALCENTER_ID", medicalcenterid);
+		}
 		page.setPd(pd);
 		List<PageData>	varList = medicalexamitemService.list(page);	//列出MedicalExamItem列表
 		mv.setViewName("medical/medicalexamitem/medicalexamitem_list");
@@ -166,8 +172,14 @@ public class MedicalExamItemController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
-		logBefore(logger, Jurisdiction.getUserId()+"userID_+++++++++++++++");
-		pd.put("userId", Jurisdiction.getUserId());
+		String userId = Jurisdiction.getUserId();
+		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		logBefore(logger, medicalcenterid+"=====medicalcenterid");
+		if(medicalcenterid == null){
+			pd.put("MEDICALCENTER_ID", "");
+		}else{
+			pd.put("MEDICALCENTER_ID", medicalcenterid);
+		}
 		page.setPd(pd);
 		List<PageData>	varList = medicalexamitemService.listrel(page);	//列出MedicalExamItem列表
 		mv.setViewName("medical/medicalexamitem/medicalexamitemrel_list");
