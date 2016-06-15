@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.medical.MedicalCenter;
 import com.shouxin.service.medical.medicalcenter.MedicalCenterManager;
 import com.shouxin.service.medical.medicalexamitem.MedicalExamItemManager;
 import com.shouxin.util.AppUtil;
@@ -128,7 +129,12 @@ public class MedicalCenterController extends BaseController {
 		String userId = Jurisdiction.getUserId();
 		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
 		logBefore(logger, medicalcenterid+"=====medicalcenterid");
-		pd.put("MEDICALCENTER_ID", medicalcenterid);
+		if(medicalcenterid == null){
+			pd.put("MEDICALCENTER_ID", "");
+		}else{
+			pd.put("MEDICALCENTER_ID", medicalcenterid);
+		}
+		
 		page.setPd(pd);
 		List<PageData>	varList = medicalcenterService.list(page);	//列出MedicalCenter列表
 		mv.setViewName("medical/medicalcenter/medicalcenter_list");
@@ -156,7 +162,12 @@ public class MedicalCenterController extends BaseController {
 		String userId = Jurisdiction.getUserId();
 		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
 		logBefore(logger, medicalcenterid+"=====medicalcenterid");
-		pd.put("MEDICALCENTER_ID", medicalcenterid);
+		if(medicalcenterid == null){
+			pd.put("MEDICALCENTER_ID", "");
+		}else{
+			pd.put("MEDICALCENTER_ID", medicalcenterid);
+		}
+		
 		page.setPd(pd);
 		List<PageData>	varList = medicalcenterService.listRelAll(page);	//列出MedicalCenter列表
 		mv.setViewName("medical/medicalcenter/medicalcenterrel_list");
@@ -175,8 +186,20 @@ public class MedicalCenterController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		String userId = Jurisdiction.getUserId();
+		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		List<MedicalCenter> centers = new ArrayList<MedicalCenter>();
+		List<PageData> pds = new ArrayList<PageData>();
+		if(!medicalcenterid.equals("0")){
+			centers = medicalcenterService.listParentIDPage(medicalcenterid);
+		}else{
+			pds = medicalcenterService.listAll();
+		}
 		mv.setViewName("medical/medicalcenter/medicalcenter_edit");
 		mv.addObject("msg", "save");
+		mv.addObject("medicalcenterid",medicalcenterid);
+		mv.addObject("centers",centers);
+		mv.addObject("pds",pds);
 		mv.addObject("pd", pd);
 		return mv;
 	}	
@@ -250,7 +273,7 @@ public class MedicalCenterController extends BaseController {
 		titles.add("体检中心或医院经纬度地理位置");	//12
 		titles.add("体检中心或医院分支机构");	//13
 		dataMap.put("titles", titles);
-		List<PageData> varOList = medicalcenterService.listAll(pd);
+		List<PageData> varOList = medicalcenterService.listAll();
 		List<PageData> varList = new ArrayList<PageData>();
 		for(int i=0;i<varOList.size();i++){
 			PageData vpd = new PageData();

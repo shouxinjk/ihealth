@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.medical.MedicalCenter;
 import com.shouxin.service.medical.medicalcenter.MedicalCenterManager;
 import com.shouxin.util.PageData;
 
@@ -63,8 +64,8 @@ public class MedicalCenterService implements MedicalCenterManager{
 	 */
 	//@Override
 	@SuppressWarnings("unchecked")
-	public List<PageData> listAll(PageData pd)throws Exception{
-		return (List<PageData>)dao.findForList("MedicalCenterMapper.listAll", pd);
+	public List<PageData> listAll()throws Exception{
+		return (List<PageData>)dao.findForList("MedicalCenterMapper.listAll", null);
 	}
 	
 	/**通过id获取数据
@@ -98,8 +99,12 @@ public class MedicalCenterService implements MedicalCenterManager{
 	 */
 	@SuppressWarnings("unchecked")
 	public List<PageData> listRelAll(Page page) throws Exception {
-		// TODO Auto-generated method stub
 		return (List<PageData>) dao.findForList("MedicalCenterMapper.datarellistPage", page);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<MedicalCenter> listParentIDPage(String MEDICALCENTER_ID) throws Exception {
+		return (List<MedicalCenter>) dao.findForList("MedicalCenterMapper.listParentIDPage", MEDICALCENTER_ID);
 	}
 	
 }

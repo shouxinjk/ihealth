@@ -24,10 +24,19 @@ public class MedicalCenter implements Serializable{
 	private String LOGOURL; // LOGO图片url
 	private String createBY; // 创建该项目用户id
 	private Date createON; // 创建该记录时间
+	private String PARENTID;//上级医院id
 	private MedicalCenter parent;
 	private List<MedicalExamItem> examItems;
 	private List<MedicalCenerAdmin> cenerAdmins;
 
+	public String getPARENTID() {
+		return PARENTID;
+	}
+
+	public void setPARENTID(String pARENTID) {
+		PARENTID = pARENTID;
+	}
+	
 	public String getSTATUS() {
 		return STATUS;
 	}

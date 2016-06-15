@@ -2,6 +2,7 @@ package com.shouxin.service.medical.medicalcenter;
 
 import java.util.List;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.medical.MedicalCenter;
 import com.shouxin.util.PageData;
 
 /** 
@@ -40,7 +41,7 @@ public interface MedicalCenterManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	public List<PageData> listAll(PageData pd)throws Exception;
+	public List<PageData> listAll()throws Exception;
 
 	/**
 	 * 
@@ -68,6 +69,8 @@ public interface MedicalCenterManager{
 	 * @throws Exception
 	 */
 	public void auditing(PageData pd)throws Exception;
+	
+	public List<MedicalCenter> listParentIDPage(String MEDICALCENTER_ID)throws Exception;
 	
 }
 

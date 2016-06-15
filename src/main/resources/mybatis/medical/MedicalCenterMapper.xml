@@ -139,7 +139,14 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 1=1 and (MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} OR PARENTID = #{pd.MEDICALCENTER_ID}) 
+		where 1=1 
+		<if test="pd.MEDICALCENTER_ID!= null and pd.MEDICALCENTER_ID != ''"><!-- 关键词检索 -->
+			and
+				(
+				MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} OR PARENTID = #{pd.MEDICALCENTER_ID}
+				)
+		</if>
+		<!-- and (MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} OR PARENTID = #{pd.MEDICALCENTER_ID})  -->
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -158,7 +165,13 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 1=1 and (MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} OR PARENTID = #{pd.MEDICALCENTER_ID}) 
+		where 1=1 
+		<if test="pd.MEDICALCENTER_ID!= null and pd.MEDICALCENTER_ID != ''"><!-- 关键词检索 -->
+			and
+				(
+				MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} OR PARENTID = #{pd.MEDICALCENTER_ID}
+				)
+		</if>
 		and STATUS !='新建' and STATUS!='审核失败'
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
@@ -178,7 +191,14 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 1=1 and (MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} OR PARENTID = #{pd.MEDICALCENTER_ID}) 
+		where 1=1 
+		<if test="pd.MEDICALCENTER_ID!= null and pd.MEDICALCENTER_ID != ''"><!-- 关键词检索 -->
+			and
+				(
+				MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} OR PARENTID = #{pd.MEDICALCENTER_ID}
+				)
+		</if>
+		 
 		and STATUS =='提交' and STATUS =='审核失败'
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
@@ -198,7 +218,13 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 1=1 and (MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} OR PARENTID = #{pd.MEDICALCENTER_ID}) 
+		where 1=1 
+		<if test="pd.MEDICALCENTER_ID!= null and pd.MEDICALCENTER_ID != ''"><!-- 关键词检索 -->
+			and
+				(
+				MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} OR PARENTID = #{pd.MEDICALCENTER_ID}
+				)
+		</if>
 		and STATUS =='审核' and STATUS =='发布' and STATUS =='失效'
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
@@ -212,8 +238,17 @@
 		</if>
 	</select>
 	
+	<!-- 列表 -->
+	<select id="listParentIDPage" parameterType="java.lang.String" resultType="MedicalCenter">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1 and (MEDICALCENTER_ID = #{MEDICALCENTER_ID} OR PARENTID = #{MEDICALCENTER_ID}) 
+	</select>
+	
 	<!-- 列表(全部) -->
-	<select id="listAll" parameterType="pd" resultType="pd">
+	<select id="listAll" resultType="pd">
 		select
 		<include refid="Field"></include>
 		from 
