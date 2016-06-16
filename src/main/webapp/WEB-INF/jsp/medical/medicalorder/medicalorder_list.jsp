@@ -45,6 +45,16 @@
 								<c:if test="${QX.cha == 1 }">
 								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 								</c:if>
+								<td> 
+									<input type="button" class="nav-search-input" value="待付款" onclick="listPart('等待付款')">
+									<input type="button" class="nav-search-input" value="已付款" onclick="listPart('已付款')">
+									<input type="button" class="nav-search-input" value="预约成功" onclick="listPart('已预约')">
+									<input type="button" class="nav-search-input" value="已完成" onclick="listPart('订单完成')">
+									<input type="button" class="nav-search-input" value="已提交" onclick="listPart('已提交')">
+									<input type="button" class="nav-search-input" value="执行中" onclick="listPart('用户执行')">
+									<input type="button" class="nav-search-input" value="所有订单" onclick="listPart('')">
+									<input type="hidden" id="sta" value="${STATUS }"/>
+								</td>
 							</tr>
 						</table>
 						<!-- 检索  -->
@@ -295,6 +305,12 @@
 			diag.show();
 		}
 		
+		function listPart(STATUS){
+			var keywords = $("#nav-search-input").val();
+			top.jzts();
+			location.href="<%=basePath%>medicalorder/listPart.do?STATUS="+STATUS+"&keywords="+keywords;
+		}
+		
 		//删除
 		function del(Id){
 			bootbox.confirm("确定要删除吗?", function(result) {
@@ -315,7 +331,7 @@
 					top.jzts();
 					var url = "<%=basePath%>medicalorder/auditing.do?MEDICALORDER_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
 					$.get(url,function(data){
-						nextPage(${page.currentPage});
+						nextPage('${page.currentPage}');
 					});
 				}
 			});
@@ -332,7 +348,14 @@
 			 diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 nextPage('${page.currentPage}');
+					 var status = $("#sta").val()+"";
+					 var keywords = $("#nav-search-input").val();
+					 if(status ==""){
+						 nextPage('${page.currentPage}');
+					 }else{
+						 location.href="<%=basePath%>medicalorder/listPart.do?STATUS="+status+"&keywords="+keywords+"&currentPage=${page.currentPage}";
+					 }
+					
 				}
 				diag.close();
 			 };

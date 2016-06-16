@@ -94,9 +94,10 @@
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">经纬度地理位置:</td>
 								<td>
-									<input type="text" name="POSITION" id="POSITION" value="${pd.POSITION}" maxlength="255" placeholder="这里输入体检中心位置进行搜索" title="体检中心或医院经纬度地理位置" style="width:40%;"/>
+									<input type="text" name="POSITION1" id="POSITION1" value="" maxlength="255" placeholder="这里输入体检中心位置进行搜索" style="width:40%;"/>
 									<input type="button" value="查询" onclick="searchByStationName()" style="width:20%;">
 									<div id="container" style="width:600px;height:400px;display:none;"></div>
+									<input type="hidden" name="POSITION" id="POSITON" value="${pd.POSITION}"/>
 								</td>
 							</tr>
 							<tr>
@@ -135,7 +136,7 @@
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 	<!-- 百度地图api -->
-	<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=e0dqKjlucOYl5SO8aRvcrLHXjNZG8N2L"></script>
 	<script type="text/javascript">
 	   
 	    function searchByStationName(){
@@ -148,11 +149,32 @@
 	   	    map.addControl(new BMap.MapTypeControl());        //添加控件：地图类型控件，默认在右上方；
 	   	    map.addControl(new BMap.ScaleControl());        //添加控件：地图显示比例的控件，默认在左下方；
 	   	    map.addControl(new BMap.OverviewMapControl());  //添加控件：地图的缩略图的控件，默认在右下方； TrafficControl
-	    	 var localSearch = new BMap.LocalSearch(map,{
-	 	    	renderOptions:{map: map}
-	 	    });
-	 	    localSearch.enableAutoViewport(); //允许自动调节窗体大小
-	    	var keyword = $("#POSITION").val();
+	    	var keyword = $("#POSITION1").val();
+	    	var options = {
+	    			onSearchComplete: function(results){
+	    				// 判断状态是否正确
+	    				if (local.getStatus() == BMAP_STATUS_SUCCESS){
+	    					var s = [];
+	    					for (var i = 0; i < results.getCurrentNumPois(); i ++){
+	    						s.push(results.getPoi(i).title + ", " + results.getPoi(i).address);
+	    						/* var marker = new BMap.Marker(new BMap.Point(results.getPoi(i).point.lng,results.getPoi(i).point.lat));  // 创建标注，为要查询的地址对应的经纬度
+	    				        map.addOverlay(marker);
+	    				        marker.addEventListener("click", function () {        //给标注添加点击事件
+	    				       		alert(i)
+	    				        }); */
+	    				        var point=new BMap.Point(results.getPoi(i).point.lng,results.getPoi(i).point.lat);
+	    				        var opts={  
+	    					            width:250,//信息窗口宽度height:100,//信息窗口高度  
+	    					            title:results.getPoi(i).title//信息窗口标题  
+	    					    }
+	    				        addMarker(point,i,results.getPoi(i).address,map,opts);
+	    					}
+	    					
+	    				}
+	    			}
+	    		};
+	    		var local =  new BMap.LocalSearch(map, options);
+	    		local.search(keyword);
 	    	/* localSearch.setSearchCompleteCallback(function (searchResult) {
 	    		var poi = searchResult.getPoi(0);
 	    		
@@ -160,7 +182,18 @@
 	    		var marker = new BMap.Marker(new BMap.Point(poi.point.lng, poi.point.lat));  // 创建标注，为要查询的地址对应的经纬度
 	        	map.addOverlay(marker);	
 	    	}); */
-	    	localSearch.search(keyword);
+	    }
+	    
+	    
+	    function addMarker(point,index,address,map,opts){
+	    	 var infoWindow=new BMap.InfoWindow(address,opts);//创建信息窗口对象  
+	            var marker=new BMap.Marker(point);  
+	                map.addOverlay(marker);  
+	                marker.addEventListener("click",function(){  
+		                $("#LOCATION").val(address);
+		                $("#POSITON").val(point.lng+","+point.lat);
+	                   map.openInfoWindow(infoWindow,point);//打开信息窗口  
+	            });  
 	    }
 	    
 	    $(top.hangge());

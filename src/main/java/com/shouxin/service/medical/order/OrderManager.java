@@ -101,6 +101,15 @@ public interface OrderManager{
 	 */
 	public void saveOrderItem(List<OrderItem> items)throws Exception;
 	
+	/**
+	 * 展示单个状态下的订单列表
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listPart(Page page)throws Exception;
+	
+	
 }
 
  

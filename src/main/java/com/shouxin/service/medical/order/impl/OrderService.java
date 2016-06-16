@@ -136,6 +136,17 @@ public class OrderService implements OrderManager{
 	public void saveOrderItem(List<OrderItem> items) throws Exception {
 		dao.save("OrderMapper.saveOrderItem", items);
 	}
+
+	/**
+	 * 展示单个状态下的订单列表
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listPart(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("OrderMapper.dataPartlistPage", page);
+	}
 	
 }
 

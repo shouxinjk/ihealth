@@ -152,6 +152,17 @@ public class MedicalOrderService implements MedicalOrderManager{
 	public List<MedicalExamItem> listExamItemByMedicalOrderID(String MEDICALORDER_ID) throws Exception {
 		return (List<MedicalExamItem>) dao.findForList("MedicalOrderMapper.listExamItemByMedicalOrderID", MEDICALORDER_ID);
 	}
+
+	/**
+	 * 展示单个状态下的订单列表
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listPart(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("MedicalOrderMapper.dataPartlistPage", page);
+	}
 	
 }
 

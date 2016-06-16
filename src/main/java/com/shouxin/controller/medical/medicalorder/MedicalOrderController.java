@@ -143,6 +143,39 @@ public class MedicalOrderController extends BaseController {
 		return mv;
 	}
 	
+	/**列表
+	 * @param page
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/listPart")
+	public ModelAndView listPart(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"单个状态下的列表MedicalOrder");
+		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		String STATUS = pd.get("STATUS").toString();
+		String userId = Jurisdiction.getUserId();
+		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		if(medicalcenterid == null){
+			pd.put("MEDICALCENTER_ID", "");
+		}else{
+			pd.put("MEDICALCENTER_ID", medicalcenterid);
+		}
+		page.setPd(pd);
+		List<PageData>	varList = medicalorderService.listPart(page);	//列出MedicalOrder列表
+		mv.setViewName("medical/medicalorder/medicalorder_list");
+		mv.addObject("varList", varList);
+		mv.addObject("STATUS",STATUS);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	
 	
 	/**去新增页面
 	 * @param
