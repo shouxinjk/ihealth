@@ -1,5 +1,7 @@
 package com.shouxin.entity.system;
 
+import java.util.Date;
+
 public class Sys_app_user_test {
 
 	private String USER_ID;// 主键id
@@ -10,6 +12,15 @@ public class Sys_app_user_test {
 	private String MARRIAGESTATUS;// 婚姻状态
 	private int HEIGHT;// 身高
 	private int WEIGHT;// 体重
+	private Date BIRTHDAY;//生日
+
+	public Date getBIRTHDAY() {
+		return BIRTHDAY;
+	}
+
+	public void setBIRTHDAY(Date bIRTHDAY) {
+		BIRTHDAY = bIRTHDAY;
+	}
 
 	public String getUSER_ID() {
 		return USER_ID;
@@ -63,7 +74,7 @@ public class Sys_app_user_test {
 	public String toString() {
 		return "Sys_app_user_test [USER_ID=" + USER_ID + ", NAME=" + NAME + ", USERNAME=" + USERNAME + ", PHONE="
 				+ PHONE + ", SEX=" + SEX + ", MARRIAGESTATUS=" + MARRIAGESTATUS + ", HEIGHT=" + HEIGHT + ", WEIGHT="
-				+ WEIGHT + "]";
+				+ WEIGHT + ", BIRTHDAY=" + BIRTHDAY + "]";
 	}
 
 	public int getHEIGHT() {

@@ -163,6 +163,7 @@ public class RestfullController extends BaseController {
 					pd.put("HEIGHT", userTest.get(i).getHEIGHT());
 					pd.put("WEIGHT", userTest.get(i).getWEIGHT());
 					pd.put("MARRIAGESTATUS", userTest.get(i).getMARRIAGESTATUS());
+					pd.put("BIRTHDAY", userTest.get(i).getBIRTHDAY());
 					String user_id_two = this.get32UUID();
 					pd.put("USER_ID", user_id_two);
 					appuserService.saveU(pd);
