@@ -146,8 +146,6 @@ public class RestfullController extends BaseController {
 				pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
 				pd.put("STATUS", "1");									//状态
 				pd.put("BIRTHDAY", "1992-01-01");
-				pd.put("HEIGHT", "170");
-				pd.put("WEIGHT", "50");
 				pd.put("LAST_LOGIN", new Date());						//最后登录时间
 				pd.put("CREATEON", new Date());							//该记录的创建时间
 				appuserService.saveU(pd); // 执行保存
