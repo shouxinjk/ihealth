@@ -196,6 +196,13 @@ public class DiseaseService implements DiseaseManager {
 	public List<PageData> listAllByUserIDIsHighIncaidence(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("DiseaseMapper.listDiseaeByUserIDIsHighIncaidence", pd);
 	}
+	
+	/**
+	 * 根据疾病名称查询疾病信息
+	 */
+	public Disease findDiseaseByName(String NAME) throws Exception {
+		return (Disease) dao.findForObject("DiseaseMapper.findDiseaseByName", NAME);
+	}
 
 	
 

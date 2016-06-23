@@ -30,6 +30,9 @@
 		<typeAlias type="com.shouxin.entity.admin.DiseaseCategory" alias="DiseaseCategory"/>
 		<typeAlias type="com.shouxin.entity.admin.Disease" alias="Disease"/>
 		<typeAlias type="com.shouxin.entity.admin.Tag" alias="Tag"/>
+		<typeAlias type="com.shouxin.entity.admin.Disease_test" alias="Diseasetest"/>
+		<typeAlias type="com.shouxin.entity.admin.Tag_test" alias="Tagtest"/>
+		<typeAlias type="com.shouxin.entity.system.Sys_app_user_test" alias="Usertest"/>
 		<typeAlias type="com.shouxin.entity.admin.TagCategory" alias="TagCategory"/>
 		<typeAlias type="com.shouxin.entity.checkup.CheckupPackage" alias="CheckupPackage"/>
 		<typeAlias type="com.shouxin.entity.checkup.CheckupItem" alias="CheckupItem"/>

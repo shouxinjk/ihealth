@@ -2,6 +2,8 @@ package com.shouxin.service.admin.tag;
 
 import java.util.List;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Disease;
+import com.shouxin.entity.admin.Tag;
 import com.shouxin.util.PageData;
 
 /** 
@@ -90,5 +92,13 @@ public interface TagManager{
 	
 
 	public List<PageData> findAllGroupByUId(PageData pd)throws Exception;
+	
+	/**
+	 * 根据标签名称查询标签信息
+	 * @param NAME
+	 * @return
+	 * @throws Exception
+	 */
+	public Tag findTagByName(String NAME) throws Exception;
 }
 

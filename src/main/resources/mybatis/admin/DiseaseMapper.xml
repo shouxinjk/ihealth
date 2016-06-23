@@ -130,6 +130,10 @@
 		where
 		DISEASE_ID = #{DISEASE_ID}
 	</select>
+	
+	<select id="findDiseaseByName" parameterType="java.lang.String" resultType="Disease">
+		select DISEASE_ID,NAME from admin_disease where NAME = #{NAME} 
+	</select>
 
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">

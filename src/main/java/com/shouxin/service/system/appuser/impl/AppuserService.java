@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Disease_test;
+import com.shouxin.entity.admin.Tag_test;
+import com.shouxin.entity.system.Sys_app_user_test;
 import com.shouxin.service.system.appuser.AppuserManager;
 import com.shouxin.util.PageData;
 import com.shouxinjk.ihealth.data.Transfer;
@@ -281,6 +284,30 @@ public class AppuserService implements AppuserManager{
 
 	public PageData findByOpenId(PageData pd) throws Exception {
 		return (PageData)dao.findForObject("AppuserMapper.findByOpenId", pd);
+	}
+	
+	/**
+	 * 查询默认疾病数据
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Disease_test> listDiseaseTest() throws Exception {
+		return (List<Disease_test>) dao.findForList("AppuserMapper.listDiseaseTest", null);
+	}
+
+	/**
+	 * 查询默认标签数据
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Tag_test> listTagTest() throws Exception {
+		return (List<Tag_test>) dao.findForList("AppuserMapper.listTagTest", null);
+	}
+	
+	/**
+	 * 查询默认关心的人数据
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Sys_app_user_test> listUserTest() throws Exception {
+		return (List<Sys_app_user_test>) dao.findForList("AppuserMapper.listUserTest", null);
 	}
 	
 }

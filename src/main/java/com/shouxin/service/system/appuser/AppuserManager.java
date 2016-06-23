@@ -3,6 +3,9 @@ package com.shouxin.service.system.appuser;
 import java.util.List;
 
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Disease_test;
+import com.shouxin.entity.admin.Tag_test;
+import com.shouxin.entity.system.Sys_app_user_test;
 import com.shouxin.util.PageData;
 
 
@@ -226,5 +229,26 @@ public interface AppuserManager {
 	public PageData findByUserId(PageData pd)throws Exception;
 	
 	public PageData findByOpenId(PageData pd)throws Exception;
+	
+	/**
+	 * 查询疾病模板数据
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Disease_test> listDiseaseTest() throws Exception;
+	
+	/**
+	 * 查询标签模板数据
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Tag_test> listTagTest() throws Exception;
+	
+	/**
+	 * 查询默认关心的人数据
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Sys_app_user_test> listUserTest() throws Exception;
 }
 

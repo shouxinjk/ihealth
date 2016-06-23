@@ -7,6 +7,7 @@ import org.testng.log4testng.Logger;
 
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Tag;
 import com.shouxin.util.PageData;
 import com.shouxinjk.ihealth.data.Transfer;
 import com.shouxin.service.admin.tag.TagManager;
@@ -169,6 +170,13 @@ public class TagService implements TagManager {
 	@SuppressWarnings("unchecked")
 	public List<PageData> findALLByGroup(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("TagMapper.findALLByGroup", pd);
+	}
+
+	/**
+	 * 根据标签名称查询标签信息
+	 */
+	public Tag findTagByName(String NAME) throws Exception {
+		return (Tag) dao.findForObject("TagMapper.findTagByName", NAME);
 	}
 
 }

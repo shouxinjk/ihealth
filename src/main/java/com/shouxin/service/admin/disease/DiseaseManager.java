@@ -135,5 +135,13 @@ public interface DiseaseManager{
 	
 	public List<Disease> listDiseaseByDiseaseCategoryID(String DISEASECATEGORY_ID)throws Exception;
 	
+	/**
+	 * 根据疾病名称查询疾病信息
+	 * @param NAME
+	 * @return
+	 * @throws Exception
+	 */
+	public Disease findDiseaseByName(String NAME) throws Exception;
+	
 }
 

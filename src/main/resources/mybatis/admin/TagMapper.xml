@@ -175,6 +175,10 @@
 		where user_id=#{USER_ID}
 	</delete>
 	
+	<select id="findTagByName" parameterType="java.lang.String" resultType="Tag">
+		select TAG_ID,NAME from admin_tag where NAME=#{NAME} 
+	</select>
+	
 		<!-- 通过用户id获取tag数据 -->
 	<select id="findALLByUserID" parameterType="pd" resultType="pd">
 		select 

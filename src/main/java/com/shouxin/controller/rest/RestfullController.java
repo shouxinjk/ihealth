@@ -1,5 +1,7 @@
 package com.shouxin.controller.rest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,7 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
 import com.shouxin.entity.admin.Article;
+import com.shouxin.entity.admin.Disease;
+import com.shouxin.entity.admin.Disease_test;
+import com.shouxin.entity.admin.Tag;
+import com.shouxin.entity.admin.Tag_test;
 import com.shouxin.entity.solr.ArticleSolr;
+import com.shouxin.entity.system.Sys_app_user_test;
 import com.shouxin.service.admin.article.ArticleManager;
 import com.shouxin.service.admin.disease.DiseaseManager;
 import com.shouxin.service.admin.tag.TagManager;
@@ -35,6 +42,7 @@ import com.shouxin.util.SexEnum;
 import com.shouxin.util.StatusEnum;
 import com.shouxin.util.StringUtil;
 import com.shouxin.util.Tools;
+import com.shouxinjk.ihealth.data.Transfer;
 
 import net.sf.json.JSONObject;
 
@@ -108,16 +116,16 @@ public class RestfullController extends BaseController {
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		String msg = null, phone = null,openId = null,avatar = null,name = null;
+		String msg = null,openId = null,avatar = null,name = null;
 		// 将String类型的数据转换为json 
 		JSONObject jasonObject = JSONObject.fromObject(userVO);
 		try {
 			// 获取json中的key并赋值给字符串 
-			if (jasonObject.get("phone") != null && !"".equals(jasonObject.get("phone")) && !"null".equals(jasonObject.get("phone"))) {
+			/*if (jasonObject.get("phone") != null && !"".equals(jasonObject.get("phone")) && !"null".equals(jasonObject.get("phone"))) {
 				phone = jasonObject.getString("phone").trim();
 				pd.put("PHONE", phone); 
 				pd.put("USERNAME", phone);	
-			}
+			}*/
 			if (jasonObject.get("openId") != null && !"".equals(jasonObject.get("openId")) && !"null".equals(jasonObject.get("openId"))) {
 				openId = jasonObject.getString("openId").trim();
 				pd.put("OPENID", openId); 
@@ -133,7 +141,8 @@ public class RestfullController extends BaseController {
 			// 判断手机号码是否存在	如果当前手机号存在  则继续判断openID是否存在，如果都存在 则返回用户数据   如果不存在 则 添加openID和用户头像信息
 			if (null == this.appuserService.findByPhone(pd)) { 
 				logBefore(logger, "经过判断，手机号码在数据库中不存在，执行新增操作");
-				pd.put("USER_ID", this.get32UUID()); 
+				String user_id_one = this.get32UUID();
+				pd.put("USER_ID", user_id_one); 
 				pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
 				pd.put("STATUS", "1");									//状态
 				pd.put("BIRTHDAY", "1992-01-01");
@@ -142,6 +151,54 @@ public class RestfullController extends BaseController {
 				pd.put("LAST_LOGIN", new Date());						//最后登录时间
 				pd.put("CREATEON", new Date());							//该记录的创建时间
 				appuserService.saveU(pd); // 执行保存
+				List<Disease_test> diseaseTest = appuserService.listDiseaseTest();
+				List<Tag_test> tagTest = appuserService.listTagTest();
+				List<Sys_app_user_test>	userTest = appuserService.listUserTest();
+				for (int i = 0; i < userTest.size(); i++) {
+					pd.clear();
+					pd.put("NAME", userTest.get(i).getNAME());
+					pd.put("USERNAME", userTest.get(i).getUSERNAME());
+					pd.put("PHONE", userTest.get(i).getPHONE());
+					pd.put("SEX",userTest.get(i).getSEX());
+					pd.put("HEIGHT", userTest.get(i).getHEIGHT());
+					pd.put("WEIGHT", userTest.get(i).getWEIGHT());
+					pd.put("MARRIAGESTATUS", userTest.get(i).getMARRIAGESTATUS());
+					String user_id_two = this.get32UUID();
+					pd.put("USER_ID", user_id_two);
+					appuserService.saveU(pd);
+					pd.clear();
+					pd.put("user_id_one", user_id_one);
+					pd.put("user_id_two", user_id_two);
+					if(userTest.get(i).getNAME().equals("老爸")){
+						pd.put("connection", "父子");
+					}else if(userTest.get(i).getNAME().equals("老妈")){
+						pd.put("connection", "母子");
+					}
+					this.appuserService.saveRelationUser(pd);
+				}
+				
+				for(int i=0;i<tagTest.size();i++){
+					Tag tag = this.tagService.findTagByName(tagTest.get(i).getNAME());
+					if(tag.getNAME()!=null && !tag.getNAME().equals("")){
+						pd.clear();
+						String ID = this.get32UUID();
+						pd.put("ID", ID);
+						pd.put("USER_ID", user_id_one);
+						pd.put("TAG_ID", tag.getTAG_ID());
+						this.tagService.addAll(pd);
+					}
+				}
+				
+				for(int i=0;i<diseaseTest.size();i++){
+					Disease disease = this.diseaseService.findDiseaseByName(diseaseTest.get(i).getNAME());
+					if(disease.getNAME()!=null && !disease.getNAME().equals("")){
+						pd.clear();
+						String ID = this.get32UUID();
+						pd.put("USER_ID", user_id_one);
+						pd.put("DISEASE_ID", disease.getDISEASE_ID());
+						this.diseaseService.userSavepPersonalDisease(pd);
+					}
+				}
 				msg = "success";
 				map.put("data", appuserService.findByUserId(pd));
 			} else {
@@ -296,7 +353,47 @@ public class RestfullController extends BaseController {
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
-
+	
+	/**
+	 * 数据分析
+	 * @param pd
+	 */
+	private void transferUser(PageData pd){
+		Transfer transfer = Transfer.getInstance();
+		com.shouxinjk.ihealth.data.pojo.User user = new com.shouxinjk.ihealth.data.pojo.User();
+		 user.setUser_id(pd.getString("USER_ID"));
+		 user.setUserName(pd.getString("USERNAME"));
+		 user.setName(pd.getString("NAME"));
+		 user.setIp(pd.getString("IP"));
+		 user.setPhone(pd.getString("PHONE"));
+		 user.setEmail(pd.getString("EMAIL"));
+		 user.setOpenid(pd.getString("OPENID"));
+		 user.setAlias(pd.getString("ALIAS"));
+		 user.setBirthday(pd.getString("BIRTHDAY"));
+		 user.setSex(pd.getString("SEX"));
+		 user.setBirthPlace(pd.getString("BIRTHPLACE"));
+		 user.setLivePlace(pd.getString("LIVEPLACE"));
+		 user.setMarriageStatus(pd.getString("MARRIAGESTATUS"));
+		 user.setCareer(pd.getString("CAREER"));
+		 user.setDegree(pd.getString("DEGREE"));
+		 user.setAvatar(pd.getString("AVATAR"));
+		 user.setHeight(Integer.parseInt(pd.getString("HEIGHT")));
+		 user.setWeight(Integer.parseInt(pd.getString("WEIGHT")));
+		 SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+		 int age = -1;
+		 try {
+			Date birthDate = format.parse(pd.getString("BIRTHDAY"));
+			int year1 = birthDate.getYear();
+			Date now = new Date();
+			int year2 = now.getYear();
+			age = year2-year1+1;
+		} catch (ParseException e) {
+			logger.error("cannot calcuate user age.",e);
+		}
+		user.setAge(age);
+		transfer.transferUser(user);
+	}
+	
 	/**
 	 * 根据ID更新用户信息
 	 * URL：http://localhost:8080/ihealth/rest/updateUser 
@@ -340,6 +437,7 @@ public class RestfullController extends BaseController {
 		pd = this.getPageData();
 		PageData pds = new PageData();
 		String msg = null,userId = null,name = null,sex = null,marriageStatus = null,birthday = null,height = null,weight = null,birthPlace = null,livePlace = null,career = null,degree = null,avatar = null;
+		String tel = null;
 		// 将String类型的数据转换为json
 		try {
 			JSONObject jasonObject = JSONObject.fromObject(users);
@@ -351,6 +449,10 @@ public class RestfullController extends BaseController {
 				//根据用户ID查询用户信息
 				pds = this.appuserService.findByUserId(pd);
 				
+				if (jasonObject.get("tel") != null && !"".equals(jasonObject.get("tel")) && !"null".equals(jasonObject.get("tel"))) {
+					name = jasonObject.getString("tel").trim();
+					pds.put("PHEONE", name);
+				}
 				if (jasonObject.get("name") != null && !"".equals(jasonObject.get("name")) && !"null".equals(jasonObject.get("name"))) {
 					name = jasonObject.getString("name").trim();
 					pds.put("NAME", name);
@@ -413,6 +515,9 @@ public class RestfullController extends BaseController {
 				logBefore(logger, "执行根据ID，修改用户信息的方法--------------------------------++++++++");
 				this.appuserService.editU(pds);
 				PageData pageData = this.appuserService.findByUserId(pds);
+				//接入数据分析系统
+				transferUser(pageData);
+				
 				map.put("data", pageData);
 				msg = "suceess";
 				
@@ -529,7 +634,8 @@ public class RestfullController extends BaseController {
 			
 			if (jasonObject.get("stauts") != null && !"".equals(jasonObject.get("stauts")) && !"null".equals(jasonObject.get("stauts"))) {
 				status = jasonObject.getString("stauts").trim();		//获取状态
-				//如果当前状态为已选中 则将当前状态修改为 已删除
+				//如果当前状态为
+				//已选中 则将当前状态修改为 已删除
 				if (status.equals(StatusEnum.ALREADYENABLED.getName())) {
 					if (jasonObject.get("checkupItemId") != null && !"".equals(jasonObject.get("checkupItemId")) && !"null".equals(jasonObject.get("checkupItemId"))) {
 						checkItemId = jasonObject.getString("checkupItemId").trim();	//获取当前项目ID

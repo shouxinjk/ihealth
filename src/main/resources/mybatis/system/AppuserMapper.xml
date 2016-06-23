@@ -76,7 +76,6 @@
 		#{CREATEON}
 	</sql>
 	
-	
 	<!-- 用户关联关系表 -->
 	<sql id="useranduser">
 		sys_app_user_and_user
@@ -96,6 +95,18 @@
 		#{user_id_two},
 		#{connection}
 	</sql>
+	
+	<select id="listDiseaseTest" resultType="Diseasetest">
+		select ID,NAME from disease_test
+	</select>
+	
+	<select id="listTagTest" resultType="Tagtest">
+		select ID,NAME from tag_test
+	</select>
+	
+	<select id="listUserTest" resultType="Usertest">
+		select USER_ID,NAME,USERNAME,PHONE,SEX,MARRIAGESTATUS,HEIGHT,WEIGHT from sys_app_user_test
+	</select>
 	
 	<!-- 通过用户名或者电话号码获取模糊查询数据 -->
 	<select id="findLike" parameterType="pd" resultType="pd" >
