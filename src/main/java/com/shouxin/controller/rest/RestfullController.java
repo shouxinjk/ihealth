@@ -180,8 +180,9 @@ public class RestfullController extends BaseController {
 				}
 				
 				for(int i=0;i<tagTest.size();i++){
+					System.err.println(tagTest.get(i)+"++++++++++++++++++++++++++++++++++++++");
 					Tag tag = this.tagService.findTagByName(tagTest.get(i).getNAME());
-					if(tag.getNAME()!=null && !tag.getNAME().equals("")){
+					if(tag.getNAME()!=null){
 						pd.clear();
 						String ID = this.get32UUID();
 						pd.put("ID", ID);
@@ -193,7 +194,7 @@ public class RestfullController extends BaseController {
 				
 				for(int i=0;i<diseaseTest.size();i++){
 					Disease disease = this.diseaseService.findDiseaseByName(diseaseTest.get(i).getNAME());
-					if(disease.getNAME()!=null && !disease.getNAME().equals("")){
+					if(disease.getNAME()!=null){
 						pd.clear();
 						String ID = this.get32UUID();
 						pd.put("USER_ID", user_id_one);
