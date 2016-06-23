@@ -974,7 +974,7 @@ public class RestfullController extends BaseController {
 			msg = "error";
 			logBefore(logger, "程序异常--请检查参数列表");
 		}
-		
+		System.out.println(msg+"aaaaaaaaaaaaaaaaaaaaaaa+++++++++++++");
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
