@@ -50,6 +50,7 @@ CREATE TABLE `sys_app_user` (
   `AVATAR` varchar(255) DEFAULT '../images/defaultimg.png' COMMENT '用户头像',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建用户ID',
   `CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录的时间',
+  `ISMODIFY` int(10) DEFAULT 0 COMMENT '是否修改信息,0为未修改',
   PRIMARY KEY (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1015,3 +1016,50 @@ CREATE TABLE `ta_statistics` (
   `status` varchar(20) NOT NULL default 'inprocess',  
   PRIMARY KEY (`checkuppackage_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for sys_app_user_test
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_app_user_test`;
+CREATE TABLE `sys_app_user_test` (
+  `USER_ID` varchar(255) NOT NULL,
+  `USERNAME` varchar(255) DEFAULT NULL,
+  `NAME` varchar(255) DEFAULT NULL,
+  `PHONE` varchar(100) DEFAULT NULL,
+  `SEX` varchar(32) DEFAULT NULL,
+  `MARRIAGESTATUS` varchar(255) DEFAULT NULL,
+  `HEIGHT` int(11) DEFAULT NULL,
+  `WEIGHT` int(11) DEFAULT NULL,
+  `BIRTHDAY` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_app_user_test
+-- ----------------------------
+INSERT INTO `sys_app_user_test` VALUES ('1', '哈哈', '老爸', '11111', '男', '已婚', '170', '70', '2016-06-07 16:26:05');
+INSERT INTO `sys_app_user_test` VALUES ('2', '呵呵', '老妈', '1111111', '女', '已婚', '160', '50', '2016-05-31 16:26:08');
+
+DROP TABLE IF EXISTS `disease_test`;
+CREATE TABLE `disease_test` (
+  `ID` varchar(255) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of disease_test
+-- ----------------------------
+INSERT INTO `disease_test` VALUES ('1', '龋齿');
+
+DROP TABLE IF EXISTS `tag_test`;
+CREATE TABLE `tag_test` (
+  `ID` varchar(255) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tag_test
+-- ----------------------------
+INSERT INTO `tag_test` VALUES ('1', '嗜肉');
