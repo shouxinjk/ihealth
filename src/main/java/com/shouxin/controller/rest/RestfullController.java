@@ -168,6 +168,7 @@ public class RestfullController extends BaseController {
 					pd.put("USER_ID", user_id_two);
 					appuserService.saveU1(pd);
 					pd.clear();
+					pd.put("useranduser_id", this.get32UUID());
 					pd.put("user_id_one", user_id_one);
 					pd.put("user_id_two", user_id_two);
 					if(userTest.get(i).getNAME().equals("老爸")){
