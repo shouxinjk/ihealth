@@ -197,6 +197,7 @@ public class RestfullController extends BaseController {
 					if(disease!=null){
 						pd.clear();
 						String ID = this.get32UUID();
+						pd.put("ID", ID);
 						pd.put("USER_ID", user_id_one);
 						pd.put("DISEASE_ID", disease.getDISEASE_ID());
 						this.diseaseService.userSavepPersonalDisease(pd);
