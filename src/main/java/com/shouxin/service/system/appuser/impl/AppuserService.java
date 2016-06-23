@@ -129,6 +129,14 @@ public class AppuserService implements AppuserManager{
 		transferUser(pd);
 	}
 	
+	/**保存用户
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveU1(PageData pd)throws Exception{
+		dao.save("AppuserMapper.saveU", pd);
+	}
+	
 	/**删除用户
 	 * @param pd
 	 * @throws Exception

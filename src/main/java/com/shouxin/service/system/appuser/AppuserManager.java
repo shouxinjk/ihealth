@@ -56,6 +56,12 @@ public interface AppuserManager {
 	 */
 	public void saveU(PageData pd)throws Exception;
 	
+	/**保存用户
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveU1(PageData pd)throws Exception;
+	
 	/**删除用户
 	 * @param pd
 	 * @throws Exception
