@@ -102,8 +102,8 @@ public class AppuserService implements AppuserManager{
 		 user.setCareer(pd.getString("CAREER"));
 		 user.setDegree(pd.getString("DEGREE"));
 		 user.setAvatar(pd.getString("AVATAR"));
-		 user.setHeight(Integer.parseInt(pd.getString("HEIGHT")));
-		 user.setWeight(Integer.parseInt(pd.getString("WEIGHT")));
+		 user.setHeight(Integer.parseInt(pd.get("HEIGHT").toString()));
+		 user.setWeight(Integer.parseInt(pd.get("WEIGHT").toString()));
 		 SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
 		 int age = -1;
 		 try {
