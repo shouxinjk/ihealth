@@ -317,6 +317,24 @@ public class AppuserService implements AppuserManager{
 	public List<Sys_app_user_test> listUserTest() throws Exception {
 		return (List<Sys_app_user_test>) dao.findForList("AppuserMapper.listUserTest", null);
 	}
+
+	/**
+	 * 查询该用户是否修改基本信息
+	 * @return
+	 * @throws Exception
+	 */
+	public PageData findIsModifyByUserId(String USER_ID) throws Exception {
+		return (PageData) dao.findForObject("AppuserMapper.findIsModifyByUserId", USER_ID);
+	}
+	
+	/**
+	 * 修改用户ismodify状态为已修改状态
+	 * @param USER_ID
+	 * @throws Exception
+	 */
+	public void editUserIsModify(String USER_ID) throws Exception {
+		dao.update("AppuserMapper.editUserIsModify", USER_ID);
+	}
 	
 }
 

@@ -78,7 +78,30 @@ public class RestfullController extends BaseController {
 	private String url = "http://localhost:8983/solr/gettingstarted";
 	
 	SolrManagerImpl smi = new SolrManagerImpl(url);
-
+	
+	
+	/**
+	 * 根据用户id查询该用户是否修改过基本信息
+	 * @param userID 
+	 * @return pd{
+	 * 			ISMODIFY  值为1时进行过修改， 值为0时未修改过
+	 * 	}
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "/findIsModifyByUserId", method = RequestMethod.POST)
+	@ResponseBody
+	public Object findIsModifyByUserId(@RequestBody(required = true) String userID) throws Exception {
+		logBefore(logger, "通过用户id获取用户信息判断该用户是否修改基本休息+++++++++++++start");
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject jasonObject = JSONObject.fromObject(userID);
+		String userId = jasonObject.getString("userID").trim();
+		pd = appuserService.findIsModifyByUserId(userId);
+		map.put("data", pd);
+		map.put("result", "successw");
+		return AppUtil.returnObject(new PageData(), map);
+	}
 	
 	/**
 	 * 用户注册，通过手机号码
@@ -1284,6 +1307,7 @@ public class RestfullController extends BaseController {
 					try {
 						this.appuserService.saveRelationUser(pd);
 						logger.debug("保存用户关系成功！");
+						this.appuserService.editUserIsModify(userId);
 						msg = "success";
 					} catch (Exception e) {
 						logger.debug("程序出错！");

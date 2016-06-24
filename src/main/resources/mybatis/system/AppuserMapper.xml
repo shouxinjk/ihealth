@@ -396,6 +396,11 @@
 			USER_ID = #{USER_ID}
 	</delete>
 	
+	<update id="editUserIsModify" parameterType="java.lang.String">
+		update <include refid="tableName"></include>
+		set ISMODIFY = 1 where USER_ID = #{USER_ID}
+	</update>
+	
 	<!-- 修改 -->
 	<update id="editU" parameterType="pd">
 		update  <include refid="tableName"></include>
@@ -423,7 +428,8 @@
 			OPENID					= #{OPENID},
 			AVATAR					= #{AVATAR},
 			CREATEBY				= #{CREATEBY},
-			CREATEON				= #{CREATEON}
+			CREATEON				= #{CREATEON},
+			ISMODIFY				= 1
 		<if test="PASSWORD != null and PASSWORD != ''">
 			,PASSWORD				= #{PASSWORD}
 		</if>
@@ -448,6 +454,11 @@
 				or OPENID = #{OPENID}
 			</if>
 		</where>
+	</select>
+	
+	<!-- 查询该用户是否修改基本信息 -->
+	<select id="findIsModifyByUserId" parameterType="java.lang.String" resultType="pd">
+		select ISMODIFY from <include refid="tableName"></include> where USER_ID = #{USER_ID}
 	</select>
 	
 	<select id="findByUserId" parameterType="pd" resultType="pd">

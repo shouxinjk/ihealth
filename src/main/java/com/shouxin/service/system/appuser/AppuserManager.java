@@ -256,5 +256,19 @@ public interface AppuserManager {
 	 * @throws Exception
 	 */
 	public List<Sys_app_user_test> listUserTest() throws Exception;
+	
+	/**
+	 * 查询该用户是否修改基本信息
+	 * @return
+	 * @throws Exception
+	 */
+	public PageData findIsModifyByUserId(String USER_ID) throws Exception;
+	
+	/**
+	 * 修改用户ismodify状态为已修改状态
+	 * @param USER_ID
+	 * @throws Exception
+	 */
+	public void editUserIsModify(String USER_ID)throws Exception;
 }
 

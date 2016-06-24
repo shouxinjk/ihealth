@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.service.admin.tag.TagManager;
 import com.shouxin.service.admin.tagcategory.TagCategoryManager;
+import com.shouxin.service.system.appuser.AppuserManager;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.PageData;
@@ -31,6 +32,8 @@ public class TagRestController extends BaseController {
 	private TagManager tagService;
 	@Resource(name = "tagcategoryService")
 	private TagCategoryManager tagcategoryService;
+	@Resource(name="appuserService")
+	private AppuserManager appuserService;
 
 	/**
 	 * 查询所有的标签分类 url
@@ -175,6 +178,7 @@ public class TagRestController extends BaseController {
 				tagService.addAll(pd);
 				msg = "success";
 			}
+			this.appuserService.editUserIsModify(userID);
 		} else {
 			msg = "no";
 		}

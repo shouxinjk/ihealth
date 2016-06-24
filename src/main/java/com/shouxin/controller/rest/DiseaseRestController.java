@@ -19,6 +19,7 @@ import com.shouxin.service.admin.disease.DiseaseManager;
 import com.shouxin.service.admin.diseasecategory.DiseaseCategoryManager;
 import com.shouxin.service.admin.tag.TagManager;
 import com.shouxin.service.admin.tagcategory.TagCategoryManager;
+import com.shouxin.service.system.appuser.AppuserManager;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.PageData;
 import com.shouxinjk.ihealth.data.Transfer;
@@ -34,7 +35,8 @@ public class DiseaseRestController extends BaseController {
 	private DiseaseManager diseaseService;
 	@Resource(name = "diseasecategoryService")
 	private DiseaseCategoryManager diseasecategoryService;
-
+	@Resource(name="appuserService")
+	private AppuserManager appuserService;
 	/**
 	 * 查询所有的疾病
 	 * url : http://localhost:8080/ihealth/restdisease/listAllDisease
@@ -230,7 +232,7 @@ public class DiseaseRestController extends BaseController {
 			msg = "no";
 		}
 		map.put("msg", msg);
-		
+		this.appuserService.editUserIsModify(userID);
 		//qchzhu: hook analysis interface
 		Transfer transfer = Transfer.getInstance();
 		transfer.transferUserDisease(userDisease);
