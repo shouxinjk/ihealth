@@ -90,7 +90,7 @@ public class RestfullController extends BaseController {
 	 */
 	@RequestMapping(value = "/findIsModifyByUserId", method = RequestMethod.POST)
 	@ResponseBody
-	public Object findIsModifyByUserId(@RequestBody(required = true) String userID) throws Exception {
+	public Object findIsModifyByUserId(@RequestBody String userID) throws Exception {
 		logBefore(logger, "通过用户id获取用户信息判断该用户是否修改基本休息+++++++++++++start");
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		PageData pd = new PageData();
@@ -99,7 +99,7 @@ public class RestfullController extends BaseController {
 		String userId = jasonObject.getString("userID").trim();
 		pd = appuserService.findIsModifyByUserId(userId);
 		map.put("data", pd);
-		map.put("result", "successw");
+		map.put("result", "success");
 		return AppUtil.returnObject(new PageData(), map);
 	}
 	
