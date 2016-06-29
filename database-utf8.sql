@@ -50,10 +50,10 @@ CREATE TABLE `sys_app_user` (
   `AVATAR` varchar(255) DEFAULT '../images/defaultimg.png' COMMENT '用户头像',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建用户ID',
   `CREATEON` timestamp NULL DEFAULT NULL COMMENT '创建该记录的时间',
-  `ISMODIFY` int(10) DEFAULT 0 COMMENT '是否修改信息,0为未修改',
+  `ISMODIFY` int(11) DEFAULT '0' COMMENT '是否是修改过个人基本信息的用户，1为修改过，0为未修改',
+  `APPKEY` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 DROP TABLE IF EXISTS `sys_app_user_and_user`;
 CREATE TABLE `sys_app_user_and_user` (
@@ -1063,3 +1063,38 @@ CREATE TABLE `tag_test` (
 -- Records of tag_test
 -- ----------------------------
 INSERT INTO `tag_test` VALUES ('1', '嗜肉');
+
+-- ----------------------------
+-- Table structure for tb_enterprise
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_enterprise`;
+CREATE TABLE `tb_enterprise` (
+  `ENTERPRISE_ID` varchar(255) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+  `ABBREVIATION` varchar(255) DEFAULT NULL COMMENT '简称',
+  `LOGO` varchar(255) DEFAULT NULL,
+  `TELEPHONE` varchar(20) DEFAULT NULL COMMENT '电话',
+  `LOCATION` varchar(255) DEFAULT NULL COMMENT '地理位置',
+  `STATUS` set('新建','审核通过','审核失败') DEFAULT '新建',
+  `POSITION` varchar(255) DEFAULT NULL COMMENT '经纬度位置',
+  `BUSINESSLICENSE` varchar(255) DEFAULT NULL COMMENT '营业执照',
+  `PARENTID` varchar(255) DEFAULT NULL,
+  `APPKEY` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ENTERPRISE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for tb_enterpriseadmin
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_enterpriseadmin`;
+CREATE TABLE `tb_enterpriseadmin` (
+  `ENTERPRISEADMIN_ID` varchar(255) NOT NULL,
+  `DEPARTMENT` varchar(255) DEFAULT NULL,
+  `TITLE` varchar(255) DEFAULT NULL,
+  `SYS_USER_ID` varchar(255) DEFAULT NULL,
+  `ENTERPRISE_ID` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ENTERPRISEADMIN_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
