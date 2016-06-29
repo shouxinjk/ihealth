@@ -91,5 +91,12 @@ public class CheckupPackageService implements CheckupPackageManager{
 		return (List<CheckupPackage>) dao.findForList("CheckupPackageMapper.findByUserId", id);
 	}
 	
+	/**
+	 * 根据企业appkey和用户电话查询体检套餐信息
+	 */
+	public PageData findByPhone(PageData pd) throws Exception {
+		return (PageData) dao.findForObject("CheckupPackageMapper.findByPhone", pd);
+	}
+	
 }
 

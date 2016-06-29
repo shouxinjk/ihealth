@@ -175,6 +175,7 @@
 		where user_id=#{USER_ID}
 	</delete>
 	
+	<!-- 根据标签名称查询标签信息 -->
 	<select id="findTagByName" parameterType="java.lang.String" resultType="Tag">
 		select TAG_ID,NAME from admin_tag where NAME=#{NAME} 
 	</select>

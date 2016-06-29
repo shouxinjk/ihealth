@@ -153,6 +153,14 @@ public class CheckupItemService implements CheckupItemManager{
 		
 		return (List<PageData>) dao.findForList("CheckupItemMapper.findlistPage", page);
 	}
+
+	/**
+	 * 通过企业appkey和用户电话查询体检项目
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> findCIByPhone(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("CheckupItemMapper.findCIByPhone", pd);
+	}
 	
 }
 

@@ -76,6 +76,32 @@
 		#{CREATEON}
 	</sql>
 	
+	<sql id="enterpriseUserFild">
+		USER_ID,
+		NAME,
+		BIRTHDAY,
+		SEX,
+		PHONE,
+		MARRIAGESTATUS,
+		HEIGHT,
+		WEIGHT,
+		CAREER,
+		BIRTHPLACE,
+		LIVEPLACE
+	</sql>
+	<sql id="enterpriseUserValue">
+		#{NAME},
+		#{BIRTHDAY},
+		#{SEX},
+		#{PHONE},
+		#{MARRIAGESTATUS},
+		#{HEIGHT},
+		#{WEIGHT},
+		#{CAREER},
+		#{BIRTHPLACE},
+		#{LIVEPLACE}
+	</sql>
+	
 	<!-- 用户关联关系表 -->
 	<sql id="useranduser">
 		sys_app_user_and_user
@@ -95,6 +121,95 @@
 		#{user_id_two},
 		#{connection}
 	</sql>
+	
+	<!-- 批量添加企业用户 -->
+	<insert id="saveEnterpriseUserAll" parameterType="pd">
+		insert into <include refid="tableName"></include>(<include refid="enterpriseUserFild"></include>) values
+		<foreach item="item" index="index" collection="list" separator="," close=";">
+			(#{item.USER_ID},#{item.NAME},
+			 	#{item.BIRTHDAY},
+				#{item.SEX},
+				#{item.PHONE},
+				#{item.MARRIAGESTATUS},
+				#{item.HEIGHT},
+				#{item.WEIGHT},
+				#{item.CAREER},
+				#{item.BIRTHPLACE},
+				#{item.LIVEPLACE})
+		</foreach>
+	</insert>
+	
+	<!-- 添加单个企业用户 -->
+	<insert id="saveEnterpriseUser" parameterType="pd">
+		insert into <include refid="tableName"></include>(<include refid="enterpriseUserFild"></include>) values
+			(	#{USER_ID},
+				#{NAME},
+			 	#{BIRTHDAY},
+				#{SEX},
+				#{PHONE},
+				#{MARRIAGESTATUS},
+				#{HEIGHT},
+				#{WEIGHT},
+				#{CAREER},
+				#{BIRTHPLACE},
+				#{LIVEPLACE}
+			)
+	</insert>
+	
+	<!--修改企业用户 -->
+	<update id="updateEnterpriseUser" parameterType="pd">
+			update <include refid="tableName"></include> set 	
+				NAME = #{NAME},
+			 	BIRTHDAY = #{BIRTHDAY},
+				SEX = #{SEX},
+				PHONE = #{PHONE},
+				MARRIAGESTATUS = #{MARRIAGESTATUS},
+				HEIGHT = #{HEIGHT},
+				WEIGHT = #{WEIGHT},
+				CAREER = #{CAREER},
+				BIRTHPLACE = #{BIRTHPLACE},
+				LIVEPLACE = #{LIVEPLACE}
+				 where USER_ID = #{USER_ID}
+	</update>
+	
+	<!--根据电话查询单个企业用户 -->
+	<select id="findEnterpriseUserByPhone" parameterType="java.lang.String" resultType="java.lang.String">
+			select USER_ID from sys_app_user where PHONE = #{PHONE}
+	</select>
+	
+	<!-- 批量添加企业用户 标签信息-->
+	<insert id="saveEnterpriseUserTag" parameterType="pd">
+		insert into sys_app_user_and_tag(id,user_id,tag_id) values
+		<foreach item="item" index="index" collection="list" separator="," close=";">
+			(#{item.ID},#{item.USER_ID},#{item.TAG_ID})
+		</foreach>
+	</insert>
+	
+	<!-- 批量添加企业用户个人疾病信息 -->
+	<insert id="saveEnterpriseUserDisease" parameterType="pd">
+		insert into sys_app_user_and_personal_disease(id,user_id,disease_id) values
+		<foreach item="item" index="index" collection="list" separator="," close=";">
+			(#{item.ID},#{item.USER_ID},#{item.DISEASE_ID})
+		</foreach>
+	</insert>
+	
+	
+	<!-- 批量添加企业用户家族疾病信息 -->
+	<insert id="saveEnterpriseUserDiseasefamily" parameterType="pd">
+		insert into sys_app_user_and_family_disease(id,user_id,disease_id) values
+		<foreach item="item" index="index" collection="list" separator="," close=";">
+			(#{item.ID},#{item.USER_ID},#{item.DISEASE_ID})
+		</foreach>
+	</insert>
+	
+	
+	<!-- 批量添加企业用户关注疾病信息 -->
+	<insert id="saveEnterpriseUserDiseasefocus" parameterType="pd">
+		insert into sys_app_user_and_focus_disease(id,user_id,disease_id) values
+		<foreach item="item" index="index" collection="list" separator="," close=";">
+			(#{item.ID},#{item.USER_ID},#{item.DISEASE_ID})
+		</foreach>
+	</insert>
 	
 	<select id="listDiseaseTest" resultType="Diseasetest">
 		select ID,NAME from disease_test
@@ -128,7 +243,7 @@
 	<select id="findUserCastUser" parameterType="pd" resultType="pd">
 		SELECT 
 		  *
-		FROM
+		FROM 
 		  sys_app_user u,
 		  sys_app_user_and_user uu 
 		WHERE u.`USER_ID` = uu.`user_id_two`  
@@ -153,6 +268,8 @@
 			<include refid="userValue"></include>
 		)
 	</insert>
+	
+	
 	
 	<!-- 删除我关心的人 -->
 	<delete id="deleteRelationUser" parameterType="pd" flushCache="false">

@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.DiseaseAndUser;
 import com.shouxin.entity.admin.Disease_test;
+import com.shouxin.entity.admin.TagAndUser;
 import com.shouxin.entity.admin.Tag_test;
 import com.shouxin.entity.system.Sys_app_user_test;
 import com.shouxin.service.system.appuser.AppuserManager;
@@ -334,6 +336,61 @@ public class AppuserService implements AppuserManager{
 	 */
 	public void editUserIsModify(String USER_ID) throws Exception {
 		dao.update("AppuserMapper.editUserIsModify", USER_ID);
+	}
+	
+	/**
+	 * 批量添加企业用户
+	 */
+	public void saveEnterpriseUserAll(List<PageData> pd) throws Exception {
+		dao.save("AppuserMapper.saveEnterpriseUserAll", pd);
+	}
+	/**
+	 * 批量添加疾病信息
+	 */
+	public void saveEnterpriseUserDisease(List<DiseaseAndUser> dau) throws Exception {
+		dao.save("AppuserMapper.saveEnterpriseUserDisease", dau);
+	}
+	/**
+	 * 批量添加标签信息
+	 */
+	public void saveEnterpriseUserTag(List<TagAndUser> tau) throws Exception {
+		dao.save("AppuserMapper.saveEnterpriseUserTag", tau);
+	}
+
+	public void saveEnterpriseUserDiseasefamily(List<DiseaseAndUser> dau) throws Exception {
+		dao.save("AppuserMapper.saveEnterpriseUserDiseasefamily", dau);
+	}
+
+	public void saveEnterpriseUserDiseasefocus(List<DiseaseAndUser> dau) throws Exception {
+		dao.save("AppuserMapper.saveEnterpriseUserDiseasefocus", dau);
+	}
+	
+	/***
+	 * 根据电话号查询企业用户id
+	 * @param PHONE
+	 * @return
+	 * @throws Exception
+	 */
+	public String findEnterpriseUserByPhone(String PHONE) throws Exception {
+		return (String) dao.findForObject("AppuserMapper.findEnterpriseUserByPhone", PHONE);
+	}
+
+	/**
+	 * 修改企业用户信息
+	 * @param USER_ID
+	 * @throws Exception
+	 */
+	public void updateEnterpriseUser(PageData pd) throws Exception {
+		dao.update("AppuserMapper.updateEnterpriseUser", pd);
+	}
+
+	/**
+	 * 添加单个企业用户
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveEnterpriseUser(PageData pd) throws Exception {
+		dao.save("AppuserMapper.saveEnterpriseUser", pd);
 	}
 	
 }

@@ -118,5 +118,15 @@ public interface CheckupItemManager{
 	
 	
 	public List<PageData> findlistPage(Page page)throws Exception;
+	
+	/**
+	 * 根据用户的电话查询体检项目
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findCIByPhone(PageData pd) throws Exception;
+	
+	
 }
 

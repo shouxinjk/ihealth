@@ -918,7 +918,7 @@ public class RestfullController extends BaseController {
 		
 		// 将String类型的数据转换为json
 		JSONObject jasonObject = JSONObject.fromObject(u);
-		System.out.println(jasonObject.getString("userId").trim()+"==============");
+		System.out.println(jasonObject.getString("userId").trim());
 		try {
 			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId")) && !"null".equals(jasonObject.get("userId"))) {
 				userId = jasonObject.getString("userId").trim();

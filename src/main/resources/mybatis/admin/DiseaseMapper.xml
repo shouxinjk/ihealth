@@ -131,8 +131,9 @@
 		DISEASE_ID = #{DISEASE_ID}
 	</select>
 	
+	<!-- 根据疾病名称获取疾病信息 -->
 	<select id="findDiseaseByName" parameterType="java.lang.String" resultType="Disease">
-		select DISEASE_ID,NAME from admin_disease where NAME = #{NAME} 
+		select DISEASE_ID,NAME,ISINHERITABLE,ISHIGHINCIDENCE from admin_disease where NAME = #{NAME} 
 	</select>
 
 	<!-- 列表 -->

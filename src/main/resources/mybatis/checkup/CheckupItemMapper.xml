@@ -76,7 +76,6 @@
 		riskDefine,
 		startage,
 		endage
-		
 	</sql>
 	
 	
@@ -254,6 +253,25 @@
 			</if>
 		</where>
 	</select>
+	
+	<!-- 根据用户电话号码查询所有体检项目分组 -->
+	<select id="findCIByPhone"  parameterType="pd" resultType="pd">
+		SELECT 
+			ci.SUBGROUP as SUBGROUP,
+			ci.NAME as NAME,
+			ci.FEATURES as FEATURES,
+			ci.FREQUENCY as FREQUENCY,
+			ci.DESCRIPTION as DESCRIPTION,
+		FROM
+		  tb_checkupitem ci,sys_app_user su 
+		<where>
+			and ci.USER_ID = su.USER_ID and su.APPKEY=#{APPKEY} 
+			<if test="PHONE != null and PHONE != ''">
+				and su.PHONE = #{PHONE}
+			</if>
+		</where>
+	</select>
+	
 	
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">

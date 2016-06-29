@@ -3,7 +3,9 @@ package com.shouxin.service.system.appuser;
 import java.util.List;
 
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.DiseaseAndUser;
 import com.shouxin.entity.admin.Disease_test;
+import com.shouxin.entity.admin.TagAndUser;
 import com.shouxin.entity.admin.Tag_test;
 import com.shouxin.entity.system.Sys_app_user_test;
 import com.shouxin.util.PageData;
@@ -270,5 +272,59 @@ public interface AppuserManager {
 	 * @throws Exception
 	 */
 	public void editUserIsModify(String USER_ID)throws Exception;
+	
+	/**
+	 * 批量添加企业用户
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveEnterpriseUserAll(List<PageData> pd)throws Exception;
+	
+	/**
+	 * 批量添加企业用户的个人疾病信息
+	 * @param dau
+	 * @throws Exception
+	 */
+	public void saveEnterpriseUserDisease(List<DiseaseAndUser> dau) throws Exception;
+	/**
+	 * 批量添加企业用户的家族疾病信息
+	 * @param dau
+	 * @throws Exception
+	 */
+	public void saveEnterpriseUserDiseasefamily(List<DiseaseAndUser> dau) throws Exception;
+	/**
+	 * 批量添加企业用户的关注疾病信息
+	 * @param dau
+	 * @throws Exception
+	 */
+	public void saveEnterpriseUserDiseasefocus(List<DiseaseAndUser> dau) throws Exception;
+	/**
+	 * 批量添加企业用户的标签信息
+	 * @param tau
+	 * @throws Exception
+	 */
+	public void saveEnterpriseUserTag(List<TagAndUser> tau) throws Exception;
+	
+	/***
+	 * 根据电话号查询企业用户id
+	 * @param PHONE
+	 * @return
+	 * @throws Exception
+	 */
+	public String findEnterpriseUserByPhone(String PHONE)throws Exception;
+	
+	/**
+	 * 修改企业用户信息
+	 * @param USER_ID
+	 * @throws Exception
+	 */
+	public void updateEnterpriseUser(PageData pd)throws Exception;
+	
+	/**
+	 * 添加单个企业用户
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveEnterpriseUser(PageData pd)throws Exception;
 }
 

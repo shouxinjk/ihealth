@@ -107,6 +107,20 @@
 		</where>
 	</select>
 	
+	<!-- 通过PHONE获取数据 -->
+	<select id="findByPhone" parameterType="pd" resultType="pd" >
+		select 
+		cp.STATUS as STATUS
+		from 
+		TB_CHECKUPPACKAGE cp , sys_app_user su
+		<where>
+			and cp.USER_ID = SU.USER_ID and su.APPKEY = #{APPKEY} 
+			<if test="PHONE != null and PHONE != ''">
+				and su.PHONE = #{PHONE}
+			</if>
+		</where>
+	</select>
+	
 	
 	<!-- 通过用户ID获取体检套餐信息 -->
 	<select id="findByUserId" parameterType="int" resultMap="resultOfUser">
