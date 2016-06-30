@@ -630,7 +630,7 @@ public class RestfullController extends BaseController {
 		}else{
 			msg = "paramError";
 		}
-		if(msg.equals("succcess")){
+		if(msg.equals("success")){
 			
 			this.appuserService.updatePrivacy(pd);
 		}
@@ -653,7 +653,7 @@ public class RestfullController extends BaseController {
 		pd = this.getPageData();
 		JSONObject jo = JSONObject.fromObject(userId);
 		String USERID_ONE = null,USERID_TWO=null;
-		int isprivacy = 0;
+		int ismodify = 0;
 		if(jo.get("userID_one")!=null && !jo.getString("userID_one").equals("")){
 			USERID_ONE = jo.getString("userID_one");
 			pd.put("USERID_ONE", USERID_ONE);
@@ -666,13 +666,13 @@ public class RestfullController extends BaseController {
 		}else{
 			msg = "paramError";
 		}
-		if(jo.get("isprivacy")!=null && !jo.getString("isprivacy").equals("")){
-			isprivacy = Integer.parseInt(jo.getString("isprivacy"));
-			pd.put("ISPRIVACY", isprivacy);
+		if(jo.get("ismodify")!=null && !jo.getString("ismodify").equals("")){
+			ismodify = Integer.parseInt(jo.getString("ismodify"));
+			pd.put("ISMODIFY", ismodify);
 		}else{
 			msg = "paramError";
 		}
-		if(msg.equals("succcess")){
+		if(msg.equals("success")){
 			this.appuserService.updateModify(pd);
 		}
 		map.put("result", msg);
