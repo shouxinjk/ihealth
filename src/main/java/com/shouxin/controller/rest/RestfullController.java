@@ -597,7 +597,7 @@ public class RestfullController extends BaseController {
 	}
 	
 	/**
-	 * 修改关心我的人是否修改我的信息
+	 * 修改关心我的人是否查看我的信息
 	 * @param userId
 	 * @return
 	 * @throws Exception
@@ -611,6 +611,7 @@ public class RestfullController extends BaseController {
 		pd = this.getPageData();
 		JSONObject jo = JSONObject.fromObject(userId);
 		String USERID_ONE = null,USERID_TWO=null;
+		int isprivacy = 0;
 		if(jo.get("userID_one")!=null && !jo.getString("userID_one").equals("")){
 			USERID_ONE = jo.getString("userID_one");
 			pd.put("USERID_ONE", USERID_ONE);
@@ -623,8 +624,14 @@ public class RestfullController extends BaseController {
 		}else{
 			msg = "paramError";
 		}
-		
+		if(jo.get("isprivacy")!=null && !jo.getString("isprivacy").equals("")){
+			isprivacy = Integer.parseInt(jo.getString("isprivacy"));
+			pd.put("ISPRIVACY", isprivacy);
+		}else{
+			msg = "paramError";
+		}
 		if(msg.equals("succcess")){
+			
 			this.appuserService.updatePrivacy(pd);
 		}
 		map.put("result", msg);
@@ -646,6 +653,7 @@ public class RestfullController extends BaseController {
 		pd = this.getPageData();
 		JSONObject jo = JSONObject.fromObject(userId);
 		String USERID_ONE = null,USERID_TWO=null;
+		int isprivacy = 0;
 		if(jo.get("userID_one")!=null && !jo.getString("userID_one").equals("")){
 			USERID_ONE = jo.getString("userID_one");
 			pd.put("USERID_ONE", USERID_ONE);
@@ -658,7 +666,12 @@ public class RestfullController extends BaseController {
 		}else{
 			msg = "paramError";
 		}
-		
+		if(jo.get("isprivacy")!=null && !jo.getString("isprivacy").equals("")){
+			isprivacy = Integer.parseInt(jo.getString("isprivacy"));
+			pd.put("ISPRIVACY", isprivacy);
+		}else{
+			msg = "paramError";
+		}
 		if(msg.equals("succcess")){
 			this.appuserService.updateModify(pd);
 		}
