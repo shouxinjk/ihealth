@@ -606,7 +606,7 @@
 	
 	<!-- 查询出所有关心我的人 -->
 	<select id="listCareAboutMe" parameterType="java.lang.String" resultType="pd">
-		select u.USER_ID AS USER_ID,u.NAME AS NAME,u.AVATAR AS AVATAR,sau.connection as CONNECTION,
+		select sau.user_id_one as USER_ID,u.NAME AS NAME,u.AVATAR AS AVATAR,sau.connection as CONNECTION,
 		sau.isprivacy as ISPRIVACY,sau.ismodify as ISMODIFY from sys_app_user u,sys_app_user_and_user 
 		sau where u.USER_ID = sau.user_id_two and sau.user_id_two = #{USER_ID}
 	</select>

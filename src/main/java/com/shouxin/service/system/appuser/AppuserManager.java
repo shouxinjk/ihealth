@@ -344,14 +344,15 @@ public interface AppuserManager {
 	public PageData findUserAndUser(PageData pd)throws Exception;
 
 	/**
-	 * 修改关心我的人是否可以查看我的信息 
+	 * 修改关心我的人是否修改我的信息
 	 * @param pd
 	 * @throws Exception
 	 */
 	public void updateModify(PageData pd)throws Exception;
 	
+	
 	/**
-	 * 修改关心我的人是否修改我的信息
+	 * 修改关心我的人是否可以查看我的信息 
 	 * @param pd
 	 * @throws Exception
 	 */

@@ -595,6 +595,78 @@ public class RestfullController extends BaseController {
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
+	
+	/**
+	 * 修改关心我的人是否修改我的信息
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/updatePrivacy")
+	@ResponseBody
+	public Object updatePrivacy(@RequestBody String userId)throws Exception{
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		String msg = "success";
+		pd = this.getPageData();
+		JSONObject jo = JSONObject.fromObject(userId);
+		String USERID_ONE = null,USERID_TWO=null;
+		if(jo.get("userID_one")!=null && !jo.getString("userID_one").equals("")){
+			USERID_ONE = jo.getString("userID_one");
+			pd.put("USERID_ONE", USERID_ONE);
+		}else{
+			msg = "paramError";
+		}
+		if(jo.get("userID_two")!=null && !jo.getString("userID_two").equals("")){
+			USERID_TWO = jo.getString("userID_two");
+			pd.put("USERID_TWO", USERID_TWO);
+		}else{
+			msg = "paramError";
+		}
+		
+		if(msg.equals("succcess")){
+			this.appuserService.updatePrivacy(pd);
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	/**
+	 * 修改关心我的人是否修改我的信息
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/updateModify")
+	@ResponseBody
+	public Object updateModify(@RequestBody String userId)throws Exception{
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		String msg = "success";
+		pd = this.getPageData();
+		JSONObject jo = JSONObject.fromObject(userId);
+		String USERID_ONE = null,USERID_TWO=null;
+		if(jo.get("userID_one")!=null && !jo.getString("userID_one").equals("")){
+			USERID_ONE = jo.getString("userID_one");
+			pd.put("USERID_ONE", USERID_ONE);
+		}else{
+			msg = "paramError";
+		}
+		if(jo.get("userID_two")!=null && !jo.getString("userID_two").equals("")){
+			USERID_TWO = jo.getString("userID_two");
+			pd.put("USERID_TWO", USERID_TWO);
+		}else{
+			msg = "paramError";
+		}
+		
+		if(msg.equals("succcess")){
+			this.appuserService.updateModify(pd);
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	
 
 	/**
 	 * 通过用户ID获取体检套餐信息

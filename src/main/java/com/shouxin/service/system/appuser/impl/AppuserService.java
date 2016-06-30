@@ -404,14 +404,30 @@ public class AppuserService implements AppuserManager{
 		return (List<PageData>) dao.findForList("AppuserMapper.listCareAboutMe", USER_ID);
 	}
 
+	/**
+	 * 查询该用户a有没有查看和修改用户b的权限 
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
 	public PageData findUserAndUser(PageData pd) throws Exception {
 		return (PageData) dao.findForObject("AppuserMapper.findUserAndUser", pd);
 	}
 
+	/**
+	 * 修改关心我的人是否修改我的信息
+	 * @param pd
+	 * @throws Exception
+	 */
 	public void updateModify(PageData pd) throws Exception {
 		dao.update("AppuserMapper.updateModify", pd);
 	}
 
+	/**
+	 * 修改关心我的人是否可以查看我的信息 
+	 * @param pd
+	 * @throws Exception
+	 */
 	public void updatePrivacy(PageData pd) throws Exception {
 		dao.update("AppuserMapper.updatePrivacy", pd);
 	}
