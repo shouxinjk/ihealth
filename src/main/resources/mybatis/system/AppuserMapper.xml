@@ -604,6 +604,32 @@
 			PHONE = #{PHONE}
 	</select>
 	
+	<!-- 查询出所有关心我的人 -->
+	<select id="listCareAboutMe" parameterType="java.lang.String" resultType="pd">
+		select u.USER_ID AS USER_ID,u.NAME AS NAME,u.AVATAR AS AVATAR,sau.connection as CONNECTION,
+		sau.isprivacy as ISPRIVACY,sau.ismodify as ISMODIFY from sys_app_user u,sys_app_user_and_user 
+		sau where u.USER_ID = sau.user_id_two and sau.user_id_two = #{USER_ID}
+	</select>
+	
+	<!-- 修改关心我的人是否可以查看我的信息 -->
+	<update id="updatePrivacy" parameterType="pd">
+		update sys_app_user_and_user set isprivacy = #{ISPRIVACY} 
+		where user_id_one = #{USERID_ONE} and user_id_two = #{USERID_TWO}
+	</update>
+	
+		<!-- 修改关心我的人是否修改我的信息 -->
+	<update id="updateModify" parameterType="pd">
+		update sys_app_user_and_user set ismodify = #{ISMODIFY} 
+		where user_id_one = #{USERID_ONE} and user_id_two = #{USERID_TWO}
+	</update>
+	
+	<!-- 查询该用户a有没有查看和修改用户b的权限 -->
+	<select id="findUserAndUser" parameterType="pd" resultType="pd">
+		select ISPRIVACY,ISMODIFY from sys_app_user_and_user where user_id_one = 
+		#{USERID_ONE} and user_id_two = #{USERID_TWO}
+	</select>
+	
+	
 	<!-- 全部会员 -->
 	<select id="listAllUser" parameterType="pd" resultType="pd">
 		select  u.USER_ID,

@@ -393,5 +393,28 @@ public class AppuserService implements AppuserManager{
 		dao.save("AppuserMapper.saveEnterpriseUser", pd);
 	}
 	
+	/**
+	 * 查询出所有关心我的人
+	 * @param USER_ID
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listCareAboutMe(String USER_ID) throws Exception {
+		return (List<PageData>) dao.findForList("AppuserMapper.listCareAboutMe", USER_ID);
+	}
+
+	public PageData findUserAndUser(PageData pd) throws Exception {
+		return (PageData) dao.findForObject("AppuserMapper.findUserAndUser", pd);
+	}
+
+	public void updateModify(PageData pd) throws Exception {
+		dao.update("AppuserMapper.updateModify", pd);
+	}
+
+	public void updatePrivacy(PageData pd) throws Exception {
+		dao.update("AppuserMapper.updatePrivacy", pd);
+	}
+	
 }
 

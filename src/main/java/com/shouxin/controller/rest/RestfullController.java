@@ -560,6 +560,41 @@ public class RestfullController extends BaseController {
 		}
 		return AppUtil.returnObject(new PageData(), map);
 	}
+	
+	/**
+	 * 查询所有关心我的人，并查询出是否 让他查看和修改
+	 * @param {"userID":"用户ID"}
+	 * @return{
+	 * 			reslut:"当返回为success时表示成功，返回为no时表示没有数据，返回为paramError时表示参数为空",
+	 * 			data:[{NAME:"名称",USER_ID:"用户id",AVATAR:"用户头像",CONNECTION:"关系",
+	 * 					ISPRIVACY:"是否可以查看,1为可查看，0为不可查看",ISMODIFY:"是否可以修改，1为可修改，0为不可修改"}]
+	 * 			}
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/listCareAboutMe")
+	@ResponseBody
+	public Object listCareAboutMe(@RequestBody String userid) throws Exception{
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		String msg = "success";
+		pd = this.getPageData();
+		JSONObject jo = JSONObject.fromObject(userid);
+		String USER_ID = null;
+		List<PageData> pds = new ArrayList<PageData>();
+		if(jo.get("userID")!=null && !jo.getString("userID").equals("")){
+			USER_ID = jo.getString("userID");
+			pds = this.appuserService.listCareAboutMe(USER_ID);
+			if(pds.size()>0){
+				map.put("data", pds);
+			}else{
+				msg = "no";
+			}
+		}else{
+			msg = "paramError";
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
 
 	/**
 	 * 通过用户ID获取体检套餐信息
