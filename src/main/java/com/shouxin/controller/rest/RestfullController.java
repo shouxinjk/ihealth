@@ -313,7 +313,12 @@ public class RestfullController extends BaseController {
 		map.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
 	}
-	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/repeatUser",method=RequestMethod.POST)
 	@ResponseBody
 	public Object addRepeatUser(@RequestBody String user)throws Exception{
