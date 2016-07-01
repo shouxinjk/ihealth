@@ -314,6 +314,41 @@ public class RestfullController extends BaseController {
 		return AppUtil.returnObject(new PageData(), map);
 	}
 	
+	@RequestMapping(value = "/repeatUser",method=RequestMethod.POST)
+	@ResponseBody
+	public Object addRepeatUser(@RequestBody String user)throws Exception{
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject jo = JSONObject.fromObject(user);
+		String USERID_ONE=null,USERID_TWO=null,connection=null,msg = "success";
+		if(jo.get("userid_one")!=null &&!jo.getString("userid_one").equals("")){
+			USERID_ONE = jo.getString("userid_one");
+			pd.put("user_id_one", USERID_ONE);
+		}else{
+			msg = "error";
+		}
+		if(jo.get("userid_two")!=null &&!jo.getString("userid_two").equals("")){
+			USERID_TWO = jo.getString("userid_two");
+			pd.put("user_id_two", USERID_TWO);
+		}else{
+			msg = "error";
+		}
+		if(jo.get("connection")!=null &&!jo.getString("connection").equals("")){
+			connection = jo.getString("connection");
+			pd.put("connection", connection);
+		}else{
+			msg = "error";
+		}
+		if(msg.equals("success")){
+			pd.put("isprivacy", 0);
+			pd.put("ismodify", 0);
+			this.appuserService.saveRelationUser(pd);
+		}
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
 	/**
 	 * 根据手机号码 判断用户关系
 	 * @param message {"phone":"手机号码","userId":"当前用户ID"}
