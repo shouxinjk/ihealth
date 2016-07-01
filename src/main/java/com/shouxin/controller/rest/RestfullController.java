@@ -294,25 +294,8 @@ public class RestfullController extends BaseController {
 			//根据手机号码   获取当前用户信息
 			List<PageData> pageData = this.appuserService.findByPhones(pd);
 			if (pageData != null) {
-				if(pageData.size()>1){
-					msg = "repeat";
-					map.put("data", pageData);
-				}else{
-					//获取当前用户ID
-					user_id_two = pageData.get(0).getString("USER_ID");
-					pd.put("user_id_one", user_id_one);
-					pd.put("user_id_two", user_id_two);
-					//查询关系是否存在
-					PageData pds = this.appuserService.findConnectionWhether(pd);
-					if (pds != null && pds.size()>0) {
-						//关系存在
-						msg = "existence";
-					}else{
-						pd.put("USER_ID", user_id_two);
-						msg = "success";
-						map.put("data", this.appuserService.findByUserId(pd));
-					}
-				}
+				msg = "repeat";
+				map.put("data", pageData);
 			}else{
 				pd.put("USER_ID", this.get32UUID());
 				pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e");	// 赋予新注册用户最低级的权限，初级会员
