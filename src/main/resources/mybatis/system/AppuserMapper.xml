@@ -608,6 +608,16 @@
 			PHONE = #{PHONE}
 	</select>
 	
+	<!-- 通过手机号码查询用户数据 -->
+	<select id="findByPhones" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where 
+			PHONE = #{PHONE}
+	</select>
+	
 	<!-- 查询出所有关心我的人 -->
 	<select id="listCareAboutMe" parameterType="java.lang.String" resultType="pd">
 		select sau.user_id_one as USER_ID,u.NAME AS NAME,u.AVATAR AS AVATAR,sau.connection as CONNECTION,

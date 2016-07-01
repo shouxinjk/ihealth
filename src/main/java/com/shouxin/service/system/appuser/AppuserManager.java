@@ -91,6 +91,14 @@ public interface AppuserManager {
 	 */
 	public PageData findByPhone(PageData pd)throws Exception;
 	
+	/**
+	 * 通过手机号码获取用户数据
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findByPhones(PageData pd)throws Exception;
+	
 	/**全部会员
 	 * @param pd
 	 * @return

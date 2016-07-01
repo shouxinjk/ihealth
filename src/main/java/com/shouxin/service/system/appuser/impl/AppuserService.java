@@ -253,6 +253,15 @@ public class AppuserService implements AppuserManager{
 	}
 
 	/**
+	 * 根据电话号码查询会员信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> findByPhones(PageData pd) throws Exception {
+		
+		return (List<PageData>) dao.findForObject("AppuserMapper.findByPhones", pd);
+	}
+
+	/**
 	 * 删除关联关系
 	 */
 	public void deleteRelationUser(PageData pd) throws Exception {

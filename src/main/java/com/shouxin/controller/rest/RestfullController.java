@@ -292,21 +292,26 @@ public class RestfullController extends BaseController {
 			user_id_one = jasonObject.getString("userId");
 			pd.put("PHONE", phone);
 			//根据手机号码   获取当前用户信息
-			PageData pageData = this.appuserService.findByPhone(pd);
+			List<PageData> pageData = this.appuserService.findByPhones(pd);
 			if (pageData != null) {
-				//获取当前用户ID
-				user_id_two = pageData.getString("USER_ID");
-				pd.put("user_id_one", user_id_one);
-				pd.put("user_id_two", user_id_two);
-				//查询关系是否存在
-				PageData pds = this.appuserService.findConnectionWhether(pd);
-				if (pds != null && pds.size()>0) {
-					//关系存在
-					msg = "existence";
+				if(pageData.size()>1){
+					msg = "repeat";
+					map.put("data", pageData);
 				}else{
-					pd.put("USER_ID", user_id_two);
-					msg = "success";
-					map.put("data", this.appuserService.findByUserId(pd));
+					//获取当前用户ID
+					user_id_two = pageData.get(0).getString("USER_ID");
+					pd.put("user_id_one", user_id_one);
+					pd.put("user_id_two", user_id_two);
+					//查询关系是否存在
+					PageData pds = this.appuserService.findConnectionWhether(pd);
+					if (pds != null && pds.size()>0) {
+						//关系存在
+						msg = "existence";
+					}else{
+						pd.put("USER_ID", user_id_two);
+						msg = "success";
+						map.put("data", this.appuserService.findByUserId(pd));
+					}
 				}
 			}else{
 				pd.put("USER_ID", this.get32UUID());
