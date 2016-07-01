@@ -249,7 +249,7 @@ public class AppuserService implements AppuserManager{
 	 */
 	public PageData findByPhone(PageData pd) throws Exception {
 		
-		return (PageData) dao.findForObject("AppuserMapper.findByPhone", pd);
+		return (PageData)dao.findForObject("AppuserMapper.findByPhone", pd);
 	}
 
 	/**
@@ -258,7 +258,7 @@ public class AppuserService implements AppuserManager{
 	@SuppressWarnings("unchecked")
 	public List<PageData> findByPhones(PageData pd) throws Exception {
 		
-		return (List<PageData>) dao.findForObject("AppuserMapper.findByPhones", pd);
+		return (List<PageData>)dao.findForObject("AppuserMapper.findByPhones", pd);
 	}
 
 	/**
