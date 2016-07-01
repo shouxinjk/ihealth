@@ -258,7 +258,7 @@ public class AppuserService implements AppuserManager{
 	@SuppressWarnings("unchecked")
 	public List<PageData> findByPhones(PageData pd) throws Exception {
 		
-		return (List<PageData>)dao.findForObject("AppuserMapper.findByPhones", pd);
+		return (List<PageData>)dao.findForList("AppuserMapper.findByPhones", pd);
 	}
 
 	/**
