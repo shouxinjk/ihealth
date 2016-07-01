@@ -620,7 +620,7 @@
 	
 	<!-- 查询出所有关心我的人 -->
 	<select id="listCareAboutMe" parameterType="java.lang.String" resultType="pd">
-		select u1.USER_ID as USER_ID,u1.NAME AS NAME,u2.connection as CONNECTION,
+		select u1.USER_ID as USER_ID,u1.NAME AS NAME,u1.AVATAR as AVATAR,u2.connection as CONNECTION,
 		u2.isprivacy as ISPRIVACY,u2.ismodify as ISMODIFY from sys_app_user u1 ,(select sau.user_id_one as USER_ID,sau.connection as CONNECTION,
 		sau.isprivacy as ISPRIVACY,sau.ismodify as ISMODIFY from sys_app_user u,sys_app_user_and_user 
 		sau where u.USER_ID = sau.user_id_two and sau.user_id_two = #{USER_ID}) u2 where u1.USER_ID = u2.USER_ID
