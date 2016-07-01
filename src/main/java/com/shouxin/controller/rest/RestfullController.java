@@ -134,7 +134,7 @@ public class RestfullController extends BaseController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@ResponseBody
 	private Object register(@RequestBody(required = true) String userVO) throws Exception {
-		logBefore(logger, "通过手机号码注册+++++++++++++start");
+		logBefore(logger, "通过openid注册+++++++++++++start");
 		
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		PageData pd = new PageData();
@@ -199,6 +199,8 @@ public class RestfullController extends BaseController {
 					}else if(userTest.get(i).getNAME().equals("老妈")){
 						pd.put("connection", "母子");
 					}
+					pd.put("isprivacy", 1);
+					pd.put("ismodify", 1);
 					this.appuserService.saveRelationUser(pd);
 				}
 				
@@ -229,7 +231,7 @@ public class RestfullController extends BaseController {
 				msg = "success";
 				map.put("data", appuserService.findByUserId(pd));
 			} else {
-				logBefore(logger, "经过判断，手机号码存在：-------------------------------");
+				logBefore(logger, "经过判断，openid存在：-------------------------------");
 				PageData pds = this.appuserService.findByPhone(pd);
 				map.put("data", pds);
 				msg = "existence";

@@ -111,7 +111,9 @@
 		useranduser_id,
 		user_id_one,
 		user_id_two,
-		connection
+		connection,
+		isprivacy,
+		ismodify
 	</sql>
 	
 	<!-- 用户关联关系表的值 -->
@@ -119,8 +121,10 @@
 		#{useranduser_id},
 		#{user_id_one},
 		#{user_id_two},
-		#{connection}
-	</sql>
+		#{connection},
+		#{isprivacy},
+		#{ismodify}
+</sql>
 	
 	<!-- 批量添加企业用户 -->
 	<insert id="saveEnterpriseUserAll" parameterType="pd">
