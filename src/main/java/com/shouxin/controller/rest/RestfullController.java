@@ -330,14 +330,10 @@ public class RestfullController extends BaseController {
 		if(jo.get("userid_one")!=null &&!jo.getString("userid_one").equals("")){
 			USERID_ONE = jo.getString("userid_one");
 			pd.put("user_id_one", USERID_ONE);
-		}else{
-			msg = "error";
 		}
 		if(jo.get("userid_two")!=null &&!jo.getString("userid_two").equals("")){
 			USERID_TWO = jo.getString("userid_two");
 			pd.put("user_id_two", USERID_TWO);
-		}else{
-			msg = "error";
 		}
 		if(jo.get("connection")!=null &&!jo.getString("connection").equals("")){
 			connection = jo.getString("connection");
@@ -346,6 +342,7 @@ public class RestfullController extends BaseController {
 			msg = "error";
 		}
 		if(msg.equals("success")){
+			pd.put("useranduser_id", this.get32UUID());
 			pd.put("isprivacy", 0);
 			pd.put("ismodify", 0);
 			this.appuserService.saveRelationUser(pd);
