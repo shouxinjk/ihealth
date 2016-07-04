@@ -466,7 +466,7 @@ public class RestfullController extends BaseController {
 		PageData pds = new PageData();
 		String msg = null, userId = null, name = null, sex = null, marriageStatus = null, birthday = null,
 				height = null, weight = null, birthPlace = null, livePlace = null, career = null, degree = null,
-				avatar = null;
+				avatar = null,phone = null;
 		String tel = null;
 		// 将String类型的数据转换为json
 		try {
@@ -482,8 +482,8 @@ public class RestfullController extends BaseController {
 
 				if (jasonObject.get("tel") != null && !"".equals(jasonObject.get("tel"))
 						&& !"null".equals(jasonObject.get("tel"))) {
-					name = jasonObject.getString("tel").trim();
-					pds.put("PHEONE", name);
+					phone = jasonObject.getString("tel").trim();
+					pds.put("PHEONE", phone);
 				}
 				if (jasonObject.get("name") != null && !"".equals(jasonObject.get("name"))
 						&& !"null".equals(jasonObject.get("name"))) {
