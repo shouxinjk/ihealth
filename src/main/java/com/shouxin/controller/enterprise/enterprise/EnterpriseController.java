@@ -9,20 +9,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Disease;
+import com.shouxin.entity.admin.DiseaseAndUser;
+import com.shouxin.entity.admin.Tag;
+import com.shouxin.entity.admin.TagAndUser;
+import com.shouxin.entity.system.Role;
 import com.shouxin.util.AppUtil;
+import com.shouxin.util.Const;
+import com.shouxin.util.FileDownload;
+import com.shouxin.util.FileUpload;
+import com.shouxin.util.GetPinyin;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
+import com.shouxin.util.PathUtil;
+import com.shouxin.util.RepeatString;
+import com.shouxin.util.Tools;
 import com.shouxin.util.Jurisdiction;
+import com.shouxin.util.ObjectExcelRead;
+import com.shouxin.service.admin.disease.DiseaseManager;
+import com.shouxin.service.admin.tag.TagManager;
 import com.shouxin.service.enterprise.enterprise.EnterpriseManager;
+import com.shouxin.service.system.appuser.AppuserManager;
 
 /** 
  * 说明：企业管理
@@ -36,6 +57,12 @@ public class EnterpriseController extends BaseController {
 	String menuUrl = "enterprise/list.do"; //菜单地址(权限用)
 	@Resource(name="enterpriseService")
 	private EnterpriseManager enterpriseService;
+	@Resource(name="appuserService")
+	private AppuserManager appuserService;
+	@Resource(name = "diseaseService")
+	private DiseaseManager diseaseService;
+	@Resource(name = "tagService")
+	private TagManager tagService;
 	
 	/**保存
 	 * @param
@@ -51,6 +78,168 @@ public class EnterpriseController extends BaseController {
 		pd.put("ENTERPRISE_ID", this.get32UUID());	//主键
 		enterpriseService.save(pd);
 		mv.addObject("msg","success");
+		mv.setViewName("save_result");
+		return mv;
+	}
+	
+	/**
+	 * 去导入exel表格页面
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/goUploadExel")
+	public ModelAndView getUploadExel()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		mv.setViewName("enterprise/enterpriseuser/enterpriseuploadexcel");
+		return mv;
+	}
+	
+	/**下载模版
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/downExcel")
+	public void downExcel(HttpServletResponse response)throws Exception{
+		FileDownload.fileDownload(response, PathUtil.getClasspath() + Const.FILEPATHFILE + "appuser.xls", "appuser.xls");
+	}
+	
+	/**
+	 * 读取exel表格数据
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/readExel")
+	public ModelAndView readExel(@RequestParam(value="excel",required=false) MultipartFile file)throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		String USER_ID = Jurisdiction.getUserId();
+		String appkey = this.enterpriseService.findAppkeyByUserid(USER_ID);
+		String msg = "";
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;}
+		if (null != file && !file.isEmpty()) {
+			String filePath = PathUtil.getClasspath() + Const.FILEPATHFILE;								//文件上传路径
+			String fileName =  FileUpload.fileUp(file, filePath, "appuserexcel");							//执行上传
+			List<PageData> listPd = (List)ObjectExcelRead.readExcel(filePath, fileName, 2, 0, 0);		//执行读EXCEL操作,读出的数据导入List 2:从第3行开始；0:从第A列开始；0:第0个sheet
+			/*存入数据库操作======================================*/
+			pd.put("STATUS", "0");					//状态
+			pd.put("APPKEY", appkey);
+			/**
+			 * var0 :编号
+			 * var1 :姓名
+			 * var2 :手机
+			 * var3 :身高
+			 * var4  ：体重
+			 * var5 :性别
+			 * var6 :出生日期
+			 * var7 :婚姻状况
+			 * var8 :出生地
+			 * var9：现住地
+			 * var10:职位
+			 * var11:疾病信息
+			 * var12:生活方式信息
+			 */
+			for(int i=0;i<listPd.size();i++){	
+				String userid = this.get32UUID();
+				pd.put("USER_ID", userid);													//ID
+				pd.put("NAME", listPd.get(i).getString("var1"));							//姓名
+				pd.put("PHONE", listPd.get(i).getString("var2"));							//手机号
+				pd.put("HEIGHT", Integer.parseInt(listPd.get(i).getString("var3")));		//身高
+				pd.put("WEIGHT", Integer.parseInt(listPd.get(i).getString("var4")));		//体重
+				pd.put("SEX", listPd.get(i).getString("var5"));								//性别
+//				pd.put("BIRTHDAY", listPd.get(i).getString("var6"));						//出生日期i
+				pd.put("MARRIAGESTATUS", listPd.get(i).getString("var7"));					//婚姻状况
+				pd.put("BIRTHPLACE", listPd.get(i).getString("var8"));						//出生地
+				pd.put("LIVEPLACE", listPd.get(i).getString("var9"));						//现住地
+				pd.put("CAREER", listPd.get(i).getString("var10"));							//职位信息
+				if(appuserService.findEnterpriseUserByPhone(userid) != null && 
+						!appuserService.findEnterpriseUserByPhone(userid).equals("")){
+					this.appuserService.updateEnterpriseUser(pd);
+				}else{
+					this.appuserService.saveEnterpriseUser(pd);
+					String[] diseases = listPd.get(i).getString("var11").split(",");
+					String[] tags = listPd.get(i).getString("var12").split(",");
+					List<DiseaseAndUser> dauj = new ArrayList<DiseaseAndUser>();
+					List<DiseaseAndUser> daug = new ArrayList<DiseaseAndUser>();
+					List<DiseaseAndUser> daup = new ArrayList<DiseaseAndUser>();
+					List<TagAndUser> tau = new ArrayList<TagAndUser>();
+					String nullDisease = "";
+					String nullTag = "";
+					boolean nullDt = true;
+					for (int j = 0; j < diseases.length; j++) {
+						Disease diseased = this.diseaseService.findDiseaseByName(diseases[j]);
+						if(diseased!=null){
+							if(diseased.getISINHERITABLE()==1){
+								DiseaseAndUser d = new DiseaseAndUser();
+								d.setID(this.get32UUID());
+								d.setUSER_ID(userid);
+								d.setDISEASE_ID(diseased.getDISEASE_ID());
+								dauj.add(d);
+							}
+							if(diseased.getISHIGHINCIDENCE()==1){
+								DiseaseAndUser d = new DiseaseAndUser();
+								d.setID(this.get32UUID());
+								d.setUSER_ID(userid);
+								d.setDISEASE_ID(diseased.getDISEASE_ID());
+								daug.add(d);
+							}
+							DiseaseAndUser d = new DiseaseAndUser();
+							d.setID(this.get32UUID());
+							d.setUSER_ID(userid);
+							d.setDISEASE_ID(diseased.getDISEASE_ID());
+							daup.add(d);
+						}else{
+							nullDisease+=diseases[j]+",";
+							nullDt = false;
+						}
+					}
+					
+					for (int j = 0; j < tags.length; j++) {
+						Tag tagt = this.tagService.findTagByName(tags[j]);
+						if(tagt!=null){
+							TagAndUser t = new TagAndUser();
+							t.setID(this.get32UUID());
+							t.setTAG_ID(tagt.getTAG_ID());
+							t.setUSER_ID(userid);
+							tau.add(t);
+						}else{
+							nullTag += tags[j]+",";
+							nullDt = false;
+						}
+					}
+					if(nullDt){
+						if(daup.size()>0){
+							this.appuserService.saveEnterpriseUserDisease(daup);
+						}
+						System.out.println(dauj.size());
+						if(dauj.size()>0){
+							this.appuserService.saveEnterpriseUserDiseasefamily(dauj);
+						}
+						if(daug.size()>0){
+							this.appuserService.saveEnterpriseUserDiseasefocus(daug);
+						}
+						if(tau.size()>0){
+							this.appuserService.saveEnterpriseUserTag(tau);
+						}
+						msg = "success";
+					}else{
+						String miaoshu="";
+						if(nullDisease!=null&&!nullDisease.equals("")){
+							nullDisease = RepeatString.repeat(nullDisease);
+							miaoshu+=nullDisease+"等疾病信息不存在。";
+						}
+						
+						if(nullTag!=null && !nullTag.equals("")){
+							nullTag = RepeatString.repeat(nullTag);
+							miaoshu+=nullTag+"等标签信息不存在。";
+						}
+						msg = "defect";
+						mv.addObject("describe", miaoshu);
+					}
+				}
+			}
+			/*存入数据库操作======================================*/
+			mv.addObject("msg",msg);
+		}
 		mv.setViewName("save_result");
 		return mv;
 	}

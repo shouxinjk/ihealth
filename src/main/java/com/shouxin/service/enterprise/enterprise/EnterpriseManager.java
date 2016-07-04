@@ -84,5 +84,13 @@ public interface EnterpriseManager{
 	 */
 	public PageData findEnterpriseByAppkey(String APPKEY)throws Exception;
 	
+	/**
+	 * 根据管理员id查询企业appkey
+	 * @param USER_ID
+	 * @return
+	 * @throws Exception
+	 */
+	public String findAppkeyByUserid(String USER_ID)throws Exception;
+	
 } 
 

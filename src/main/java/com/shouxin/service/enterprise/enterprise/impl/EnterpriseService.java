@@ -123,5 +123,15 @@ public class EnterpriseService implements EnterpriseManager{
 		dao.update("EnterpriseMapper.editEN", pd);
 	}
 	
+	/**
+	 * 根据管理员id查询企业appkey
+	 * @param USER_ID
+	 * @return
+	 * @throws Exception
+	 */
+	public String findAppkeyByUserid(String USER_ID) throws Exception {
+		return (String) dao.findForObject("EnterpriseMapper.findAppkeyByUserid", USER_ID);
+	}
+	
 }
 

@@ -421,7 +421,6 @@ public class UserController extends BaseController {
 			List<PageData> listPd = (List)ObjectExcelRead.readExcel(filePath, fileName, 2, 0, 0);		//执行读EXCEL操作,读出的数据导入List 2:从第3行开始；0:从第A列开始；0:第0个sheet
 			/*存入数据库操作======================================*/
 			pd.put("RIGHTS", "");					//权限
-			pd.put("LAST_LOGIN", "");				//最后登录时间
 			pd.put("IP", "");						//IP
 			pd.put("STATUS", "0");					//状态
 			pd.put("SKIN", "default");				//默认皮肤

@@ -42,6 +42,13 @@
 		select ENTERPRISE_ID from tb_enterpriseadmin where sys_user_id = #{userId}
 	</select>
 	
+		<!-- 根据管理员id查询该管理员属于哪个企业-->
+	<select id="findAppkeyByUserid" parameterType="java.lang.String" resultType="java.lang.String">
+		select e.APPKEY from tb_enterprise e , tb_enterpriseadmin ea where 
+		e.ENTERPRISE_ID = ea.ENTERPRISE_ID and ea.SYS_USER_ID = #{USER_ID}; 
+	</select>
+	
+	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
 		insert into 
