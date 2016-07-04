@@ -273,7 +273,7 @@ public class RestfullController extends BaseController {
 			pd.put("PHONE", phone);
 			// 根据手机号码 获取当前用户信息
 			List<PageData> pageData = this.appuserService.findByPhones(pd);
-			if (pageData != null) {
+			if (pageData.size()>0) {
 				msg = "repeat";
 				map.put("data", pageData);
 			} else {
