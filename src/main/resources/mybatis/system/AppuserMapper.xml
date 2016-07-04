@@ -246,7 +246,13 @@
 	<!-- 根据用户ID查询所有的关联用户 -->
 	<select id="findUserCastUser" parameterType="pd" resultType="pd">
 		SELECT 
-		  *
+		  u.USER_ID AS USER_ID,u.NUMBER as NUMBER,u.RIGHTS as RIGHTS,u.IP as IP,u.PHONE as PHONE,
+		  u.ALIAS as ALIAS,u.SEX as SEX,u.MARRIAGESTATUS as MARRIAGESTATUS,u.LAST_LOGIN as LAST_LOGIN,
+		  u.EMAIL as EMAIL,u.HEIGHT as HEIGHT,u.BIRTHPLACE as BIRTHPLACE,u.NAME as NAME,u.CAREER as CAREER,
+		  u.STATUS as STATUS,u.OPENID as OPENID,u.PASSWORD as PASSWORD,u.BZ as BZ,u.USERNAME as USERNAME,
+		  u.DEGREE as DEGREE,u.LIVEPLACE as LIVEPLACE,u.AVATAR as AVATAR,u.WEIGHT as WEIGHT,u.BIRTHDAY as BIRTHDAY,
+		  uu.useranduser_id as useranduser_id,uu.connection as connection,uu.user_id_two as user_id_two,
+		  uu.user_id_one as user_id_one,u.ISMODIFY as ismodify,uu.ismodify as uismodify,uu.isprivacy as isprivacy
 		FROM 
 		  sys_app_user u,
 		  sys_app_user_and_user uu 
