@@ -483,7 +483,7 @@ public class RestfullController extends BaseController {
 				if (jasonObject.get("tel") != null && !"".equals(jasonObject.get("tel"))
 						&& !"null".equals(jasonObject.get("tel"))) {
 					phone = jasonObject.getString("tel").trim();
-					pds.put("PHEONE", phone);
+					pds.put("PHONE", phone);
 				}
 				if (jasonObject.get("name") != null && !"".equals(jasonObject.get("name"))
 						&& !"null".equals(jasonObject.get("name"))) {
