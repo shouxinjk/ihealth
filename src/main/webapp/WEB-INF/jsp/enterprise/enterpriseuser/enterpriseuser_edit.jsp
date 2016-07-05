@@ -28,44 +28,32 @@
 					<div class="col-xs-12">
 					
 					<form action="enterprise/${msg }.do" name="Form" id="Form" method="post">
-						<input type="hidden" name="ENTERPRISE_ID" id="ENTERPRISE_ID" value="${pd.ENTERPRISE_ID}"/>
+						<input type="hidden" name="USER_ID" id="USER_ID" value="${pd.USER_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">企业全程:</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">姓名全程:</td>
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入企业全程" title="企业全程" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">企业简称:</td>
-								<td><input type="text" name="ABBREVIATION" id="ABBREVIATION" value="${pd.ABBREVIATION}" maxlength="255" placeholder="这里输入企业简称" title="企业简称" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">性别:</td>
+								<td><input type="text" name="SEX" id="SEX" value="${pd.SEX}" maxlength="255" placeholder="这里输入企业简称" title="企业简称" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">企业logo:</td>
-								<td><input type="text" name="LOGO" id="LOGO" value="${pd.LOGO}" maxlength="255" placeholder="这里输入企业logo" title="企业logo" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">生日:</td>
+								<td><input type="text" name="BIRTHDAY" id="DIRTHDAY" value="${pd.BIRTHDAY}" maxlength="255" placeholder="这里输入企业logo" title="企业logo" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">联系人电话:</td>
-								<td><input type="text" name="TELEPHONE" id="TELEPHONE" value="${pd.TELEPHONE}" maxlength="255" placeholder="这里输入联系人电话" title="联系人电话" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">电话:</td>
+								<td><input type="text" name="PHONE" id="PHONE" value="${pd.PHONE}" maxlength="255" placeholder="这里输入联系人电话" title="联系人电话" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">地理位置:</td>
-								<td><input type="text" name="LOCATION" id="LOCATION" value="${pd.LOCATION}" maxlength="255" placeholder="这里输入地理位置" title="地理位置" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">身高:</td>
+								<td><input type="text" name="HEIGHT" id="HEIGHT" value="${pd.HEIGHT}" maxlength="255" placeholder="这里输入地理位置" title="地理位置" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">企业状态:</td>
-								<td><input type="text" name="STATUS" id="STATUS" value="${pd.STATUS}" maxlength="255" placeholder="这里输入企业状态" title="企业状态" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">经度纬度位置:</td>
-								<td><input type="text" name="POSITION" id="POSITION" value="${pd.POSITION}" maxlength="255" placeholder="这里输入经度纬度位置" title="经度纬度位置" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">营业执照信息:</td>
-								<td><input type="text" name="BUSINESSLICENSE" id="BUSINESSLICENSE" value="${pd.BUSINESSLICENSE}" maxlength="255" placeholder="这里输入营业执照信息" title="营业执照信息" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">上级公司:</td>
-								<td><input type="text" name="PARENTID" id="PARENTID" value="${pd.PARENTID}" maxlength="255" placeholder="这里输入上级公司" title="上级公司" style="width:98%;"/></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">体重:</td>
+								<td><input type="text" name="WEIGHT" id="WEIGHT" value="${pd.WEIGHT}" maxlength="255" placeholder="这里输入企业状态" title="企业状态" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">
@@ -109,7 +97,7 @@
 			if($("#NAME").val()==""){
 				$("#NAME").tips({
 					side:3,
-		            msg:'请输入企业全程',
+		            msg:'请输入姓名',
 		            bg:'#AE81FF',
 		            time:2
 		        });

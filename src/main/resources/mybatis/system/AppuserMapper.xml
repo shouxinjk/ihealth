@@ -87,7 +87,8 @@
 		WEIGHT,
 		CAREER,
 		BIRTHPLACE,
-		LIVEPLACE
+		LIVEPLACE,
+		APPKEY
 	</sql>
 	<sql id="enterpriseUserValue">
 		#{NAME},
@@ -99,7 +100,8 @@
 		#{WEIGHT},
 		#{CAREER},
 		#{BIRTHPLACE},
-		#{LIVEPLACE}
+		#{LIVEPLACE},
+		#{APPKEY}
 	</sql>
 	
 	<!-- 用户关联关系表 -->
@@ -156,7 +158,8 @@
 				#{WEIGHT},
 				#{CAREER},
 				#{BIRTHPLACE},
-				#{LIVEPLACE}
+				#{LIVEPLACE},
+				#{APPKEY}
 			)
 	</insert>
 	

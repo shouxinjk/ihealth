@@ -24,6 +24,12 @@ public interface EnterpriseManager{
 	 */
 	public void delete(PageData pd)throws Exception;
 	
+	/**删除企业用户
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void deleteUser(PageData pd)throws Exception;
+	
 	/**修改
 	 * @param pd
 	 * @throws Exception

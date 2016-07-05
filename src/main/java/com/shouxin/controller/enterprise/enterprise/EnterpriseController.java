@@ -146,7 +146,7 @@ public class EnterpriseController extends BaseController {
 				pd.put("HEIGHT", Integer.parseInt(listPd.get(i).getString("var3")));		//身高
 				pd.put("WEIGHT", Integer.parseInt(listPd.get(i).getString("var4")));		//体重
 				pd.put("SEX", listPd.get(i).getString("var5"));								//性别
-//				pd.put("BIRTHDAY", listPd.get(i).getString("var6"));						//出生日期i
+				pd.put("BIRTHDAY", listPd.get(i).getString("var6"));						//出生日期i
 				pd.put("MARRIAGESTATUS", listPd.get(i).getString("var7"));					//婚姻状况
 				pd.put("BIRTHPLACE", listPd.get(i).getString("var8"));						//出生地
 				pd.put("LIVEPLACE", listPd.get(i).getString("var9"));						//现住地
@@ -259,6 +259,21 @@ public class EnterpriseController extends BaseController {
 		out.close();
 	}
 	
+	/**删除
+	 * @param out
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/deleteUser")
+	public void deleteUser(PrintWriter out) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"删除Enterprise");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		enterpriseService.deleteUser(pd);
+		out.write("success");
+		out.close();
+	}
+	
 	/**修改
 	 * @param
 	 * @throws Exception
@@ -271,6 +286,23 @@ public class EnterpriseController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		enterpriseService.edit(pd);
+		mv.addObject("msg","success");
+		mv.setViewName("save_result");
+		return mv;
+	}
+	
+	/**修改
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/editUser")
+	public ModelAndView editUser() throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改Enterprise");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		this.appuserService.editU(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -345,6 +377,20 @@ public class EnterpriseController extends BaseController {
 		mv.addObject("pd", pd);
 		return mv;
 	}	
+	/**去新增页面
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/goAddUser")
+	public ModelAndView goAddUser()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		mv.setViewName("enterprise/enterpriseuser/enterpriseuser_edit");
+		mv.addObject("msg", "save");
+		mv.addObject("pd", pd);
+		return mv;
+	}	
 	
 	 /**去修改页面
 	 * @param
@@ -361,6 +407,22 @@ public class EnterpriseController extends BaseController {
 		mv.addObject("pd", pd);
 		return mv;
 	}	
+	
+	 /**去修改页面
+	  * @param
+	  * @throws Exception
+	  */
+	@RequestMapping(value="/goEditUser")
+	public ModelAndView goEditUser()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		pd = this.appuserService.findByUiId(pd);	//根据ID读取
+		mv.setViewName("enterprise/enterpriseuser/enterpriseuser_edit");
+		mv.addObject("msg", "editUser");
+		mv.addObject("pd", pd);
+		return mv;
+		}	
 	
 	 /**批量删除
 	 * @param
@@ -379,6 +441,32 @@ public class EnterpriseController extends BaseController {
 		if(null != DATA_IDS && !"".equals(DATA_IDS)){
 			String ArrayDATA_IDS[] = DATA_IDS.split(",");
 			enterpriseService.deleteAll(ArrayDATA_IDS);
+			pd.put("msg", "ok");
+		}else{
+			pd.put("msg", "no");
+		}
+		pdList.add(pd);
+		map.put("list", pdList);
+		return AppUtil.returnObject(pd, map);
+	}
+	
+	/**批量删除
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/deleteUserAll")
+	@ResponseBody
+	public Object deleteUserAll() throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"批量删除Enterprise");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return null;} //校验权限
+		PageData pd = new PageData();		
+		Map<String,Object> map = new HashMap<String,Object>();
+		pd = this.getPageData();
+		List<PageData> pdList = new ArrayList<PageData>();
+		String DATA_IDS = pd.getString("DATA_IDS");
+		if(null != DATA_IDS && !"".equals(DATA_IDS)){
+			String ArrayDATA_IDS[] = DATA_IDS.split(",");
+			this.appuserService.deleteAllU(ArrayDATA_IDS);
 			pd.put("msg", "ok");
 		}else{
 			pd.put("msg", "no");

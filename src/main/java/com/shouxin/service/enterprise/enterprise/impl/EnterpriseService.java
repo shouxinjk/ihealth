@@ -133,5 +133,13 @@ public class EnterpriseService implements EnterpriseManager{
 		return (String) dao.findForObject("EnterpriseMapper.findAppkeyByUserid", USER_ID);
 	}
 	
+	/**删除企业用户
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void deleteUser(PageData pd) throws Exception {
+		dao.delete("EnterpriseMapper.deleteUser", pd);
+	}
+	
 }
 
