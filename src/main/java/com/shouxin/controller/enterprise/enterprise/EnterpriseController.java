@@ -38,10 +38,14 @@ import com.shouxin.util.PageData;
 import com.shouxin.util.PathUtil;
 import com.shouxin.util.RepeatString;
 import com.shouxin.util.Tools;
+
+import net.sf.json.JSONObject;
+
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.ObjectExcelRead;
 import com.shouxin.service.admin.disease.DiseaseManager;
 import com.shouxin.service.admin.tag.TagManager;
+import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.enterprise.enterprise.EnterpriseManager;
 import com.shouxin.service.system.appuser.AppuserManager;
 
@@ -63,6 +67,8 @@ public class EnterpriseController extends BaseController {
 	private DiseaseManager diseaseService;
 	@Resource(name = "tagService")
 	private TagManager tagService;
+	@Resource(name = "checkupitemService")
+	private CheckupItemManager checkupitemService;
 	
 	/**保存
 	 * @param
@@ -77,6 +83,90 @@ public class EnterpriseController extends BaseController {
 		pd = this.getPageData();
 		pd.put("ENTERPRISE_ID", this.get32UUID());	//主键
 		enterpriseService.save(pd);
+		mv.addObject("msg","success");
+		mv.setViewName("save_result");
+		return mv;
+	}
+	
+	/**保存
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/saveUser")
+	public ModelAndView saveUser() throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"新增EnterpriseUser");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String USER_ID = Jurisdiction.getUserId();
+		String appkey = this.enterpriseService.findAppkeyByUserid(USER_ID);
+		String ALLDISEASE = pd.getString("ALLDISEASE");
+		String FIMALYDISEASE = pd.getString("FIMALYDISEASE");
+		String GUANDISEASE = pd.getString("GUANDISEASE");
+		String TAG = pd.getString("TAG");
+		String userid = this.get32UUID();
+		if(pd.getString("HEIGHT").equals("")){
+			pd.put("HEIGHT", 170);
+		}else{
+			pd.put("HEIGHT", Integer.parseInt(pd.getString("HEIGHT")));
+		}
+		if(pd.getString("WEIGHT").equals("")){
+			pd.put("WEIGHT", 50);
+		}else{
+			pd.put("WEIGHT", Integer.parseInt(pd.getString("WEIGHT")));
+		}
+		pd.put("USER_ID", userid);	//主键
+		pd.put("APPKEY", appkey);
+		this.appuserService.saveU(pd);
+		String[] ALLDISEASES = ALLDISEASE.split(",");
+		String[] FIMALYDISEASES = FIMALYDISEASE.split(",");
+		String[] GUANDISEASES = GUANDISEASE.split(",");
+		String[] TAGS = TAG.split(",");
+		if(ALLDISEASES.length>0){
+			List<DiseaseAndUser> list = new ArrayList<DiseaseAndUser>();
+			for(int i=0;i<ALLDISEASES.length;i++){
+				DiseaseAndUser pds = new DiseaseAndUser();
+				pds.setID(this.get32UUID());
+				pds.setUSER_ID(userid);
+				pds.setDISEASE_ID(ALLDISEASES[i]);
+				list.add(pds);
+			}
+			this.appuserService.saveEnterpriseUserDisease(list);
+		}
+		if(FIMALYDISEASES.length>0){
+			List<DiseaseAndUser> list = new ArrayList<DiseaseAndUser>();
+			for(int i=0;i<FIMALYDISEASES.length;i++){
+				DiseaseAndUser pds = new DiseaseAndUser();
+				pds.setID(this.get32UUID());
+				pds.setUSER_ID(userid);
+				pds.setDISEASE_ID(FIMALYDISEASES[i]);
+				list.add(pds);
+			}
+			this.appuserService.saveEnterpriseUserDiseasefamily(list);
+		}
+		if(GUANDISEASES.length>0){
+			List<DiseaseAndUser> list = new ArrayList<DiseaseAndUser>();
+			for(int i=0;i<GUANDISEASES.length;i++){
+				DiseaseAndUser pds = new DiseaseAndUser();
+				pds.setID(this.get32UUID());
+				pds.setUSER_ID(userid);
+				pds.setDISEASE_ID(GUANDISEASES[i]);
+				list.add(pds);
+			}
+			this.appuserService.saveEnterpriseUserDiseasefocus(list);
+		}
+		if(TAGS.length>0){
+			List<TagAndUser> list = new ArrayList<TagAndUser>();
+			for(int i=0;i<TAGS.length;i++){
+				TagAndUser pds = new TagAndUser();
+				pds.setID(this.get32UUID());
+				pds.setUSER_ID(userid);
+				pds.setTAG_ID(TAGS[i]);
+				list.add(pds);
+			}
+			this.appuserService.saveEnterpriseUserTag(list);
+		}
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -302,7 +392,65 @@ public class EnterpriseController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		String ALLDISEASE = pd.getString("ALLDISEASE");
+		String FIMALYDISEASE = pd.getString("FIMALYDISEASE");
+		String GUANDISEASE = pd.getString("GUANDISEASE");
+		String TAG = pd.getString("TAG");
+		String  userid = pd.getString("USER_ID");
 		this.appuserService.editU(pd);
+		pd.put("user_id", userid);
+		this.appuserService.deleteFamily(pd);
+		this.appuserService.deleteFocus(pd);
+		this.appuserService.deletePersonal(pd);
+		this.appuserService.deleteTag(pd);
+		String[] ALLDISEASES = ALLDISEASE.split(",");
+		String[] FIMALYDISEASES = FIMALYDISEASE.split(",");
+		String[] GUANDISEASES = GUANDISEASE.split(",");
+		String[] TAGS = TAG.split(",");
+		if(ALLDISEASES.length>0){
+			List<DiseaseAndUser> list = new ArrayList<DiseaseAndUser>();
+			for(int i=0;i<ALLDISEASES.length;i++){
+				DiseaseAndUser pds = new DiseaseAndUser();
+				pds.setID(this.get32UUID());
+				pds.setUSER_ID(userid);
+				pds.setDISEASE_ID(ALLDISEASES[i]);
+				list.add(pds);
+			}
+			this.appuserService.saveEnterpriseUserDisease(list);
+		}
+		if(FIMALYDISEASES.length>0){
+			List<DiseaseAndUser> list = new ArrayList<DiseaseAndUser>();
+			for(int i=0;i<FIMALYDISEASES.length;i++){
+				DiseaseAndUser pds = new DiseaseAndUser();
+				pds.setID(this.get32UUID());
+				pds.setUSER_ID(userid);
+				pds.setDISEASE_ID(FIMALYDISEASES[i]);
+				list.add(pds);
+			}
+			this.appuserService.saveEnterpriseUserDiseasefamily(list);
+		}
+		if(GUANDISEASES.length>0){
+			List<DiseaseAndUser> list = new ArrayList<DiseaseAndUser>();
+			for(int i=0;i<GUANDISEASES.length;i++){
+				DiseaseAndUser pds = new DiseaseAndUser();
+				pds.setID(this.get32UUID());
+				pds.setUSER_ID(userid);
+				pds.setDISEASE_ID(GUANDISEASES[i]);
+				list.add(pds);
+			}
+			this.appuserService.saveEnterpriseUserDiseasefocus(list);
+		}
+		if(TAGS.length>0){
+			List<TagAndUser> list = new ArrayList<TagAndUser>();
+			for(int i=0;i<TAGS.length;i++){
+				TagAndUser pds = new TagAndUser();
+				pds.setID(this.get32UUID());
+				pds.setUSER_ID(userid);
+				pds.setTAG_ID(TAGS[i]);
+				list.add(pds);
+			}
+			this.appuserService.saveEnterpriseUserTag(list);
+		}
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -377,6 +525,7 @@ public class EnterpriseController extends BaseController {
 		mv.addObject("pd", pd);
 		return mv;
 	}	
+	
 	/**去新增页面
 	 * @param
 	 * @throws Exception
@@ -387,8 +536,34 @@ public class EnterpriseController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		mv.setViewName("enterprise/enterpriseuser/enterpriseuser_edit");
-		mv.addObject("msg", "save");
+		mv.addObject("msg", "saveUser");
 		mv.addObject("pd", pd);
+		return mv;
+	}	
+	
+	/**去查询详细信息页面
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/goFind")
+	public ModelAndView goFind()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		PageData findUser = this.appuserService.findByUiId(pd);
+		System.out.println(findUser+"======================================");
+		List<PageData> pageData = this.checkupitemService.listAll(pd);
+		List<PageData> allDisease = diseaseService.listAllByUserID(pd);//个人疾病
+		List<PageData> allDiseaseIsHighIncaidence = diseaseService.listAllByUserIDIsHighIncaidence(pd);//家族疾病信息
+		List<PageData> allDiseaseIsInherItable = diseaseService.listAllByUserIDIsInherItable(pd);//关注疾病信息
+		List<PageData> tags = tagService.listTagByUserID(pd);//该用户标签信息
+		mv.setViewName("enterprise/enterpriseuser/enterpriseuser_find");
+		mv.addObject("allDisease",allDisease);
+		mv.addObject("fimalyDisease", allDiseaseIsHighIncaidence);
+		mv.addObject("inherDisease",allDiseaseIsInherItable);
+		mv.addObject("tags", tags);
+		mv.addObject("pd",findUser);
+		mv.addObject("checkupItems",pageData);
 		return mv;
 	}	
 	
@@ -418,11 +593,49 @@ public class EnterpriseController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd = this.appuserService.findByUiId(pd);	//根据ID读取
+		//查询所有的疾病信息
 		mv.setViewName("enterprise/enterpriseuser/enterpriseuser_edit");
 		mv.addObject("msg", "editUser");
 		mv.addObject("pd", pd);
 		return mv;
-		}	
+	}	
+	
+	/**
+	 * 获取疾病标签信息等
+	 * @param resp
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/getDiseaseAndTag")
+	public void getDiseaseAndTag(javax.servlet.http.HttpServletResponse resp )throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		List<PageData> allDisease = diseaseService.listAll(pd);
+		System.out.println(allDisease+"==================++");
+		List<PageData> allIsInheritableDisease = diseaseService.listAllIsInheritable(pd);
+		List<PageData> allIsHighIncidenceDiseae = diseaseService.listAllIsHighIncidence(pd);
+		List<PageData> tags = this.tagService.listAll(pd);
+		//查询属于该用户疾病信息
+		List<PageData> allUserDisease = diseaseService.listAllByUserID(pd);//个人疾病
+		List<PageData> allDiseaseIsHighIncaidence = diseaseService.listAllByUserIDIsHighIncaidence(pd);//家族疾病信息
+		List<PageData> allDiseaseIsInherItable = diseaseService.listAllByUserIDIsInherItable(pd);//关注疾病信息
+		List<PageData> userTags = tagService.listTagByUserID(pd);//该用户标签信息
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("application/json;charet=utf-8");
+		allMap.put("allDisease", allDisease);
+		allMap.put("allFimaly", allIsHighIncidenceDiseae);
+		allMap.put("allGuan", allIsInheritableDisease);
+		allMap.put("allUserDisease", allUserDisease);
+		allMap.put("allUserFimaly", allDiseaseIsHighIncaidence);
+		allMap.put("allUserGuan", allDiseaseIsInherItable);
+		allMap.put("tags", tags);
+		allMap.put("userTags", userTags);
+		JSONObject json = JSONObject.fromObject(allMap);
+		System.out.println(json+"======");
+		PrintWriter out = resp.getWriter();
+		out.print(json);
+		out.close();
+	}
 	
 	 /**批量删除
 	 * @param

@@ -44,14 +44,6 @@
 								</td>
 								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart"  value="" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="开始日期"/></td>
 								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginEnd" name="lastLoginEnd"  value="" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期" title="结束日期"/></td>
-								<td style="vertical-align:top;padding-left:2px;">
-								 	<select class="chosen-select form-control" name="name" id="id" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
-									<option value=""></option>
-									<option value="">全部</option>
-									<option value="">1</option>
-									<option value="">2</option>
-								  	</select>
-								</td>
 								<c:if test="${QX.cha == 1 }">
 								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 								</c:if>
@@ -66,15 +58,12 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">企业全程</th>
+									<th class="center">企业名称</th>
 									<th class="center">企业简称</th>
-									<th class="center">企业logo</th>
+									<th class="center">logo</th>
 									<th class="center">联系人电话</th>
 									<th class="center">地理位置</th>
 									<th class="center">企业状态</th>
-									<th class="center">经度纬度位置</th>
-									<th class="center">营业执照信息</th>
-									<th class="center">上级公司</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -96,9 +85,6 @@
 											<td class='center'>${var.TELEPHONE}</td>
 											<td class='center'>${var.LOCATION}</td>
 											<td class='center'>${var.STATUS}</td>
-											<td class='center'>${var.POSITION}</td>
-											<td class='center'>${var.BUSINESSLICENSE}</td>
-											<td class='center'>${var.PARENTID}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

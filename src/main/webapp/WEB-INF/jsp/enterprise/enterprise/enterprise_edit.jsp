@@ -32,7 +32,7 @@
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">企业全程:</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">企业名称:</td>
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入企业全程" title="企业全程" style="width:98%;"/></td>
 							</tr>
 							<tr>
@@ -50,10 +50,6 @@
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">地理位置:</td>
 								<td><input type="text" name="LOCATION" id="LOCATION" value="${pd.LOCATION}" maxlength="255" placeholder="这里输入地理位置" title="地理位置" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">企业状态:</td>
-								<td><input type="text" name="STATUS" id="STATUS" value="${pd.STATUS}" maxlength="255" placeholder="这里输入企业状态" title="企业状态" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">经度纬度位置:</td>

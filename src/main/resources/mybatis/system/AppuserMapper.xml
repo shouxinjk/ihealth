@@ -39,7 +39,8 @@
 		OPENID,
 		AVATAR,
 		CREATEBY,
-		CREATEON
+		CREATEON,
+		APPKEY
 	</sql>
 	
 	<!-- 字段值 -->
@@ -73,7 +74,8 @@
 		#{OPENID},
 		#{AVATAR},
 		#{CREATEBY},
-		#{CREATEON}
+		#{CREATEON},
+		#{APPKEY}
 	</sql>
 	
 	<sql id="enterpriseUserFild">

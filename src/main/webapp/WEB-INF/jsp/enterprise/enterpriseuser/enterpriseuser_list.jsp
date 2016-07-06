@@ -102,10 +102,10 @@
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 													</c:if>
-													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.USER_ID}');">
-														<i class="ace-icon fa fa-trash-o bigger-120" title="查看"></i>
-													</a>
+													<c:if test="${QX.cha == 1 }">
+														<a class="btn btn-xs btn-info" onclick="find('${var.USER_ID}');">
+															<i class="ace-icon fa fa-search nav-search-icon" title="查看"></i>
+														</a>
 													</c:if>
 												</div>
 												<div class="hidden-md hidden-lg">
@@ -301,6 +301,24 @@
 			 diag.Drag=true;
 			 diag.Title ="编辑";
 			 diag.URL = '<%=basePath%>enterprise/goEditUser.do?USER_ID='+Id;
+			 diag.Width = 800;
+			 diag.Height = 600;
+			 diag.CancelEvent = function(){ //关闭事件
+				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+					 nextPage(${page.currentPage});
+				}
+				diag.close();
+			 };
+			 diag.show();
+		}
+		
+		//修改
+		function find(Id){
+			 top.jzts();
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="查看";
+			 diag.URL = '<%=basePath%>enterprise/goFind.do?USER_ID='+Id;
 			 diag.Width = 800;
 			 diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
