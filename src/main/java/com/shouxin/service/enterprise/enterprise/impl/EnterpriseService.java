@@ -140,6 +140,26 @@ public class EnterpriseService implements EnterpriseManager{
 	public void deleteUser(PageData pd) throws Exception {
 		dao.delete("EnterpriseMapper.deleteUser", pd);
 	}
+
+	/**
+	 * 添加企业管理员信息
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveEnterpriseAdmin(PageData pd) throws Exception {
+		dao.save("EnterpriseMapper.saveEnterpriseAdmin", pd);
+	}
+
+	/***
+	 * 查询出所有的企业如果已经是管理员了就查询出该管理员管理的所有企业
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listEnterptise(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("EnterpriseMapper.listEnterptise", pd);
+	}
 	
 }
 

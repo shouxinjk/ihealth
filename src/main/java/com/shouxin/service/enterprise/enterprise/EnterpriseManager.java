@@ -98,5 +98,20 @@ public interface EnterpriseManager{
 	 */
 	public String findAppkeyByUserid(String USER_ID)throws Exception;
 	
+	/**
+	 * 添加企业管理员信息
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveEnterpriseAdmin(PageData pd)throws Exception;
+	
+	/***
+	 * 查询出所有的企业如果已经是管理员了就查询出该管理员管理的所有企业
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listEnterptise(PageData pd)throws Exception;
+	
 } 
 

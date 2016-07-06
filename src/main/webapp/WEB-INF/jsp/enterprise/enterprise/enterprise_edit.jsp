@@ -61,7 +61,22 @@
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">上级公司:</td>
-								<td><input type="text" name="PARENTID" id="PARENTID" value="${pd.PARENTID}" maxlength="255" placeholder="这里输入上级公司" title="上级公司" style="width:98%;"/></td>
+								<td>
+									<%-- <input type="text" name="PARENTID" id="PARENTID" value="${pd.PARENTID}" maxlength="255" placeholder="这里输入上级公司" title="上级公司" style="width:98%;"/> --%>
+									<select name="PARENTID" id="PARENTID">
+										<option value="0" selected="selected">没有上级</option>
+										<c:forEach items="${pds }" var="pds">
+											<c:choose>
+												<c:when test="${pds.ENTERPRISE_ID eq pd.PARENTID }">
+													<option value="${pds.ENTERPRISE_ID }" selected="selected">${pds.NAME }</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${pds.ENTERPRISE_ID }">${pds.NAME }</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</select>
+								</td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">

@@ -42,6 +42,7 @@ import com.shouxin.util.Tools;
 import net.sf.json.JSONObject;
 
 import com.shouxin.util.Jurisdiction;
+import com.shouxin.util.MD5;
 import com.shouxin.util.ObjectExcelRead;
 import com.shouxin.service.admin.disease.DiseaseManager;
 import com.shouxin.service.admin.tag.TagManager;
@@ -81,8 +82,20 @@ public class EnterpriseController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("ENTERPRISE_ID", this.get32UUID());	//主键
+		String user_id = Jurisdiction.getUserId();
+		String ENTERPRISE_ID = this.get32UUID();
+		String name = pd.getString("NAME");
+		String parentid = pd.getString("PARENTID");
+		pd.put("NAME", MD5.md5(name));//将企业名称进行MD5加密生成appkey
+		pd.put("ENTERPRISE_ID", ENTERPRISE_ID);	//主键
 		enterpriseService.save(pd);
+		if(parentid.equals("0")){
+			pd.clear();
+			pd.put("ENTERPRISEADMIN_ID", this.get32UUID());
+			pd.put("SYS_USER_ID", user_id);
+			pd.put("ENTERPRISE_ID", ENTERPRISE_ID);
+			this.enterpriseService.saveEnterpriseAdmin(pd);
+		}
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -520,8 +533,15 @@ public class EnterpriseController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		String SYS_USER_ID = Jurisdiction.getUserId();
+		String ENTERPRISE_ID = this.enterpriseService.findadminbyuserid(SYS_USER_ID);
+		if(null != ENTERPRISE_ID&&!"".equals(ENTERPRISE_ID)){
+			pd.put("ENTERPRISE_ID", ENTERPRISE_ID);
+		}
+		List<PageData> pds = this.enterpriseService.listEnterptise(pd);
 		mv.setViewName("enterprise/enterprise/enterprise_edit");
 		mv.addObject("msg", "save");
+		mv.addObject("pds", pds);
 		mv.addObject("pd", pd);
 		return mv;
 	}	
@@ -577,9 +597,18 @@ public class EnterpriseController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd = enterpriseService.findById(pd);	//根据ID读取
+		String SYS_USER_ID = Jurisdiction.getUserId();
+		String ENTERPRISE_ID = this.enterpriseService.findadminbyuserid(SYS_USER_ID);
+		PageData pageData = new PageData();
+		if(null != ENTERPRISE_ID&&!"".equals(ENTERPRISE_ID)){
+			pageData.put("ENTERPRISE_ID", ENTERPRISE_ID);
+		}
+		List<PageData> pds = this.enterpriseService.listEnterptise(pageData);
+		mv.setViewName("enterprise/enterprise/enterprise_edit");
 		mv.setViewName("enterprise/enterprise/enterprise_edit");
 		mv.addObject("msg", "edit");
 		mv.addObject("pd", pd);
+		mv.addObject("pds", pds);
 		return mv;
 	}	
 	
