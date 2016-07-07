@@ -412,7 +412,7 @@ public class RestfullController extends BaseController {
 		user.setEmail(pd.getString("EMAIL"));
 		user.setOpenid(pd.getString("OPENID"));
 		user.setAlias(pd.getString("ALIAS"));
-		user.setBirthday(pd.getString("BIRTHDAY"));
+		user.setBirthday(pd.get("BIRTHDAY").toString());
 		user.setSex(pd.getString("SEX"));
 		user.setBirthPlace(pd.getString("BIRTHPLACE"));
 		user.setLivePlace(pd.getString("LIVEPLACE"));
@@ -420,12 +420,12 @@ public class RestfullController extends BaseController {
 		user.setCareer(pd.getString("CAREER"));
 		user.setDegree(pd.getString("DEGREE"));
 		user.setAvatar(pd.getString("AVATAR"));
-		user.setHeight(Integer.parseInt(pd.getString("HEIGHT")));
-		user.setWeight(Integer.parseInt(pd.getString("WEIGHT")));
+		user.setHeight(Integer.parseInt(pd.get("HEIGHT").toString()));
+		user.setWeight(Integer.parseInt(pd.get("WEIGHT").toString()));
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		int age = -1;
 		try {
-			Date birthDate = format.parse(pd.getString("BIRTHDAY"));
+			Date birthDate = format.parse(pd.get("BIRTHDAY").toString());
 			int year1 = birthDate.getYear();
 			Date now = new Date();
 			int year2 = now.getYear();
@@ -457,7 +457,7 @@ public class RestfullController extends BaseController {
 	 */
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
 	@ResponseBody
-	public Object saveUser(@RequestBody(required = true) String users) {
+	public Object saveUser(@RequestBody(required = true) String users) throws Exception {
 		logBefore(logger, "通过用户ID更新用户信息+++++++++++++执行修改用户信息的方法");
 
 		Map<Object, Object> map = new HashMap<Object, Object>();
@@ -469,7 +469,7 @@ public class RestfullController extends BaseController {
 				avatar = null,phone = null;
 		String tel = null;
 		// 将String类型的数据转换为json
-		try {
+	
 			JSONObject jasonObject = JSONObject.fromObject(users);
 			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId"))
 					&& !"null".equals(jasonObject.get("userId"))) {
@@ -513,7 +513,7 @@ public class RestfullController extends BaseController {
 				if (jasonObject.get("birthday") != null && !"".equals(jasonObject.get("birthday"))
 						&& !"null".equals(jasonObject.get("birthday"))) {
 					birthday = jasonObject.getString("birthday").trim();
-					pds.put("BIRTHDAY", DateUtil.fomatDate(birthday));
+					pds.put("BIRTHDAY", birthday);
 				}
 				if (jasonObject.get("height") != null && !"".equals(jasonObject.get("height"))
 						&& !"null".equals(jasonObject.get("height"))) {
@@ -568,12 +568,8 @@ public class RestfullController extends BaseController {
 				msg = "error";
 				logBefore(logger, "没有获取到用户ID ++++++++++++++++++ 用户ID为空");
 			}
-		} catch (Exception e) {
-			msg = "errorMessage";
-			logBefore(logger, "程序异常--请检查参数列表");
-		} finally {
+		
 			map.put("result", msg);
-		}
 		return AppUtil.returnObject(new PageData(), map);
 	}
 
