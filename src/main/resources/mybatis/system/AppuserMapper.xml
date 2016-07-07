@@ -626,7 +626,7 @@
 		from 
 			<include refid="tableName"></include>
 		where 
-			PHONE = #{PHONE}
+			PHONE = #{PHONE} or NAME = #{PHONE}
 	</select>
 	
 	<!-- 查询出所有关心我的人 -->

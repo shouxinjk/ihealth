@@ -89,12 +89,15 @@ public class EnterpriseController extends BaseController {
 		pd.put("NAME", MD5.md5(name));//将企业名称进行MD5加密生成appkey
 		pd.put("ENTERPRISE_ID", ENTERPRISE_ID);	//主键
 		enterpriseService.save(pd);
+		String eid = this.enterpriseService.findadminbyuserid(user_id);
 		if(parentid.equals("0")){
-			pd.clear();
-			pd.put("ENTERPRISEADMIN_ID", this.get32UUID());
-			pd.put("SYS_USER_ID", user_id);
-			pd.put("ENTERPRISE_ID", ENTERPRISE_ID);
-			this.enterpriseService.saveEnterpriseAdmin(pd);
+			if(eid == null){
+				pd.clear();
+				pd.put("ENTERPRISEADMIN_ID", this.get32UUID());
+				pd.put("SYS_USER_ID", user_id);
+				pd.put("ENTERPRISE_ID", ENTERPRISE_ID);
+				this.enterpriseService.saveEnterpriseAdmin(pd);
+			}
 		}
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -571,7 +574,6 @@ public class EnterpriseController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		PageData findUser = this.appuserService.findByUiId(pd);
-		System.out.println(findUser+"======================================");
 		List<PageData> pageData = this.checkupitemService.listAll(pd);
 		List<PageData> allDisease = diseaseService.listAllByUserID(pd);//个人疾病
 		List<PageData> allDiseaseIsHighIncaidence = diseaseService.listAllByUserIDIsHighIncaidence(pd);//家族疾病信息
