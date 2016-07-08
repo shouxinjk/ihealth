@@ -161,5 +161,25 @@ public class EnterpriseService implements EnterpriseManager{
 		return (List<PageData>) dao.findForList("EnterpriseMapper.listEnterptise", pd);
 	}
 	
+	/**
+	 * 审核企业，修改企业状态	
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void editStatus(PageData pd) throws Exception {
+		dao.update("EnterpriseMapper.editStatus", pd);
+	}
+
+	/**
+	 * 查询出需要审核的企业
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> dataStatuslistPage(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("EnterpriseMapper.dataStatuslistPage", page);
+	}
+	
 }
 

@@ -113,5 +113,20 @@ public interface EnterpriseManager{
 	 */
 	public List<PageData> listEnterptise(PageData pd)throws Exception;
 	
+	/**
+	 * 审核企业，修改企业状态
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void editStatus(PageData pd)throws Exception;
+	
+	/**
+	 * 查询出需要审核的企业
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> dataStatuslistPage(Page page)throws Exception;
+	
 } 
 

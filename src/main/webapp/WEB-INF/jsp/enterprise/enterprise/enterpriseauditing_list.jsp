@@ -90,20 +90,20 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.ENTERPRISE_ID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '已提交' }">
+													<a class="btn btn-xs btn-success" title="审核通过" onclick="editStatus('${var.ENTERPRISE_ID}','审核通过');">
+														<i class="ace-icon fa fa-folder-open bigger-120" title="审核通过"></i>
 													</a>
 													</c:if>
-													<c:if test="${QX.edit == 1 && var.STATUS eq '新建'}">
-														<a class="btn btn-xs btn-success" title="提交" onclick="editStatus('${var.ENTERPRISE_ID}');">
-															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '审核通过'}">
+														<a class="btn btn-xs btn-success" title="不通过" onclick="editStatus('${var.ENTERPRISE_ID}','审核失败');">
+															<i class="ace-icon fa fa-retweet bigger-120" title="不通过"></i>
 														</a>
 													</c:if>
-													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.ENTERPRISE_ID}');">
-														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
-													</a>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '审核失败'}">
+														<a class="btn btn-xs btn-success" title="审核通过" onclick="editStatus('${var.ENTERPRISE_ID}','审核通过');">
+															<i class="ace-icon fa fa-folder-open bigger-120" title="审核通过"></i>
+														</a>
 													</c:if>
 												</div>
 												<div class="hidden-md hidden-lg">
@@ -154,19 +154,6 @@
 							</tbody>
 						</table>
 						<div class="page-header position-relative">
-						<table style="width:100%;">
-							<tr>
-								<td style="vertical-align:top;">
-									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-sm btn-success" onclick="add();">新增</a>
-									</c:if>
-									<c:if test="${QX.del == 1 }">
-									<a class="btn btn-sm btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
-									</c:if>
-								</td>
-								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
-							</tr>
-						</table>
 						</div>
 						</form>
 					
@@ -255,123 +242,22 @@
 			});
 		});
 		
-		//新增
-		function add(){
-			 top.jzts();
-			 var diag = new top.Dialog();
-			 diag.Drag=true;
-			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>enterprise/goAdd.do';
-			 diag.Width = 800;
-			 diag.Height = 600;
-			 diag.CancelEvent = function(){ //关闭事件
-				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 if('${page.currentPage}' == '0'){
-						 top.jzts();
-						 setTimeout("self.location=self.location",100);
-					 }else{
-						 nextPage(${page.currentPage});
-					 }
-				}
-				diag.close();
-			 };
-			 diag.show();
-		}
 		
-		//删除
-		function del(Id){
-			bootbox.confirm("确定要删除吗?", function(result) {
-				if(result) {
-					top.jzts();
-					var url = "<%=basePath%>enterprise/delete.do?ENTERPRISE_ID="+Id+"&tm="+new Date().getTime();
-					$.get(url,function(data){
-						nextPage(${page.currentPage});
-					});
-				}
-			});
-		}
 		
 		//修改企业状态
-		function editStatus(Id){
-			bootbox.confirm("确定要提交吗?", function(result) {
+		function editStatus(Id,status){
+			bootbox.confirm("确定要操作吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>enterprise/editStatus.do?ENTERPRISE_ID="+Id+"&STATUS=已提交&tm="+new Date().getTime();
+					var url = "<%=basePath%>enterprise/editStatus.do?ENTERPRISE_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
 					$.get(url,function(data){
-						nextPage(${page.currentPage});
+						location.href="<%=basePath%>enterprise/listStatus.do?dnowPage=${page.currentPage}";
 					});
 				}
 			});
 		}
 		
-		//修改
-		function edit(Id){
-			 top.jzts();
-			 var diag = new top.Dialog();
-			 diag.Drag=true;
-			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>enterprise/goEdit.do?ENTERPRISE_ID='+Id;
-			 diag.Width = 800;
-			 diag.Height = 600;
-			 diag.CancelEvent = function(){ //关闭事件
-				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 nextPage(${page.currentPage});
-				}
-				diag.close();
-			 };
-			 diag.show();
-		}
 		
-		//批量操作
-		function makeAll(msg){
-			bootbox.confirm(msg, function(result) {
-				if(result) {
-					var str = '';
-					for(var i=0;i < document.getElementsByName('ids').length;i++){
-					  if(document.getElementsByName('ids')[i].checked){
-					  	if(str=='') str += document.getElementsByName('ids')[i].value;
-					  	else str += ',' + document.getElementsByName('ids')[i].value;
-					  }
-					}
-					if(str==''){
-						bootbox.dialog({
-							message: "<span class='bigger-110'>您没有选择任何内容!</span>",
-							buttons: 			
-							{ "button":{ "label":"确定", "className":"btn-sm btn-success"}}
-						});
-						$("#zcheckbox").tips({
-							side:1,
-				            msg:'点这里全选',
-				            bg:'#AE81FF',
-				            time:8
-				        });
-						return;
-					}else{
-						if(msg == '确定要删除选中的数据吗?'){
-							top.jzts();
-							$.ajax({
-								type: "POST",
-								url: '<%=basePath%>enterprise/deleteAll.do?tm='+new Date().getTime(),
-						    	data: {DATA_IDS:str},
-								dataType:'json',
-								//beforeSend: validateData,
-								cache: false,
-								success: function(data){
-									 $.each(data.list, function(i, list){
-											nextPage(${page.currentPage});
-									 });
-								}
-							});
-						}
-					}
-				}
-			});
-		};
-		
-		//导出excel
-		function toExcel(){
-			window.location.href='<%=basePath%>enterprise/excel.do';
-		}
 	</script>
 
 

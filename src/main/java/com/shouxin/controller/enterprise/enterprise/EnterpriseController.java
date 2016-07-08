@@ -401,6 +401,25 @@ public class EnterpriseController extends BaseController {
 	 * @param
 	 * @throws Exception
 	 */
+	@RequestMapping(value="/editStatus")
+	public ModelAndView editStatus() throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改Enterprise");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		System.out.println(pd.getString("STATUS"));
+		enterpriseService.editStatus(pd);
+		mv.addObject("msg","success");
+		mv.setViewName("save_result");
+		return mv;
+	}
+	
+	
+	/**修改
+	 * @param
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/editUser")
 	public ModelAndView editUser() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"修改Enterprise");
@@ -495,6 +514,35 @@ public class EnterpriseController extends BaseController {
 		page.setPd(pd);
 		List<PageData>	varList = enterpriseService.list(page);	//列出Enterprise列表
 		mv.setViewName("enterprise/enterprise/enterprise_list");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	
+	/**列表
+	 * @param page
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/listStatus")
+	public ModelAndView listStatus(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表Enterprise");
+		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String SYS_USER_ID = Jurisdiction.getUserId();
+		String ENTERPRISE_ID = this.enterpriseService.findadminbyuserid(SYS_USER_ID);
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		if(null != ENTERPRISE_ID&&!"".equals(ENTERPRISE_ID)){
+			pd.put("ENTERPRISE_ID", ENTERPRISE_ID);
+		}
+		page.setPd(pd);
+		List<PageData>	varList = enterpriseService.dataStatuslistPage(page);	//列出Enterprise列表
+		mv.setViewName("enterprise/enterprise/enterpriseauditing_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
