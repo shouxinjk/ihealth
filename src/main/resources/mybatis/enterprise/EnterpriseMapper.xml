@@ -60,9 +60,27 @@
 		insert into 
 	<include refid="tableName"></include>
 		(
-	<include refid="Field"></include>
+		NAME,	
+		ABBREVIATION,	
+		LOGO,	
+		TELEPHONE,	
+		LOCATION,	
+		POSITION,	
+		BUSINESSLICENSE,	
+		PARENTID,	
+		ENTERPRISE_ID,
+		APPKEY
 		) values (
-	<include refid="FieldValue"></include>
+		#{NAME},	
+		#{ABBREVIATION},	
+		#{LOGO},	
+		#{TELEPHONE},	
+		#{LOCATION},	
+		#{POSITION},	
+		#{BUSINESSLICENSE},	
+		#{PARENTID},	
+		#{ENTERPRISE_ID},
+		#{APPKEY}
 		)
 	</insert>
 	

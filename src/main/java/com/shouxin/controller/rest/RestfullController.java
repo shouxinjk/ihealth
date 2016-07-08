@@ -270,6 +270,7 @@ public class RestfullController extends BaseController {
 		} else {
 			phone = jasonObject.getString("phone");
 			user_id_one = jasonObject.getString("userId");
+			int i = jasonObject.getInt("i");
 			pd.put("PHONE", phone);
 			// 根据手机号码 获取当前用户信息
 			List<PageData> pageData = this.appuserService.findByPhones(pd);
@@ -277,6 +278,10 @@ public class RestfullController extends BaseController {
 				msg = "repeat";
 				map.put("data", pageData);
 			} else {
+				if(i == 1){
+					pd.put("PHONE", "");	
+					pd.put("NAME", phone);
+				}
 				pd.put("USER_ID", this.get32UUID());
 				pd.put("ROLE_ID", "1b67fc82ce89457a8347ae53e43a347e"); // 赋予新注册用户最低级的权限，初级会员
 				pd.put("STATUS", "1"); // 状态
