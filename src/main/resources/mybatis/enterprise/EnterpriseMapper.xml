@@ -39,7 +39,7 @@
 	
 	<!-- 添加企业管理员信息 -->
 	<insert id="saveEnterpriseAdmin" parameterType="pd">
-		insert into tb_enterpriseadmin(ENTERPRISEADMIN,SYS_USER_ID,ENTERPTISE_ID) 
+		insert into tb_enterpriseadmin(ENTERPRISEADMIN_ID,SYS_USER_ID,ENTERPRISE_ID) 
 		values(#{ENTERPRISEADMIN_ID},#{SYS_USER_ID},#{ENTERPRISE_ID})
 	</insert>
 	

@@ -86,7 +86,7 @@ public class EnterpriseController extends BaseController {
 		String ENTERPRISE_ID = this.get32UUID();
 		String name = pd.getString("NAME");
 		String parentid = pd.getString("PARENTID");
-		pd.put("NAME", MD5.md5(name));//将企业名称进行MD5加密生成appkey
+		pd.put("APPKEY", MD5.md5(name));//将企业名称进行MD5加密生成appkey
 		pd.put("ENTERPRISE_ID", ENTERPRISE_ID);	//主键
 		enterpriseService.save(pd);
 		String eid = this.enterpriseService.findadminbyuserid(user_id);
