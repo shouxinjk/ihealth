@@ -279,8 +279,15 @@ INSERT INTO `sys_menu` VALUES ('267', '指南运维审核', 'examguideline/listR
 INSERT INTO `sys_menu` VALUES ('288', '体检中心管理', 'medicalcenter/list.do', '372', '19', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('309', '体检项目管理', 'medicalexamitem/list.do', '372', '21', 'menu-icon fa fa-leaf black', '1', '1');
 INSERT INTO `sys_menu` VALUES ('330', '用户订单管理', 'order/list.do', '372', '20', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('351', '体检中心订单管理', 'medicalorder/list.do', '372', '22', 'menu-icon fa fa-leaf black', '1', '1');
-INSERT INTO `sys_menu` VALUES ('372', '体检中心(医院)', '#', '0', '7', 'menu-icon fa fa-leaf black', '2', '1');
+INSERT INTO `sys_menu` VALUES ('351', '体检中心订单管理', 'medicalorder/list.do', '372', '4', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('372', '体检中心(医院)', '#', '0', '8', 'menu-icon fa fa-leaf black', '2', '1');
+INSERT INTO `sys_menu` VALUES ('373', '体检中心审核发布', 'medicalcenter/listrel.do', '372', '5', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('394', '体检项目审核发布', 'medicalexamitem/listrel.do', '372', '6', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('395', '企业管理', '#', '0', '9', 'menu-icon fa fa-leaf black', '2', '1');
+INSERT INTO `sys_menu` VALUES ('430', '企业', 'enterprise/list.do', '395', '1', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('451', '企业员工管理', 'enterprise/listEnterpriseUser.do', '395', '2', 'menu-icon fa fa-leaf black', '1', '1');
+INSERT INTO `sys_menu` VALUES ('452', '企业审核', 'enterprise/listStatus.do', '395', '3', 'menu-icon fa fa-leaf black', '1', '1');
+
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
