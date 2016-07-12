@@ -51,6 +51,9 @@ public class ObjectExcelRead {
 						switch (cell.getCellType()) { 					// 判断excel单元格内容的格式，并对其进行转换，以便插入数据库
 						case 0:
 							cellValue = String.valueOf((int) cell.getNumericCellValue());
+							if(cellValue.equals("2147483647")){
+								cellValue = String.valueOf((long) cell.getNumericCellValue());
+							}
 							break;
 						case 1:
 							cellValue = cell.getStringCellValue();
