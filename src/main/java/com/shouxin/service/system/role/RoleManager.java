@@ -25,6 +25,13 @@ public interface RoleManager {
 	 */
 	public PageData findObjectById(PageData pd) throws Exception;
 	
+	/**通过名称查找
+	 * @param ROLE_NAME
+	 * @return
+	 * @throws Exception
+	 */
+	public PageData findObjectByName(String ROLE_NAME)throws Exception;
+	
 	/**添加
 	 * @param pd
 	 * @throws Exception

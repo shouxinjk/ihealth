@@ -58,6 +58,16 @@
 		where ROLE_ID = #{ROLE_ID}
 	</select>
 	
+	<!-- 通过权限名称查找 -->
+	<select id="findObjectByName" parameterType="java.lang.String" resultType="pd">
+		select  
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where ROLE_NAME = #{ROLE_NAME}
+	</select>
+	
+	
 	<!-- 添加 -->
 	<insert id="insert" parameterType="pd">
 		insert into 

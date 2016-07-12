@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.medical.MedicalExamItem;
 import com.shouxin.entity.medical.OrderItem;
+import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.medical.medicalorder.MedicalOrderManager;
 import com.shouxin.service.medical.order.OrderManager;
 import com.shouxin.util.AppUtil;
@@ -30,6 +31,8 @@ public class OrderRestController extends BaseController {
 	
 	@Resource(name="orderService")
 	private OrderManager orderService;
+	@Resource(name = "checkupitemService")
+	private CheckupItemManager checkupitemService;
 	
 	@RequestMapping(value="/addOrder",method=RequestMethod.POST)
 	@ResponseBody
@@ -87,6 +90,69 @@ public class OrderRestController extends BaseController {
 			allMap.put("msg", "no");
 		}
 		return AppUtil.returnObject(new PageData(), allMap);
+	}
+	
+	/**
+	 * 根据userID 和当前分组名 获取体检项目
+	 * url：http://localhost:8080/ihealth/rest/getCheckItemsByGroup type:post
+	 * 
+	 * @param {"userId":"用户ID"}
+	 * @return 当userID不为空，并且数据库中存在这个ID、返回以下数据，需要注意的是，一个用户有多个体检项目，需要循环取值 {
+	 *         "result": "success", "data": [ { "REVISION": 版本,
+	 *         "STATUS":"状态，包括：已选中，已删除", "DESCRIPTION": "详细描述", "GENERATEDTIME":
+	 *         该记录生成时间, "FREQUENCY": "每年一次", "ORIGINATE": "指南来源", "WORKER":
+	 *         "用于产生该记录的标记", "SUBGROUP": "检查项目分组", "SYSFLAG": "系统标记", "NAME":
+	 *         "检查项目名称", "FEATURES": "检查频率，是文字描述", "CHECKUPITEM_ID": "ID" } ] }
+	 *         当用户ID为空时返回：{"result": "error"} 当根据userID查询出的数据为null时
+	 *         返回：{"result": "no"}
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "getCheckItemsByGroup", method = RequestMethod.POST)
+	@ResponseBody
+	public Object getCheckItemsByGroup(@RequestBody String u) throws Exception {
+		logBefore(logger, "查询--------根据用户ID，获取体检项目信息");
+
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		String msg = null, userId = null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+
+		// 将String类型的数据转换为json
+		JSONObject jasonObject = JSONObject.fromObject(u);
+		try {
+			if (jasonObject.get("userId") != null && !"".equals(jasonObject.get("userId"))
+					&& !"null".equals(jasonObject.get("userId"))) {
+				userId = jasonObject.getString("userId").trim();
+				pd.put("USER_ID", userId);
+				pd.put("STATUS", "已选中");
+				logger.debug("根据用户ID 查询体检项目信息");
+				List<PageData> pageDate = this.checkupitemService.findCIByIdOrSubGroup(pd);
+				if (pageDate != null && pageDate.size() > 0) {
+					msg = "success";
+					map.put("data", pageDate);
+				} else {
+					msg = "no";
+				}
+			} else {
+				msg = "error";
+			}
+		} catch (Exception e) {
+			msg = "error";
+			logBefore(logger, "程序异常--请检查参数列表");
+			e.printStackTrace();
+		}
+
+		map.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	@RequestMapping(value="/listMedicalItemByCid")
+	@ResponseBody
+	public Object listMedicalItemByCid(@RequestBody String checkupId)throws Exception{
+		logBefore(logger, "查询--------根据checkupitemID，获取体检中心体检项目信息");
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		JSONObject jasonObject = JSONObject.fromObject(checkupId);
+		return null;
 	}
 	
 }

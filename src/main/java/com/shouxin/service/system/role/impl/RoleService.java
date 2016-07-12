@@ -98,4 +98,13 @@ public class RoleService implements RoleManager{
 		dao.update("RoleMapper."+msg, pd);
 	}
 
+	/**通过名称查找
+	 * @param ROLE_NAME
+	 * @return
+	 * @throws Exception
+	 */
+	public PageData findObjectByName(String ROLE_NAME) throws Exception {
+		return (PageData) dao.findForObject("RoleMapper.findObjectByName", ROLE_NAME);
+	}
+
 }

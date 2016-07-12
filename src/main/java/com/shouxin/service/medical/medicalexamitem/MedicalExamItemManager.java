@@ -75,5 +75,13 @@ public interface MedicalExamItemManager{
 	 */
 	public void auditing(PageData pd)throws Exception;
 	
+	/**
+	 * 根据checkupitemid查询体检中心体检项目
+	 * @param CHECKEDUPITEM_ID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listMedicalItemByCheckuoItemId(String CHECKEDUPITEM_ID)throws Exception;
+	
 }
 

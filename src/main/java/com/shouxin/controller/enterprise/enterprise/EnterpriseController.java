@@ -30,6 +30,7 @@ import com.shouxin.entity.admin.TagAndUser;
 import com.shouxin.entity.system.Role;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.Const;
+import com.shouxin.util.DateUtil;
 import com.shouxin.util.FileDownload;
 import com.shouxin.util.FileUpload;
 import com.shouxin.util.GetPinyin;
@@ -38,6 +39,9 @@ import com.shouxin.util.PageData;
 import com.shouxin.util.PathUtil;
 import com.shouxin.util.RepeatString;
 import com.shouxin.util.Tools;
+import com.shouxinjk.ihealth.data.Transfer;
+import com.shouxinjk.ihealth.data.pojo.UserDisease;
+import com.shouxinjk.ihealth.data.pojo.UserTag;
 
 import net.sf.json.JSONObject;
 
@@ -49,6 +53,8 @@ import com.shouxin.service.admin.tag.TagManager;
 import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.enterprise.enterprise.EnterpriseManager;
 import com.shouxin.service.system.appuser.AppuserManager;
+import com.shouxin.service.system.role.RoleManager;
+import com.shouxin.service.system.user.UserManager;
 
 /** 
  * 说明：企业管理
@@ -70,6 +76,10 @@ public class EnterpriseController extends BaseController {
 	private TagManager tagService;
 	@Resource(name = "checkupitemService")
 	private CheckupItemManager checkupitemService;
+	@Resource(name="roleService")
+	private RoleManager roleService;
+	@Resource(name="userService")
+	private UserManager userService;
 	
 	/**保存
 	 * @param
@@ -102,6 +112,47 @@ public class EnterpriseController extends BaseController {
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
+	}
+	
+	/**
+	 * 添加企业用户为企业管理员
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/saveEnterpriseAdmin")
+	public void saveEnterpriseAdmin(PrintWriter out)throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"新增EnterpriseUser");
+//		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String user_id = pd.getString("userid");
+		PageData userPd = this.enterpriseService.findEnterpriseUserByUserid(user_id);
+		String enterpriseId = userPd.getString("ENTERPRISE_ID");
+		PageData rolePd = this.roleService.findObjectByName("企业管理员");
+		String roleId = rolePd.getString("ROLE_ID");
+		userPd.put("ROLE_ID", roleId);
+		String SYS_USER_ID = this.get32UUID();
+		userPd.put("USER_ID", SYS_USER_ID);
+		userPd.put("LAST_LOGIN", DateUtil.getTime());				//最后登录时间
+		userPd.put("IP", "");						//IP
+		userPd.put("STATUS", "0");					//状态
+		userPd.put("SKIN", "default");
+		if(userPd.get("USERNAME") == null || userPd.get("USERNAME").equals("")){
+			userPd.put("USERNAME", userPd.get("PHONE"));
+		}
+		userPd.put("PASSWORD", "1");
+		userPd.put("RIGHTS", "");	
+		userService.saveU(userPd); 					//执行保存
+		PageData adminPd = new PageData();
+		adminPd.put("ENTERPRISEADMIN_ID", this.get32UUID());
+		adminPd.put("SYS_USER_ID", SYS_USER_ID);
+		adminPd.put("ENTERPRISE_ID", enterpriseId);
+		this.enterpriseService.saveEnterpriseAdmin(adminPd);
+		pd.clear();
+		pd.put("USER_ID", user_id);
+		pd.put("ISADMIN", 1);
+		this.appuserService.updateEnterpriseUserIsAdmin(pd);
+		out.write("success");
+		out.close();
 	}
 	
 	/**保存
@@ -315,16 +366,50 @@ public class EnterpriseController extends BaseController {
 					if(nullDt){
 						if(daup.size()>0){
 							this.appuserService.saveEnterpriseUserDisease(daup);
+							//qchzhu: hook analysis interface
+							UserDisease userDisease = new UserDisease();
+							userDisease.setUser_id(userid);
+							//end
+							for (DiseaseAndUser d : daup) {
+								//qchzhu: hook analysis interface
+								userDisease.addSufferedDisease(d.getDISEASE_ID());
+							}
 						}
-						System.out.println(dauj.size());
 						if(dauj.size()>0){
 							this.appuserService.saveEnterpriseUserDiseasefamily(dauj);
+							//qchzhu: hook analysis interface
+							UserDisease userDisease = new UserDisease();
+							userDisease.setUser_id(userid);
+							//end
+							for (DiseaseAndUser d : dauj) {
+								//qchzhu: hook analysis interface
+								userDisease.addSufferedDisease(d.getDISEASE_ID());
+							}
 						}
 						if(daug.size()>0){
 							this.appuserService.saveEnterpriseUserDiseasefocus(daug);
+							//qchzhu: hook analysis interface
+							UserDisease userDisease = new UserDisease();
+							userDisease.setUser_id(userid);
+							//end
+							for (DiseaseAndUser d : daug) {
+								//qchzhu: hook analysis interface
+								userDisease.addSufferedDisease(d.getDISEASE_ID());
+							}
 						}
 						if(tau.size()>0){
 							this.appuserService.saveEnterpriseUserTag(tau);
+							//qchzhu: hook analysis interface
+							Transfer transfer = Transfer.getInstance();
+							UserTag userTag = new UserTag();
+							userTag.setUser_id(userid);
+							PageData pdTemp = new PageData();
+							pdTemp.put("USER_ID", userid);
+							List<PageData> tagss = tagService.listTagByUserID(pdTemp);
+							for(PageData pdTag:tagss){
+								userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
+							}
+							transfer.transferUserTags(userTag);
 						}
 						msg = "success";
 					}else{

@@ -30,6 +30,9 @@ import com.shouxin.util.AppUtil;
 import com.shouxin.util.DateUtil;
 import com.shouxin.util.PageData;
 import com.shouxin.util.RepeatString;
+import com.shouxinjk.ihealth.data.Transfer;
+import com.shouxinjk.ihealth.data.pojo.UserDisease;
+import com.shouxinjk.ihealth.data.pojo.UserTag;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -225,12 +228,13 @@ public class ForeignRestController extends BaseController {
 		boolean nullDT = true;
 		boolean paramError = true;
 		System.out.println(user);
+		String userId = "";
 		for(int i=0;i<user.size();i++){
 			PageData pd1 = new PageData();
 			JSONObject jo = JSONObject.fromObject(user.get(i));
 			String name=null,birthday=null,sex=null,phone=null,marriage=null,height=null,weight=null,job=null,
 			degree=null,placeofbirth=null,address=null,disease=null,tag=null,appkey=null;
-			String userId = this.get32UUID();
+			userId = this.get32UUID();
 			if(jo.get("name")!=null&&!jo.get("name").equals("")){
 				name = jo.getString("name");
 				pd1.put("NAME", name);
@@ -366,6 +370,7 @@ public class ForeignRestController extends BaseController {
 				String id = this.appuserService.findEnterpriseUserByPhone(pd2.getString("PHONE"));
 				if(id!=null&&!id.equals("")){
 					pd2.put("USER_ID", id);
+					userId = id;
 					this.appuserService.updateEnterpriseUser(pd2);
 				}else{
 					this.appuserService.saveEnterpriseUser(pd2);
@@ -373,16 +378,51 @@ public class ForeignRestController extends BaseController {
 			}
 			if(daup.size()>0){
 				this.appuserService.saveEnterpriseUserDisease(daup);
+				//qchzhu: hook analysis interface
+				UserDisease userDisease = new UserDisease();
+				userDisease.setUser_id(userId);
+				//end
+				for (DiseaseAndUser d : daup) {
+					//qchzhu: hook analysis interface
+					userDisease.addSufferedDisease(d.getDISEASE_ID());
+				}
 			}
-			System.out.println(dauj.size());
 			if(dauj.size()>0){
 				this.appuserService.saveEnterpriseUserDiseasefamily(dauj);
+				//qchzhu: hook analysis interface
+				UserDisease userDisease = new UserDisease();
+				userDisease.setUser_id(userId);
+				//end
+				for (DiseaseAndUser d : dauj) {
+					//qchzhu: hook analysis interface
+					userDisease.addSufferedDisease(d.getDISEASE_ID());
+				}
 			}
 			if(daug.size()>0){
 				this.appuserService.saveEnterpriseUserDiseasefocus(daug);
+				this.appuserService.saveEnterpriseUserDiseasefocus(daug);
+				//qchzhu: hook analysis interface
+				UserDisease userDisease = new UserDisease();
+				userDisease.setUser_id(userId);
+				//end
+				for (DiseaseAndUser d : daug) {
+					//qchzhu: hook analysis interface
+					userDisease.addSufferedDisease(d.getDISEASE_ID());
+				}
 			}
 			if(tau.size()>0){
 				this.appuserService.saveEnterpriseUserTag(tau);
+				//qchzhu: hook analysis interface
+				Transfer transfer = Transfer.getInstance();
+				UserTag userTag = new UserTag();
+				userTag.setUser_id(userId);
+				PageData pdTemp = new PageData();
+				pdTemp.put("USER_ID", userId);
+				List<PageData> tagss = tagService.listTagByUserID(pdTemp);
+				for(PageData pdTag:tagss){
+					userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
+				}
+				transfer.transferUserTags(userTag);
 			}
 		}else{
 			String miaoshu="";

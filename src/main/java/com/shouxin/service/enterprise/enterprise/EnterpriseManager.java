@@ -128,5 +128,13 @@ public interface EnterpriseManager{
 	 */
 	public List<PageData> dataStatuslistPage(Page page)throws Exception;
 	
+	/**
+	 * 根据userid查询出该企业用户的信息和所属企业id
+	 * @param USER_ID
+	 * @return
+	 * @throws Exception
+	 */
+	public PageData findEnterpriseUserByUserid(String USER_ID)throws Exception;
+	
 } 
 

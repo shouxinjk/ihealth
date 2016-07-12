@@ -180,6 +180,16 @@ public class EnterpriseService implements EnterpriseManager{
 	public List<PageData> dataStatuslistPage(Page page) throws Exception {
 		return (List<PageData>) dao.findForList("EnterpriseMapper.dataStatuslistPage", page);
 	}
+
+	/**
+	 * 根据userid查询出该企业用户的信息和所属企业id
+	 * @param USER_ID
+	 * @return
+	 * @throws Exception
+	 */
+	public PageData findEnterpriseUserByUserid(String USER_ID) throws Exception {
+		return (PageData) dao.findForObject("EnterpriseMapper.findEnterpriseUserByUserid", USER_ID);
+	}
 	
 }
 

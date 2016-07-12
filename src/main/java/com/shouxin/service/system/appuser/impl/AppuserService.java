@@ -391,6 +391,8 @@ public class AppuserService implements AppuserManager{
 	 */
 	public void updateEnterpriseUser(PageData pd) throws Exception {
 		dao.update("AppuserMapper.updateEnterpriseUser", pd);
+		//qchzhu: hook analysis interface
+		transferUser(pd);
 	}
 
 	/**
@@ -400,6 +402,8 @@ public class AppuserService implements AppuserManager{
 	 */
 	public void saveEnterpriseUser(PageData pd) throws Exception {
 		dao.save("AppuserMapper.saveEnterpriseUser", pd);
+		//qchzhu: hook analysis interface
+		transferUser(pd);
 	}
 	
 	/**
@@ -439,6 +443,10 @@ public class AppuserService implements AppuserManager{
 	 */
 	public void updatePrivacy(PageData pd) throws Exception {
 		dao.update("AppuserMapper.updatePrivacy", pd);
+	}
+
+	public void updateEnterpriseUserIsAdmin(PageData pd) throws Exception {
+		dao.update("AppuserMapper.updateEnterpriseUserIsAdmin", pd);
 	}
 	
 }

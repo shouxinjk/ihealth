@@ -108,6 +108,17 @@ public class MedicalExamItemService implements MedicalExamItemManager{
 	public List<PageData> listrel(Page page) throws Exception {
 		return (List<PageData>) dao.findForList("MedicalExamItemMapper.datarellistPage", page);
 	}
+
+	/**
+	 * 根据checkupitemid查询体检中心体检项目
+	 * @param CHECKEDUPITEM_ID
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listMedicalItemByCheckuoItemId(String CHECKEDUPITEM_ID) throws Exception {
+		return (List<PageData>) dao.findForList("MedicalExamItemMapper.listMedicalItemByCheckuoItemId", CHECKEDUPITEM_ID);
+	}
 	
 }
 

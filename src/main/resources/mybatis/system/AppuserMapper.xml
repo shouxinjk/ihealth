@@ -181,6 +181,13 @@
 				 where USER_ID = #{USER_ID}
 	</update>
 	
+		<!--修改企业用户 -->
+	<update id="updateEnterpriseUserIsAdmin" parameterType="pd">
+			update <include refid="tableName"></include> set 	
+				ISADMIN = #{ISADMIN}
+				 where USER_ID = #{USER_ID}
+	</update>
+	
 	<!--根据电话查询单个企业用户 -->
 	<select id="findEnterpriseUserByPhone" parameterType="java.lang.String" resultType="java.lang.String">
 			select USER_ID from sys_app_user where PHONE = #{PHONE}

@@ -365,5 +365,11 @@ public interface AppuserManager {
 	 * @throws Exception
 	 */
 	public void updatePrivacy(PageData pd)throws Exception;
+	
+	/**
+	 * 修改是否为管理员标记
+	 * @throws Exception
+	 */
+	public void updateEnterpriseUserIsAdmin(PageData pd)throws Exception;
 }
 

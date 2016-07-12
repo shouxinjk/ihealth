@@ -80,6 +80,15 @@
 		select medicalcenter_id from tb_medicalceneradmin where sys_user_id = #{userId}
 	</select>
 	
+	<!-- 根据checkupitemid查询体检中心检查项目 -->
+	<select id="listMedicalItemByCheckuoItemId" parameterType="java.lang.String" resultType="pd">
+		select mei.MEDICALEXAMITEM_ID as MEDICALEXAMITEM_ID,mei.`NAME` as `NAME`,mei.DESCRIPTION 
+		as DESCRIPTION,mc.NAME AS MNAME from tb_medicalexamitem mei , tb_medicalcenter mc , exam_examitem 
+		ei , exam_examsolution es , tb_checkupitem ci where mei.MEDICALCENTER_ID = mc.MEDICALCENTER_ID 
+		and mei.EXAMITEM_ID = ei.EXAMITEM_ID and ei.EXAMITEM_ID = es.EXAMITEM_ID and es.EXAMSOLUTION_ID = 
+		ci.solution_id and ci.CHECKUPITEM_ID=#{CHECKUPITEM_ID}
+	</select>
+	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
 		insert into 

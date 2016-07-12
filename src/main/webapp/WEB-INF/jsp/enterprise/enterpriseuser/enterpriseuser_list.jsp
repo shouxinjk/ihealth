@@ -103,8 +103,13 @@
 													</a>
 													</c:if>
 													<c:if test="${QX.cha == 1 }">
-														<a class="btn btn-xs btn-info" onclick="find('${var.USER_ID}');">
+														<a class="btn btn-xs btn-info" title="查看" onclick="find('${var.USER_ID}');">
 															<i class="ace-icon fa fa-search nav-search-icon" title="查看"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.edit == 1 && var.ISADMIN == 0 }">
+														<a class="btn btn-xs btn-info" onclick="saveEnterpriseUser('${var.USER_ID}');">
+															<i class="ace-icon fa fa-search nav-search-icon" title="设置为管理员"></i>
 														</a>
 													</c:if>
 												</div>
@@ -279,6 +284,19 @@
 				diag.close();
 			 };
 			 diag.show();
+		}
+		
+		//添加企业管理员
+		function saveEnterpriseUser(Id){
+			bootbox.confirm("确定要操作吗?", function(result) {
+				if(result) {
+					top.jzts();
+					var url = "<%=basePath%>enterprise/saveEnterpriseAdmin.do?userid="+Id+"&tm="+new Date().getTime();
+					$.get(url,function(data){
+						location.href="<%=basePath%>enterprise/listEnterpriseUser.do?dnowPage=${page.currentPage}";
+					});
+				}
+			});
 		}
 		
 		//删除
