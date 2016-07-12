@@ -561,11 +561,11 @@ public class RestfullController extends BaseController {
 				if(jasonObject.get("connection")!=null && !"".equals(jasonObject.get("connection"))){
 					PageData pd1 = new PageData();
 					String connection = jasonObject.getString("connection");
-					pd.put("connection", connection);
-					pd1.put("USER_ONE", userId);
+					pd1.put("connection", connection);
+					pd1.put("USERID_TWO", userId);
 					if(jasonObject.get("userid")!=null && !"".equals(jasonObject.get("userid"))){
 						String userid = jasonObject.getString("userid");
-						pd.put("USER_TWO", userid);
+						pd1.put("USERID_ONE", userid);
 						this.appuserService.updateUserConnection(pd1);
 					}
 				}
