@@ -21,7 +21,6 @@ public class PageData extends HashMap implements Map{
 	HttpServletRequest request;
 	public PageData(HttpServletRequest request){
 		this.request = request;
-		System.out.println(request.getParameter("DISEASECATEGORY_ID")+"==================");
 		Map properties = request.getParameterMap();
 		Map returnMap = new HashMap(); 
 		Iterator entries = properties.entrySet().iterator(); 

@@ -246,6 +246,8 @@ public interface AppuserManager {
 	
 	public PageData findByOpenId(PageData pd)throws Exception;
 	
+	public void updateUserConnection(PageData pd)throws Exception;
+	
 	/**
 	 * 查询疾病模板数据
 	 * @return

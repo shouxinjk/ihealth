@@ -448,6 +448,10 @@ public class AppuserService implements AppuserManager{
 	public void updateEnterpriseUserIsAdmin(PageData pd) throws Exception {
 		dao.update("AppuserMapper.updateEnterpriseUserIsAdmin", pd);
 	}
+
+	public void updateUserConnection(PageData pd) throws Exception {
+		dao.update("AppuserMapper.updateUserConnection", pd);
+	}
 	
 }
 

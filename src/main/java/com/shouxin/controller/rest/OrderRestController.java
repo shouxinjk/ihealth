@@ -18,6 +18,7 @@ import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.medical.MedicalExamItem;
 import com.shouxin.entity.medical.OrderItem;
 import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
+import com.shouxin.service.medical.medicalexamitem.MedicalExamItemManager;
 import com.shouxin.service.medical.medicalorder.MedicalOrderManager;
 import com.shouxin.service.medical.order.OrderManager;
 import com.shouxin.util.AppUtil;
@@ -33,7 +34,15 @@ public class OrderRestController extends BaseController {
 	private OrderManager orderService;
 	@Resource(name = "checkupitemService")
 	private CheckupItemManager checkupitemService;
+	@Resource(name="medicalexamitemService")
+	private MedicalExamItemManager medicalexamitemService;
 	
+	/**
+	 * 添加订单
+	 * @param souid
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/addOrder",method=RequestMethod.POST)
 	@ResponseBody
 	public Object addOrder(@RequestBody String souid) throws Exception{
@@ -74,7 +83,8 @@ public class OrderRestController extends BaseController {
 		return AppUtil.returnObject(new PageData(), allMap);
 	}
 	
-	@RequestMapping(value="/listExamItem",method=RequestMethod.POST)
+	
+	/*@RequestMapping(value="/listExamItem",method=RequestMethod.POST)
 	@ResponseBody
 	public Object listExamItem(@RequestBody String id) throws Exception{
 		Map<Object, Object> allMap = new HashMap<Object, Object>();
@@ -90,7 +100,7 @@ public class OrderRestController extends BaseController {
 			allMap.put("msg", "no");
 		}
 		return AppUtil.returnObject(new PageData(), allMap);
-	}
+	}*/
 	
 	/**
 	 * 根据userID 和当前分组名 获取体检项目
@@ -146,13 +156,41 @@ public class OrderRestController extends BaseController {
 		return AppUtil.returnObject(new PageData(), map);
 	}
 	
+	/**
+	 * 根据checkupItemID查询体检中心体检项目
+	 * @param checkupId
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/listMedicalItemByCid")
 	@ResponseBody
 	public Object listMedicalItemByCid(@RequestBody String checkupId)throws Exception{
 		logBefore(logger, "查询--------根据checkupitemID，获取体检中心体检项目信息");
 		Map<Object, Object> map = new HashMap<Object, Object>();
-		JSONObject jasonObject = JSONObject.fromObject(checkupId);
-		return null;
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		List<PageData> pds = new ArrayList<PageData>();
+		JSONObject json = JSONObject.fromObject(checkupId);
+		String user_id = null,checkupItemId = null,msg="";
+		if(json.get("userID") != null && !json.getString("userID").equals("")){
+			user_id = json.getString("userID");
+			pd.put("USER_ID", user_id);
+		}
+		if(json.get("checkupItemID")!=null && !json.getString("checkupItemID").equals("")){
+			checkupItemId = json.getString("checkupItemID");
+			pd.put("CHECKUPITEM_ID", checkupItemId);
+			pds = this.medicalexamitemService.listMedicalItemByCheckuoItemId(checkupItemId);
+			if(pds!=null&&pds.size()>0){
+				msg = "success";
+				map.put("data", pds);
+			}else{
+				msg = "no";
+			}
+		}else{
+			msg = "paramerror";
+		}	
+		pd.put("result", msg);
+		return AppUtil.returnObject(new PageData(), map);
 	}
 	
 }

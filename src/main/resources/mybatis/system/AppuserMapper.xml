@@ -595,6 +595,8 @@
 		</where>
 	</select>
 	
+	
+	
 	<!-- 查询该用户是否修改基本信息 -->
 	<select id="findIsModifyByUserId" parameterType="java.lang.String" resultType="pd">
 		select ISMODIFY from <include refid="tableName"></include> where USER_ID = #{USER_ID}
@@ -605,7 +607,7 @@
 			<include refid="Field"></include>
 		from 
 			<include refid="tableName"></include>
-		where USER_ID = #{USER_ID}
+		where USER_ID = #{USER_ID} 
 	</select>
 	
 	<select id="findByOpenId" parameterType="pd" resultType="pd">
@@ -654,6 +656,12 @@
 	<update id="updateModify" parameterType="pd">
 		update sys_app_user_and_user set ismodify = #{ISMODIFY} 
 		where user_id_one = #{USERID_ONE} and user_id_two = #{USERID_TWO}
+	</update>
+	
+	<!-- 修改关心的人的关系 -->
+	<update id="updateUserConnection" parameterType="pd">
+		update sys_app_user_and_user set connection = #{connection} where 
+		user_id_one = #{USERID_ONE} and user_id_two = #{USERID_TWO}
 	</update>
 	
 	<!-- 查询该用户a有没有查看和修改用户b的权限 -->

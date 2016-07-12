@@ -98,6 +98,7 @@ public class EnterpriseController extends BaseController {
 		String parentid = pd.getString("PARENTID");
 		pd.put("APPKEY", MD5.md5(name));//将企业名称进行MD5加密生成appkey
 		pd.put("ENTERPRISE_ID", ENTERPRISE_ID);	//主键
+		System.out.println(pd.get("LOGO"));
 		enterpriseService.save(pd);
 		String eid = this.enterpriseService.findadminbyuserid(user_id);
 		if(parentid.equals("0")){

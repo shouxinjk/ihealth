@@ -558,6 +558,17 @@ public class RestfullController extends BaseController {
 					pds.put("AVATAR", avatar);
 					logBefore(logger, "执行根据用户ID，修改用户信息的方法：用户头像地址为：======" + avatar);
 				}
+				if(jasonObject.get("connection")!=null && !"".equals(jasonObject.get("connection"))){
+					PageData pd1 = new PageData();
+					String connection = jasonObject.getString("connection");
+					pd.put("connection", connection);
+					pd1.put("USER_ONE", userId);
+					if(jasonObject.get("userid")!=null && !"".equals(jasonObject.get("userid"))){
+						String userid = jasonObject.getString("userid");
+						pd.put("USER_TWO", userid);
+						this.appuserService.updateUserConnection(pd1);
+					}
+				}
 				// 将值添加到PageDate中
 				pds.put("STATUS", "1");
 				logBefore(logger, "执行根据ID，修改用户信息的方法--------------------------------++++++++");
