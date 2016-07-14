@@ -16,6 +16,10 @@
 	<%@ include file="../../system/index/top.jsp"%>
 	<!-- 日期框 -->
 	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<!-- 上传插件 -->
+	<link rel="stylesheet" type="text/css" href="plugins/uploadj/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="plugins/uploadj/css/htmleaf-demo.css">
+	<link rel="stylesheet" href="plugins/uploadj/css/ssi-uploader.css"/>
 </head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -27,7 +31,7 @@
 				<div class="row">
 					<div class="col-xs-12">
 					
-					<form action="enterprise/${msg }.do" name="Form" id="Form" method="post">
+					<form action="enterprise/${msg }.do" name="Form" id="Form" method="post"  enctype="multipart/form-data">
 						<input type="hidden" name="ENTERPRISE_ID" id="ENTERPRISE_ID" value="${pd.ENTERPRISE_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
@@ -43,7 +47,7 @@
 								<td style="width:75px;text-align: right;padding-top: 13px;">企业logo:</td>
 								<td>
 									<%-- <input type="text" name="LOGO" id="LOGO" value="${pd.LOGO}" maxlength="255" placeholder="这里输入企业logo" title="企业logo" style="width:98%;"/> --%>
-									<input type="file" name="LOGO" id="LOGO">
+									<input type="file" name="LOGO" multiple id="LOGO"/>
 								</td>
 							</tr>
 							<tr>
@@ -121,6 +125,9 @@
 	<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="static/js/jquery.uploadify-3.1.min.js"></script>
+	<script src="plugins/uploadj/js/ssi-uploader.js"></script>
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=e0dqKjlucOYl5SO8aRvcrLHXjNZG8N2L"></script>
 	<script type="text/javascript">
 	   
@@ -183,7 +190,7 @@
 		$(top.hangge());
 		//保存
 		function save(){
-			if($("#NAME").val()==""){
+			/* if($("#NAME").val()==""){
 				$("#NAME").tips({
 					side:3,
 		            msg:'请输入企业全程',
@@ -195,9 +202,17 @@
 			}
 			$("#Form").submit();
 			$("#zhongxin").hide();
-			$("#zhongxin2").show();
+			$("#zhongxin2").show(); */
+			$.ajax({
+				url:"enterprise/ceshi.do",
+				type:"post",
+				data:$("#Form").serialize(),
+				success:function(data){
+					
+				}
+			});
 		}
-		
+		$('#LOGO').ssi_uploader({url:'#',maxFileSize:6,allowed:['jpg','gif','txt','png','pdf']});
 		$(function() {
 			//日期框
 			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});

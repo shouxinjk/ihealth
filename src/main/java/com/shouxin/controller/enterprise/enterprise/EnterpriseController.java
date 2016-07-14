@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -80,6 +81,18 @@ public class EnterpriseController extends BaseController {
 	private RoleManager roleService;
 	@Resource(name="userService")
 	private UserManager userService;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/ceshi")
+	public ModelAndView ceshi(HttpServletResponse resp,HttpServletRequest req) throws Exception{
+		System.out.println(req);
+		System.out.println(req.getParameter("LOGO"));
+		return null;
+	}
 	
 	/**保存
 	 * @param
