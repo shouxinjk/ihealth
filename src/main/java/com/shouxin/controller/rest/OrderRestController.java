@@ -117,7 +117,7 @@ public class OrderRestController extends BaseController {
 	 *         返回：{"result": "no"}
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "getCheckItemsByGroup", method = RequestMethod.POST)
+	@RequestMapping(value = "/getCheckItemsByGroup", method = RequestMethod.POST)
 	@ResponseBody
 	public Object getCheckItemsByGroup(@RequestBody String u) throws Exception {
 		logBefore(logger, "查询--------根据用户ID，获取体检项目信息");
