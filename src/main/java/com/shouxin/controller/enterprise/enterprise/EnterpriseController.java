@@ -14,12 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
@@ -40,6 +42,7 @@ import com.shouxin.util.PageData;
 import com.shouxin.util.PathUtil;
 import com.shouxin.util.RepeatString;
 import com.shouxin.util.Tools;
+import com.shouxin.util.Watermark;
 import com.shouxinjk.ihealth.data.Transfer;
 import com.shouxinjk.ihealth.data.pojo.UserDisease;
 import com.shouxinjk.ihealth.data.pojo.UserTag;
@@ -114,8 +117,8 @@ public class EnterpriseController extends BaseController {
 		System.out.println(pd.get("LOGO"));
 		enterpriseService.save(pd);
 		String eid = this.enterpriseService.findadminbyuserid(user_id);
+		if(eid == null){
 		if(parentid.equals("0")){
-			if(eid == null){
 				pd.clear();
 				pd.put("ENTERPRISEADMIN_ID", this.get32UUID());
 				pd.put("SYS_USER_ID", user_id);
@@ -167,6 +170,30 @@ public class EnterpriseController extends BaseController {
 		this.appuserService.updateEnterpriseUserIsAdmin(pd);
 		out.write("success");
 		out.close();
+	}
+	
+	@RequestMapping(value="/saveImage")
+	@ResponseStatus(value = HttpStatus.OK)
+	public void saveImage(
+			@RequestParam("upload") MultipartFile file ,HttpServletRequest req ,HttpServletResponse resp)
+			throws Exception {
+		logBefore(logger, Jurisdiction.getUsername()+"新增企业logo图片");
+		String  ffile = DateUtil.getDays(), fileName = "";
+		PageData pd = new PageData();
+		if(Jurisdiction.buttonJurisdiction(menuUrl, "add")){
+			if (null != file && !file.isEmpty()) {
+				String filePath = PathUtil.getClasspath() + Const.FILEPATHIMG + ffile;		//文件上传路径
+				fileName = FileUpload.fileUp(file, filePath, this.get32UUID());				//执行上传
+			}else{
+				System.out.println("上传失败");
+			}
+			pd.put("PATH", ffile + "/" + fileName);				//路径
+			//Watermark.setWatemark(PathUtil.getClasspath() + Const.FILEPATHIMG + ffile + "/" + fileName);//加水印
+		}
+		String path = ffile + "/" + fileName;
+		PrintWriter pw = resp.getWriter();
+		pw.print(path);
+		pw.close();
 	}
 	
 	/**保存

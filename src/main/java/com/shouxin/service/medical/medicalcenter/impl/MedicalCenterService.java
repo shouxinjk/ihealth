@@ -106,6 +106,15 @@ public class MedicalCenterService implements MedicalCenterManager{
 	public List<MedicalCenter> listParentIDPage(String MEDICALCENTER_ID) throws Exception {
 		return (List<MedicalCenter>) dao.findForList("MedicalCenterMapper.listParentIDPage", MEDICALCENTER_ID);
 	}
+
+	/**
+	 * 添加体检中心管理员信息
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveCenterAdmin(PageData pd) throws Exception {
+		dao.save("MedicalCenterMapper.saveCenterAdmin", pd);
+	}
 	
 }
 

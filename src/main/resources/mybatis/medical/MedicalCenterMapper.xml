@@ -96,6 +96,11 @@
 			MEDICALCENTER_ID = #{MEDICALCENTER_ID}
 	</delete>
 	
+	<insert id="saveCenterAdmin" parameterType="pd">
+		insert into tb_medicalceneradmin(MEDICALCENERADMIN_ID,
+		SYS_USER_ID,MEDICALCENTER_ID) values(#{MEDICALCENERADMIN_ID},#{SYS_USER_ID},#{MEDICALCENTER_ID})
+	</insert>
+	
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
 		update

@@ -81,7 +81,11 @@
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.ABBREVIATION}</td>
-											<td class='center'>${var.LOGO}</td>
+											<td class='center'>
+												<c:if test="${var.LOGO != '' }">
+													<img alt="" src="<%=basePath %>uploadFiles/uploadImgs/${var.LOGO }" id="image" style="width:65px;height:65px;">
+												</c:if>
+											</td>
 											<td class='center'>${var.TELEPHONE}</td>
 											<td class='center'>${var.LOCATION}</td>
 											<td class='center'>${var.STATUS}</td>

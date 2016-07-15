@@ -62,15 +62,10 @@ public class OrderRestController extends BaseController {
 		for(int i=0;i<solutionIDS.length;i++){
 			OrderItem oi = new OrderItem();
 			String orderItemID = this.get32UUID();
-			String examitemID
-			= orderService.findExamItemByExamSolutionId(solutionIDS[i]);
-			System.out.println(examitemID+"++++++++++++++++++++");
-			if(examitemID!=null && !examitemID.equals("")){
 				oi.setORDER_ID(ORDER_ID);
 				oi.setORDERITEM_ID(orderItemID);
-				oi.setMEDICALEXAMITEM_ID(examitemID);
+				oi.setMEDICALEXAMITEM_ID(solutionIDS[i]);
 				itemIDs.add(oi);
-			}
 		}
 		System.out.println(itemIDs.size()+"=============");
 		if(itemIDs.size()>0){

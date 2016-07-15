@@ -62,8 +62,7 @@
 									<th class="center">简介</th>
 									<th class="center">联系电话</th>
 									<th class="center">状态</th>
-									<th class="center">开业时间</th>
-									<th class="center">附件信息</th>
+									<th class="center">LOGO</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -85,8 +84,11 @@
 											<td class='center'>${var.ABBREVIATION}</td>
 											<td class='center'>${var.TELEPHONE}</td>
 											<td class='center'>${var.STATUS}</td>
-											<td class='center'>${var.OPENINGTIME}</td>
-											<td class='center'>${var.ACCESSORY}</td>
+											<td class='center'>
+												<c:if test="${var.LOGO != '' }">
+													<img alt="" src="<%=basePath %>uploadFiles/uploadImgs/${var.LOGO }" id="image" style="width:65px;height:65px;">
+												</c:if>
+											</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

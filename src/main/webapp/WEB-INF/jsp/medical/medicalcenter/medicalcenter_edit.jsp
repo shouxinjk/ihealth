@@ -16,6 +16,8 @@
 	<%@ include file="../../system/index/top.jsp"%>
 	<!-- 日期框 -->
 	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<!-- webuploader上传插件css -->
+	<link rel="stylesheet" type="text/css" href="plugins/uploadifys/uploadify.css" />
 </head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -42,6 +44,7 @@
 											<td style="width:75px;text-align: right;padding-top: 13px;">上级医院:</td>
 											<td>
 												<select name="PARENTID" id="PARENTID">
+												<option value="0">没有上级</option>
 													<c:forEach items="${pds }" var="pd">
 														<option value="${pd.MEDICALCENTER_ID }">${pd.NAME }</option>
 													</c:forEach>
@@ -68,6 +71,19 @@
 								<td><input type="text" name="DESCRIPTION" id="DESCRIPTION" value="${pd.DESCRIPTION}" maxlength="255" placeholder="这里输入体检中心描述" title="体检中心描述" style="width:98%;"/></td>
 							</tr>
 							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">LOGO:</td>
+								<td>
+									<input type="hidden" name="LOGO" id="LOGO" value="${pd.DESCRIPTION}" maxlength="255" placeholder="这里输入体检中心描述" title="体检中心描述" style="width:98%;"/>
+									<input type="file" name="LOGO2" id="LOGO2" />
+									<c:if test="${msg eq 'edit'}">
+									<img alt="" src="<%=basePath%>uploadFiles/uploadImgs/${pd.LOGO }" id="image" style="width:40%;height:100px;">
+									</c:if>
+									<c:if test="${msg eq 'save' }">
+									<img alt="" src="" id="image" style="width:40%;height:100px;">
+									</c:if>
+								</td>
+							</tr>
+							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">地理位置:</td>
 								<td><input type="text" name="LOCATION" id="LOCATION" value="${pd.LOCATION}" maxlength="255" placeholder="这里输入体检中心地理位置" title="体检中心地理位置" style="width:98%;"/></td>
 							</tr>
@@ -89,12 +105,21 @@
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">附件信息:</td>
-								<td><input type="text" name="ACCESSORY" id="ACCESSORY" value="${pd.ACCESSORY}" maxlength="255" placeholder="这里输入体检中心或医院附件信息" title="体检中心或医院附件信息" style="width:98%;"/></td>
+								<td>
+									<input type="text" name="ACCESSORY" id="ACCESSORY" value="${pd.ACCESSORY}" maxlength="255" placeholder="这里输入体检中心或医院附件信息" title="体检中心或医院附件信息" style="width:98%;"/>
+									<input type="file" name="ACCESSORY2" id="ACCESSORY2" />
+									<c:if test="${msg eq 'edit'}">
+									<img alt="" src="<%=basePath%>uploadFiles/uploadImgs/${pd.LOGO }" id="ACCESSORYimage" style="width:40%;height:100px;">
+									</c:if>
+									<c:if test="${msg eq 'save' }">
+									<img alt="" src="" id="ACCESSORYimage" style="width:40%;height:100px;">
+									</c:if>
+								</td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">经纬度地理位置:</td>
 								<td>
-									<input type="text" name="POSITION1" id="POSITION1" value="" maxlength="255" placeholder="这里输入体检中心位置进行搜索" style="width:40%;"/>
+									<input type="text" name="POSITION1" id="POSITION1" value="${pd.LOCATION}" maxlength="255" placeholder="这里输入体检中心位置进行搜索" style="width:40%;"/>
 									<input type="button" value="查询" onclick="searchByStationName()" style="width:20%;">
 									<div id="container" style="width:600px;height:400px;display:none;"></div>
 									<input type="hidden" name="POSITION" id="POSITON" value="${pd.POSITION}"/>
@@ -135,6 +160,10 @@
 	<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
+	<!-- uploadify上传图片插件 -->
+	<script type="text/javascript" src="plugins/uploadifys/swfobject.js"></script> 
+	<script type="text/javascript" src="plugins/uploadifys/swfupload.js"></script> 
+	<script type="text/javascript" src="plugins/uploadifys/jquery.uploadify.js"></script> 
 	<!-- 百度地图api -->
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=e0dqKjlucOYl5SO8aRvcrLHXjNZG8N2L"></script>
 	<script type="text/javascript">
@@ -197,6 +226,56 @@
 	    }
 	    
 	    $(top.hangge());
+	    
+	    $("#LOGO2").uploadify({
+			'swf':'<%=path%>/plugins/uploadifys/uploadify.swf',
+			 'uploader':'<%=path%>/enterprise/saveImage.do',
+            //  'cancelImg': '<%=path%>/jsplugin/uploadify/uploadify-cancel.png',   
+             //  'queueID': 'fileQueue', //页面中，你想要用来作为文件队列的元素的id  
+            //   'auto': false, //当文件被添加到队列时，自动上传  
+               'multi': false, //设置为true将允许多文件上传  
+               'fileExt': '*.jpg;*.gif;*.png', //允许上传的文件后缀  
+               'fileDesc': 'Web Image Files (.JPG, .GIF, .PNG)', //在浏览窗口底部的文件类型下拉菜单中显示的文本  
+               'auto': true,
+               'width':80,
+              'buttonImage' : '<%=path%>/plugins/uploadifys/attrament_icon.jpg',
+               'fileObjName':'upload',
+              // 'buttonClass':'buttoncss',
+           
+               'fileSizeLimit': 10240000,  //上传文件的大小限制，单位为字节 100k  
+               'onAllComplete': function (event, data) { //当上传队列中的所有文件都完成上传时触发  
+                 	 //alert(data.filesUploaded + ' 个文件上传成功!');  
+               },
+               'onUploadSuccess': function(file,data, response) {
+            	   $("#image").attr("src","<%=basePath%>uploadFiles/uploadImgs/"+data);
+            	   $("#LOGO").val(data);
+                }  
+		});
+	    
+	    $("#ACCESSORY2").uploadify({
+			'swf':'<%=path%>/plugins/uploadifys/uploadify.swf',
+			 'uploader':'<%=path%>/enterprise/saveImage.do',
+            //  'cancelImg': '<%=path%>/jsplugin/uploadify/uploadify-cancel.png',   
+             //  'queueID': 'fileQueue', //页面中，你想要用来作为文件队列的元素的id  
+            //   'auto': false, //当文件被添加到队列时，自动上传  
+               'multi': false, //设置为true将允许多文件上传  
+               'fileExt': '*.jpg;*.gif;*.png', //允许上传的文件后缀  
+               'fileDesc': 'Web Image Files (.JPG, .GIF, .PNG)', //在浏览窗口底部的文件类型下拉菜单中显示的文本  
+               'auto': true,
+               'width':80,
+              'buttonImage' : '<%=path%>/plugins/uploadifys/attrament_icon.jpg',
+               'fileObjName':'upload',
+              // 'buttonClass':'buttoncss',
+           
+               'fileSizeLimit': 10240000,  //上传文件的大小限制，单位为字节 100k  
+               'onAllComplete': function (event, data) { //当上传队列中的所有文件都完成上传时触发  
+                 	 //alert(data.filesUploaded + ' 个文件上传成功!');  
+               },
+               'onUploadSuccess': function(file,data, response) {
+            	   $("#ACCESSORYimage").attr("src","<%=basePath%>uploadFiles/uploadImgs/"+data);
+            	   $("#ACCESSORY").val(data);
+                }  
+		});
 		//保存
 		function save(){
 			if($("#NAME").val()==""){

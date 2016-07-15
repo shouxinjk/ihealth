@@ -53,10 +53,24 @@ public class MedicalCenterController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("MEDICALCENTER_ID", this.get32UUID());	//主键
+		String centerid = this.get32UUID();
+		pd.put("MEDICALCENTER_ID", centerid);	//主键
 		pd.put("CREATEBY", "");	//创建该记录用户id
 		pd.put("CREATEON", DateUtil.getTime());	//创建该记录时间
+		String parentid = pd.getString("PARENTID");
+		String userId = Jurisdiction.getUserId();
 		medicalcenterService.save(pd);
+		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		if(medicalcenterid == null){
+		if(parentid.equals("0")){
+			
+				pd.clear();
+				pd.put("MEDICALCENERADMIN_ID", this.get32UUID());
+				pd.put("MEDICALCENTER_ID",centerid);
+				pd.put("SYS_USER_ID", userId);
+				this.medicalcenterService.saveCenterAdmin(pd);
+			}
+		}
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;

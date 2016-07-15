@@ -16,10 +16,8 @@
 	<%@ include file="../../system/index/top.jsp"%>
 	<!-- 日期框 -->
 	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
-	<!-- 上传插件 -->
-	<link rel="stylesheet" type="text/css" href="plugins/uploadj/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="plugins/uploadj/css/htmleaf-demo.css">
-	<link rel="stylesheet" href="plugins/uploadj/css/ssi-uploader.css"/>
+	<!-- webuploader上传插件css -->
+	<link rel="stylesheet" type="text/css" href="plugins/uploadifys/uploadify.css" />
 </head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -31,7 +29,7 @@
 				<div class="row">
 					<div class="col-xs-12">
 					
-					<form action="enterprise/${msg }.do" name="Form" id="Form" method="post"  enctype="multipart/form-data">
+					<form action="enterprise/${msg }.do" name="Form" id="Form" method="post" >
 						<input type="hidden" name="ENTERPRISE_ID" id="ENTERPRISE_ID" value="${pd.ENTERPRISE_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
@@ -46,8 +44,14 @@
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">企业logo:</td>
 								<td>
-									<%-- <input type="text" name="LOGO" id="LOGO" value="${pd.LOGO}" maxlength="255" placeholder="这里输入企业logo" title="企业logo" style="width:98%;"/> --%>
-									<input type="file" name="LOGO" multiple id="LOGO"/>
+									<input type="hidden" name="LOGO" id="LOGO" value="${pd.LOGO}" maxlength="255" placeholder="这里输入企业logo" title="企业logo" style="width:98%;"/> 
+									<input type="file" name="LOGO2" id="LOGO2" />
+									<c:if test="${msg eq 'edit'}">
+									<img alt="" src="<%=basePath%>uploadFiles/uploadImgs/${pd.LOGO }" id="image" style="width:40%;height:100px;">
+									</c:if>
+									<c:if test="${msg eq 'save' }">
+									<img alt="" src="" id="image" style="width:40%;height:100px;">
+									</c:if>
 								</td>
 							</tr>
 							<tr>
@@ -69,7 +73,16 @@
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">营业执照信息:</td>
-								<td><input type="text" name="BUSINESSLICENSE" id="BUSINESSLICENSE" value="${pd.BUSINESSLICENSE}" maxlength="255" placeholder="这里输入营业执照信息" title="营业执照信息" style="width:98%;"/></td>
+								<td>
+									<input type="hidden" name="BUSINESSLICENSE" id="BUSINESSLICENSE" value="${pd.BUSINESSLICENSE}" maxlength="255" placeholder="这里输入营业执照信息" title="营业执照信息" style="width:98%;"/>
+									<input type="file" name="zhizhao" id="zhizhao">
+									<c:if test="${msg eq 'edit'}">
+									<img alt="" src="<%=basePath%>uploadFiles/uploadImgs/${pd.BUSINESSLICENSE }" id="BUSINESSLICENSEimage" style="width:40%;height:100px;">
+									</c:if>
+									<c:if test="${msg eq 'save' }">
+									<img alt="" src="" id="BUSINESSLICENSEimage" style="width:40%;height:100px;">
+									</c:if>
+								</td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">上级公司:</td>
@@ -126,8 +139,9 @@
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="static/js/jquery.uploadify-3.1.min.js"></script>
-	<script src="plugins/uploadj/js/ssi-uploader.js"></script>
+	<script type="text/javascript" src="plugins/uploadifys/swfobject.js"></script> 
+	<script type="text/javascript" src="plugins/uploadifys/swfupload.js"></script> 
+	<script type="text/javascript" src="plugins/uploadifys/jquery.uploadify.js"></script> 
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=e0dqKjlucOYl5SO8aRvcrLHXjNZG8N2L"></script>
 	<script type="text/javascript">
 	   
@@ -188,9 +202,60 @@
 	            });  
 	    }
 		$(top.hangge());
+		
+		$("#LOGO2").uploadify({
+			'swf':'<%=path%>/plugins/uploadifys/uploadify.swf',
+			 'uploader':'<%=path%>/enterprise/saveImage.do',
+            //  'cancelImg': '<%=path%>/jsplugin/uploadify/uploadify-cancel.png',   
+             //  'queueID': 'fileQueue', //页面中，你想要用来作为文件队列的元素的id  
+            //   'auto': false, //当文件被添加到队列时，自动上传  
+               'multi': false, //设置为true将允许多文件上传  
+               'fileExt': '*.jpg;*.gif;*.png', //允许上传的文件后缀  
+               'fileDesc': 'Web Image Files (.JPG, .GIF, .PNG)', //在浏览窗口底部的文件类型下拉菜单中显示的文本  
+               'auto': true,
+               'width':80,
+              'buttonImage' : '<%=path%>/plugins/uploadifys/attrament_icon.jpg',
+               'fileObjName':'upload',
+              // 'buttonClass':'buttoncss',
+           
+               'fileSizeLimit': 10240000,  //上传文件的大小限制，单位为字节 100k  
+               'onAllComplete': function (event, data) { //当上传队列中的所有文件都完成上传时触发  
+                 	 //alert(data.filesUploaded + ' 个文件上传成功!');  
+               },
+               'onUploadSuccess': function(file,data, response) {
+            	   $("#image").attr("src","<%=basePath%>uploadFiles/uploadImgs/"+data);
+            	   $("#LOGO").val(data);
+                }  
+		});
+		
+		$("#zhizhao").uploadify({
+			'swf':'<%=path%>/plugins/uploadifys/uploadify.swf',
+			 'uploader':'<%=path%>/enterprise/saveImage.do',
+            //  'cancelImg': '<%=path%>/jsplugin/uploadify/uploadify-cancel.png',   
+             //  'queueID': 'fileQueue', //页面中，你想要用来作为文件队列的元素的id  
+            //   'auto': false, //当文件被添加到队列时，自动上传  
+               'multi': false, //设置为true将允许多文件上传  
+               'fileExt': '*.jpg;*.gif;*.png', //允许上传的文件后缀  
+               'fileDesc': 'Web Image Files (.JPG, .GIF, .PNG)', //在浏览窗口底部的文件类型下拉菜单中显示的文本  
+               'auto': true,
+               'width':80,
+              'buttonImage' : '<%=path%>/plugins/uploadifys/attrament_icon.jpg',
+               'fileObjName':'upload',
+              // 'buttonClass':'buttoncss',
+           
+               'fileSizeLimit': 10240000,  //上传文件的大小限制，单位为字节 100k  
+               'onAllComplete': function (event, data) { //当上传队列中的所有文件都完成上传时触发  
+                 	 //alert(data.filesUploaded + ' 个文件上传成功!');  
+               },
+               'onUploadSuccess': function(file,data, response) {
+            	   $("#BUSINESSLICENSEimage").attr("src","<%=basePath%>uploadFiles/uploadImgs/"+data);
+            	   $("#BUSINESSLICENSE").val(data);
+                }  
+		});
+		
 		//保存
 		function save(){
-			/* if($("#NAME").val()==""){
+			 if($("#NAME").val()==""){
 				$("#NAME").tips({
 					side:3,
 		            msg:'请输入企业全程',
@@ -202,21 +267,9 @@
 			}
 			$("#Form").submit();
 			$("#zhongxin").hide();
-			$("#zhongxin2").show(); */
-			$.ajax({
-				url:"enterprise/ceshi.do",
-				type:"post",
-				data:$("#Form").serialize(),
-				success:function(data){
-					
-				}
-			});
+			$("#zhongxin2").show(); 
+//		});
 		}
-		$('#LOGO').ssi_uploader({url:'#',maxFileSize:6,allowed:['jpg','gif','txt','png','pdf']});
-		$(function() {
-			//日期框
-			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
-		});
 		</script>
 </body>
 </html>
