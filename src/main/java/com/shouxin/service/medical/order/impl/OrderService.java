@@ -147,6 +147,16 @@ public class OrderService implements OrderManager{
 	public List<PageData> listPart(Page page) throws Exception {
 		return (List<PageData>) dao.findForList("OrderMapper.dataPartlistPage", page);
 	}
+
+	/**
+	 * 查询当天流水号
+	 * @param ORDERNOSTR
+	 * @return
+	 * @throws Exception
+	 */
+	public String getMaxOrderNo(String ORDERNOSTR) throws Exception {
+		return (String) dao.findForObject("OrderMapper.getMaxOrderNo", ORDERNOSTR);
+	}
 	
 }
 

@@ -58,6 +58,19 @@ public class MedicalCenterService implements MedicalCenterManager{
 		return (List<PageData>)dao.findForList("MedicalCenterMapper.datalistPage", page);
 	}
 	
+	public List<PageData> ListDigui(Page page,List<PageData> pds)throws Exception{
+		List<PageData> ps = list(page);
+		for(int i=0;i<ps.size();i++){
+			pds.add(ps.get(i));
+			page.getPd().put("MEDICALCENTER_ID", pds.get(i).get("MEDICALCENTER_ID"));
+			List<PageData> pd = ListDigui(page,pds);
+			if(pd == null){
+				continue;
+			}
+		}
+ 		return ps;
+	}
+	
 	/**列表(全部)
 	 * @param pd
 	 * @throws Exception

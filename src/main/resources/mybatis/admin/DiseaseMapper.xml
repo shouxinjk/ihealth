@@ -32,7 +32,8 @@
 		ISHIGHINCIDENCE,
 		CREATEBY,
 		CREATEON,
-		DISEASE_ID
+		DISEASE_ID,
+		ISALABLE
 	</sql>
 
 	<!-- 字段值 -->
@@ -43,7 +44,8 @@
 		#{ISHIGHINCIDENCE},
 		#{CREATEBY},
 		#{CREATEON},
-		#{DISEASE_ID}
+		#{DISEASE_ID},
+		#{ISALABLE}
 	</sql>
 
 	<!-- 字段 -->
@@ -55,7 +57,8 @@
 		CREATEBY,
 		CREATEON,
 		DISEASE_ID,
-		DISEASECATEGORY_ID
+		DISEASECATEGORY_ID,
+		ISALABLE
 	</sql>
 
 	<!-- 字段值 -->
@@ -67,7 +70,8 @@
 		#{CREATEBY},
 		#{CREATEON},
 		#{DISEASE_ID},
-		#{DISEASECATEGORY_ID}
+		#{DISEASECATEGORY_ID},
+		#{ISALABLE}
 	</sql>
 
 	<!-- 通过疾病分类id获取疾病信息 -->
@@ -115,6 +119,7 @@
 		ISINHERITABLE =
 		#{ISINHERITABLE},
 		ISHIGHINCIDENCE = #{ISHIGHINCIDENCE},
+		ISALABLE = #{ISALABLE},
 		DISEASE_ID =
 		DISEASE_ID
 		where
@@ -133,7 +138,7 @@
 	
 	<!-- 根据疾病名称获取疾病信息 -->
 	<select id="findDiseaseByName" parameterType="java.lang.String" resultType="Disease">
-		select DISEASE_ID,NAME,ISINHERITABLE,ISHIGHINCIDENCE from admin_disease where NAME = #{NAME} 
+		select DISEASE_ID,NAME,ISINHERITABLE,ISHIGHINCIDENCE,ISALABLE from admin_disease where NAME = #{NAME} 
 	</select>
 
 	<!-- 列表 -->
@@ -171,7 +176,7 @@
 
 	<select id="listAllisInheritable" parameterType="pd" resultType="pd">
 		select NAME, DESCRIPTION, ISINHERITABLE, ISHIGHINCIDENCE, CREATEBY,
-		CREATEON, DISEASE_ID, DISEASECATEGORY_ID from ADMIN_DISEASE where
+		CREATEON, DISEASE_ID, DISEASECATEGORY_ID ,ISALABLE from ADMIN_DISEASE where
 		ISINHERITABLE ='1'
 	</select>
 
@@ -179,7 +184,7 @@
 	<select id="listAllisHighIncidence" parameterType="pd"
 		resultType="pd">
 		select NAME, DESCRIPTION, ISINHERITABLE, ISHIGHINCIDENCE,
-		CREATEBY, CREATEON, DISEASE_ID, DISEASECATEGORY_ID from ADMIN_DISEASE
+		CREATEBY, CREATEON, DISEASE_ID, DISEASECATEGORY_ID,ISALABLE from ADMIN_DISEASE
 		where ISHIGHINCIDENCE = 1
 	</select>
 

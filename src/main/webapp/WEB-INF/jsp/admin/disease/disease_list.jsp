@@ -66,6 +66,7 @@
 									<th class="center">疾病症状说明</th>
 									<th class="center">是否遗传</th>
 									<th class="center">是否高发</th>
+									<th class="center">显示标签</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -96,6 +97,14 @@
 													是
 												</c:if>
 												<c:if test="${var.ISHIGHINCIDENCE eq 0 }">
+													否
+												</c:if>
+											</td>
+											<td class='center'>
+												<c:if test="${var.ISALABLE eq 1}">
+													是
+												</c:if>
+												<c:if test="${var.ISALABLE eq 0 }">
 													否
 												</c:if>
 											</td>

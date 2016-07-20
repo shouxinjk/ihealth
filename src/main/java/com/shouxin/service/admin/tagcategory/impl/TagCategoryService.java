@@ -93,6 +93,7 @@ public class TagCategoryService implements TagCategoryManager{
 	 * @param parentID
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<TagCategory> listSubTagCategoryByParentId(String parentID) throws Exception {
 		// TODO Auto-generated method stub
 		return (List<TagCategory>) dao.findForList("TagCategoryMapper.listSubTagCategorybyParentID", parentID);

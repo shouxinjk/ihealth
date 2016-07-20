@@ -36,6 +36,7 @@ public interface MedicalCenterManager{
 	 * @throws Exception
 	 */
 	public List<PageData> list(Page page)throws Exception;
+	public List<PageData> ListDigui(Page page,List<PageData> pd)throws Exception;
 	
 	/**列表(全部)
 	 * @param pd

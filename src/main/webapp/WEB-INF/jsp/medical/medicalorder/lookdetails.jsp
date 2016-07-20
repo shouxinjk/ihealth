@@ -35,6 +35,12 @@
 								<td>${pd.MEDICALORDERGENERATIONTIME}</td>
 							</tr>
 							<tr>
+								<td style="width:150px;text-align: right;padding-top: 13px;">用户:</td>
+								<td>${pd.NAME}</td>
+								<td style="width:150px;text-align: right;padding-top: 13px;">用户电话:</td>
+								<td>${pd.PHONE}</td>
+							</tr>
+							<tr>
 								<td style="width:150px;text-align: right;padding-top: 13px;">订单预约时间:</td>
 								<td>${pd.MEDICALORDERBOOKINGTIME}</td>
 								<td style="width:150px;text-align: right;padding-top: 13px;">订单实际执行时间:</td>

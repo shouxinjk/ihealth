@@ -456,9 +456,9 @@
 				u.AVATAR,
 				r.ROLE_ID,
 				r.ROLE_NAME
-		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r 
-		where u.ROLE_ID = r.ROLE_ID 
-		and r.PARENT_ID = '2'
+		from <include refid="tableName"></include> u left join <include refid="roleTableName"></include> r
+		on  u.ROLE_ID = r.ROLE_ID
+		where 1=1
 		<if test="pd.keywords != null and pd.keywords!= ''"><!-- 关键词检索 -->
 			and (
 				u.USERNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')

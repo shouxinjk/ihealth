@@ -67,6 +67,8 @@
 									</th>
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">订单号</th>
+									<th class="center">用户</th>
+									<th class="center">用户电话</th>
 									<th class="center">订单生成时间</th>
 									<th class="center">订单预约时间</th>
 									<th class="center">订单实际执行时间</th>
@@ -88,6 +90,8 @@
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.MEDICALORDERNO}</td>
+											<td class='center'>${var.NAME}</td>
+											<td class='center'>${var.PHONE}</td>
 											<td class='center'>${var.MEDICALORDERGENERATIONTIME}</td>
 											<td class='center'>${var.MEDICALORDERBOOKINGTIME}</td>
 											<td class='center'>${var.MEDICALORDEREXECUTIONTIME}</td>

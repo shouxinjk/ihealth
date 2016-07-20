@@ -88,6 +88,9 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
+													<a class="btn btn-xs btn-info" title="查看" onclick="goLook('${var.EXAMGUIDELINE_ID}');">
+															<i class="ace-icon fa fa-search nav-search-icon" title="查看"></i>
+													</a>
 													<c:if test="${QX.edit == 1 && var.STATUS eq '新建'}">
 														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.EXAMGUIDELINE_ID}');">
 															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
@@ -316,6 +319,24 @@
 			 diag.Drag=true;
 			 diag.Title ="编辑";
 			 diag.URL = '<%=basePath%>examguideline/goEdit.do?EXAMGUIDELINE_ID='+Id;
+			 diag.Width = 800;
+			 diag.Height = 600;
+			 diag.CancelEvent = function(){ //关闭事件
+				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+					 nextPage(${page.currentPage});
+				}
+				diag.close();
+			 };
+			 diag.show();
+		}
+		
+		//查看单个信息
+		function goLook(Id){
+			 top.jzts();
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="查看";
+			 diag.URL = '<%=basePath%>examguideline/find.do?EXAMGUIDELINE_ID='+Id;
 			 diag.Width = 800;
 			 diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件

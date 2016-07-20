@@ -132,10 +132,20 @@
 	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
-		select 
-		<include refid="Field"></include>
-		from 
-		<include refid="tableName"></include>
+		select
+		m.MEDICALORDER_ID as MEDICALORDER_ID,	
+		m.MEDICALORDERNO as MEDICALORDERNO,	
+		m.MEDICALORDERGENERATIONTIME as MEDICALORDERGENERATIONTIME,	
+		m.MEDICALORDERBOOKINGTIME as MEDICALORDERBOOKINGTIME,	
+		m.MEDICALORDEREXECUTIONTIME as MEDICALORDEREXECUTIONTIME,	
+		m.MEDICALTOTALAMOUNT as MEDICALTOTALAMOUNT,	
+		m.STATUS as STATUS,	
+		m.CREATEBY as CREATEBY,	
+		m.CREATEON as CREATEON,
+		sau.`NAME` as `NAME`,
+		sau.PHONE as PHONE
+		from tb_medicalorder m LEFT JOIN tb_order o ON m.ORDER_ID = o.ORDER_ID 
+		LEFT JOIN sys_app_user sau ON o.APP_USERID = sau.USER_ID 
 		where 
 			MEDICALORDER_ID = #{MEDICALORDER_ID}
 	</select>
@@ -154,12 +164,22 @@
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
-		<include refid="Field"></include>
-		from 
-		<include refid="tableName"></include>
+		m.MEDICALORDER_ID as MEDICALORDER_ID,	
+		m.MEDICALORDERNO as MEDICALORDERNO,	
+		m.MEDICALORDERGENERATIONTIME as MEDICALORDERGENERATIONTIME,	
+		m.MEDICALORDERBOOKINGTIME as MEDICALORDERBOOKINGTIME,	
+		m.MEDICALORDEREXECUTIONTIME as MEDICALORDEREXECUTIONTIME,	
+		m.MEDICALTOTALAMOUNT as MEDICALTOTALAMOUNT,	
+		m.STATUS as STATUS,	
+		m.CREATEBY as CREATEBY,	
+		m.CREATEON as CREATEON,
+		sau.`NAME` as `NAME`,
+		sau.PHONE as PHONE
+		from tb_medicalorder m LEFT JOIN tb_order o ON m.ORDER_ID = o.ORDER_ID 
+		LEFT JOIN sys_app_user sau ON o.APP_USERID = sau.USER_ID 
 		where 1=1
 		<if test="pd.MEDICALCENTER_ID!= null and pd.MEDICALCENTER_ID != ''"><!-- 关键词检索 -->
-		 and MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} 
+		 and m.MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} 
 		</if>
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
@@ -176,15 +196,25 @@
 	<!-- 列表 -->
 	<select id="dataPartlistPage" parameterType="page" resultType="pd">
 		select
-		<include refid="Field"></include>
-		from 
-		<include refid="tableName"></include>
+		m.MEDICALORDER_ID as MEDICALORDER_ID,	
+		m.MEDICALORDERNO as MEDICALORDERNO,	
+		m.MEDICALORDERGENERATIONTIME as MEDICALORDERGENERATIONTIME,	
+		m.MEDICALORDERBOOKINGTIME as MEDICALORDERBOOKINGTIME,	
+		m.MEDICALORDEREXECUTIONTIME as MEDICALORDEREXECUTIONTIME,	
+		m.MEDICALTOTALAMOUNT as MEDICALTOTALAMOUNT,	
+		m.STATUS as STATUS,	
+		m.CREATEBY as CREATEBY,	
+		m.CREATEON as CREATEON,
+		sau.`NAME` as `NAME`,
+		sau.PHONE as PHONE
+		from tb_medicalorder m LEFT JOIN tb_order o ON m.ORDER_ID = o.ORDER_ID 
+		LEFT JOIN sys_app_user sau ON o.APP_USERID = sau.USER_ID 
 		where 1=1
 		<if test="pd.MEDICALCENTER_ID!= null and pd.MEDICALCENTER_ID != ''"><!-- 关键词检索 -->
-		 and MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} 
+		 and m.MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} 
 		</if>
 		<if test="pd.STATUS!= null and pd.STATUS != ''"><!-- 关键词检索 -->
-		and STATUS = #{pd.STATUS} 
+		and m.STATUS = #{pd.STATUS} 
 		</if>
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and

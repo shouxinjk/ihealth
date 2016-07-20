@@ -150,7 +150,8 @@ public class MedicalCenterController extends BaseController {
 		}
 		
 		page.setPd(pd);
-		List<PageData>	varList = medicalcenterService.list(page);	//列出MedicalCenter列表
+		List<PageData>	varList = new ArrayList<PageData>();
+		varList = medicalcenterService.list(page);	//列出MedicalCenter列表
 		mv.setViewName("medical/medicalcenter/medicalcenter_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);

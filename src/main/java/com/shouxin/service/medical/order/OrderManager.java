@@ -109,6 +109,14 @@ public interface OrderManager{
 	 */
 	public List<PageData> listPart(Page page)throws Exception;
 	
+	/**
+	 * 查询当天流水号
+	 * @param ORDERNOSTR
+	 * @return
+	 * @throws Exception
+	 */
+	public String getMaxOrderNo(String ORDERNOSTR)throws Exception;
+	
 	
 }
 

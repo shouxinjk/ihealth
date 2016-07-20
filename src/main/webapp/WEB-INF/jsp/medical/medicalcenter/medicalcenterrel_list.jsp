@@ -63,9 +63,7 @@
 									<th class="center">联系电话</th>
 									<th class="center">状态</th>
 									<th class="center">LOGO</th>
-									<th class="center">开业时间</th>
-									<th class="center">附件信息</th>
-									<th class="center">经纬度地理位置</th>
+									<th class="center">营业执照</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -87,10 +85,13 @@
 											<td class='center'>${var.ABBREVIATION}</td>
 											<td class='center'>${var.TELEPHONE}</td>
 											<td class='center'>${var.STATUS}</td>
-											<td class='center'>${var.LOGO}</td>
-											<td class='center'>${var.OPENINGTIME}</td>
+											<td class='center'>
+												<c:if test="${var.LOGO != '' }">
+													<img alt="" src="<%=basePath %>uploadFiles/uploadImgs/${var.LOGO }" id="image" style="width:65px;height:65px;">
+												</c:if>
+											</td>
 											<td class='center'>${var.ACCESSORY}</td>
-											<td class='center'>${var.POSITION}</td>
+											
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
@@ -180,14 +181,6 @@
 						<div class="page-header position-relative">
 						<table style="width:100%;">
 							<tr>
-								<td style="vertical-align:top;">
-									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-sm btn-success" onclick="add();">新增</a>
-									</c:if>
-									<c:if test="${QX.del == 1 }">
-									<a class="btn btn-sm btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
-									</c:if>
-								</td>
 								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 							</tr>
 						</table>

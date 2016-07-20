@@ -104,9 +104,9 @@
 								<td><input class="span10 date-picker" name="OPENINGTIME" id="OPENINGTIME" value="${pd.OPENINGTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="体检中心开业时间" title="体检中心开业时间" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">附件信息:</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">营业执照:</td>
 								<td>
-									<input type="text" name="ACCESSORY" id="ACCESSORY" value="${pd.ACCESSORY}" maxlength="255" placeholder="这里输入体检中心或医院附件信息" title="体检中心或医院附件信息" style="width:98%;"/>
+									<input type="hidden" name="ACCESSORY" id="ACCESSORY" value="${pd.ACCESSORY}" maxlength="255" placeholder="这里输入体检中心或医院附件信息" title="体检中心或医院附件信息" style="width:98%;"/>
 									<input type="file" name="ACCESSORY2" id="ACCESSORY2" />
 									<c:if test="${msg eq 'edit'}">
 									<img alt="" src="<%=basePath%>uploadFiles/uploadImgs/${pd.LOGO }" id="ACCESSORYimage" style="width:40%;height:100px;">

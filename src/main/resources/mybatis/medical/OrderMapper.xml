@@ -33,6 +33,10 @@
 		#{ORDER_ID}
 	</sql>
 	
+	<select id="getMaxOrderNo" parameterType="java.lang.String" resultType="java.lang.String">
+		select ORDERNO from tb_order where ORDERNO LIKE CONCAT(CONCAT(#{ORDERNOSTR}),'%') order by ORDERNO limit 0,1
+	</select>
+	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
 		insert into 

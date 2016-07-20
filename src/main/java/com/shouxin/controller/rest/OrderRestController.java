@@ -22,6 +22,7 @@ import com.shouxin.service.medical.medicalexamitem.MedicalExamItemManager;
 import com.shouxin.service.medical.medicalorder.MedicalOrderManager;
 import com.shouxin.service.medical.order.OrderManager;
 import com.shouxin.util.AppUtil;
+import com.shouxin.util.OrderNo;
 import com.shouxin.util.PageData;
 
 import net.sf.json.JSONObject;
@@ -50,9 +51,13 @@ public class OrderRestController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		String ORDER_ID =  this.get32UUID();
-		String ORDERNO = this.get32UUID();
+		String orderDateStr = OrderNo.getDateStr();
+		String orderNo = this.orderService.getMaxOrderNo(orderDateStr);
+		String orderNoStr = OrderNo.getOrderNo(orderNo);
 		pd.put("ORDER_ID", ORDER_ID);
-		pd.put("ORDERNO", ORDERNO);
+		if(!orderNoStr.equals("max")){
+			pd.put("ORDERNO", orderNoStr);
+		}
 		pd.put("ORDERGENERATIONTIME", new Date());
 		orderService.save(pd);
 		JSONObject json = JSONObject.fromObject(souid);
