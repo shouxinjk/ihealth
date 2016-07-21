@@ -41,20 +41,20 @@
 												style="width: 75px; text-align: right; padding-top: 13px;">指南名称:</td>
 											<td><input type="text" name="NAME" id="NAME"
 												value="${pd.GNAME}" maxlength="255" placeholder="这里输入指南名称"
-												title="指南名称" style="width: 98%;" /></td>
+												title="指南名称" style="width: 98%;" readonly="readonly"/></td>
 										</tr>
 										<tr>
 											<td
 												style="width: 75px; text-align: right; padding-top: 13px;">指南来源:</td>
 											<td><input type="text" name="ORIGINATE" id="ORIGINATE"
 												value="${pd.ORIGINATE}" maxlength="255" placeholder="这里输入指南来源"
-												title="指南来源" style="width: 98%;" /></td>
+												title="指南来源" style="width: 98%;" readonly="readonly"/></td>
 										</tr>
 										<tr>
 											<td
 												style="width: 75px; text-align: right; padding-top: 13px;">疾病类别:</td>
 											<td>
-												<input type="text" value="${pd.CNAME }">
+												<input type="text" value="${pd.CNAME }" readonly="readonly" />
 												<%-- <select id="DISEASECATEGORY" name="DISEASECATEGORY" style="width: 40%" onchange="diseaseChange('${pd.EXAMGUIDELINE_ID}')">
 														<c:forEach items="${pds }" var="pds">
 															<c:if test="${pds.DISEASECATEGORY_ID eq pd.DISEASECATEGORY_ID }">
@@ -69,7 +69,7 @@
 											<td
 												style="width: 75px; text-align: right; padding-top: 13px;">疾病名称:</td>
 											<td>
-												<input type="text" value="${pd.DNAME }">
+												<input type="text" value="${pd.DNAME }" readonly="readonly" />
 												<%-- <select id="DISEASE_ID" name="DISEASE_ID"
 													style="width: 40%">
 														<c:forEach items="${varDisList}" var="dis" varStatus="vs">
@@ -86,7 +86,7 @@
 												style="width: 75px; text-align: right; padding-top: 13px;">关注因素:</td>
 											<td><textarea rows="5" cols="10" name="CONCERNEDFACTORS"
 													id="CONCERNEDFACTORS" placeholder="这里输入关注因素描述"
-													title="关注因素描述" style="width: 98%;">${pd.CONCERNEDFACTORS}</textarea>
+													title="关注因素描述" style="width: 98%;" readonly="readonly">${pd.CONCERNEDFACTORS}</textarea>
 												<%-- 
 									<input type="text" name="CONCERNEDFACTORS" id="CONCERNEDFACTORS" value="${pd.CONCERNEDFACTORS}" maxlength="255" placeholder="这里输入关注因素描述" title="关注因素描述" style="width:98%;"/>
 								 --%></td>
@@ -96,7 +96,7 @@
 												style="width: 75px; text-align: right; padding-top: 13px;">高危人群界定方法:</td>
 											<td><textarea rows="3" cols="10" name="HIGHRISKDEFINE"
 													id="HIGHRISKDEFINE" placeholder="这里输入高危人群识别脚本"
-													title="高危人群识别脚本" style="width: 98%;">${pd.HIGHRISKDEFINE}</textarea>
+													title="高危人群识别脚本" style="width: 98%;" readonly="readonly">${pd.HIGHRISKDEFINE}</textarea>
 												<%-- <input type="text" name="HIGHRISKEXPRESSION" id="HIGHRISKEXPRESSION" value="${pd.HIGHRISKEXPRESSION}" maxlength="255" placeholder="这里输入高危人群识别脚本" title="高危人群识别脚本" style="width:98%;"/>
 								 --%></td>
 										</tr>
@@ -104,7 +104,7 @@
 											<td
 												style="width: 75px; text-align: right; padding-top: 13px;">高危人群识别规则:</td>
 											<td><textarea rows="3" cols="10" name="HIGHRISKEXPRESSION"
-													id="HIGHRISKDEFINE"  style="width: 98%;">${pd.HIGHRISKEXPRESSION}</textarea>
+													id="HIGHRISKDEFINE"  style="width: 98%;" readonly="readonly">${pd.HIGHRISKEXPRESSION}</textarea>
 												<%-- <input type="text" name="HIGHRISKEXPRESSION" id="HIGHRISKEXPRESSION" value="${pd.HIGHRISKEXPRESSION}" maxlength="255" placeholder="这里输入高危人群识别脚本" title="高危人群识别脚本" style="width:98%;"/>
 								 --%></td>
 										</tr>
@@ -151,7 +151,7 @@
 												style="width: 75px; text-align: right; padding-top: 13px;">普通人群界定方法:</td>
 											<td><textarea rows="3" cols="10" name="LOWRISKDEFINE"
 													id="LOWRISKDEFINE" placeholder="这里输入普通人群识别脚本"
-													title="普通人群识别脚本" style="width: 98%;">${pd.LOWRISKDEFINE}</textarea>
+													title="普通人群识别脚本" style="width: 98%;" readonly="readonly">${pd.LOWRISKDEFINE}</textarea>
 												<%-- <input type="text" name="LOWRISKEXPRESSION" id="LOWRISKEXPRESSION" value="${pd.LOWRISKEXPRESSION}" maxlength="255" placeholder="这里输入普通人群识别脚本" title="普通人群识别脚本" style="width:98%;"/>
 								 --%></td>
 										</tr>
@@ -160,7 +160,7 @@
 											<td
 												style="width: 75px; text-align: right; padding-top: 13px;">普通人群识别规则:</td>
 											<td><textarea rows="3" cols="10" name="LOWRISKEXPRESSION"
-													id="LOWRISKDEFINE"  style="width: 98%;">${pd.LOWRISKEXPRESSION}</textarea>
+													id="LOWRISKDEFINE"  style="width: 98%;" readonly="readonly">${pd.LOWRISKEXPRESSION}</textarea>
 												<%-- <input type="text" name="LOWRISKEXPRESSION" id="LOWRISKEXPRESSION" value="${pd.LOWRISKEXPRESSION}" maxlength="255" placeholder="这里输入普通人群识别脚本" title="普通人群识别脚本" style="width:98%;"/>
 								 --%></td>
 										</tr>
