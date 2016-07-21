@@ -169,7 +169,7 @@
 		select
 		<include refid="Field1"></include>
 		from
-		<include refid="tableName"></include>
+		<include refid="tableName"></include> where ISALABLE = '1'
 	</select>
 
 	<!-- 家族疾病列表 -->
@@ -177,7 +177,7 @@
 	<select id="listAllisInheritable" parameterType="pd" resultType="pd">
 		select NAME, DESCRIPTION, ISINHERITABLE, ISHIGHINCIDENCE, CREATEBY,
 		CREATEON, DISEASE_ID, DISEASECATEGORY_ID ,ISALABLE from ADMIN_DISEASE where
-		ISINHERITABLE ='1'
+		ISINHERITABLE ='1' and ISALABLE = '1'
 	</select>
 
 	<!-- 关注疾病列表 -->
@@ -185,7 +185,7 @@
 		resultType="pd">
 		select NAME, DESCRIPTION, ISINHERITABLE, ISHIGHINCIDENCE,
 		CREATEBY, CREATEON, DISEASE_ID, DISEASECATEGORY_ID,ISALABLE from ADMIN_DISEASE
-		where ISHIGHINCIDENCE = 1
+		where ISHIGHINCIDENCE = 1 and ISALABLE = '1'
 	</select>
 
 	<!-- 查询该用户下的所有疾病 -->
