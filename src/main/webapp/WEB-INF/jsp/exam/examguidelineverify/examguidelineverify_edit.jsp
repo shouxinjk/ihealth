@@ -100,6 +100,14 @@
 												<%-- <input type="text" name="HIGHRISKEXPRESSION" id="HIGHRISKEXPRESSION" value="${pd.HIGHRISKEXPRESSION}" maxlength="255" placeholder="这里输入高危人群识别脚本" title="高危人群识别脚本" style="width:98%;"/>
 								 --%></td>
 										</tr>
+										<tr>
+											<td
+												style="width: 75px; text-align: right; padding-top: 13px;">高危人群识别规则:</td>
+											<td><textarea rows="3" cols="10" name="HIGHRISKEXPRESSION"
+													id="HIGHRISKDEFINE"  style="width: 98%;">${pd.HIGHRISKEXPRESSION}</textarea>
+												<%-- <input type="text" name="HIGHRISKEXPRESSION" id="HIGHRISKEXPRESSION" value="${pd.HIGHRISKEXPRESSION}" maxlength="255" placeholder="这里输入高危人群识别脚本" title="高危人群识别脚本" style="width:98%;"/>
+								 --%></td>
+										</tr>
 										<c:if test="${msg eq 'edit'}">
 											<tr>
 												<td
@@ -140,10 +148,19 @@
 
 										<tr>
 											<td
-												style="width: 75px; text-align: right; padding-top: 13px;">普通热群界定方法:</td>
+												style="width: 75px; text-align: right; padding-top: 13px;">普通人群界定方法:</td>
 											<td><textarea rows="3" cols="10" name="LOWRISKDEFINE"
 													id="LOWRISKDEFINE" placeholder="这里输入普通人群识别脚本"
 													title="普通人群识别脚本" style="width: 98%;">${pd.LOWRISKDEFINE}</textarea>
+												<%-- <input type="text" name="LOWRISKEXPRESSION" id="LOWRISKEXPRESSION" value="${pd.LOWRISKEXPRESSION}" maxlength="255" placeholder="这里输入普通人群识别脚本" title="普通人群识别脚本" style="width:98%;"/>
+								 --%></td>
+										</tr>
+										
+										<tr>
+											<td
+												style="width: 75px; text-align: right; padding-top: 13px;">普通人群识别规则:</td>
+											<td><textarea rows="3" cols="10" name="LOWRISKEXPRESSION"
+													id="LOWRISKDEFINE"  style="width: 98%;">${pd.LOWRISKEXPRESSION}</textarea>
 												<%-- <input type="text" name="LOWRISKEXPRESSION" id="LOWRISKEXPRESSION" value="${pd.LOWRISKEXPRESSION}" maxlength="255" placeholder="这里输入普通人群识别脚本" title="普通人群识别脚本" style="width:98%;"/>
 								 --%></td>
 										</tr>
