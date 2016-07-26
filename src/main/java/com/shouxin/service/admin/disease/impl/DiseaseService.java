@@ -204,6 +204,12 @@ public class DiseaseService implements DiseaseManager {
 		return (Disease) dao.findForObject("DiseaseMapper.findDiseaseByName", NAME);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<PageData> getDiseaseAndCategoryByIDPD(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<PageData>) dao.findForList("DiseaseMapper.getDiseaseAndCategoryByIDPD",id);
+	}
+
 	
 
 }

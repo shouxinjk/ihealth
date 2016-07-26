@@ -143,5 +143,7 @@ public interface DiseaseManager{
 	 */
 	public Disease findDiseaseByName(String NAME) throws Exception;
 	
+	public List<PageData> getDiseaseAndCategoryByIDPD(String id)throws Exception;
+	
 }
 

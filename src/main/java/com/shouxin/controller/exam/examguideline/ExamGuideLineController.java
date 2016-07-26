@@ -320,7 +320,8 @@ public class ExamGuideLineController extends BaseController {
 		
 		
 		List<PageData> pds = diseasecategoryService.listAll(pd);//查询出所有的疾分类
-		List<PageData> varDisList = diseaseService.listAll(pd);//查询出所有疾病
+		String did = pd.getString("DISEASECATEGORY_ID");
+		List<PageData> varDisList = diseaseService.getDiseaseAndCategoryByIDPD(did);//查询出所有疾病
 		List<ExamCategory> varItemCategoryList = examcategoryService.listAllExamCategory("0");//查询所有检查项目分类
 		logBefore(logger, varItemCategoryList+"查询所有检查项目分类");
 		List<PageData> varSouAndItem = examsolutionService.listAllExamSolutionAndExamItem(pd);//查询所有的检查手段

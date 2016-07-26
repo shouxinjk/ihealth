@@ -89,6 +89,22 @@
 		d.DISEASECATEGORY_ID=C.DISEASECATEGORY_ID where
 		c.DISEASECATEGORY_ID=#{id}
 	</select>
+	
+	<!-- 通过疾病分类id获取疾病信息 -->
+	<select id="getDiseaseAndCategoryByIDPD" parameterType="java.lang.String"
+		resultType="pd">
+		select
+		d.NAME as NAME,d.DISEASE_ID as
+		DISEASE_ID,c.DISEASECATEGORY_ID as
+		DISEASECATEGORY_ID
+		from admin_disease
+		d
+		left join admin_diseasecategory
+		c
+		on
+		d.DISEASECATEGORY_ID=C.DISEASECATEGORY_ID where
+		c.DISEASECATEGORY_ID=#{id}
+	</select>
 
 	<!-- 新增 -->
 	<insert id="save" parameterType="pd">
@@ -171,7 +187,7 @@
 		from
 		<include refid="tableName"></include> where ISALABLE = '1'
 	</select>
-
+	
 	<!-- 家族疾病列表 -->
 
 	<select id="listAllisInheritable" parameterType="pd" resultType="pd">
