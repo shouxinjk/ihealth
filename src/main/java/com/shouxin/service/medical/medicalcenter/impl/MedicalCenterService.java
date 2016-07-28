@@ -58,17 +58,20 @@ public class MedicalCenterService implements MedicalCenterManager{
 		return (List<PageData>)dao.findForList("MedicalCenterMapper.datalistPage", page);
 	}
 	
-	public List<PageData> ListDigui(Page page,List<PageData> pds)throws Exception{
-		List<PageData> ps = list(page);
-		for(int i=0;i<ps.size();i++){
-			pds.add(ps.get(i));
-			page.getPd().put("MEDICALCENTER_ID", pds.get(i).get("MEDICALCENTER_ID"));
-			List<PageData> pd = ListDigui(page,pds);
-			if(pd == null){
-				continue;
-			}
+	@SuppressWarnings("unchecked")
+	public List<PageData> listByPaentID(Page page)throws Exception{
+		return (List<PageData>) dao.findForList("MedicalCenterMapper.dataParentIDlistPage", page);
+	}
+	
+	public List<PageData> listDigui(Page page,List<PageData> pds)throws Exception{
+		List<PageData> ps = listByPaentID(page);
+		
+		for (PageData pageData : ps) {
+			pds.add(pageData);
+			page.setPd(pageData);
+			pds = listDigui(page,pds);
 		}
- 		return ps;
+ 		return pds;
 	}
 	
 	/**列表(全部)
@@ -115,6 +118,23 @@ public class MedicalCenterService implements MedicalCenterManager{
 		return (List<PageData>) dao.findForList("MedicalCenterMapper.datarellistPage", page);
 	}
 
+	///递归体检中心审核子级体检中心
+	@SuppressWarnings("unchecked")
+	public List<PageData> listrelByPaentID(Page page)throws Exception{
+		return (List<PageData>) dao.findForList("MedicalCenterMapper.datarelParentIDlistPage", page);
+	}
+	
+	public List<PageData> listrelDigui(Page page,List<PageData> pds)throws Exception{
+		List<PageData> ps = listByPaentID(page);
+		
+		for (PageData pageData : ps) {
+			pds.add(pageData);
+			page.setPd(pageData);
+			pds = listDigui(page,pds);
+		}
+ 		return pds;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<MedicalCenter> listParentIDPage(String MEDICALCENTER_ID) throws Exception {
 		return (List<MedicalCenter>) dao.findForList("MedicalCenterMapper.listParentIDPage", MEDICALCENTER_ID);
