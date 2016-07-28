@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Tag;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
@@ -63,7 +64,11 @@ public class TagController extends BaseController {
 		pd.put("CREATEBY", Jurisdiction.getUserId());
 		pd.put("CREATEON", new Date());
 		logBefore(logger, pd+"新增Tag+++++++");
-		tagService.save(pd);
+		String name = pd.getString("NAME");
+		Tag tag =  this.tagService.findTagByName(name);
+		if(tag==null){
+			tagService.save(pd);
+		}
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
