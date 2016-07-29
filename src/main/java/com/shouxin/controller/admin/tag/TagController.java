@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -72,6 +73,26 @@ public class TagController extends BaseController {
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
+	}
+	
+	/**
+	 * 判断输入的标签是否存在
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/tagIsNull")
+	public void tagIsNull(HttpServletRequest req ,HttpServletResponse resp) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"新增Tag");
+		String name = req.getParameter("name");
+		Tag tag =  this.tagService.findTagByName(name);
+		String isNull = "";
+		if(tag==null){
+			isNull = "yes";
+		}else{
+			isNull = "no";
+		}
+		PrintWriter pw = resp.getWriter();
+		pw.print(isNull);
+		pw.close();
 	}
 	
 	/**删除

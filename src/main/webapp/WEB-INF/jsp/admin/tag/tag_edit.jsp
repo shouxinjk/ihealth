@@ -42,7 +42,7 @@
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">名称:</td>
-								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入名称" title="名称" style="width:98%;"/></td>
+								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入名称" title="名称" style="width:98%;" onblur="tagIsNull();"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">描述:</td>
@@ -98,7 +98,26 @@
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 		<script type="text/javascript">
+		var a = true;
 		$(top.hangge());
+		function tagIsNull(){
+			var name = $("#NAME").val();
+			$.ajax({
+				url:"<%=basePath%>tag/tagIsNull",
+				type:"post",
+				data:{"name":name},
+		  		async : false,
+				cache : false,
+				success:function(data){
+					if(data == 'no'){
+						alert("标签已经存在,请重新输入!");
+						a=false;
+					}else if(data == "yes"){
+						a=true;
+					}
+				}
+			})
+		}
 		//保存
 		function save(){
 			if($("#NAME").val()==""){
@@ -111,9 +130,14 @@
 				$("#NAME").focus();
 			return false;
 			}
-			$("#Form").submit();
-			$("#zhongxin").hide();
-			$("#zhongxin2").show();
+			if(a){
+				$("#Form").submit();
+				$("#zhongxin").hide();
+				$("#zhongxin2").show();
+			}else{
+				alert("请修改标签名称!");
+			}
+			
 		}
 		
 		$(function() {
