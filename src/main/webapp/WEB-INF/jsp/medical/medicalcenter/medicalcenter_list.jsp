@@ -295,7 +295,7 @@
 					top.jzts();
 					var url = "<%=basePath%>medicalcenter/delete.do?MEDICALCENTER_ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
-						nextPage(${page.currentPage});
+						location.href="<%=basePath%>medicalcenter/list.do?dnowPage=${page.currentPage}";
 					});
 				}
 			});
@@ -326,7 +326,7 @@
 			 diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 nextPage(${page.currentPage});
+					 location.href="<%=basePath%>medicalcenter/list.do?dnowPage=${page.currentPage}";
 				}
 				diag.close();
 			 };
