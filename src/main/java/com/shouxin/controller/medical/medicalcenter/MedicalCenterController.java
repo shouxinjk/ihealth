@@ -168,10 +168,6 @@ public class MedicalCenterController extends BaseController {
 		List<PageData>	varList = new ArrayList<PageData>();
 		List<PageData> l = new ArrayList<PageData>();
 		varList = medicalcenterService.list(page);	//列出MedicalCenter列表
-		l = medicalcenterService.listDigui(page,l);
-		for (PageData pageData : l) {
-			varList.add(pageData);
-		}
 		mv.setViewName("medical/medicalcenter/medicalcenter_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -207,10 +203,6 @@ public class MedicalCenterController extends BaseController {
 		page.setPd(pd);
 		List<PageData> l = new ArrayList<PageData>();
 		List<PageData>	varList = medicalcenterService.listRelAll(page);	//列出MedicalCenter列表
-		l = medicalcenterService.listrelDigui(page, l);
-		for (PageData pageData : l) {
-			varList.add(pageData);
-		}
 		mv.setViewName("medical/medicalcenter/medicalcenterrel_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
