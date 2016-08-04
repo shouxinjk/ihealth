@@ -77,7 +77,7 @@ public class MedicalCenterController extends BaseController {
 			}
 		}else{
 			if(parentid.equals("0")){
-				if(varList == null){
+				if(varList.size()<=0){
 					pd.clear();
 					pd.put("MEDICALCENERADMIN_ID",adminPd.get("MEDICALCENERADMIN_ID"));
 					pd.put("MEDICALCENTER_ID",centerid);
