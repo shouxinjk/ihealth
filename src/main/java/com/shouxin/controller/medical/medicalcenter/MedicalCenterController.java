@@ -63,6 +63,9 @@ public class MedicalCenterController extends BaseController {
 		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
 		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		Page page = new Page();
+		PageData pd2 = new PageData();
+		pd2.put("MEDICALCENTER_ID", medicalcenterid);
+		page.setPd(pd2);
 		List<PageData> varList = this.medicalcenterService.list(page);
 		if(medicalcenterid == null){
 		if(parentid.equals("0")){
