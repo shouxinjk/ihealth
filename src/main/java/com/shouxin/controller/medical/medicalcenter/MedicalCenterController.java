@@ -60,15 +60,26 @@ public class MedicalCenterController extends BaseController {
 		String parentid = pd.getString("PARENTID");
 		String userId = Jurisdiction.getUserId();
 		medicalcenterService.save(pd);
-		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
+		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
+		Page page = new Page();
+		List<PageData> varList = this.medicalcenterService.list(page);
 		if(medicalcenterid == null){
 		if(parentid.equals("0")){
-			
 				pd.clear();
 				pd.put("MEDICALCENERADMIN_ID", this.get32UUID());
 				pd.put("MEDICALCENTER_ID",centerid);
 				pd.put("SYS_USER_ID", userId);
 				this.medicalcenterService.saveCenterAdmin(pd);
+			}
+		}else{
+			if(parentid.equals("0")){
+				if(varList == null){
+					pd.clear();
+					pd.put("MEDICALCENERADMIN_ID",adminPd.get("MEDICALCENERADMIN_ID"));
+					pd.put("MEDICALCENTER_ID",centerid);
+					this.medicalcenterService.editCenterAdmin(pd);
+				}
 			}
 		}
 		mv.addObject("msg","success");
@@ -141,7 +152,8 @@ public class MedicalCenterController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 		String userId = Jurisdiction.getUserId();
-		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
+		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		logBefore(logger, medicalcenterid+"=====medicalcenterid");
 		if(medicalcenterid == null){
 			pd.put("MEDICALCENTER_ID", "");
@@ -180,7 +192,8 @@ public class MedicalCenterController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 		String userId = Jurisdiction.getUserId();
-		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
+		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		logBefore(logger, medicalcenterid+"=====medicalcenterid");
 		if(medicalcenterid == null){
 			pd.put("MEDICALCENTER_ID", "");
@@ -212,7 +225,8 @@ public class MedicalCenterController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		String userId = Jurisdiction.getUserId();
-		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
+		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		List<MedicalCenter> centers = new ArrayList<MedicalCenter>();
 		List<PageData> pds = new ArrayList<PageData>();
 		if(medicalcenterid!=null){

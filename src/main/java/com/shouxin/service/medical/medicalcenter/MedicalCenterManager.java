@@ -79,6 +79,8 @@ public interface MedicalCenterManager{
 	 */
 	public void saveCenterAdmin(PageData pd)throws Exception;
 	
+	public void editCenterAdmin(PageData pd)throws Exception;
+	
 	public List<PageData> listByPaentID(Page page)throws Exception;
 	
 	public List<PageData> listDigui(Page page,List<PageData> pds)throws Exception;

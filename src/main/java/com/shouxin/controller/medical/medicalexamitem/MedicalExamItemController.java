@@ -63,7 +63,8 @@ public class MedicalExamItemController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		String userId = Jurisdiction.getUserId();
-		String medicalcenterId = medicalexamitemService.findAdminByUserId(userId);
+		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
+		String medicalcenterId = adminPd.getString("MEDICALCENTER_ID");
 		pd.put("MEDICALCENTER_ID", medicalcenterId);
 		pd.put("MEDICALEXAMITEM_ID", this.get32UUID());	//主键
 		pd.put("CREATEON", DateUtil.getTime());	//创建该记录时间
@@ -141,7 +142,8 @@ public class MedicalExamItemController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 		String userId = Jurisdiction.getUserId();
-		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
+		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		logBefore(logger, medicalcenterid+"=====medicalcenterid");
 		if(medicalcenterid == null){
 			pd.put("MEDICALCENTER_ID", "");
@@ -173,7 +175,8 @@ public class MedicalExamItemController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 		String userId = Jurisdiction.getUserId();
-		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
+		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		logBefore(logger, medicalcenterid+"=====medicalcenterid");
 		if(medicalcenterid == null){
 			pd.put("MEDICALCENTER_ID", "");

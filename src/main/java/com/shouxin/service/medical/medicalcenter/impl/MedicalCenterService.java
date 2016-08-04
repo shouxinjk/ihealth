@@ -148,6 +148,11 @@ public class MedicalCenterService implements MedicalCenterManager{
 	public void saveCenterAdmin(PageData pd) throws Exception {
 		dao.save("MedicalCenterMapper.saveCenterAdmin", pd);
 	}
+
+	public void editCenterAdmin(PageData pd) throws Exception {
+		// TODO Auto-generated method stub
+		dao.update("MedicalCenterMapper.editCenterAdmin", pd);
+	}
 	
 }
 

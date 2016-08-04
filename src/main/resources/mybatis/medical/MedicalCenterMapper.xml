@@ -101,6 +101,10 @@
 		SYS_USER_ID,MEDICALCENTER_ID) values(#{MEDICALCENERADMIN_ID},#{SYS_USER_ID},#{MEDICALCENTER_ID})
 	</insert>
 	
+	<update id="editCenterAdmin" parameterType="pd">
+		update tb_medicalceneradmin set MEDICALCENTER_ID = #{MEDICALCENTER_ID} where MEDICALCENERADMIN_ID = #{MEDICALCENERADMIN_ID}
+	</update>
+	
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
 		update

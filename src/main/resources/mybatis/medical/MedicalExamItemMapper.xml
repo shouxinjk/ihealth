@@ -76,8 +76,8 @@
 	</sql>
 	
 	<!-- 根据管理员id查询该管理员属于哪个体检中心 -->
-	<select id="findadminbyuserid" parameterType="java.lang.String" resultType="java.lang.String">
-		select medicalcenter_id from tb_medicalceneradmin where sys_user_id = #{userId}
+	<select id="findadminbyuserid" parameterType="java.lang.String" resultType="pd">
+		select MEDICALCENERADMIN_ID,MEDICALCENTER_ID,SYS_USER_ID from tb_medicalceneradmin where sys_user_id = #{userId}
 	</select>
 	
 	<!-- 根据checkupitemid查询体检中心检查项目 -->

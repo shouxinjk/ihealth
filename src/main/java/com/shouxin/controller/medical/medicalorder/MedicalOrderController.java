@@ -128,7 +128,8 @@ public class MedicalOrderController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 		String userId = Jurisdiction.getUserId();
-		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
+		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		if(medicalcenterid == null){
 			pd.put("MEDICALCENTER_ID", "");
 		}else{
@@ -160,7 +161,8 @@ public class MedicalOrderController extends BaseController {
 		}
 		String STATUS = pd.get("STATUS").toString();
 		String userId = Jurisdiction.getUserId();
-		String medicalcenterid = medicalexamitemService.findAdminByUserId(userId);
+		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
+		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		if(medicalcenterid == null){
 			pd.put("MEDICALCENTER_ID", "");
 		}else{

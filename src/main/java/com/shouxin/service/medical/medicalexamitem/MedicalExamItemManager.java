@@ -66,7 +66,7 @@ public interface MedicalExamItemManager{
 	 * @param userId
 	 * @throws Exception
 	 */
-	public String findAdminByUserId(String userId) throws Exception;
+	public PageData findAdminByUserId(String userId) throws Exception;
 	
 	/**
 	 * 跟据体检项目id修改体检项目状态
