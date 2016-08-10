@@ -1112,3 +1112,36 @@ CREATE TABLE `tb_enterpriseadmin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `tb_subhealthcategory`;
+CREATE TABLE `tb_subhealthcategory` (
+  `SUBHEALTHCATEGORY_ID` varchar(100) NOT NULL,
+  `NAME` varchar(255) DEFAULT NULL COMMENT '名称',
+  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '描述',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '录入数据用户',
+  `CREATEON` varchar(255) DEFAULT NULL COMMENT '录入数据时间',
+  `PARENTID` varchar(255) DEFAULT NULL COMMENT '父级',
+  PRIMARY KEY (`SUBHEALTHCATEGORY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tb_subhealth`;
+CREATE TABLE `tb_subhealth` (
+  `SUBHEALTH_ID` varchar(100) NOT NULL,
+  `NAME` varchar(50) DEFAULT NULL COMMENT '名称',
+  `DESCRIPTION` varchar(512) DEFAULT NULL COMMENT '描述',
+  `ISALABLE` int(11) NOT NULL COMMENT '是否为按钮',
+  `SUBHEALTHCATEGORY_ID` varchar(255) DEFAULT NULL COMMENT '亚健康分类id',
+  `EXPRESSION` varchar(1024) DEFAULT NULL COMMENT '附加表达式',
+  `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户',
+  `CREATEON` varchar(255) DEFAULT NULL COMMENT '创建该记录时间',
+  PRIMARY KEY (`SUBHEALTH_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sys_app_user_and_subhealth`;
+CREATE TABLE `sys_app_user_and_subhealth` (
+  `ID` varchar(100) NOT NULL,
+  `USER_ID` varchar(100) DEFAULT NULL,
+  `SUBHEALTH_ID` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
