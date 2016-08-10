@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SubhealthMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		TB_SUBHEALTH
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		NAME,	
+		DESCRIPTION,	
+		ISALABLE,	
+		SUBHEALTHCATEGORY_ID,	
+		EXPRESSION,	
+		CREATEBY,	
+		CREATEON,	
+		SUBHEALTH_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{NAME},	
+		#{DESCRIPTION},	
+		#{ISALABLE},	
+		#{SUBHEALTHCATEGORY_ID},	
+		#{EXPRESSION},	
+		#{CREATEBY},	
+		#{CREATEON},	
+		#{SUBHEALTH_ID}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			SUBHEALTH_ID = #{SUBHEALTH_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			NAME = #{NAME},
+			DESCRIPTION = #{DESCRIPTION},
+			ISALABLE = #{ISALABLE},
+			SUBHEALTHCATEGORY_ID = #{SUBHEALTHCATEGORY_ID},
+			EXPRESSION = #{EXPRESSION},
+		SUBHEALTH_ID = SUBHEALTH_ID
+		where 
+		SUBHEALTH_ID = #{SUBHEALTH_ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			SUBHEALTH_ID = #{SUBHEALTH_ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="pd.SUBHEALTHCATEGORY_ID!=null and pd.SUBHEALTHCATEGORY_ID !=''">
+			and SUBHEALTHCATEGORY_ID = #{pd.SUBHEALTHCATEGORY_ID}
+		</if>
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 微信接口查询所有为标签的亚健康症状信息 -->
+	<select id="restListAll" parameterType="pd" resultType="pd">
+		select SUBHEALTH_ID,NAME,DESCRIPTION,SUBHEALTHCATEGORY_ID from 
+		<include refid="tableName"></include>
+		where ISALABLE = 1;
+	</select>
+	
+	<!-- 微信接口查询该用户下的所有亚健康症状信息 -->
+	<select id="restListSubhealthByUserID" parameterType="java.lang.String" resultType="pd">
+		select s.`NAME` as `NAME`,s.DESCRIPTION as DESCRIPTION , s.SUBHEALTH_ID as SUBHEALTH_ID,
+		s.SUBHEALTHCATEGORY_ID as SUBHEALTHCATEGORY_ID from tb_subhealth s , sys_app_user_and_subhealth 
+		us where s.SUBHEALTH_ID = us.SUBHEALTH_ID and us.USER_ID = #{USER_ID}
+	</select>
+	
+	<!-- 新增属于用户的标签-->
+	<insert id="restSaveUserSubhealth" parameterType="pd">
+		insert into 
+		sys_app_user_and_subhealth
+		(
+		ID,USER_ID,SUBHEALTH_ID
+		) values
+          (
+		#{ID},#{USER_ID},#{SUBHEALTH_ID}
+		)
+	</insert>
+	
+	<delete id="restDeleteUserSubhealth" parameterType="java.lang.String">
+		delete from sys_app_user_and_subhealth where USER_ID = #{USER_ID}
+	</delete>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			SUBHEALTH_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- shouxin -->
+</mapper>

@@ -28,6 +28,7 @@
 		<typeAlias type="com.shouxin.entity.exam.ExamItem" alias="ExamItem"/>
 		<typeAlias type="com.shouxin.entity.exam.ExamSolution" alias="ExamSolution"/>
 		<typeAlias type="com.shouxin.entity.admin.DiseaseCategory" alias="DiseaseCategory"/>
+		<typeAlias type="com.shouxin.entity.subhealth.SubhealthCategory" alias="SubhealthCategory"/>
 		<typeAlias type="com.shouxin.entity.admin.Disease" alias="Disease"/>
 		<typeAlias type="com.shouxin.entity.admin.Tag" alias="Tag"/>
 		<typeAlias type="com.shouxin.entity.admin.Disease_test" alias="Diseasetest"/>
