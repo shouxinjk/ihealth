@@ -24,6 +24,7 @@ import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.medical.medicalexamitem.MedicalExamItemManager;
 import com.shouxin.service.medical.medicalorder.MedicalOrderManager;
 import com.shouxin.service.medical.order.OrderManager;
+import com.shouxin.service.system.appuser.AppuserManager;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.OrderNo;
@@ -46,9 +47,10 @@ public class OrderRestController extends BaseController {
 	private CheckupItemManager checkupitemService;
 	@Resource(name="medicalexamitemService")
 	private MedicalExamItemManager medicalexamitemService;
-
 	@Resource(name="medicalorderService")
 	private MedicalOrderManager medicalorderService;
+	@Resource(name="appuserService")
+	private AppuserManager appuserService;
 	/**
 	 * 添加订单
 	 * @param souid
@@ -193,6 +195,32 @@ public class OrderRestController extends BaseController {
 		logBefore(logger, item.get(0).getMEDICALCENTER_ID()+"medicalcenter_id==");
 		pd.put("STATUS", "已提交");
 		orderService.updateOrderStatus(pd);
+	}
+	
+	/**
+	 * 根据orderid和userid分别查询出订单和用户信息
+	 * @param souid
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/findOrderAndUser",method=RequestMethod.POST)
+	@ResponseBody
+	public Object findOrderAndUser(@RequestBody String param) throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject json = JSONObject.fromObject(param);
+		String orderid = json.getString("order_id").toString();
+		String userid = json.getString("user_id").toString();
+		pd.put("ORDER_ID", orderid);
+		pd = orderService.findById(pd);
+		PageData pds = new PageData();
+		pds.put("USER_ID", userid);
+		pds = appuserService.findByUiId(pds);
+		allMap.put("msg", "success");
+		allMap.put("orderData", pd);
+		allMap.put("userData", pds);
+		return AppUtil.returnObject(new PageData(), allMap);
 	}
 	
 	/*@RequestMapping(value="/listExamItem",method=RequestMethod.POST)
