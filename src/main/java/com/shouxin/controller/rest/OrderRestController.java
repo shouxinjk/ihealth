@@ -180,7 +180,7 @@ public class OrderRestController extends BaseController {
 					medicalOrderItem.add(moi);
 				}
 			}
-			o.setMEDICALORDERTOTALAMOUNT(SELLINCPRICE);
+			o.setMEDICALTOTALAMOUNT(SELLINCPRICE);
 			medicalOrder.add(o);
 		}
 		
