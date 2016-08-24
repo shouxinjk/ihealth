@@ -28,22 +28,22 @@ public class OrderNo {
 				int nextNum = serialNum+1;
 				switch ((nextNum+"").length()) {
 				case 1:
-					newOrderNo += "00000"+nextNum;
+					newOrderNo += d1+"00000"+nextNum;
 					break;
 				case 2:
-					newOrderNo += "0000"+nextNum;
+					newOrderNo += d1+"0000"+nextNum;
 					break;
 				case 3:
-					newOrderNo += "000"+nextNum;
+					newOrderNo += d1+"000"+nextNum;
 					break;
 				case 4:
-					newOrderNo += "00"+nextNum;
+					newOrderNo += d1+"00"+nextNum;
 					break;
 				case 5:
-					newOrderNo += "0"+nextNum;
+					newOrderNo += d1+"0"+nextNum;
 					break;
 				default:
-					newOrderNo += ""+nextNum;
+					newOrderNo += d1+""+nextNum;
 					break;
 				}
 			}
