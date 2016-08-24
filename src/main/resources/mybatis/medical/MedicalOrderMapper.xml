@@ -34,7 +34,7 @@
 	</sql>
 	
 	<!-- 批量增加体检中心订单 -->
-	<insert id="insertAll" parameterType="MedicalOrder">
+	<insert id="insertAll" parameterType="java.util.List">
 		insert into 
 		<include refid="tableName"></include> 
 		(MEDICALORDER_ID,MEDICALORDERNO,MEDICALORDERGENERATIONTIME,MEDICALORDERBOOKINGTIME,MEDICALORDEREXECUTIONTIME,MEDICALCENTER_ID,MEDICALTOTALAMOUNT)
