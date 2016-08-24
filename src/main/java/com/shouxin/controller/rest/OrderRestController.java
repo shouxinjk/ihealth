@@ -147,7 +147,7 @@ public class OrderRestController extends BaseController {
 	 * @throws Exception
 	 */
 	public void splitOrder(String OrderId)throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"提交订单时根据订单所属的体检项目进行拆分");
+		logBefore(logger, "提交订单时根据订单所属的体检项目进行拆分");
 		PageData pd = new PageData();
 		Order order = orderService.findByIdString(OrderId);	//根据ID读取
 		List<MedicalExamItem> item = orderService.findCenterIDByOrderId(OrderId);
@@ -168,17 +168,22 @@ public class OrderRestController extends BaseController {
 			}
 			
 			o.setMEDICALORDERGENERATIONTIME(order.getORDERGENERATIONTIME());
-			medicalOrder.add(o);
+			
+			double SELLINCPRICE = 0.0;
 			for (MedicalExamItem it : items) {
 				if(it.getMEDICALCENTER_ID().equals(item.get(i).getMEDICALCENTER_ID())){
 					MedicalOrderItem moi = new MedicalOrderItem();
 					moi.setMEDICALORDERITEM_ID(this.get32UUID());
 					moi.setMEDICALORDER_ID(medicalOrder_id);
 					moi.setMEDICALEXAMITEM_ID(it.getMEDICALEXAMITEM_ID());
+					SELLINCPRICE+=it.getSETTLEMENTPRICE();
 					medicalOrderItem.add(moi);
 				}
 			}
+			o.setMEDICALORDERTOTALAMOUNT(SELLINCPRICE);
+			medicalOrder.add(o);
 		}
+		
 		medicalorderService.saveAll(medicalOrder);
 		medicalorderService.saveItemAll(medicalOrderItem);
 		logBefore(logger, item.get(0).getMEDICALCENTER_ID()+"medicalcenter_id==");
