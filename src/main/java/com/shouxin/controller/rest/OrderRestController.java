@@ -16,17 +16,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.medical.MedicalExamItem;
+import com.shouxin.entity.medical.MedicalOrder;
+import com.shouxin.entity.medical.MedicalOrderItem;
+import com.shouxin.entity.medical.Order;
 import com.shouxin.entity.medical.OrderItem;
 import com.shouxin.service.checkup.checkupitem.CheckupItemManager;
 import com.shouxin.service.medical.medicalexamitem.MedicalExamItemManager;
 import com.shouxin.service.medical.medicalorder.MedicalOrderManager;
 import com.shouxin.service.medical.order.OrderManager;
 import com.shouxin.util.AppUtil;
+import com.shouxin.util.Jurisdiction;
 import com.shouxin.util.OrderNo;
 import com.shouxin.util.PageData;
 
 import net.sf.json.JSONObject;
 
+/**
+ * 订单接口
+ * @author yxd1
+ *
+ */
 @Controller
 @RequestMapping(value = "/restOrder")
 public class OrderRestController extends BaseController {
@@ -37,7 +46,9 @@ public class OrderRestController extends BaseController {
 	private CheckupItemManager checkupitemService;
 	@Resource(name="medicalexamitemService")
 	private MedicalExamItemManager medicalexamitemService;
-	
+
+	@Resource(name="medicalorderService")
+	private MedicalOrderManager medicalorderService;
 	/**
 	 * 添加订单
 	 * @param souid
@@ -62,20 +73,59 @@ public class OrderRestController extends BaseController {
 		orderService.save(pd);
 		JSONObject json = JSONObject.fromObject(souid);
 		String solutionID = json.getString("solutionID").toString();
-		String[] solutionIDS = solutionID.split(",");
+//		String[] solutionIDS = solutionID.split(",");
+//		List<OrderItem> itemIDs = new ArrayList<OrderItem>();
+//		for(int i=0;i<solutionIDS.length;i++){
+//			OrderItem oi = new OrderItem();
+//			String orderItemID = this.get32UUID();
+//				oi.setORDER_ID(ORDER_ID);
+//				oi.setORDERITEM_ID(orderItemID);
+//				//String MEDICALEXAMITEM_ID = orderService.findExamItemByExamSolutionId(solutionIDS[i]);
+//				oi.setMEDICALEXAMITEM_ID(solutionIDS[i]);
+//				itemIDs.add(oi);
+//		}
+//		System.out.println(itemIDs.size()+"=============");
+//		if(itemIDs.size()>0){
+//			orderService.saveOrderItem(itemIDs);
+//			allMap.put("msg", "success");
+//			allMap.put("orderid", ORDER_ID);
+//		}else{
+//			allMap.put("msg", "no");
+//		}
+		allMap.put("msg", "success");
+		allMap.put("orderid", ORDER_ID);
+		return AppUtil.returnObject(new PageData(), allMap);
+	}
+	
+	/**
+	 * 修改所属订单的体检项目
+	 * @param {"order_id":订单编号,"itemID":属于订单的体检项目}
+	 * @return{"msg":修改的状态（success=完成修改，no=修改失败）,"orderid":订单编号}
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/addOrder",method=RequestMethod.POST)
+	@ResponseBody
+	public Object editOrderAndExamItem(@RequestBody String itemID) throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject json = JSONObject.fromObject(itemID);
+		String ORDER_ID = json.getString("order_id").toString();
+		String itemIDStr = json.getString("itemID").toString();
+		String[] itemIDArray = itemIDStr.split(",");
 		List<OrderItem> itemIDs = new ArrayList<OrderItem>();
-		for(int i=0;i<solutionIDS.length;i++){
+		for(int i=0;i<itemIDArray.length;i++){
 			OrderItem oi = new OrderItem();
 			String orderItemID = this.get32UUID();
 				oi.setORDER_ID(ORDER_ID);
 				oi.setORDERITEM_ID(orderItemID);
 				//String MEDICALEXAMITEM_ID = orderService.findExamItemByExamSolutionId(solutionIDS[i]);
-				oi.setMEDICALEXAMITEM_ID(solutionIDS[i]);
+				oi.setMEDICALEXAMITEM_ID(itemIDArray[i]);
 				itemIDs.add(oi);
 		}
-		System.out.println(itemIDs.size()+"=============");
 		if(itemIDs.size()>0){
 			orderService.saveOrderItem(itemIDs);
+			splitOrder(ORDER_ID);
 			allMap.put("msg", "success");
 			allMap.put("orderid", ORDER_ID);
 		}else{
@@ -84,6 +134,41 @@ public class OrderRestController extends BaseController {
 		return AppUtil.returnObject(new PageData(), allMap);
 	}
 	
+	
+	public void splitOrder(String OrderId)throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"提交订单时根据订单所属的体检项目进行拆分");
+		PageData pd = new PageData();
+		Order order = orderService.findByIdString(OrderId);	//根据ID读取
+		List<MedicalExamItem> item = orderService.findCenterIDByOrderId(OrderId);
+		List<MedicalExamItem> items = orderService.findExamItemByOrderId(OrderId);
+		List<MedicalOrder> medicalOrder = new ArrayList<MedicalOrder>();
+		List<MedicalOrderItem> medicalOrderItem = new ArrayList<MedicalOrderItem>();
+		for (MedicalExamItem m : item) {
+			MedicalOrder o = new MedicalOrder();
+			String medicalOrder_id = this.get32UUID();
+			o.setMEDICALORDER_ID(medicalOrder_id);
+			o.setMEDICALCENTER_ID(m.getMEDICALCENTER_ID());
+			o.setMEDICALORDERBOOKINGTIME(order.getORDERBOOKINGTIME());
+			o.setMEDICALORDEREXECUTIONTIME(order.getORDEREXECUTIONTIME());
+			o.setMEDICALORDERNO(order.getORDERNO());
+			o.setMEDICALORDERGENERATIONTIME(order.getORDERGENERATIONTIME());
+			medicalOrder.add(o);
+			for (MedicalExamItem i : items) {
+				if(i.getMEDICALCENTER_ID().equals(m.getMEDICALCENTER_ID())){
+					MedicalOrderItem moi = new MedicalOrderItem();
+					moi.setMEDICALORDERITEM_ID(this.get32UUID());
+					moi.setMEDICALORDER_ID(medicalOrder_id);
+					moi.setMEDICALEXAMITEM_ID(i.getMEDICALEXAMITEM_ID());
+					medicalOrderItem.add(moi);
+				}
+			}
+		}
+		medicalorderService.saveAll(medicalOrder);
+		medicalorderService.saveItemAll(medicalOrderItem);
+		logBefore(logger, item.get(0).getMEDICALCENTER_ID()+"medicalcenter_id==");
+		pd.put("STATUS", "已提交");
+		orderService.updateOrderStatus(pd);
+	}
 	
 	/*@RequestMapping(value="/listExamItem",method=RequestMethod.POST)
 	@ResponseBody
