@@ -133,8 +133,12 @@ public class OrderRestController extends BaseController {
 			orderService.saveOrderItem(itemIDs);
 			//根据订单体检项目拆分出子级体检中心订单
 			splitOrder(ORDER_ID);
+			PageData pds = new PageData();
+			pds.put("ORDER_ID", ORDER_ID);
+			pds = orderService.findById(pds);
 			allMap.put("msg", "success");
 			allMap.put("orderid", ORDER_ID);
+			allMap.put("orderData", pds);
 		}else{
 			allMap.put("msg", "no");
 		}
