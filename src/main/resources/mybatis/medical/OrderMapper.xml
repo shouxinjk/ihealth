@@ -77,7 +77,7 @@
 		update
 		<include refid="tableName"></include>
 		set 
-			ORDERTOTALAMOUNT = #{ORDERTOTALAMOUNT},
+			ORDERTOTALAMOUNT = #{ORDERTOTALAMOUNT}
 		where 
 		ORDER_ID = #{ORDER_ID}
 	</update>
