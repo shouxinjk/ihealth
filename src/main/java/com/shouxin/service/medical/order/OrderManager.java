@@ -117,6 +117,12 @@ public interface OrderManager{
 	 */
 	public String getMaxOrderNo(String ORDERNOSTR)throws Exception;
 	
+	/**
+	 * 修改订单总金额
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void editOrderPrice(PageData pd)throws Exception;
 	
 }
 

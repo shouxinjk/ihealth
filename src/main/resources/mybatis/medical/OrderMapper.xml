@@ -72,6 +72,16 @@
 		ORDER_ID = #{ORDER_ID}
 	</update>
 	
+	<!-- 修改订单金额 -->
+	<update id="editOrderPrice" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			ORDERTOTALAMOUNT = #{ORDERTOTALAMOUNT},
+		where 
+		ORDER_ID = #{ORDER_ID}
+	</update>
+	
 	<!-- 修改体检中心状态 -->
 	<update id="auditing" parameterType="pd">
 		update 

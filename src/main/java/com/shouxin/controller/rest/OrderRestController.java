@@ -103,7 +103,7 @@ public class OrderRestController extends BaseController {
 	 * @return{"msg":修改的状态（success=完成修改，no=修改失败）,"orderid":订单编号}
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/addOrder",method=RequestMethod.POST)
+	@RequestMapping(value="/editOrderAndItem",method=RequestMethod.POST)
 	@ResponseBody
 	public Object editOrderAndExamItem(@RequestBody String itemID) throws Exception{
 		Map<Object, Object> allMap = new HashMap<Object, Object>();
@@ -112,6 +112,11 @@ public class OrderRestController extends BaseController {
 		JSONObject json = JSONObject.fromObject(itemID);
 		String ORDER_ID = json.getString("order_id").toString();
 		String itemIDStr = json.getString("itemID").toString();
+		double ORDERTOTALAMOUNT = json.getDouble("ORDERTOTALAMOUNT");
+		pd.put("ORDER_ID", ORDER_ID);
+		pd.put("ORDERTOTALAMOUNT", ORDERTOTALAMOUNT);
+		//修改订单金额
+		orderService.editOrderPrice(pd);
 		String[] itemIDArray = itemIDStr.split(",");
 		List<OrderItem> itemIDs = new ArrayList<OrderItem>();
 		for(int i=0;i<itemIDArray.length;i++){
@@ -124,7 +129,9 @@ public class OrderRestController extends BaseController {
 				itemIDs.add(oi);
 		}
 		if(itemIDs.size()>0){
+			//添加订单体检项目
 			orderService.saveOrderItem(itemIDs);
+			//根据订单体检项目拆分出子级体检中心订单
 			splitOrder(ORDER_ID);
 			allMap.put("msg", "success");
 			allMap.put("orderid", ORDER_ID);
@@ -134,7 +141,11 @@ public class OrderRestController extends BaseController {
 		return AppUtil.returnObject(new PageData(), allMap);
 	}
 	
-	
+	/**
+	 * 根据用户订单体检项目信息分解体检中心订单
+	 * @param OrderId
+	 * @throws Exception
+	 */
 	public void splitOrder(String OrderId)throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"提交订单时根据订单所属的体检项目进行拆分");
 		PageData pd = new PageData();
@@ -143,22 +154,27 @@ public class OrderRestController extends BaseController {
 		List<MedicalExamItem> items = orderService.findExamItemByOrderId(OrderId);
 		List<MedicalOrder> medicalOrder = new ArrayList<MedicalOrder>();
 		List<MedicalOrderItem> medicalOrderItem = new ArrayList<MedicalOrderItem>();
-		for (MedicalExamItem m : item) {
+		for (int i=0;i<item.size();i++) {
 			MedicalOrder o = new MedicalOrder();
 			String medicalOrder_id = this.get32UUID();
 			o.setMEDICALORDER_ID(medicalOrder_id);
-			o.setMEDICALCENTER_ID(m.getMEDICALCENTER_ID());
+			o.setMEDICALCENTER_ID(item.get(i).getMEDICALCENTER_ID());
 			o.setMEDICALORDERBOOKINGTIME(order.getORDERBOOKINGTIME());
 			o.setMEDICALORDEREXECUTIONTIME(order.getORDEREXECUTIONTIME());
-			o.setMEDICALORDERNO(order.getORDERNO());
+			if(i<10){
+				o.setMEDICALORDERNO(order.getORDERNO()+"-0"+i);
+			}else{
+				o.setMEDICALORDERNO(order.getORDERNO()+"-"+i);
+			}
+			
 			o.setMEDICALORDERGENERATIONTIME(order.getORDERGENERATIONTIME());
 			medicalOrder.add(o);
-			for (MedicalExamItem i : items) {
-				if(i.getMEDICALCENTER_ID().equals(m.getMEDICALCENTER_ID())){
+			for (MedicalExamItem it : items) {
+				if(it.getMEDICALCENTER_ID().equals(item.get(i).getMEDICALCENTER_ID())){
 					MedicalOrderItem moi = new MedicalOrderItem();
 					moi.setMEDICALORDERITEM_ID(this.get32UUID());
 					moi.setMEDICALORDER_ID(medicalOrder_id);
-					moi.setMEDICALEXAMITEM_ID(i.getMEDICALEXAMITEM_ID());
+					moi.setMEDICALEXAMITEM_ID(it.getMEDICALEXAMITEM_ID());
 					medicalOrderItem.add(moi);
 				}
 			}

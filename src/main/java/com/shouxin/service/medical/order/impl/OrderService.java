@@ -157,6 +157,15 @@ public class OrderService implements OrderManager{
 	public String getMaxOrderNo(String ORDERNOSTR) throws Exception {
 		return (String) dao.findForObject("OrderMapper.getMaxOrderNo", ORDERNOSTR);
 	}
+
+	/**
+	 * 修改订单总金额
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void editOrderPrice(PageData pd) throws Exception {
+		dao.update("OrderMapper.editOrderPrice", pd);
+	}
 	
 }
 
