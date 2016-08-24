@@ -85,6 +85,15 @@
 								</td>
 							</tr>
 							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">城市:</td>
+								<td>
+									<div id="element_id">
+									  <select name="PROVINCE" class="province" data-value="${pd.PROVINCE }" data-required="true"></select>
+									  <select name="CITY" id="CITY" class="city" data-value="${pd.CITY }" data-required="true"></select>
+									</div>
+								</td>
+							</tr>
+							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">地理位置:</td>
 								<td><input type="text" name="LOCATION" id="LOCATION" value="${pd.LOCATION}" maxlength="255" placeholder="这里输入体检中心地理位置" title="体检中心地理位置" style="width:98%;"/></td>
 							</tr>
@@ -165,15 +174,26 @@
 	<script type="text/javascript" src="plugins/uploadifys/swfobject.js"></script> 
 	<script type="text/javascript" src="plugins/uploadifys/swfupload.js"></script> 
 	<script type="text/javascript" src="plugins/uploadifys/jquery.uploadify.js"></script> 
+	<script type="text/javascript" src="plugins/js/jquery.cxselect.js"></script>
 	<!-- 百度地图api -->
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=e0dqKjlucOYl5SO8aRvcrLHXjNZG8N2L"></script>
 	<script type="text/javascript">
-	   
+	
+		$('#element_id').cxSelect({
+			  url: 'plugins/js/cityData.min.json',               // 如果服务器不支持 .json 类型文件，请将文件改为 .js 文件
+			  selects: ['province', 'city'],  // 数组，请注意顺序
+			  emptyStyle: 'none'
+			});
+		
+		
 	    function searchByStationName(){
+	    	var city = $("#CITY option:selected").val();   
+	    	alert(city);
 	    	$("#container").css("display","block");
 	    	 var map = new BMap.Map("container");        //在container容器中创建一个地图,参数container为div的id属性;
-	   	 	 var point = new BMap.Point(104.06,30.66);    //创建点坐标
-	   	    map.centerAndZoom(point, 12);                //初始化地图，设置中心点坐标和地图级别
+	   	 	 var point = new BMap.Point();    //创建点坐标
+	   	    map.centerAndZoom(city, 12);                //初始化地图，设置中心点坐标和地图级别
+	   	 	map.setCurrentCity(city);
 	   	    map.enableScrollWheelZoom();                //激活滚轮调整大小功能
 	   	    map.addControl(new BMap.NavigationControl());    //添加控件：缩放地图的控件，默认在左上角；
 	   	    map.addControl(new BMap.MapTypeControl());        //添加控件：地图类型控件，默认在右上方；
