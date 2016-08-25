@@ -237,10 +237,10 @@ public class OrderRestController extends BaseController {
 		pd = this.getPageData();
 		JSONObject json = JSONObject.fromObject(param);
 		String orderno = json.getString("orderNo").toString();
-		Order order = this.orderService.findByOrderNoString(orderno);
-		logBefore(logger, order+"=========order====orderno==="+orderno);
+		PageData orderpds = this.orderService.findByOrderNoString(orderno);
+		logBefore(logger, orderpds+"=========order====orderno==="+orderno);
 		pd.put("STATUS", "已付款");
-		pd.put("ORDER_ID", order.getORDER_ID());
+		pd.put("ORDER_ID", orderpds.getString("ORDER_ID"));
 		this.orderService.updateOrderStatus(pd);
 		List<PageData> pds = new ArrayList<PageData>();
 		pds=this.medicalorderService.listOrderByOrderId(pd);
@@ -249,7 +249,7 @@ public class OrderRestController extends BaseController {
 			this.medicalorderService.auditing(p);
 		}
 		allMap.put("msg", "success");
-		allMap.put("orderData", order);
+		allMap.put("orderData", orderpds);
 		return AppUtil.returnObject(new PageData(), allMap);
 	}
 	

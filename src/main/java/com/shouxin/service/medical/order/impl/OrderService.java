@@ -173,8 +173,8 @@ public class OrderService implements OrderManager{
 	 * @return
 	 * @throws Exception
 	 */
-	public Order findByOrderNoString(String ORDERNO)throws Exception{
-		return (Order) dao.findForObject("OrderMapper.findByOrderNoString", ORDERNO);
+	public PageData findByOrderNoString(String ORDERNO)throws Exception{
+		return (PageData) dao.findForObject("OrderMapper.findByOrderNoString", ORDERNO);
 	}
 	
 	

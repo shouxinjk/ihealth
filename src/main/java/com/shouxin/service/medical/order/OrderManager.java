@@ -130,7 +130,7 @@ public interface OrderManager{
 	 * @return
 	 * @throws Exception
 	 */
-	public Order findByOrderNoString(String ORDERNO)throws Exception;
+	public PageData findByOrderNoString(String ORDERNO)throws Exception;
 	
 }
 
