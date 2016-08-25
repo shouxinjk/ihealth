@@ -238,6 +238,7 @@ public class OrderRestController extends BaseController {
 		JSONObject json = JSONObject.fromObject(param);
 		String orderno = json.getString("orderNo").toString();
 		Order order = this.orderService.findByOrderNoString(orderno);
+		logBefore(logger, order+"=========order====orderno==="+orderno);
 		pd.put("STATUS", "已付款");
 		pd.put("ORDER_ID", order.getORDER_ID());
 		this.orderService.updateOrderStatus(pd);
