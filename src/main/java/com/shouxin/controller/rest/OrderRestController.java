@@ -165,8 +165,6 @@ public class OrderRestController extends BaseController {
 			String medicalOrder_id = this.get32UUID();
 			o.setMEDICALORDER_ID(medicalOrder_id);
 			o.setMEDICALCENTER_ID(item.get(i).getMEDICALCENTER_ID());
-			o.setMEDICALORDERBOOKINGTIME(order.getORDERBOOKINGTIME());
-			o.setMEDICALORDEREXECUTIONTIME(order.getORDEREXECUTIONTIME());
 			if(i<10){
 				o.setMEDICALORDERNO(order.getORDERNO()+"-0"+i);
 			}else{
