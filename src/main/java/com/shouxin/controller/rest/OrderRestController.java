@@ -156,6 +156,7 @@ public class OrderRestController extends BaseController {
 		logBefore(logger, "提交订单时根据订单所属的体检项目进行拆分");
 		PageData pd = new PageData();
 		Order order = orderService.findByIdString(OrderId);	//根据ID读取
+		logBefore(logger,order+"=====order=======orderID===="+OrderId);
 		List<MedicalExamItem> item = orderService.findCenterIDByOrderId(OrderId);
 		List<MedicalExamItem> items = orderService.findExamItemByOrderId(OrderId);
 		List<MedicalOrder> medicalOrder = new ArrayList<MedicalOrder>();
