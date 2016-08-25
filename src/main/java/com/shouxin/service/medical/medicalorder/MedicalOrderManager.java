@@ -125,5 +125,13 @@ public interface MedicalOrderManager{
 	 */
 	public List<PageData> listPart(Page page)throws Exception;
 	
+	/**
+	 * 根据订单编号查询所属体检中心订单
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listOrderByOrderId(PageData pd)throws Exception;
+	
 }
 

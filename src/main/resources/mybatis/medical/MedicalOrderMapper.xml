@@ -193,6 +193,12 @@
 		</if>
 	</select>
 	
+	<!-- 查询平台订单下的体检中心订单 -->
+	<select id="listOrderByOrderId" parameterType="pd" resultType="pd">
+		select mo.MEDICALORDER_ID as MEDICALORDER_ID 
+		from tb_medicalorder mo where mo.ORDER_ID = #{ORDER_ID} 
+	</select>
+	
 	<!-- 列表 -->
 	<select id="dataPartlistPage" parameterType="page" resultType="pd">
 		select

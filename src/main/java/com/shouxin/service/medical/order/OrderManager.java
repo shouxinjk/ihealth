@@ -124,6 +124,14 @@ public interface OrderManager{
 	 */
 	public void editOrderPrice(PageData pd)throws Exception;
 	
+	/**
+	 * 通过订单号获取订单信息
+	 * @param ORDERNO
+	 * @return
+	 * @throws Exception
+	 */
+	public Order findByOrderNoString(String ORDERNO)throws Exception;
+	
 }
 
  

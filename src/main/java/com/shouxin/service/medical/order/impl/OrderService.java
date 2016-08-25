@@ -167,5 +167,16 @@ public class OrderService implements OrderManager{
 		dao.update("OrderMapper.editOrderPrice", pd);
 	}
 	
+	/**
+	 * 通过订单号获取订单信息
+	 * @param ORDERNO
+	 * @return
+	 * @throws Exception
+	 */
+	public Order findByOrderNoString(String ORDERNO)throws Exception{
+		return (Order) dao.findForObject("OrderMapper.findByOrderNoString", ORDERNO);
+	}
+	
+	
 }
 

@@ -164,5 +164,17 @@ public class MedicalOrderService implements MedicalOrderManager{
 		return (List<PageData>) dao.findForList("MedicalOrderMapper.dataPartlistPage", page);
 	}
 	
+	/**
+	 * 根据订单编号查询所属体检中心订单
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listOrderByOrderId(PageData pd)throws Exception{
+		return (List<PageData>) dao.findForList("MedicalOrderMapper.listOrderByOrderId", pd);
+	}
+	
+	
 }
 

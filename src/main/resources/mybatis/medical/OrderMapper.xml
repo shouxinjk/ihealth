@@ -127,6 +127,16 @@
 			ORDER_ID = #{ORDER_ID}
 	</select>
 	
+		<!-- 通过ID获取数据 -->
+	<select id="findByOrderNoString" parameterType="java.lang.String" resultType="Order">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ORDERNO = #{ORDERNO}
+	</select>
+	
 	<!-- 查询该订单的所有体检项目 -->
 	<select id="findExamItemByOrderId" parameterType="java.lang.String" resultType="MedicalExamItem">
 		select ei.MEDICALCENTER_ID AS MEDICALCENTER_ID,ei.MEDICALEXAMITEM_ID as MEDICALEXAMITEM_ID,ei.NAME AS NAME,ei.DESCRIPTION AS

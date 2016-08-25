@@ -156,7 +156,6 @@ public class OrderRestController extends BaseController {
 		logBefore(logger, "提交订单时根据订单所属的体检项目进行拆分");
 		PageData pd = new PageData();
 		Order order = orderService.findByIdString(OrderId);	//根据ID读取
-		logBefore(logger,order+"=====order=======orderID===="+OrderId);
 		List<MedicalExamItem> item = orderService.findCenterIDByOrderId(OrderId);
 		List<MedicalExamItem> items = orderService.findExamItemByOrderId(OrderId);
 		List<MedicalOrder> medicalOrder = new ArrayList<MedicalOrder>();
@@ -166,6 +165,8 @@ public class OrderRestController extends BaseController {
 			String medicalOrder_id = this.get32UUID();
 			o.setMEDICALORDER_ID(medicalOrder_id);
 			o.setMEDICALCENTER_ID(item.get(i).getMEDICALCENTER_ID());
+			o.setMEDICALORDERBOOKINGTIME(order.getORDERBOOKINGTIME());
+			o.setMEDICALORDEREXECUTIONTIME(order.getORDEREXECUTIONTIME());
 			if(i<10){
 				o.setMEDICALORDERNO(order.getORDERNO()+"-0"+i);
 			}else{
@@ -219,6 +220,35 @@ public class OrderRestController extends BaseController {
 		allMap.put("msg", "success");
 		allMap.put("orderData", pd);
 		allMap.put("userData", pds);
+		return AppUtil.returnObject(new PageData(), allMap);
+	}
+	
+	/**
+	 * 查询订单信息并且修改订单状态
+	 * @param orderNo:订单号
+	 * @return 该订单的所有信息
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/findOrderByOrderNo",method=RequestMethod.POST)
+	@ResponseBody
+	public Object findOrderByOrderNo(@RequestBody String param) throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject json = JSONObject.fromObject(param);
+		String orderno = json.getString("orderNo").toString();
+		Order order = this.orderService.findByOrderNoString(orderno);
+		pd.put("STATUS", "已付款");
+		pd.put("ORDER_ID", order.getORDER_ID());
+		this.orderService.updateOrderStatus(pd);
+		List<PageData> pds = new ArrayList<PageData>();
+		pds=this.medicalorderService.listOrderByOrderId(pd);
+		for (PageData p : pds) {
+			p.put("STATUS", "已付款");
+			this.medicalorderService.auditing(p);
+		}
+		allMap.put("msg", "success");
+		allMap.put("orderData", order);
 		return AppUtil.returnObject(new PageData(), allMap);
 	}
 	
