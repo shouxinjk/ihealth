@@ -15,9 +15,8 @@
 		ORDEREXECUTIONTIME,	
 		ORDERTOTALAMOUNT,	
 		STATUS,	
-		CREATEBY,	
-		CREATEON,	
-		ORDER_ID
+		ORDER_ID,
+		APP_USERID
 	</sql>
 	
 	<!-- 字段值 -->
@@ -44,11 +43,13 @@
 		(
 		ORDER_ID,
 		ORDERNO,	
-		ORDERGENERATIONTIME
+		ORDERGENERATIONTIME,
+		APP_USERID
 		) values (
 		#{ORDER_ID},
 		#{ORDERNO},	
-		#{ORDERGENERATIONTIME}
+		#{ORDERGENERATIONTIME},
+		#{APP_USERID}
 		)
 	</insert>
 	
@@ -87,6 +88,20 @@
 		update 
 		<include refid="tableName"></include> 
 		set STATUS = #{STATUS} where ORDER_ID = #{ORDER_ID}
+	</update>
+	
+	<!-- 修改订单预约时间 -->
+	<update id="editTime" parameterType="pd">
+		update 
+		<include refid="tableName"></include> 
+		set ORDERBOOKINGTIME = #{ORDERBOOKINGTIME} where ORDER_ID = #{ORDER_ID}
+	</update>
+	
+	<!-- 修改体检中心订单预约时间 -->
+	<update id="editTime" parameterType="pd">
+		update 
+		<include refid="tableName"></include> 
+		set MEDICALORDERBOOKINGTIME = #{MEDICALORDERBOOKINGTIME} where MEDICALORDER_ID = #{MEDICALORDER_ID}
 	</update>
 	
 	<!-- 通过ID获取数据 -->
@@ -200,6 +215,24 @@
 		from 
 		<include refid="tableName"></include>
 	</select>
+	
+		<!-- 根据userid 查询体检定单 -->
+	<select id="listAllByUserID" parameterType="pd" resultType="pd">
+		select
+		o.ORDERNO as ORDERNO,	
+		o.ORDERGENERATIONTIME as ORDERGENERATIONTIME,	
+		o.ORDERBOOKINGTIME as ORDERBOOKINGTIME,	
+		o.ORDEREXECUTIONTIME as ORDEREXECUTIONTIME,	
+		o.ORDERTOTALAMOUNT as ORDERTOTALAMOUNT,	
+		o.STATUS as STATUS,	
+		o.ORDER_ID as ORDER_ID,
+		sau.NAME AS NAME,
+		sau.USER_ID = USER_ID
+		from 
+		<include refid="tableName"></include> o left join sys_app_user sau on o.APP_USERID = sau.USER_ID
+		where APP_USERID = #{APP_USERID}
+	</select>
+	
 	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">

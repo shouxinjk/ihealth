@@ -88,7 +88,6 @@ public class MedicalExamItemService implements MedicalExamItemManager{
 	 * 根据 登陆用户id获取体检中心id
 	 */
 	public PageData findAdminByUserId(String userId) throws Exception {
-		
 		return (PageData) dao.findForObject("MedicalExamItemMapper.findadminbyuserid", userId);
 	}
 	

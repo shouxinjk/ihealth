@@ -174,6 +174,25 @@ public class MedicalOrderService implements MedicalOrderManager{
 	public List<PageData> listOrderByOrderId(PageData pd)throws Exception{
 		return (List<PageData>) dao.findForList("MedicalOrderMapper.listOrderByOrderId", pd);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllOrderAndAbout(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("MedicalOrderMapper.listAllOrderAndAbout", pd);
+	}
+
+	public void editTime(PageData pd) throws Exception {
+		dao.update("MedicalOrderMapper.editTime", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllOrderAndUserid(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("MedicalOrderMapper.listAllOrderAndUserid", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllSchedule(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("MedicalOrderMapper.listAllSchedule", pd);
+	}
 	
 	
 }

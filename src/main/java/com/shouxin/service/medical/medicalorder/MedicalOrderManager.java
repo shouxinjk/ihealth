@@ -133,5 +133,13 @@ public interface MedicalOrderManager{
 	 */
 	public List<PageData> listOrderByOrderId(PageData pd)throws Exception;
 	
+	public List<PageData> listAllOrderAndAbout(PageData pd)throws Exception;
+	
+	public void editTime(PageData pd)throws Exception;
+	
+	public List<PageData> listAllOrderAndUserid(PageData pd)throws Exception;
+	
+	public List<PageData> listAllSchedule(PageData pd)throws Exception;
+	
 }
 

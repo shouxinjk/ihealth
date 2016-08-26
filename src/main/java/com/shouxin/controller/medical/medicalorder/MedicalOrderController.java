@@ -129,8 +129,11 @@ public class MedicalOrderController extends BaseController {
 		}
 		String userId = Jurisdiction.getUserId();
 		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
-		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
-		if(medicalcenterid == null){
+		String medicalcenterid = "";
+		if(adminPd!=null){
+			medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
+		}
+		if(medicalcenterid.equals("")){
 			pd.put("MEDICALCENTER_ID", "");
 		}else{
 			pd.put("MEDICALCENTER_ID", medicalcenterid);

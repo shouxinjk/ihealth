@@ -1,5 +1,6 @@
 package com.shouxin.controller.rest;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,11 +60,13 @@ public class OrderRestController extends BaseController {
 	 */
 	@RequestMapping(value="/addOrder",method=RequestMethod.POST)
 	@ResponseBody
-	public Object addOrder(@RequestBody String souid) throws Exception{
+	public Object addOrder(@RequestBody String params) throws Exception{
 		Map<Object, Object> allMap = new HashMap<Object, Object>();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		String ORDER_ID =  this.get32UUID();
+		JSONObject json = JSONObject.fromObject(params);
+		String user_id = json.getString("user_id").toString();
 		String orderDateStr = OrderNo.getDateStr();
 		String orderNo = this.orderService.getMaxOrderNo(orderDateStr);
 		String orderNoStr = OrderNo.getOrderNo(orderNo);
@@ -71,10 +74,10 @@ public class OrderRestController extends BaseController {
 		if(!orderNoStr.equals("max")){
 			pd.put("ORDERNO", orderNoStr);
 		}
+		pd.put("APP_USERID", user_id);
 		pd.put("ORDERGENERATIONTIME", new Date());
 		orderService.save(pd);
-		JSONObject json = JSONObject.fromObject(souid);
-		String solutionID = json.getString("solutionID").toString();
+//		String solutionID = json.getString("solutionID").toString();
 //		String[] solutionIDS = solutionID.split(",");
 //		List<OrderItem> itemIDs = new ArrayList<OrderItem>();
 //		for(int i=0;i<solutionIDS.length;i++){
@@ -167,6 +170,7 @@ public class OrderRestController extends BaseController {
 			o.setMEDICALCENTER_ID(item.get(i).getMEDICALCENTER_ID());
 			o.setMEDICALORDERBOOKINGTIME(order.getORDERBOOKINGTIME());
 			o.setMEDICALORDEREXECUTIONTIME(order.getORDEREXECUTIONTIME());
+			o.setORDER_ID(OrderId);
 			if(i<10){
 				o.setMEDICALORDERNO(order.getORDERNO()+"-0"+i);
 			}else{
@@ -224,9 +228,10 @@ public class OrderRestController extends BaseController {
 	}
 	
 	/**
-	 * 查询订单信息并且修改订单状态
+	 * 根据订单号查询订单信息并且修改订单状态
 	 * @param orderNo:订单号
 	 * @return 该订单的所有信息
+	 * 			[orderData:{"ORDERNO":"订单号","ORDERTOTALAMOUNT":"订单总金额","ORDER_ID":"订单编号"}]
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/findOrderByOrderNo",method=RequestMethod.POST)
@@ -248,8 +253,156 @@ public class OrderRestController extends BaseController {
 			p.put("STATUS", "已付款");
 			this.medicalorderService.auditing(p);
 		}
-		allMap.put("msg", "success");
+		if(orderpds!=null ){
+			if(orderpds.size()>0){
+				allMap.put("result","SUCCESS");
+			}else{
+				allMap.put("result", "NO");
+			}
+		}else{
+			allMap.put("result", "NO");
+		}
 		allMap.put("orderData", orderpds);
+		return AppUtil.returnObject(new PageData(), allMap);
+	}
+	
+	/**
+	 * 修改订单预约时间时查询出订单信息
+	 * @param order_id:订单编号
+	 * @return 该订单的所有信息
+	 * 			[orderData:{"UNAME":"体检人的名称","CNAME":"体检中心名称","ORDER_ID":"订单编号"
+	 * 			,"MNAME":"体检项目名称","MEDICALORDERBOOKINGTIME":"预约时间","MEDICALORDER_ID":"体检订单编号"
+	 * 			"ORDERNO":"订单编号","MEDICALORDERNO":"体检订单编号","MSTATUS":"体检订单状态"}]
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/aboutOrderPageData",method=RequestMethod.POST)
+	@ResponseBody
+	public Object aboutOrderTime(@RequestBody String param) throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject json = JSONObject.fromObject(param);
+		String ORDER_ID = json.getString("order_id").toString();
+		pd.put("ORDER_ID", ORDER_ID);
+//		List<PageData> pds = this.medicalorderService.listOrderByOrderId(pd);
+//		PageData order = this.orderService.findById(pd);
+		List<PageData> pds = this.medicalorderService.listAllOrderAndAbout(pd);
+		allMap.put("msg", "success");
+		allMap.put("orderData", pds);
+		return AppUtil.returnObject(new PageData(), allMap);
+	}
+	
+	/**
+	 * 修改订单预约时间 并且修改订单状态
+	 * @param order_id:体检订单编号,time:预约的时间
+	 * @return 
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/editAboutTime",method=RequestMethod.POST)
+	@ResponseBody
+	public Object editAboutTime(@RequestBody String param) throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject json = JSONObject.fromObject(param);
+		String ORDER_ID = json.getString("order_id").toString();
+		String time = json.getString("time").toString();
+		SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd");
+		Date date = sdf.parse(time);
+		pd.put("MEDICALORDER_ID", ORDER_ID);
+		pd.put("MEDICALORDERBOOKINGTIME", date);
+		this.medicalorderService.editTime(pd);
+		pd.put("STATUS", "已预约");
+		this.medicalorderService.auditing(pd);
+		PageData orderpd = this.medicalorderService.findById(pd);
+		String orderID = orderpd.getString("ORDER_ID");
+		PageData orderIDpd = new PageData();
+		pd.put("ORDER_ID", orderID);
+		List<PageData> medicalOrders = this.medicalorderService.listOrderByOrderId(orderIDpd);
+		boolean fash = true;
+		for (PageData p : medicalOrders) {
+			if(p.getString("STATUS").equals("已付款")){
+				fash = false;
+			}
+		}
+		if(fash){
+			orderIDpd.clear();
+			orderIDpd.put("ORDER_ID", orderID);
+			orderIDpd.put("STATUS", "已预约");
+			this.orderService.updateOrderStatus(orderIDpd);
+			orderIDpd.put("ORDERBOOKINGTIME", date);
+			this.orderService.editTime(orderIDpd);
+		}else{
+			orderIDpd.clear();
+			orderIDpd.put("ORDER_ID", orderID);
+			orderIDpd.put("STATUS", "正在预约");
+			this.orderService.updateOrderStatus(orderIDpd);
+		}
+		allMap.put("msg", "success");
+		return AppUtil.returnObject(new PageData(), allMap);
+	}
+	
+	/**
+	 * 查询我的订单
+	 * @param user_id:用户编号
+	 * @return 该订单的所有信息
+	 * 			[pds:{"ORDERNO":"订单号","ORDERGENERATIONTIME":"下单时间","ORDER_ID":"订单编号"
+	 * 			,"ORDERBOOKINGTIME":"预约时间","ORDEREXECUTIONTIME":"实际执行时间","ORDERTOTALAMOUNT":"订单总金额"
+	 * 			"STATUS":"订单状态","USER_ID":"体检人id","NAME":"体检人名称"}]
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/myOrder",method=RequestMethod.POST)
+	@ResponseBody
+	public Object myOrder(@RequestBody String param) throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject json = JSONObject.fromObject(param);
+		String user_id = json.getString("user_id").toString();
+		pd.put("USER_ID", user_id);
+		List<PageData > pds = this.orderService.listAllByUserID(pd);
+		if(pds!=null){
+			if(pds.size()>0){
+				allMap.put("result", "SUCCESS");
+				allMap.put("pds", pds);
+			}else{
+				allMap.put("result", "NO");
+			}
+		}else{
+			allMap.put("result", "NO");
+		}
+		return AppUtil.returnObject(new PageData(), allMap);
+	}
+	
+	/**
+	 * 查询我的体检日程
+	 * @param user_id:用户编号
+	 * @return 该订单的所有信息
+	 * 			[pds:{"UNAME":"体检人的名称","CNAME":"体检中心名称","ORDER_ID":"订单编号"
+	 * 			,"MNAME":"体检项目名称","MEDICALORDERBOOKINGTIME":"预约时间","MEDICALORDER_ID":"体检订单编号"
+	 * 			"ORDERNO":"订单编号","MEDICALORDERNO":"体检订单编号","MSTATUS":"体检订单状态","LOCATION":"体检中心地址"}]
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/mySchedule",method=RequestMethod.POST)
+	@ResponseBody
+	public Object mySchedule(@RequestBody String param) throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject json = JSONObject.fromObject(param);
+		String user_id = json.getString("user_id").toString();
+		pd.put("USER_ID", user_id);
+		List<PageData > pds = this.medicalorderService.listAllSchedule(pd);
+		if(pds!=null){
+			if(pds.size()>0){
+				allMap.put("result", "SUCCESS");
+				allMap.put("pds", pds);
+			}else{
+				allMap.put("result", "NO");
+			}
+		}else{
+			allMap.put("result", "NO");
+		}
 		return AppUtil.returnObject(new PageData(), allMap);
 	}
 	

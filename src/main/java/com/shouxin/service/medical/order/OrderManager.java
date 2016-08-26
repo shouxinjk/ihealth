@@ -132,6 +132,13 @@ public interface OrderManager{
 	 */
 	public PageData findByOrderNoString(String ORDERNO)throws Exception;
 	
+	/**
+	 * 修改订单预约时间
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void editTime(PageData pd)throws Exception;
+	
+	public List<PageData> listAllByUserID(PageData pd)throws Exception;
+	
 }
-
- 

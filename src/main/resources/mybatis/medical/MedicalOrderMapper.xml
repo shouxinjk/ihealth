@@ -37,10 +37,10 @@
 	<insert id="insertAll" parameterType="java.util.List">
 		insert into 
 		<include refid="tableName"></include> 
-		(MEDICALORDER_ID,MEDICALORDERNO,MEDICALORDERGENERATIONTIME,MEDICALORDERBOOKINGTIME,MEDICALORDEREXECUTIONTIME,MEDICALCENTER_ID,MEDICALTOTALAMOUNT)
+		(MEDICALORDER_ID,MEDICALORDERNO,MEDICALORDERGENERATIONTIME,MEDICALORDERBOOKINGTIME,MEDICALORDEREXECUTIONTIME,MEDICALCENTER_ID,MEDICALTOTALAMOUNT,ORDER_ID)
 		values 
 		<foreach item="item" index="index" collection="list" separator="," close=";">
-                 (#{item.MEDICALORDER_ID},#{item.MEDICALORDERNO},#{item.MEDICALORDERGENERATIONTIME},#{item.MEDICALORDERBOOKINGTIME},#{item.MEDICALORDEREXECUTIONTIME},#{item.MEDICALCENTER_ID},#{item.MEDICALTOTALAMOUNT})
+                 (#{item.MEDICALORDER_ID},#{item.MEDICALORDERNO},#{item.MEDICALORDERGENERATIONTIME},#{item.MEDICALORDERBOOKINGTIME},#{item.MEDICALORDEREXECUTIONTIME},#{item.MEDICALCENTER_ID},#{item.MEDICALTOTALAMOUNT},#{item.ORDER_ID})
 		</foreach>
 	</insert>
 	
@@ -101,6 +101,13 @@
 		set STATUS = #{STATUS} where MEDICALORDER_ID = #{MEDICALORDER_ID}
 	</update>
 	
+	<!-- 修改体检中心订单预约时间 -->
+	<update id="editTime" parameterType="pd">
+		update 
+		<include refid="tableName"></include> 
+		set MEDICALORDERBOOKINGTIME = #{MEDICALORDERBOOKINGTIME} where MEDICALORDER_ID = #{MEDICALORDER_ID}
+	</update>
+	
 	<!-- 修改体检中心订单状态 -->
 	<update id="auditingALL" parameterType="pd">
 		update 
@@ -142,6 +149,7 @@
 		m.STATUS as STATUS,	
 		m.CREATEBY as CREATEBY,	
 		m.CREATEON as CREATEON,
+		m.ORDER_ID as ORDER_ID,
 		sau.`NAME` as `NAME`,
 		sau.PHONE as PHONE
 		from tb_medicalorder m LEFT JOIN tb_order o ON m.ORDER_ID = o.ORDER_ID 
@@ -159,6 +167,36 @@
 		  LEFT JOIN TB_MEDICALEXAMITEM mei 
 		    ON moi.`MEDICALEXAMITEM_ID` = mei.`MEDICALEXAMITEM_ID` 
 		WHERE moi.`MEDICALORDER_ID` = #{MEDICALORDER_ID}
+	</select>
+	
+	<!-- 根据订单号查询出需要预约的信息 -->
+	<select id="listAllOrderAndAbout" parameterType="pd" resultType="pd">
+		select sau.`NAME` as UNAME,mc.`NAME` as CNAME,o.ORDER_ID as ORDER_ID,mei.`NAME` as MNAME,
+		mo.MEDICALORDERBOOKINGTIME as MEDICALORDERBOOKINGTIME,mo.MEDICALORDER_ID as MEDICALORDER_ID,o.ORDERNO as ORDERNO,
+		mo.MEDICALORDERNO as MEDICALORDERNO,mo.`STATUS` as MSTATUS from tb_medicalexamitem mei LEFT JOIN tb_medicalorderitem moi on mei.MEDICALEXAMITEM_ID=moi.MEDICALEXAMITEM_ID 
+		left join tb_medicalorder mo on moi.MEDICALORDER_ID=mo.MEDICALORDER_ID LEFT JOIN tb_medicalcenter mc 
+		on mc.MEDICALCENTER_ID = mei.MEDICALCENTER_ID LEFT JOIN tb_order o on o.ORDER_ID=mo.ORDER_ID LEFT JOIN
+		sys_app_user sau on sau.USER_ID = o.APP_USERID where o.ORDER_ID = #{ORDER_ID}
+	</select>
+	
+	<!-- 查询我的订单 -->
+	<select id="listAllOrderAndUserid" parameterType="pd" resultType="pd">
+		select sau.`NAME` as UNAME,mc.`NAME` as CNAME,o.ORDER_ID as ORDER_ID,mei.`NAME` as MNAME,
+		mo.MEDICALORDERBOOKINGTIME as MEDICALORDERBOOKINGTIME,mo.MEDICALORDER_ID as MEDICALORDER_ID,o.ORDERNO as ORDERNO,
+		mo.MEDICALORDERNO as MEDICALORDERNO,mo.`STATUS` as MSTATUS from tb_medicalexamitem mei LEFT JOIN tb_medicalorderitem moi on mei.MEDICALEXAMITEM_ID=moi.MEDICALEXAMITEM_ID 
+		left join tb_medicalorder mo on moi.MEDICALORDER_ID=mo.MEDICALORDER_ID LEFT JOIN tb_medicalcenter mc 
+		on mc.MEDICALCENTER_ID = mei.MEDICALCENTER_ID LEFT JOIN tb_order o on o.ORDER_ID=mo.ORDER_ID LEFT JOIN
+		sys_app_user sau on sau.USER_ID = o.APP_USERID where o.APP_USERID = #{APP_USERID}
+	</select>
+	
+	<!-- 查询我的订单 -->
+	<select id="listAllSchedule" parameterType="pd" resultType="pd">
+		select sau.`NAME` as UNAME,mc.`NAME` as CNAME,o.ORDER_ID as ORDER_ID,mei.`NAME` as MNAME,
+		mo.MEDICALORDERBOOKINGTIME as MEDICALORDERBOOKINGTIME,mo.MEDICALORDER_ID as MEDICALORDER_ID,o.ORDERNO as ORDERNO,
+		mo.MEDICALORDERNO as MEDICALORDERNO,mo.`STATUS` as MSTATUS,mc.LOCATION as LOCATION from tb_medicalexamitem mei LEFT JOIN tb_medicalorderitem moi on mei.MEDICALEXAMITEM_ID=moi.MEDICALEXAMITEM_ID 
+		left join tb_medicalorder mo on moi.MEDICALORDER_ID=mo.MEDICALORDER_ID LEFT JOIN tb_medicalcenter mc 
+		on mc.MEDICALCENTER_ID = mei.MEDICALCENTER_ID LEFT JOIN tb_order o on o.ORDER_ID=mo.ORDER_ID LEFT JOIN
+		sys_app_user sau on sau.USER_ID = o.APP_USERID where o.APP_USERID = #{USER_ID} and mo.STATUS = "已预约"
 	</select>
 	
 	<!-- 列表 -->
@@ -195,8 +233,15 @@
 	
 	<!-- 查询平台订单下的体检中心订单 -->
 	<select id="listOrderByOrderId" parameterType="pd" resultType="pd">
-		select mo.MEDICALORDER_ID as MEDICALORDER_ID 
-		from tb_medicalorder mo where mo.ORDER_ID = #{ORDER_ID} 
+		select 
+		m.MEDICALORDER_ID as MEDICALORDER_ID,	
+		m.MEDICALORDERNO as MEDICALORDERNO,	
+		m.MEDICALORDERGENERATIONTIME as MEDICALORDERGENERATIONTIME,	
+		m.MEDICALORDERBOOKINGTIME as MEDICALORDERBOOKINGTIME,	
+		m.MEDICALORDEREXECUTIONTIME as MEDICALORDEREXECUTIONTIME,	
+		m.MEDICALTOTALAMOUNT as MEDICALTOTALAMOUNT,	
+		m.STATUS as STATUS,	
+		from tb_medicalorder m where m.ORDER_ID = #{ORDER_ID} 
 	</select>
 	
 	<!-- 列表 -->

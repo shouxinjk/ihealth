@@ -16,7 +16,15 @@ public class MedicalOrder {
 	private Date  CREATEON;				// timestamp NULL DEFAULT NULL COMMENT '创建该记录时间',
 	private String MEDICALCENTER_ID;
 	private String NAME;//
+	private String ORDER_ID;
 	private List<MedicalExamItem> items;
+	
+	public String getORDER_ID() {
+		return ORDER_ID;
+	}
+	public void setORDER_ID(String oRDER_ID) {
+		ORDER_ID = oRDER_ID;
+	}
 	public List<MedicalExamItem> getItems() {
 		return items;
 	}

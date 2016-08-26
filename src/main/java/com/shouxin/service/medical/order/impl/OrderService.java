@@ -176,6 +176,15 @@ public class OrderService implements OrderManager{
 	public PageData findByOrderNoString(String ORDERNO)throws Exception{
 		return (PageData) dao.findForObject("OrderMapper.findByOrderNoString", ORDERNO);
 	}
+
+	public void editTime(PageData pd) throws Exception {
+		dao.update("OrderMapper.editTime", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllByUserID(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("OrderMapper.listAllByUserID", pd);
+	}
 	
 	
 }
