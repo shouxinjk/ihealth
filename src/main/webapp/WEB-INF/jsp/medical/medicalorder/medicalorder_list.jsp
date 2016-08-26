@@ -113,7 +113,7 @@
 														</a>
 														<c:if test="${var.STATUS eq '已提交' }">
 															<a class="btn btn-xs btn-success" title="确认" onclick="auditing('${var.MEDICALORDER_ID}','已确认');">
-																<i class="ace-icon fa fa-pencil-square-o bigger-120" title="确认"></i>
+																<i class="ace-icon fa fa-twitter-square bigger-120" title="确认"></i>
 															</a>
 														</c:if>
 													</c:if>

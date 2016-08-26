@@ -113,11 +113,11 @@
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 													</c:if>
-													<c:if test="${QX.edit == 1 && var.STATUS eq '新建'}">
+													<%-- <c:if test="${QX.edit == 1 && var.STATUS eq '新建'}">
 														<a class="btn btn-xs btn-success" title="提交" onclick="auditing1('${var.ORDER_ID}','已提交');">
 															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
 														</a>
-													</c:if>
+													</c:if> --%>
 													<c:if test="${QX.edit == 1 && var.STATUS eq '已提交' && var.ISCONFIRM}">
 														<a class="btn btn-xs btn-success" title="确认" onclick="auditing('${var.ORDER_ID}','等待付款','${var.ORDERNO }');">
 															<i class="ace-icon fa fa-twitter-square bigger-120" title="确认"></i>
