@@ -97,13 +97,6 @@
 		set ORDERBOOKINGTIME = #{ORDERBOOKINGTIME} where ORDER_ID = #{ORDER_ID}
 	</update>
 	
-	<!-- 修改体检中心订单预约时间 -->
-	<update id="editTime" parameterType="pd">
-		update 
-		<include refid="tableName"></include> 
-		set MEDICALORDERBOOKINGTIME = #{MEDICALORDERBOOKINGTIME} where MEDICALORDER_ID = #{MEDICALORDER_ID}
-	</update>
-	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
