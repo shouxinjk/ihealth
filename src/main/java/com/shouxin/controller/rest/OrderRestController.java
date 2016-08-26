@@ -170,6 +170,7 @@ public class OrderRestController extends BaseController {
 			o.setMEDICALCENTER_ID(item.get(i).getMEDICALCENTER_ID());
 			o.setMEDICALORDERBOOKINGTIME(order.getORDERBOOKINGTIME());
 			o.setMEDICALORDEREXECUTIONTIME(order.getORDEREXECUTIONTIME());
+			o.setSTATUS(order.getSTATUS());
 			o.setORDER_ID(OrderId);
 			if(i<10){
 				o.setMEDICALORDERNO(order.getORDERNO()+"-0"+i);
@@ -197,6 +198,8 @@ public class OrderRestController extends BaseController {
 		medicalorderService.saveAll(medicalOrder);
 		medicalorderService.saveItemAll(medicalOrderItem);
 		logBefore(logger, item.get(0).getMEDICALCENTER_ID()+"medicalcenter_id==");
+		pd.clear();
+		pd.put("ORDER_ID", OrderId);
 		pd.put("STATUS", "已提交");
 		orderService.updateOrderStatus(pd);
 	}
@@ -243,22 +246,21 @@ public class OrderRestController extends BaseController {
 		JSONObject json = JSONObject.fromObject(param);
 		String orderno = json.getString("orderNo").toString();
 		PageData orderpds = this.orderService.findByOrderNoString(orderno);
-		logBefore(logger, orderpds+"=========order====orderno==="+orderno);
-		pd.put("STATUS", "已付款");
-		pd.put("ORDER_ID", orderpds.getString("ORDER_ID"));
-		this.orderService.updateOrderStatus(pd);
-		List<PageData> pds = new ArrayList<PageData>();
-		pds=this.medicalorderService.listOrderByOrderId(pd);
-		for (PageData p : pds) {
-			p.put("STATUS", "已付款");
-			this.medicalorderService.auditing(p);
-		}
 		if(orderpds!=null ){
-			if(orderpds.size()>0){
-				allMap.put("result","SUCCESS");
-			}else{
-				allMap.put("result", "NO");
+			pd.put("STATUS", "已付款");
+			pd.put("ORDER_ID", orderpds.getString("ORDER_ID"));
+			this.orderService.updateOrderStatus(pd);
+			List<PageData> pds = new ArrayList<PageData>();
+			pd.clear();
+			pd.put("ORDER_ID", orderpds.getString("ORDER_ID"));
+			pds=this.medicalorderService.listOrderByOrderId(pd);
+			for (PageData p : pds) {
+				PageData p1 = new PageData();
+				p1.put("STATUS", "已付款");
+				p1.put("MEDICALORDER_ID", p.getString("MEDICALORDER_ID"));
+				this.medicalorderService.auditing(p1);
 			}
+			allMap.put("result", "SUCCESS");
 		}else{
 			allMap.put("result", "NO");
 		}
