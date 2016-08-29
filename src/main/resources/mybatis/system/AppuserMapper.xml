@@ -285,9 +285,15 @@
 	<!-- 新增关联用户 -->
 	<insert id="saveRelationUser" parameterType="pd" >
 		insert into <include refid="useranduser"></include> (
-			<include refid="userAttribute"></include>
+			useranduser_id,
+		user_id_one,
+		user_id_two,
+		connection
 		) values (
-			<include refid="userValue"></include>
+			#{useranduser_id},
+		#{user_id_one},
+		#{user_id_two},
+		#{connection}
 		)
 	</insert>
 	
