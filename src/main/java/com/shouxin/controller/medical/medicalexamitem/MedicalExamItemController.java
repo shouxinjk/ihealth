@@ -64,7 +64,10 @@ public class MedicalExamItemController extends BaseController {
 		pd = this.getPageData();
 		String userId = Jurisdiction.getUserId();
 		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
-		String medicalcenterId = adminPd.getString("MEDICALCENTER_ID");
+		String medicalcenterId = "";
+		if(adminPd!=null){
+			medicalcenterId = adminPd.getString("MEDICALCENTER_ID");
+		}
 		pd.put("MEDICALCENTER_ID", medicalcenterId);
 		pd.put("MEDICALEXAMITEM_ID", this.get32UUID());	//主键
 		pd.put("CREATEON", DateUtil.getTime());	//创建该记录时间

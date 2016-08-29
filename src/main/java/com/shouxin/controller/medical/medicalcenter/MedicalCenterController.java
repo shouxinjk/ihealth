@@ -61,7 +61,10 @@ public class MedicalCenterController extends BaseController {
 		String userId = Jurisdiction.getUserId();
 		medicalcenterService.save(pd);
 		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
-		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
+		String medicalcenterid = "";
+		if(adminPd!=null){
+			medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
+		}
 		Page page = new Page();
 		PageData pd2 = new PageData();
 		pd2.put("MEDICALCENTER_ID", medicalcenterid);
@@ -227,7 +230,10 @@ public class MedicalCenterController extends BaseController {
 		pd = this.getPageData();
 		String userId = Jurisdiction.getUserId();
 		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
-		String medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
+		String medicalcenterid = "";
+		if(adminPd!=null){
+			medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
+		}
 		List<MedicalCenter> centers = new ArrayList<MedicalCenter>();
 		List<PageData> pds = new ArrayList<PageData>();
 		if(medicalcenterid!=null){
