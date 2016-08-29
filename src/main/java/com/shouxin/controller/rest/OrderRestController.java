@@ -170,7 +170,6 @@ public class OrderRestController extends BaseController {
 			o.setMEDICALCENTER_ID(item.get(i).getMEDICALCENTER_ID());
 			o.setMEDICALORDERBOOKINGTIME(order.getORDERBOOKINGTIME());
 			o.setMEDICALORDEREXECUTIONTIME(order.getORDEREXECUTIONTIME());
-			o.setSTATUS(order.getSTATUS());
 			o.setORDER_ID(OrderId);
 			if(i<10){
 				o.setMEDICALORDERNO(order.getORDERNO()+"-0"+i);
