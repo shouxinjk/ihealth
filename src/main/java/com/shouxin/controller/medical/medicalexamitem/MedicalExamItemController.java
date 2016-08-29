@@ -151,7 +151,7 @@ public class MedicalExamItemController extends BaseController {
 			medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		}
 		logBefore(logger, medicalcenterid+"=====medicalcenterid");
-		if(medicalcenterid == null){
+		if(medicalcenterid.equals("")){
 			pd.put("MEDICALCENTER_ID", "");
 		}else{
 			pd.put("MEDICALCENTER_ID", medicalcenterid);
@@ -187,7 +187,7 @@ public class MedicalExamItemController extends BaseController {
 			medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		}
 		logBefore(logger, medicalcenterid+"=====medicalcenterid");
-		if(medicalcenterid == null){
+		if(medicalcenterid.equals("")){
 			pd.put("MEDICALCENTER_ID", "");
 		}else{
 			pd.put("MEDICALCENTER_ID", medicalcenterid);

@@ -70,7 +70,7 @@ public class MedicalCenterController extends BaseController {
 		pd2.put("MEDICALCENTER_ID", medicalcenterid);
 		page.setPd(pd2);
 		List<PageData> varList = this.medicalcenterService.list(page);
-		if(medicalcenterid == null){
+		if(medicalcenterid .equals("")){
 		if(parentid.equals("0")){
 				pd.clear();
 				pd.put("MEDICALCENERADMIN_ID", this.get32UUID());
@@ -164,7 +164,7 @@ public class MedicalCenterController extends BaseController {
 			medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		}
 		logBefore(logger, medicalcenterid+"=====medicalcenterid");
-		if(medicalcenterid == null){
+		if(medicalcenterid.equals("")){
 			pd.put("MEDICALCENTER_ID", "");
 		}else{
 			pd.put("MEDICALCENTER_ID", medicalcenterid);
@@ -203,7 +203,7 @@ public class MedicalCenterController extends BaseController {
 			medicalcenterid = adminPd.getString("MEDICALCENTER_ID");
 		}
 		logBefore(logger, medicalcenterid+"=====medicalcenterid");
-		if(medicalcenterid == null){
+		if(medicalcenterid.equals("")){
 			pd.put("MEDICALCENTER_ID", "");
 		}else{
 			pd.put("MEDICALCENTER_ID", medicalcenterid);
@@ -236,7 +236,7 @@ public class MedicalCenterController extends BaseController {
 		}
 		List<MedicalCenter> centers = new ArrayList<MedicalCenter>();
 		List<PageData> pds = new ArrayList<PageData>();
-		if(medicalcenterid!=null){
+		if(!medicalcenterid.equals("")){
 			centers = medicalcenterService.listParentIDPage(medicalcenterid);
 		}else{
 			medicalcenterid ="0";
