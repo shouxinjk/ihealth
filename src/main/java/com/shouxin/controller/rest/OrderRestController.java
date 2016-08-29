@@ -66,7 +66,7 @@ public class OrderRestController extends BaseController {
 		pd = this.getPageData();
 		String ORDER_ID =  this.get32UUID();
 		JSONObject json = JSONObject.fromObject(params);
-		String user_id = json.getString("user_id").toString();
+		String user_id = json.getString("userId").toString();
 		String orderDateStr = OrderNo.getDateStr();
 		String orderNo = this.orderService.getMaxOrderNo(orderDateStr);
 		String orderNoStr = OrderNo.getOrderNo(orderNo);
