@@ -1382,6 +1382,7 @@ public class RestfullController extends BaseController {
 						this.appuserService.editUserIsModify(userId);
 						msg = "success";
 					} catch (Exception e) {
+						e.printStackTrace();
 						logger.debug("程序出错！");
 						msg = "no";
 					}
