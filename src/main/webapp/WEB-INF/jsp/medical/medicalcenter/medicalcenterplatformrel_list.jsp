@@ -63,6 +63,7 @@
 									<th class="center">联系电话</th>
 									<th class="center">状态</th>
 									<th class="center">LOGO</th>
+									<th class="center">营业执照</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -89,6 +90,8 @@
 													<img alt="" src="<%=basePath %>uploadFiles/uploadImgs/${var.LOGO }" id="image" style="width:65px;height:65px;">
 												</c:if>
 											</td>
+											<td class='center'>${var.ACCESSORY}</td>
+											
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
@@ -99,14 +102,27 @@
 															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 														</a>
 													</c:if>
-													<c:if test="${QX.edit == 1 && var.STATUS eq '新建' }">
-														<a class="btn btn-xs btn-success" title="提交" onclick="auditing('${var.MEDICALCENTER_ID}','已提交');">
-															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '发布' }">
+														<a class="btn btn-xs btn-success" title="审核" onclick="auditing('${var.MEDICALCENTER_ID}','平台审核');">
+															<i class="ace-icon fa fa-check-circle-o bigger-120" title="审核"></i>
+														</a>
+														<a class="btn btn-xs btn-success" title="审核失败" onclick="auditing('${var.MEDICALCENTER_ID}','平台审核失败');">
+															<i class="ace-icon fa fa-times-circle-o bigger-120" title="审核失败"></i>
 														</a>
 													</c:if>
-													<c:if test="${QX.edit == 1 && var.STATUS eq '审核失败' }">
-														<a class="btn btn-xs btn-success" title="提交" onclick="auditing('${var.MEDICALCENTER_ID}','已提交');">
-															<i class="ace-icon fa fa-twitter-square bigger-120" title="提交"></i>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '平台审核' }">
+														<a class="btn btn-xs btn-success" title="发布" onclick="auditing('${var.MEDICALCENTER_ID}','平台发布');">
+															<i class="ace-icon fa fa-folder bigger-120" title="发布"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '平台发布' }">
+														<a class="btn btn-xs btn-success" title="失效" onclick="auditing('${var.MEDICALCENTER_ID}','平台失效');">
+															<i class="ace-icon fa fa-retweet bigger-120" title="失效"></i>
+														</a>
+													</c:if>
+													<c:if test="${QX.edit == 1 && var.STATUS eq '平台失效' }">
+														<a class="btn btn-xs btn-success" title="重新发布" onclick="auditing('${var.MEDICALCENTER_ID}','平台发布');">
+															<i class="ace-icon fa fa-folder-open bigger-120" title="重新发布"></i>
 														</a>
 													</c:if>
 													<c:if test="${QX.del == 1 }">
@@ -165,14 +181,6 @@
 						<div class="page-header position-relative">
 						<table style="width:100%;">
 							<tr>
-								<td style="vertical-align:top;">
-									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-sm btn-success" onclick="add();">新增</a>
-									</c:if>
-									<c:if test="${QX.del == 1 }">
-									<a class="btn btn-sm btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
-									</c:if>
-								</td>
 								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 							</tr>
 						</table>
@@ -188,7 +196,6 @@
 			</div>
 		</div>
 		<!-- /.main-content -->
-		
 
 		<!-- 返回顶部 -->
 		<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
@@ -295,7 +302,7 @@
 					top.jzts();
 					var url = "<%=basePath%>medicalcenter/delete.do?MEDICALCENTER_ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
-						location.href="<%=basePath%>medicalcenter/list.do?dnowPage=${page.currentPage}";
+						nextPage(${page.currentPage});
 					});
 				}
 			});
@@ -308,7 +315,7 @@
 					top.jzts();
 					var url = "<%=basePath%>medicalcenter/auditing.do?MEDICALCENTER_ID="+Id+"&STATUS="+status+"&tm="+new Date().getTime();
 					$.get(url,function(data){
-						nextPage(${page.currentPage});
+						location.href="<%=basePath%>medicalcenter/listPlatformRel.do?dnowPage=${page.currentPage}";
 					});
 				}
 			});
@@ -326,7 +333,7 @@
 			 diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 location.href="<%=basePath%>medicalcenter/list.do?dnowPage=${page.currentPage}";
+					 nextPage(${page.currentPage});
 				}
 				diag.close();
 			 };

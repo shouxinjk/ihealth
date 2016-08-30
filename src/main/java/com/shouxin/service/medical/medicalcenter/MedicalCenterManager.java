@@ -89,5 +89,8 @@ public interface MedicalCenterManager{
 	
 	public List<PageData> listrelDigui(Page page,List<PageData> pds)throws Exception;
 	
+	public List<PageData> dataPingTairellistPage(Page page)throws Exception;
+	
+	
 }
 

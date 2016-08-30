@@ -150,8 +150,12 @@ public class MedicalCenterService implements MedicalCenterManager{
 	}
 
 	public void editCenterAdmin(PageData pd) throws Exception {
-		// TODO Auto-generated method stub
 		dao.update("MedicalCenterMapper.editCenterAdmin", pd);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> dataPingTairellistPage(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("MedicalCenterMapper.dataPingTairellistPage", page);
 	}
 	
 }

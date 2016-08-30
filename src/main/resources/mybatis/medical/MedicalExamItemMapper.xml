@@ -165,7 +165,7 @@
 		</if>
 	</select>
 	
-		<!-- 列表 -->
+		<!-- 体检项目审核发布列表 -->
 	<select id="datarellistPage" parameterType="page" resultType="pd">
 		select
 		<include refid="Field1"></include>
@@ -175,7 +175,30 @@
 		<if test="pd.MEDICALCENTER_ID!= null and pd.MEDICALCENTER_ID != ''">
 			and item.MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID}	
 		</if>
-		and item.STATUS !='新建' and item.STATUS !='审核失败'
+		and (item.STATUS ='提交' or item.STATUS ='审核' or item.STATUS ='平台审核失效')
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				<!--	根据需求自己加检索条件	 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+	</select>
+	
+			<!-- 体检项目平台审核发布列表 -->
+	<select id="dataplatformrellistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field1"></include>
+		from 
+		 TB_MEDICALEXAMITEM item 
+		where 1=1 
+		<if test="pd.MEDICALCENTER_ID!= null and pd.MEDICALCENTER_ID != ''">
+			and item.MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID}	
+		</if>
+		and (item.STATUS = '发布' or item.STATUS ='平台审核' 
+		or item.STATUS ='平台发布' or item.STATUS ='平台失效')
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(

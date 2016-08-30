@@ -102,7 +102,7 @@
 															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 														</a>
 													</c:if>
-													<c:if test="${QX.edit == 1 && var.STATUS eq '提交' }">
+													<c:if test="${QX.edit == 1 && var.STATUS eq '已提交' }">
 														<a class="btn btn-xs btn-success" title="审核" onclick="auditing('${var.MEDICALCENTER_ID}','审核');">
 															<i class="ace-icon fa fa-check-circle-o bigger-120" title="审核"></i>
 														</a>
@@ -115,12 +115,7 @@
 															<i class="ace-icon fa fa-folder bigger-120" title="发布"></i>
 														</a>
 													</c:if>
-													<c:if test="${QX.edit == 1 && var.STATUS eq '发布' }">
-														<a class="btn btn-xs btn-success" title="失效" onclick="auditing('${var.MEDICALCENTER_ID}','失效');">
-															<i class="ace-icon fa fa-retweet bigger-120" title="失效"></i>
-														</a>
-													</c:if>
-													<c:if test="${QX.edit == 1 && var.STATUS eq '失效' }">
+													<c:if test="${QX.edit == 1 && var.STATUS eq '平台审核失败' }">
 														<a class="btn btn-xs btn-success" title="重新发布" onclick="auditing('${var.MEDICALCENTER_ID}','发布');">
 															<i class="ace-icon fa fa-folder-open bigger-120" title="重新发布"></i>
 														</a>

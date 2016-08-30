@@ -83,5 +83,7 @@ public interface MedicalExamItemManager{
 	 */
 	public List<PageData> listMedicalItemByCheckuoItemId(String CHECKEDUPITEM_ID)throws Exception;
 	
+	public List<PageData> dataplatformrellistPage(Page page)throws Exception;
+	
 }
 

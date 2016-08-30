@@ -196,7 +196,7 @@
 		</if>
 	</select>
 	
-	<!-- 列表 --> 
+	<!-- 体检中心审核发布列表 --> 
 	<select id="datarellistPage" parameterType="page" resultType="pd">
 		select
 		<include refid="Field"></include>
@@ -206,7 +206,7 @@
 		<if test="pd.MEDICALCENTER_ID!= null and pd.MEDICALCENTER_ID != ''"><!-- 关键词检索 -->
 			 and (MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} OR PARENTID = #{pd.MEDICALCENTER_ID})
 		</if>
-		and STATUS !='新建' and STATUS!='审核失败'
+		and (STATUS ='已提交' or STATUS ='审核' or STATUS = '平台审核失败')
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -217,6 +217,26 @@
 				)
 		</if>
 	</select>
+	
+	<!-- 平台审核发布列表 --> 
+	<select id="dataPingTairellistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		and (STATUS ='发布' or STATUS ='平台审核' or STATUS ='平台发布' or STATUS ='平台失效')
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					<!--	根据需求自己加检索条件 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+	</select>
+	
 	
 	<!-- 列表 --> 
 	<select id="datarelParentIDlistPage" parameterType="page" resultType="pd">

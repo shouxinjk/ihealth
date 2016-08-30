@@ -118,6 +118,11 @@ public class MedicalExamItemService implements MedicalExamItemManager{
 	public List<PageData> listMedicalItemByCheckuoItemId(String CHECKEDUPITEM_ID) throws Exception {
 		return (List<PageData>) dao.findForList("MedicalExamItemMapper.listMedicalItemByCheckuoItemId", CHECKEDUPITEM_ID);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> dataplatformrellistPage(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("MedicalExamItemMapper.dataplatformrellistPage", page);
+	}
 	
 }
 
