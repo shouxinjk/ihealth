@@ -344,6 +344,34 @@ public class OrderRestController extends BaseController {
 	}
 	
 	/**
+	 * 修改订单预约时间 并且修改订单状态
+	 * @param order_id:体检订单编号,time:预约的时间
+	 * @return 
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/editAboutTimeQuxiao",method=RequestMethod.POST)
+	@ResponseBody
+	public Object editAboutTimeQuxiao(@RequestBody String param) throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject json = JSONObject.fromObject(param);
+		String ORDER_ID = json.getString("order_id").toString();
+		pd.put("MEDICALORDER_ID", ORDER_ID);
+		pd.put("STATUS", "取消预约");
+		this.medicalorderService.auditing(pd);
+		PageData orderpd = this.medicalorderService.findById(pd);
+		String orderID = orderpd.getString("ORDER_ID");
+		PageData orderIDpd = new PageData();
+		orderIDpd.clear();
+		orderIDpd.put("ORDER_ID", orderID);
+		orderIDpd.put("STATUS", "正在预约");
+		this.orderService.updateOrderStatus(orderIDpd);
+		allMap.put("msg", "success");
+		return AppUtil.returnObject(new PageData(), allMap);
+	}
+	
+	/**
 	 * 查询我的订单
 	 * @param user_id:用户编号
 	 * @return 该订单的所有信息
