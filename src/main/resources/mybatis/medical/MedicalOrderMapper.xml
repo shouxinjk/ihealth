@@ -176,7 +176,7 @@
 		mo.MEDICALORDERNO as MEDICALORDERNO,mo.`STATUS` as MSTATUS from tb_medicalexamitem mei LEFT JOIN tb_medicalorderitem moi on mei.MEDICALEXAMITEM_ID=moi.MEDICALEXAMITEM_ID 
 		left join tb_medicalorder mo on moi.MEDICALORDER_ID=mo.MEDICALORDER_ID LEFT JOIN tb_medicalcenter mc 
 		on mc.MEDICALCENTER_ID = mei.MEDICALCENTER_ID LEFT JOIN tb_order o on o.ORDER_ID=mo.ORDER_ID LEFT JOIN
-		sys_app_user sau on sau.USER_ID = o.APP_USERID where o.ORDER_ID = #{ORDER_ID}
+		sys_app_user sau on sau.USER_ID = o.APP_USERID where o.ORDER_ID = #{ORDER_ID} GROUP BY mei.MEDICALEXAMITEM_ID
 	</select>
 	
 	<!-- 查询我的订单 -->
