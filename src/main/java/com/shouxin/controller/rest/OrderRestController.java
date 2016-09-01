@@ -388,7 +388,7 @@ public class OrderRestController extends BaseController {
 		pd = this.getPageData();
 		JSONObject json = JSONObject.fromObject(param);
 		String user_id = json.getString("user_id").toString();
-		pd.put("USER_ID", user_id);
+		pd.put("APP_USERID", user_id);
 		List<PageData > pds = this.orderService.listAllByUserID(pd);
 		if(pds!=null){
 			if(pds.size()>0){
