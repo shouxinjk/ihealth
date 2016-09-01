@@ -141,4 +141,6 @@ public interface OrderManager{
 	
 	public List<PageData> listAllByUserID(PageData pd)throws Exception;
 	
+	public List<PageData> listAllOrderByUserIDAndUserID(PageData pd)throws Exception;
+	
 }

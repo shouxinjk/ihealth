@@ -185,6 +185,11 @@ public class OrderService implements OrderManager{
 	public List<PageData> listAllByUserID(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("OrderMapper.listAllByUserID", pd);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllOrderByUserIDAndUserID(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("OrderMapper.listAllOrderByUserIDAndUserID", pd);
+	}
 	
 	
 }

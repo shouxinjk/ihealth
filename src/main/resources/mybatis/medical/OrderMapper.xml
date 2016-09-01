@@ -226,6 +226,26 @@
 		where APP_USERID = #{APP_USERID}
 	</select>
 	
+	<!-- 根据用户id查询出该用户和关联用户的订单 -->
+	<select id="listAllOrderByUserIDAndUserID" parameterType="pd" resultType="pd">
+		select
+		o.ORDERNO as ORDERNO,	
+		o.ORDERGENERATIONTIME as ORDERGENERATIONTIME,	
+		o.ORDERBOOKINGTIME as ORDERBOOKINGTIME,	
+		o.ORDEREXECUTIONTIME as ORDEREXECUTIONTIME,	
+		o.ORDERTOTALAMOUNT as ORDERTOTALAMOUNT,	
+		o.STATUS as STATUS,	
+		o.ORDER_ID as ORDER_ID,
+		sau.NAME AS NAME,
+		sau.USER_ID as USER_ID,
+		sau.AVATAR as AVATAR
+		from 
+		tb_order o left join sys_app_user sau on o.APP_USERID = sau.USER_ID
+		where o.APP_USERID = #{APP_USERID} or o.APP_USERID in (
+		select sauau.user_id_two from sys_app_user_and_user sauau where 
+		sauau.user_id_one = #{APP_USERID})
+	</select>
+	
 	
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
