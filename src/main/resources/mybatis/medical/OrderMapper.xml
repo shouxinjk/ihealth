@@ -266,10 +266,11 @@
 	
 	<!-- 根据用户id查询出该用户和关联用户的订单 -->
 	<select id="findOrderExamitem" parameterType="java.lang.String" resultType="pd">
-		select mei.`NAME` as `NAME`,mei.SELLINGPRICE as SELLINGPRICE from 
-		tb_order o left join tb_orderitem oi on o.ORDER_ID = oi.ORDER_ID 
-		left join tb_medicalexamitem mei on mei.MEDICALEXAMITEM_ID = oi.MEDICALEXAMITEM_ID 
-		where o.ORDER_ID = #{ORDER_ID}
+		select mei.`NAME` as `MNAME`,mei.SELLINGPRICE as SELLINGPRICE ,mc.`NAME` as CNAME 
+		from tb_medicalexamitem mei LEFT JOIN tb_medicalorderitem moi on mei.MEDICALEXAMITEM_ID 
+		= moi.MEDICALEXAMITEM_ID LEFT JOIN tb_medicalorder mo on mo.MEDICALORDER_ID = 
+		moi.MEDICALORDER_ID LEFT JOIN tb_medicalcenter mc on mo.MEDICALCENTER_ID = 
+		mc.MEDICALCENTER_ID where mo.ORDER_ID = #{ORDER_ID}
 	</select>
 	
 	<!-- 批量删除 -->
