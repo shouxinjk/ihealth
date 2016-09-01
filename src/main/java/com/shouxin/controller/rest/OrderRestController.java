@@ -436,6 +436,37 @@ public class OrderRestController extends BaseController {
 	}
 	
 	/**
+	 * 查询我的订单
+	 * @param user_id:用户编号
+	 * @return 该订单的所有信息
+	 * 			[itemData:{"ORDERNO":"订单号","ORDERGENERATIONTIME":"下单时间","ORDER_ID":"订单编号"
+	 * 			,"ORDERBOOKINGTIME":"预约时间","ORDEREXECUTIONTIME":"实际执行时间","ORDERTOTALAMOUNT":"订单总金额"
+	 * 			"STATUS":"订单状态","USER_ID":"体检人id","NAME":"体检人名称"}
+	 * 			orderData:{"NAME":"项目名称","SELLINGPRICE":"项目价格"}
+	 * 			]
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/orderSummary",method=RequestMethod.POST)
+	@ResponseBody
+	public Object orderSummary(@RequestBody String param) throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject json = JSONObject.fromObject(param);
+		String order_id = json.getString("order_id").toString();
+		List<PageData > pds = this.orderService.findOrderExamitem(order_id);
+		PageData orderPD = this.orderService.findOrder(order_id);
+		if(pds!=null){
+				allMap.put("result", "SUCCESS");
+				allMap.put("itemData", pds);
+				allMap.put("orderData", orderPD);
+		}else{
+			allMap.put("result", "NO");
+		}
+		return AppUtil.returnObject(new PageData(), allMap);
+	}
+	
+	/**
 	 * 查询我的体检日程
 	 * @param user_id:用户编号
 	 * @return 该订单的所有信息

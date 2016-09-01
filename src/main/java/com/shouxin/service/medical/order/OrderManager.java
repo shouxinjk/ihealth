@@ -143,4 +143,7 @@ public interface OrderManager{
 	
 	public List<PageData> listAllOrderByUserIDAndUserID(PageData pd)throws Exception;
 	
+	public PageData findOrder(String ORDER_ID)throws Exception;
+	
+	public List<PageData> findOrderExamitem(String ORDER_ID)throws Exception;
 }

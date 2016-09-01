@@ -190,6 +190,15 @@ public class OrderService implements OrderManager{
 	public List<PageData> listAllOrderByUserIDAndUserID(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("OrderMapper.listAllOrderByUserIDAndUserID", pd);
 	}
+
+	public PageData findOrder(String ORDER_ID) throws Exception {
+		return (PageData) dao.findForObject("OrderMapper.findOrder", ORDER_ID);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> findOrderExamitem(String ORDER_ID) throws Exception {
+		return (List<PageData>) dao.findForList("OrderMapper.findOrderExamitem", ORDER_ID);
+	}
 	
 	
 }
