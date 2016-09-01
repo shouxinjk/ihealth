@@ -219,7 +219,8 @@
 		o.STATUS as STATUS,	
 		o.ORDER_ID as ORDER_ID,
 		sau.NAME AS NAME,
-		sau.USER_ID = USER_ID
+		sau.USER_ID as USER_ID,
+		sau.AVATAR as AVATAR
 		from 
 		<include refid="tableName"></include> o left join sys_app_user sau on o.APP_USERID = sau.USER_ID
 		where APP_USERID = #{APP_USERID}
