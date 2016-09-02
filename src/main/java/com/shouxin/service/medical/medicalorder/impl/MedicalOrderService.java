@@ -205,7 +205,7 @@ public class MedicalOrderService implements MedicalOrderManager{
 	}
 
 	public PageData findMedicalOrder(String MEDICALORDER_ID) throws Exception {
-		return (PageData) dao.findForList("MedicalOrderMapper.findMedicalOrder", MEDICALORDER_ID);
+		return (PageData) dao.findForObject("MedicalOrderMapper.findMedicalOrder", MEDICALORDER_ID);
 	}
 	
 	
