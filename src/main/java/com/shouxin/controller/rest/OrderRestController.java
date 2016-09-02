@@ -614,13 +614,19 @@ public class OrderRestController extends BaseController {
 				pd.put("STATUS", "已选中");
 				logger.debug("根据用户ID 查询体检项目信息");
 				List<PageData> pageDate = this.checkupitemService.findCIByIdOrSubGroup(pd);
+				String prompt = "";
 				if (pageDate != null && pageDate.size() > 0) {
 					for (PageData p : pageDate) {
 						List<PageData> pds = new ArrayList<PageData>();
 						pds = this.medicalexamitemService.listMedicalItemByCheckuoItemId(p.getString("CHECKUPITEM_ID"));
+						if(pds.size()==0){
+							prompt+="\n";
+							prompt+=p.getString("NAME");
+						}
 						p.put("pds", pds);
 					}
 					msg = "success";
+					map.put("prompt", prompt);
 					map.put("data", pageDate);
 				} else {
 					msg = "no";
