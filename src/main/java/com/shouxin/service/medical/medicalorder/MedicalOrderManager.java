@@ -143,5 +143,8 @@ public interface MedicalOrderManager{
 	
 	public List<PageData> listAllScheduleAndUserID(PageData pd)throws Exception;
 	
+	public List<PageData> findMedicalOrderExamitem(String MEDICALORDER_ID)throws Exception;
+	
+	public PageData findMedicalOrder(String MEDICALORDER_ID)throws Exception;
 }
 
