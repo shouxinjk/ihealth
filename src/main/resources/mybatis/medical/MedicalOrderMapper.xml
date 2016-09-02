@@ -191,12 +191,26 @@
 	
 	<!-- 查询我的订单 -->
 	<select id="listAllSchedule" parameterType="pd" resultType="pd">
-		select sau.`NAME` as UNAME,mc.`NAME` as CNAME,o.ORDER_ID as ORDER_ID,mei.`NAME` as MNAME,
+		select sau.`NAME` as UNAME,mc.`NAME` as CNAME,o.ORDER_ID as ORDER_ID,o.ORDERTOTALAMOUNT as ORDERTOTALAMOUNT,mei.`NAME` as MNAME,
 		mo.MEDICALORDERBOOKINGTIME as MEDICALORDERBOOKINGTIME,mo.MEDICALORDER_ID as MEDICALORDER_ID,o.ORDERNO as ORDERNO,
-		mo.MEDICALORDERNO as MEDICALORDERNO,mo.`STATUS` as MSTATUS,mc.LOCATION as LOCATION from tb_medicalexamitem mei LEFT JOIN tb_medicalorderitem moi on mei.MEDICALEXAMITEM_ID=moi.MEDICALEXAMITEM_ID 
+		mo.MEDICALORDERNO as MEDICALORDERNO,mo.`STATUS` as MSTATUS,mc.LOCATION as LOCATION from tb_medicalexamitem
+		 mei LEFT JOIN tb_medicalorderitem moi on mei.MEDICALEXAMITEM_ID=moi.MEDICALEXAMITEM_ID 
 		left join tb_medicalorder mo on moi.MEDICALORDER_ID=mo.MEDICALORDER_ID LEFT JOIN tb_medicalcenter mc 
 		on mc.MEDICALCENTER_ID = mei.MEDICALCENTER_ID LEFT JOIN tb_order o on o.ORDER_ID=mo.ORDER_ID LEFT JOIN
 		sys_app_user sau on sau.USER_ID = o.APP_USERID where o.APP_USERID = #{USER_ID} and mo.STATUS = "已预约"
+	</select>
+	
+	<!-- 查询我的订单 -->
+	<select id="listAllScheduleAndUserID" parameterType="pd" resultType="pd">
+		select sau.`NAME` as UNAME,mc.`NAME` as CNAME,o.ORDER_ID as ORDER_ID,o.ORDERTOTALAMOUNT as ORDERTOTALAMOUNT,mei.`NAME` as MNAME,
+		mo.MEDICALORDERBOOKINGTIME as MEDICALORDERBOOKINGTIME,mo.MEDICALORDER_ID as MEDICALORDER_ID,o.ORDERNO as ORDERNO,
+		mo.MEDICALORDERNO as MEDICALORDERNO,mo.`STATUS` as MSTATUS,mc.LOCATION as LOCATION from 
+		tb_medicalexamitem mei LEFT JOIN tb_medicalorderitem moi on mei.MEDICALEXAMITEM_ID=moi.MEDICALEXAMITEM_ID 
+		left join tb_medicalorder mo on moi.MEDICALORDER_ID=mo.MEDICALORDER_ID LEFT JOIN tb_medicalcenter mc 
+		on mc.MEDICALCENTER_ID = mei.MEDICALCENTER_ID LEFT JOIN tb_order o on o.ORDER_ID=mo.ORDER_ID LEFT JOIN
+		sys_app_user sau on sau.USER_ID = o.APP_USERID where o.APP_USERID = #{USER_ID} or o.APP_USERID in (
+		select sauau.user_id_two from sys_app_user_and_user sauau where 
+		sauau.user_id_one = #{USER_ID}) and mo.STATUS = "已预约"
 	</select>
 	
 	<!-- 列表 -->

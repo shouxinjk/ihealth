@@ -470,9 +470,41 @@ public class OrderRestController extends BaseController {
 	 * 查询我的体检日程
 	 * @param user_id:用户编号
 	 * @return 该订单的所有信息
-	 * 			[pds:{"UNAME":"体检人的名称","CNAME":"体检中心名称","ORDER_ID":"订单编号"
+	 * 			[pds:{"UNAME":"体检人的名称","CNAME":"体检中心名称","ORDER_ID":"订单编号","ORDERTOTALAMOUNT":"订单金额"
 	 * 			,"MNAME":"体检项目名称","MEDICALORDERBOOKINGTIME":"预约时间","MEDICALORDER_ID":"体检订单编号"
-	 * 			"ORDERNO":"订单编号","MEDICALORDERNO":"体检订单编号","MSTATUS":"体检订单状态","LOCATION":"体检中心地址"}]
+	 * 			"ORDERNO":"订单号","MEDICALORDERNO":"体检订单号","MSTATUS":"体检订单状态","LOCATION":"体检中心地址"}]
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/allSchedule",method=RequestMethod.POST)
+	@ResponseBody
+	public Object allSchedule(@RequestBody String param) throws Exception{
+		Map<Object, Object> allMap = new HashMap<Object, Object>();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		JSONObject json = JSONObject.fromObject(param);
+		String user_id = json.getString("user_id").toString();
+		pd.put("USER_ID", user_id);
+		List<PageData > pds = this.medicalorderService.listAllScheduleAndUserID(pd);
+		if(pds!=null){
+			if(pds.size()>0){
+				allMap.put("result", "SUCCESS");
+				allMap.put("pds", pds);
+			}else{
+				allMap.put("result", "NO");
+			}
+		}else{
+			allMap.put("result", "NO");
+		}
+		return AppUtil.returnObject(new PageData(), allMap);
+	}
+	
+	/**
+	 * 查询我的体检日程
+	 * @param user_id:用户编号
+	 * @return 该订单的所有信息
+	 * 			[pds:{"UNAME":"体检人的名称","CNAME":"体检中心名称","ORDER_ID":"订单编号","ORDERTOTALAMOUNT":"订单金额"
+	 * 			,"MNAME":"体检项目名称","MEDICALORDERBOOKINGTIME":"预约时间","MEDICALORDER_ID":"体检订单编号"
+	 * 			"ORDERNO":"订单号","MEDICALORDERNO":"体检订单号","MSTATUS":"体检订单状态","LOCATION":"体检中心地址"}]
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/mySchedule",method=RequestMethod.POST)

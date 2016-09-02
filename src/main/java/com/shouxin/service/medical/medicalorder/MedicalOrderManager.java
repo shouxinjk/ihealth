@@ -141,5 +141,7 @@ public interface MedicalOrderManager{
 	
 	public List<PageData> listAllSchedule(PageData pd)throws Exception;
 	
+	public List<PageData> listAllScheduleAndUserID(PageData pd)throws Exception;
+	
 }
 
