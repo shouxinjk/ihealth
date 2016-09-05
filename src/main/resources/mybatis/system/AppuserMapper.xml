@@ -546,6 +546,11 @@
 		set ISMODIFY = 1 where USER_ID = #{USER_ID}
 	</update>
 	
+	<update id="editUserIsPrivacy" parameterType="java.lang.String">
+		update sys_user_and_user
+		set isprivacy = 1 where useranduser_id = #{id}
+	</update>
+	
 	<!-- 修改 -->
 	<update id="editU" parameterType="pd">
 		update  <include refid="tableName"></include>

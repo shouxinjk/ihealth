@@ -1374,12 +1374,14 @@ public class RestfullController extends BaseController {
 					logger.debug("用户关系已存在！");
 					msg = "existence";
 				} else {
-					pd.put("useranduser_id", this.get32UUID());
+					String id = this.get32UUID();
+					pd.put("useranduser_id", id);
 					pd.put("connection", connection);
 					try {
 						this.appuserService.saveRelationUser(pd);
 						logger.debug("保存用户关系成功！");
 						this.appuserService.editUserIsModify(userId);
+						this.appuserService.editUserIsPrivacy(id);
 						msg = "success";
 					} catch (Exception e) {
 						e.printStackTrace();

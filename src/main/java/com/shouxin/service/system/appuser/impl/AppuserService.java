@@ -452,6 +452,10 @@ public class AppuserService implements AppuserManager{
 	public void updateUserConnection(PageData pd) throws Exception {
 		dao.update("AppuserMapper.updateUserConnection", pd);
 	}
+
+	public void editUserIsPrivacy(String id) throws Exception {
+		dao.update("AppuserMapper.editUserIsPrivacy", id);
+	}
 	
 }
 

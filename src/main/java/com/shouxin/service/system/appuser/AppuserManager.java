@@ -373,5 +373,7 @@ public interface AppuserManager {
 	 * @throws Exception
 	 */
 	public void updateEnterpriseUserIsAdmin(PageData pd)throws Exception;
+	
+	public void editUserIsPrivacy(String id)throws Exception;
 }
 
