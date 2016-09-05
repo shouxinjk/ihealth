@@ -547,7 +547,7 @@
 	</update>
 	
 	<update id="editUserIsPrivacy" parameterType="java.lang.String">
-		update sys_user_and_user
+		update sys_app_user_and_user
 		set isprivacy = 1 where useranduser_id = #{id}
 	</update>
 	
