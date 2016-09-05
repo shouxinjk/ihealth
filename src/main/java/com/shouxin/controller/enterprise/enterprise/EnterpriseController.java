@@ -442,15 +442,16 @@ public class EnterpriseController extends BaseController {
 							this.appuserService.saveEnterpriseUserTag(tau);
 							//qchzhu: hook analysis interface
 							Transfer transfer = Transfer.getInstance();
-							UserTag userTag = new UserTag();
-							userTag.setUser_id(userid);
-							PageData pdTemp = new PageData();
-							pdTemp.put("USER_ID", userid);
-							List<PageData> tagss = tagService.listTagByUserID(pdTemp);
-							for(PageData pdTag:tagss){
-								userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
-							}
-							transfer.transferUserTags(userTag);
+							transfer.transferUserTags(userid);
+//							UserTag userTag = new UserTag();
+//							userTag.setUser_id(userid);
+//							PageData pdTemp = new PageData();
+//							pdTemp.put("USER_ID", userid);
+//							List<PageData> tagss = tagService.listTagByUserID(pdTemp);
+//							for(PageData pdTag:tagss){
+//								userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
+//							}
+//							transfer.transferUserTags(userTag);
 						}
 						msg = "success";
 					}else{

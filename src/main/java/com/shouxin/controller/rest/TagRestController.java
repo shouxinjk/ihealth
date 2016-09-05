@@ -132,15 +132,16 @@ public class TagRestController extends BaseController {
 		}
 		//qchzhu: hook analysis interface
 		Transfer transfer = Transfer.getInstance();
-		UserTag userTag = new UserTag();
-		userTag.setUser_id(userId);
-		PageData pdTemp = new PageData();
-		pdTemp.put("USER_ID", userId);
-		List<PageData> tags = tagService.listTagByUserID(pdTemp);
-		for(PageData pdTag:tags){
-			userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
-		}
-		transfer.transferUserTags(userTag);
+		transfer.transferUserTags(userId);
+//		UserTag userTag = new UserTag();
+//		userTag.setUser_id(userId);
+//		PageData pdTemp = new PageData();
+//		pdTemp.put("USER_ID", userId);
+//		List<PageData> tags = tagService.listTagByUserID(pdTemp);
+//		for(PageData pdTag:tags){
+//			userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
+//		}
+//		transfer.transferUserTags(userTag);
 		//end
 		map.put("msg", msg);
 
@@ -184,15 +185,16 @@ public class TagRestController extends BaseController {
 		}
 		//qchzhu: hook analysis interface
 		Transfer transfer = Transfer.getInstance();
-		UserTag userTag = new UserTag();
-		userTag.setUser_id(userID);
-		PageData pdTemp = new PageData();
-		pdTemp.put("USER_ID", userID);
-		List<PageData> tags = tagService.listTagByUserID(pdTemp);
-		for(PageData pdTag:tags){
-			userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
-		}
-		transfer.transferUserTags(userTag);
+		transfer.transferUserTags(userID);
+//		UserTag userTag = new UserTag();
+//		userTag.setUser_id(userID);
+//		PageData pdTemp = new PageData();
+//		pdTemp.put("USER_ID", userID);
+//		List<PageData> tags = tagService.listTagByUserID(pdTemp);
+//		for(PageData pdTag:tags){
+//			userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
+//		}
+//		transfer.transferUserTags(userTag);
 		//end
 		map.put("msg", msg);
 
