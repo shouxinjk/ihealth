@@ -1382,6 +1382,7 @@ public class RestfullController extends BaseController {
 						logger.debug("保存用户关系成功！");
 						this.appuserService.editUserIsModify(userId);
 						this.appuserService.editUserIsPrivacy(id);
+						//ceshi github banbenhao
 						msg = "success";
 					} catch (Exception e) {
 						e.printStackTrace();
