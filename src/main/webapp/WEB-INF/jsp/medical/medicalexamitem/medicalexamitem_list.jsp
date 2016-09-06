@@ -61,10 +61,7 @@
 									<th class="center">特征</th>
 									<th class="center">销售价格</th>
 									<th class="center">结算价格</th>
-									<th class="center">LOGO</th>
 									<th class="center">状态</th>
-									<th class="center">生效时间</th>
-									<th class="center">失效时间</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -85,10 +82,7 @@
 											<td class='center'>${var.FEATURES}</td>
 											<td class='center'>${var.SELLINGPRICE}</td>
 											<td class='center'>${var.SETTLEMENTPRICE}</td>
-											<td class='center'>${var.LOGO}</td>
 											<td class='center'>${var.STATUS}</td>
-											<td class='center'>${var.EFFECTIVETIME}</td>
-											<td class='center'>${var.EXPIRETIME}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

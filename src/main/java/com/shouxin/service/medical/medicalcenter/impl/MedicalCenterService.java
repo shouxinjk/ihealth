@@ -157,6 +157,11 @@ public class MedicalCenterService implements MedicalCenterManager{
 	public List<PageData> dataPingTairellistPage(Page page) throws Exception {
 		return (List<PageData>) dao.findForList("MedicalCenterMapper.dataPingTairellistPage", page);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<PageData> listCenterByUserid(String USER_ID) throws Exception {
+		return (List<PageData>) dao.findForList("MedicalCenterMapper.listCenterByUserid", USER_ID);
+	}
 	
 }
 

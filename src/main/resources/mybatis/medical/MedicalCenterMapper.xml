@@ -324,6 +324,16 @@
 		where 1=1 and (MEDICALCENTER_ID = #{MEDICALCENTER_ID}) 
 	</select>
 	
+	<!-- 列表 -->
+	<select id="listCenterByUserid" parameterType="java.lang.String" resultType="pd">
+		select mc.`NAME` as `NAME` ,mc.MEDICALCENTER_ID as MEDICALCENTER_ID
+		 from tb_medicalcenter mc where mc.MEDICALCENTER_ID = 
+		(select mca.MEDICALCENTER_ID from tb_medicalceneradmin mca where 
+		mca.SYS_USER_ID = #{USER_ID}) or mc.PARENTID 
+		= (select mca.MEDICALCENTER_ID from tb_medicalceneradmin mca where 
+		mca.SYS_USER_ID = #{USER_ID})
+	</select>
+	
 	<!-- 列表(全部) -->
 	<select id="listAll" resultType="pd">
 		select

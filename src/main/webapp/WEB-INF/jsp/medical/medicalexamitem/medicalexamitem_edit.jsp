@@ -46,6 +46,19 @@
 									
 								</td>
 							</tr>
+								<tr>
+									<td style="width:75px;text-align: right;padding-top: 13px;">体检中心:</td>
+									<td>
+										<select name="MEDICALCENTER_ID" id="MEDICALCENTER_ID">
+											<c:forEach items="${pds}" var="pds" varStatus="vs">
+												<c:if test="${pd.MEDICALCENTER_ID eq pds.MEDICALCENTER_ID }">
+													<option value="${pds.MEDICALCENTER_ID}" selected="selected">${pds.NAME }</option>
+												</c:if>
+												<option value="${pds.MEDICALCENTER_ID}">${pds.NAME }</option>
+											</c:forEach>
+										</select>
+									</td>
+								</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">名称:</td>
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入体检项目名称" title="体检项目名称" style="width:98%;"/></td>
@@ -65,18 +78,6 @@
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">结算价格:</td>
 								<td><input type="number" name="SETTLEMENTPRICE" id="SETTLEMENTPRICE" value="${pd.SETTLEMENTPRICE}" maxlength="32" placeholder="这里输入体检项目结算价格" title="体检项目结算价格" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">LOGO:</td>
-								<td><input type="text" name="LOGO" id="LOGO" value="${pd.LOGO}" maxlength="255" placeholder="这里输入体检项目logo图片url地址" title="体检项目logo图片url地址" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">生效时间:</td>
-								<td><input class="span10 date-picker" name="EFFECTIVETIME" id="EFFECTIVETIME" value="${pd.EFFECTIVETIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="体检项目生效时间" title="体检项目生效时间" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">失效时间:</td>
-								<td><input class="span10 date-picker" name="EXPIRETIME" id="EXPIRETIME" value="${pd.EXPIRETIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="体检项目失效时间" title="体检项目失效时间" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">
@@ -173,7 +174,6 @@
 				$("#NAME").focus();
 			return false;
 			}
-			
 			$("#Form").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();

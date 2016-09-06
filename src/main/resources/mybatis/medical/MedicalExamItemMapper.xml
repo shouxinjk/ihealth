@@ -118,10 +118,8 @@
 			FEATURES = #{FEATURES},
 			SELLINGPRICE = #{SELLINGPRICE},
 			SETTLEMENTPRICE = #{SETTLEMENTPRICE},
-			LOGO = #{LOGO},
-			EFFECTIVETIME = #{EFFECTIVETIME},
-			EXPIRETIME = #{EXPIRETIME},
 			EXAMITEM_ID = #{EXAMITEM_ID},
+			MEDICALCENTER_ID = #{MEDICALCENTER_ID},
 		MEDICALEXAMITEM_ID = MEDICALEXAMITEM_ID
 		where 
 		MEDICALEXAMITEM_ID = #{MEDICALEXAMITEM_ID}
@@ -136,7 +134,7 @@
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
-		<include refid="Field1"></include>
+		<include refid="Field1"></include>,MEDICALCENTER_ID
 		from 
 		<include refid="tableName"></include>
 		where 
