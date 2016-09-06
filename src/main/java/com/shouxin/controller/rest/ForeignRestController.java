@@ -414,15 +414,16 @@ public class ForeignRestController extends BaseController {
 				this.appuserService.saveEnterpriseUserTag(tau);
 				//qchzhu: hook analysis interface
 				Transfer transfer = Transfer.getInstance();
-				UserTag userTag = new UserTag();
-				userTag.setUser_id(userId);
-				PageData pdTemp = new PageData();
-				pdTemp.put("USER_ID", userId);
-				List<PageData> tagss = tagService.listTagByUserID(pdTemp);
-				for(PageData pdTag:tagss){
-					userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
-				}
-				transfer.transferUserTags(userTag);
+				transfer.transferUserTags(userId);
+//				UserTag userTag = new UserTag();
+//				userTag.setUser_id(userId);
+//				PageData pdTemp = new PageData();
+//				pdTemp.put("USER_ID", userId);
+//				List<PageData> tagss = tagService.listTagByUserID(pdTemp);
+//				for(PageData pdTag:tagss){
+//					userTag.addTag(pdTag.getString("NAME"), pdTag.getString("fieldName"),pdTag.getString("EXPRESSION"));
+//				}
+//				transfer.transferUserTags(userTag);
 			}
 		}else{
 			String miaoshu="";

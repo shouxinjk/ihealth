@@ -170,7 +170,8 @@ public class SubhealthRestfullController extends BaseController {
 			msg = "no";
 		}
 		//qchzhu: hook analysis interface
-//		Transfer transfer = Transfer.getInstance();
+		Transfer transfer = Transfer.getInstance();
+		transfer.transferUserTags(userID);
 //		UserTag userTag = new UserTag();
 //		userTag.setUser_id(userID);
 //		PageData pdTemp = new PageData();
