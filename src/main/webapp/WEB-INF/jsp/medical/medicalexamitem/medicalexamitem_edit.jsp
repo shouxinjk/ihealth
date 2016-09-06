@@ -73,11 +73,11 @@
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">销售价格:</td>
-								<td><input type="number" name="SELLINGPRICE" id="SELLINGPRICE" value="${pd.SELLINGPRICE}" maxlength="32" placeholder="这里输入体检项目销售价格" title="体检项目销售价格" style="width:98%;"/></td>
+								<td><input type="number" name="SELLINGPRICE" id="SELLINGPRICE" value="${pd.SELLINGPRICE/100}" maxlength="32" placeholder="这里输入体检项目销售价格" title="体检项目销售价格" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">结算价格:</td>
-								<td><input type="number" name="SETTLEMENTPRICE" id="SETTLEMENTPRICE" value="${pd.SETTLEMENTPRICE}" maxlength="32" placeholder="这里输入体检项目结算价格" title="体检项目结算价格" style="width:98%;"/></td>
+								<td><input type="number" name="SETTLEMENTPRICE" id="SETTLEMENTPRICE" value="${pd.SETTLEMENTPRICE/100}" maxlength="32" placeholder="这里输入体检项目结算价格" title="体检项目结算价格" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">

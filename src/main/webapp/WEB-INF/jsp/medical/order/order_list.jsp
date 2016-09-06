@@ -91,7 +91,7 @@
 											<td class='center'>${var.ORDERGENERATIONTIME}</td>
 											<td class='center'>${var.ORDERBOOKINGTIME}</td>
 											<td class='center'>${var.ORDEREXECUTIONTIME}</td>
-											<td class='center'>${var.ORDERTOTALAMOUNT}</td>
+											<td class='center'>${var.ORDERTOTALAMOUNT/100}</td>
 											<td class='center'>${var.STATUS}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">

@@ -48,7 +48,7 @@
 							</tr>
 							<tr>
 								<td style="width:150px;text-align: right;padding-top: 13px;">订单总金额:</td>
-								<td>${pd.MEDICALTOTALAMOUNT}</td>
+								<td>${pd.MEDICALTOTALAMOUNT/100}</td>
 								<td style="width:150px;text-align: right;padding-top: 13px;">订单状态:</td>
 								<td>${pd.STATUS}</td>
 							</tr>
@@ -82,8 +82,8 @@
 														<td class='center' style="width: 30px;">${vs.index+1}</td>
 														<td class='center'>${var.NAME}</td>
 														<td class='center'>${var.FEATURES}</td>
-														<td class='center'>${var.SELLINGPRICE}</td>
-														<td class='center'>${var.SETTLEMENTPRICE}</td>
+														<td class='center'>${var.SELLINGPRICE/100}</td>
+														<td class='center'>${var.SETTLEMENTPRICE/100}</td>
 														<td class="center">
 															
 														</td>

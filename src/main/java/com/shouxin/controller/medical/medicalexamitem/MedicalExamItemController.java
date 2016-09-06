@@ -72,6 +72,8 @@ public class MedicalExamItemController extends BaseController {
 //			medicalcenterId = adminPd.getString("MEDICALCENTER_ID");
 //		}
 //		pd.put("MEDICALCENTER_ID", medicalcenterId);
+		pd.put("SELLINGPRICE", (Integer.parseInt(pd.getString("SELLINGPRICE"))*100));
+		pd.put("SETTLEMENTPRICE", (Integer.parseInt(pd.getString("SETTLEMENTPRICE"))*100));
 		pd.put("MEDICALEXAMITEM_ID", this.get32UUID());	//主键
 		pd.put("CREATEON", DateUtil.getTime());	//创建该记录时间
 		medicalexamitemService.save(pd);
@@ -108,6 +110,8 @@ public class MedicalExamItemController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd.put("SELLINGPRICE", (Integer.parseInt(pd.getString("SELLINGPRICE"))*100));
+		pd.put("SETTLEMENTPRICE", (Integer.parseInt(pd.getString("SETTLEMENTPRICE"))*100));
 		medicalexamitemService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");

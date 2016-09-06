@@ -95,7 +95,7 @@
 											<td class='center'>${var.MEDICALORDERGENERATIONTIME}</td>
 											<td class='center'>${var.MEDICALORDERBOOKINGTIME}</td>
 											<td class='center'>${var.MEDICALORDEREXECUTIONTIME}</td>
-											<td class='center'>${var.MEDICALTOTALAMOUNT}</td>
+											<td class='center'>${var.MEDICALTOTALAMOUNT/100}</td>
 											<td class='center'>${var.STATUS}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">

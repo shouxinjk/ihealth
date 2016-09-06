@@ -80,8 +80,8 @@
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.DESCRIPTION}</td>
 											<td class='center'>${var.FEATURES}</td>
-											<td class='center'>${var.SELLINGPRICE}</td>
-											<td class='center'>${var.SETTLEMENTPRICE}</td>
+											<td class='center'>${var.SELLINGPRICE/100}</td>
+											<td class='center'>${var.SETTLEMENTPRICE/100}</td>
 											<td class='center'>${var.STATUS}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
