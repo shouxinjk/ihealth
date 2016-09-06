@@ -620,15 +620,12 @@ public class OrderRestController extends BaseController {
 						List<PageData> pds = new ArrayList<PageData>();
 						pds = this.medicalexamitemService.listMedicalItemByCheckuoItemId(p.getString("CHECKUPITEM_ID"));
 						for (int i = 0; i < pds.size(); i++) {
-							System.out.println("项目个数"+pds.size());
-							if((!pds.get(i).getString("MSTATUS").equals("已发布"))&&
-									(!pds.get(i).getString("CSTATUS").equals("已发布"))){
-								System.out.println("=========进入");
+							if((!pds.get(i).getString("MSTATUS").equals("平台发布"))&&
+									(!pds.get(i).getString("CSTATUS").equals("平台发布"))){
 								pds.remove(i);
 								i--;
 							}
 						}
-						System.out.println("项目的最终个数"+pds.size());
 						if(pds.size()==0){
 							prompt+="\n";
 							prompt+=p.getString("NAME");
