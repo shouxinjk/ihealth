@@ -94,9 +94,25 @@
 		insert into 
 	<include refid="tableName"></include>
 		(
-	<include refid="Field"></include>
+		NAME,	
+		DESCRIPTION,	
+		FEATURES,	
+		SELLINGPRICE,	
+		SETTLEMENTPRICE,	
+		CREATEBY,	
+		MEDICALEXAMITEM_ID,
+		EXAMITEM_ID,
+		MEDICALCENTER_ID
 		) values (
-	<include refid="FieldValue"></include>
+		#{NAME},	
+		#{DESCRIPTION},	
+		#{FEATURES},	
+		#{SELLINGPRICE},	
+		#{SETTLEMENTPRICE},	
+		#{CREATEBY},	
+		#{MEDICALEXAMITEM_ID},
+		#{EXAMITEM_ID},
+		#{MEDICALCENTER_ID}
 		)
 	</insert>
 	
