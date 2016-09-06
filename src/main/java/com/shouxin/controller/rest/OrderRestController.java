@@ -623,7 +623,6 @@ public class OrderRestController extends BaseController {
 						for (int i = 0; i < pds.size(); i++) {
 							if(!(pds.get(i).getString("MSTATUS").equals("平台发布")&&
 									pds.get(i).getString("CSTATUS").equals("平台发布"))){
-								System.out.println(1);
 								pds.remove(i);
 								i--;
 							}
