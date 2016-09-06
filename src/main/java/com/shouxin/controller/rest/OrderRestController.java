@@ -619,6 +619,7 @@ public class OrderRestController extends BaseController {
 					for (PageData p : pageDate) {
 						List<PageData> pds = new ArrayList<PageData>();
 						pds = this.medicalexamitemService.listMedicalItemByCheckuoItemId(p.getString("CHECKUPITEM_ID"));
+						logBefore(logger, "查看购买项目的状态++++++++"+pds);
 						for (int i = 0; i < pds.size(); i++) {
 							if((!pds.get(i).getString("MSTATUS").equals("平台发布"))&&
 									(!pds.get(i).getString("CSTATUS").equals("平台发布"))){
@@ -686,6 +687,12 @@ public class OrderRestController extends BaseController {
 		}	
 		pd.put("result", msg);
 		return AppUtil.returnObject(new PageData(), map);
+	}
+	
+	public static void main(String[] args) {
+		if((!"新建".equals("平台发布"))&&(!"新建1".equals("平台发布"))){
+			System.out.println(1111);
+		}
 	}
 	
 }
