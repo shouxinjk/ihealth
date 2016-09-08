@@ -119,7 +119,7 @@ public class OrderRestController extends BaseController {
 		String itemIDStr = json.getString("itemID").toString();
 		double ORDERTOTALAMOUNT = json.getDouble("ORDERTOTALAMOUNT");
 		pd.put("ORDER_ID", ORDER_ID);
-		pd.put("ORDERTOTALAMOUNT", ORDERTOTALAMOUNT*100);
+		pd.put("ORDERTOTALAMOUNT", ORDERTOTALAMOUNT);
 		//修改订单金额
 		orderService.editOrderPrice(pd);
 		String[] itemIDArray = itemIDStr.split(",");
@@ -190,7 +190,7 @@ public class OrderRestController extends BaseController {
 					medicalOrderItem.add(moi);
 				}
 			}
-			o.setMEDICALTOTALAMOUNT(SELLINCPRICE*100);
+			o.setMEDICALTOTALAMOUNT(SELLINCPRICE);
 			medicalOrder.add(o);
 		}
 		
