@@ -33,6 +33,7 @@ import net.sf.json.JSONArray;
 import com.shouxin.util.Jurisdiction;
 import com.shouxin.service.exam.examcategory.ExamCategoryManager;
 import com.shouxin.service.exam.examitem.ExamItemManager;
+import com.shouxin.service.medical.medicalcenter.MedicalCenterManager;
 import com.shouxin.service.medical.medicalexamitem.MedicalExamItemManager;
 
 /** 
@@ -51,6 +52,8 @@ public class MedicalExamItemController extends BaseController {
 	private ExamItemManager examitemService;
 	@Resource(name="examcategoryService")
 	private ExamCategoryManager examcategoryService;
+	@Resource(name="medicalcenterService")
+	private MedicalCenterManager medicalcenterService;
 	/**保存
 	 * @param
 	 * @throws Exception
@@ -62,13 +65,15 @@ public class MedicalExamItemController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		String userId = Jurisdiction.getUserId();
-		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
-		String medicalcenterId = "";
-		if(adminPd!=null){
-			medicalcenterId = adminPd.getString("MEDICALCENTER_ID");
-		}
-		pd.put("MEDICALCENTER_ID", medicalcenterId);
+//		String userId = Jurisdiction.getUserId();
+//		PageData adminPd = medicalexamitemService.findAdminByUserId(userId);
+//		String medicalcenterId = "";
+//		if(adminPd!=null){
+//			medicalcenterId = adminPd.getString("MEDICALCENTER_ID");
+//		}
+//		pd.put("MEDICALCENTER_ID", medicalcenterId);
+		pd.put("SELLINGPRICE", (Double.parseDouble(pd.getString("SELLINGPRICE"))*100));
+		pd.put("SETTLEMENTPRICE", (Double.parseDouble(pd.getString("SETTLEMENTPRICE"))*100));
 		pd.put("MEDICALEXAMITEM_ID", this.get32UUID());	//主键
 		pd.put("CREATEON", DateUtil.getTime());	//创建该记录时间
 		medicalexamitemService.save(pd);
@@ -105,6 +110,8 @@ public class MedicalExamItemController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd.put("SELLINGPRICE", (Double.parseDouble(pd.getString("SELLINGPRICE"))*100));
+		pd.put("SETTLEMENTPRICE", (Double.parseDouble(pd.getString("SETTLEMENTPRICE"))*100));
 		medicalexamitemService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -247,8 +254,18 @@ public class MedicalExamItemController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		String userId = Jurisdiction.getUserId();
+		List<PageData> pds = this.medicalcenterService.listCenterByUserid(userId);
+		String result = "";
+		if(pds.size()>0){
+			result="success";
+			mv.addObject("pds",pds);
+		}else{
+			result="no";
+		}
 		mv.setViewName("medical/medicalexamitem/medicalexamitem_edit");
 		mv.addObject("msg", "save");
+		mv.addObject("result",result);
 		mv.addObject("pd", pd);
 		return mv;
 	}	
@@ -302,11 +319,21 @@ public class MedicalExamItemController extends BaseController {
 		pd = medicalexamitemService.findById(pd);	//根据ID读取
 		List<ExamCategory> varItemCategoryList = examcategoryService.listAllExamCategory2("0","");//查询所有检查项目分类
 		ExamItem e = examitemService.findById(pd.getString("EXAMITEM_ID"));
+		String userId = Jurisdiction.getUserId();
+		List<PageData> pds = this.medicalcenterService.listCenterByUserid(userId);
+		String result = "";
+		if(pds.size()>0){
+			result="success";
+			mv.addObject("pds",pds);
+		}else{
+			result="no";
+		}
 		//logBefore(logger, e.toString()+"查询所有检查项目分类");
 		mv.setViewName("medical/medicalexamitem/medicalexamitem_edit");
 		mv.addObject("msg", "edit");
 		mv.addObject("pd", pd);
 		mv.addObject("item",e);
+		mv.addObject("result",result);
 		mv.addObject("varItemcate",varItemCategoryList);
 		return mv;
 	}	

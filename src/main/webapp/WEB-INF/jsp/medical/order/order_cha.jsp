@@ -58,7 +58,7 @@
 											<td>${pd.STATUS}</td>
 											<td
 												style="width: 75px; text-align: right; padding-top: 13px;">订单总金额:</td>
-											<td>${pd.ORDERTOTALAMOUNT}</td>
+											<td>${pd.ORDERTOTALAMOUNT/100}</td>
 										</tr>
 										<c:choose>
 											<c:when test="${not empty medicalOrders}">
@@ -104,8 +104,8 @@
 																	<tr>
 																		<td class='center'>${var.NAME}</td>
 																		<td class='center'>${var.FEATURES}</td>
-																		<td class='center'>${var.SELLINGPRICE}</td>
-																		<td class='center'>${var.SETTLEMENTPRICE}</td>
+																		<td class='center'>${var.SELLINGPRICE/100}</td>
+																		<td class='center'>${var.SETTLEMENTPRICE/100}</td>
 																	</tr>
 																</c:forEach>
 																</tbody>
@@ -135,8 +135,8 @@
 																	<tr>
 																		<td class='center'>${var.NAME}</td>
 																		<td class='center'>${var.FEATURES}</td>
-																		<td class='center'>${var.SELLINGPRICE}</td>
-																		<td class='center'>${var.SETTLEMENTPRICE}</td>
+																		<td class='center'>${var.SELLINGPRICE/100}</td>
+																		<td class='center'>${var.SETTLEMENTPRICE/100}</td>
 																	</tr>
 																</c:forEach>
 															</tbody>

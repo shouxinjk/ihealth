@@ -91,6 +91,8 @@ public interface MedicalCenterManager{
 	
 	public List<PageData> dataPingTairellistPage(Page page)throws Exception;
 	
+	public List<PageData> listCenterByUserid(String USER_ID)throws Exception;
+	
 	
 }
 

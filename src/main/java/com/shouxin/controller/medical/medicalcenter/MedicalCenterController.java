@@ -9,23 +9,39 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Disease;
+import com.shouxin.entity.admin.DiseaseAndUser;
+import com.shouxin.entity.admin.Tag;
+import com.shouxin.entity.admin.TagAndUser;
 import com.shouxin.entity.medical.MedicalCenter;
 import com.shouxin.service.medical.medicalcenter.MedicalCenterManager;
 import com.shouxin.service.medical.medicalexamitem.MedicalExamItemManager;
 import com.shouxin.util.AppUtil;
+import com.shouxin.util.Const;
 import com.shouxin.util.DateUtil;
+import com.shouxin.util.FileDownload;
+import com.shouxin.util.FileUpload;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
+import com.shouxin.util.PathUtil;
+import com.shouxin.util.RepeatString;
+import com.shouxinjk.ihealth.data.Transfer;
+import com.shouxinjk.ihealth.data.pojo.UserDisease;
 import com.shouxin.util.Jurisdiction;
+import com.shouxin.util.ObjectExcelRead;
 
 /** 
  * 说明：体检中心
@@ -141,6 +157,80 @@ public class MedicalCenterController extends BaseController {
 		mv.setViewName("save_result");
 		return mv;
 	}
+	
+	/**
+	 * 去导入exel表格页面
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/goUploadExel")
+	public ModelAndView getUploadExel()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		mv.setViewName("medical/medicalcenter/medicalcenteruploadexcel");
+		return mv;
+	}
+	
+	/**下载模版
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/downExcel")
+	public void downExcel(HttpServletResponse response)throws Exception{
+		FileDownload.fileDownload(response, PathUtil.getClasspath() + Const.FILEPATHFILE + "medicalcenter.xls", "medicalcenter.xls");
+	}
+	
+	/**
+	 * 读取exel表格数据
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/readExel")
+	public ModelAndView readExel(@RequestParam(value="excel",required=false) MultipartFile file)throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+//		String USER_ID = Jurisdiction.getUserId();
+//		String msg = "";
+		List<PageData> pds = new ArrayList<PageData>();
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;}
+		if (null != file && !file.isEmpty()) {
+			String filePath = PathUtil.getClasspath() + Const.FILEPATHFILE;								//文件上传路径
+			String fileName =  FileUpload.fileUp(file, filePath, "medicalcenterexcel");							//执行上传
+			List<PageData> listPd = (List)ObjectExcelRead.readExcel(filePath, fileName, 2, 0, 0);		//执行读EXCEL操作,读出的数据导入List 2:从第3行开始；0:从第A列开始；0:第0个sheet
+			/*存入数据库操作======================================*/
+			/**
+			 * var0 :医院名称
+			 * var1 :简介
+			 * var2 :描述
+			 * var3 :地址
+			 * var4  ：电话
+			 * var5 :LOGO
+			 * var6 :所在省
+			 * var7 :所在市
+			 */
+			for(int i=0;i<listPd.size();i++){	
+				String MEDICALCENTERID = this.get32UUID();
+				pd.put("MEDICALCENTER_ID", MEDICALCENTERID);													//ID
+				pd.put("NAME", listPd.get(i).getString("var0"));							//医院名称
+				pd.put("ABBREVIATION", listPd.get(i).getString("var1"));							//简介
+				pd.put("DESCRIPTION", Integer.parseInt(listPd.get(i).getString("var2")));		//描述
+				pd.put("LOCATION", Integer.parseInt(listPd.get(i).getString("var3")));		//地址
+				pd.put("TELEPHONE", listPd.get(i).getString("var4"));								//电话
+				pd.put("LOGO", listPd.get(i).getString("var5"));						//logo地址
+				pd.put("PROVINCE", listPd.get(i).getString("var6"));					//省份
+				pd.put("CITY", listPd.get(i).getString("var7"));						//城市
+				pds.add(pd);
+			}						
+		}
+		if(pds.size()>0){
+			for (PageData p : pds) {
+				this.medicalcenterService.save(p);
+			}
+		}
+		
+		mv.setViewName("save_result");
+		return mv;
+	}
+	
 	
 	/**列表
 	 * @param page

@@ -83,7 +83,8 @@
 	<!-- 根据checkupitemid查询体检中心检查项目 -->
 	<select id="listMedicalItemByCheckuoItemId" parameterType="java.lang.String" resultType="pd">
 		select mei.SELLINGPRICE as PRICE, mei.MEDICALEXAMITEM_ID as MEDICALEXAMITEM_ID,mei.`NAME` as `NAME`,mei.DESCRIPTION 
-		as DESCRIPTION,mc.NAME AS MNAME from tb_medicalexamitem mei , tb_medicalcenter mc , exam_examitem 
+		as DESCRIPTION,mc.NAME AS MNAME,mei.STATUS as MSTATUS,mc.STATUS as CSTATUS from 
+		tb_medicalexamitem mei , tb_medicalcenter mc , exam_examitem 
 		ei , exam_examsolution es , tb_checkupitem ci where mei.MEDICALCENTER_ID = mc.MEDICALCENTER_ID 
 		and mei.EXAMITEM_ID = ei.EXAMITEM_ID and ei.EXAMITEM_ID = es.EXAMITEM_ID and es.EXAMSOLUTION_ID = 
 		ci.solution_id and ci.CHECKUPITEM_ID=#{CHECKUPITEM_ID}
@@ -94,9 +95,25 @@
 		insert into 
 	<include refid="tableName"></include>
 		(
-	<include refid="Field"></include>
+		NAME,	
+		DESCRIPTION,	
+		FEATURES,	
+		SELLINGPRICE,	
+		SETTLEMENTPRICE,	
+		CREATEBY,	
+		MEDICALEXAMITEM_ID,
+		EXAMITEM_ID,
+		MEDICALCENTER_ID
 		) values (
-	<include refid="FieldValue"></include>
+		#{NAME},	
+		#{DESCRIPTION},	
+		#{FEATURES},	
+		#{SELLINGPRICE},	
+		#{SETTLEMENTPRICE},	
+		#{CREATEBY},	
+		#{MEDICALEXAMITEM_ID},
+		#{EXAMITEM_ID},
+		#{MEDICALCENTER_ID}
 		)
 	</insert>
 	
@@ -118,10 +135,8 @@
 			FEATURES = #{FEATURES},
 			SELLINGPRICE = #{SELLINGPRICE},
 			SETTLEMENTPRICE = #{SETTLEMENTPRICE},
-			LOGO = #{LOGO},
-			EFFECTIVETIME = #{EFFECTIVETIME},
-			EXPIRETIME = #{EXPIRETIME},
 			EXAMITEM_ID = #{EXAMITEM_ID},
+			MEDICALCENTER_ID = #{MEDICALCENTER_ID},
 		MEDICALEXAMITEM_ID = MEDICALEXAMITEM_ID
 		where 
 		MEDICALEXAMITEM_ID = #{MEDICALEXAMITEM_ID}
@@ -136,7 +151,7 @@
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
-		<include refid="Field1"></include>
+		<include refid="Field1"></include>,MEDICALCENTER_ID
 		from 
 		<include refid="tableName"></include>
 		where 

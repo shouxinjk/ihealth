@@ -32,10 +32,6 @@
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">订单总金额:</td>
-								<td><input type="number" name="ORDERTOTALAMOUNT" id="ORDERTOTALAMOUNT" value="${pd.ORDERTOTALAMOUNT}" maxlength="32" placeholder="这里输入订单总金额" title="订单总金额" style="width:98%;"/></td>
-							</tr>
-							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单状态:</td>
 								<td><input type="text" name="STATUS" id="STATUS" value="${pd.STATUS}" maxlength="255" placeholder="这里输入订单状态" title="订单状态" style="width:98%;"/></td>
 							</tr>

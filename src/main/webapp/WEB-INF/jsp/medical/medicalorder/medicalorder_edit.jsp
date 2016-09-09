@@ -48,10 +48,6 @@
 								<td><input class="span10 date-picker" name="MEDICALORDEREXECUTIONTIME" id="MEDICALORDEREXECUTIONTIME" value="${pd.MEDICALORDEREXECUTIONTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="订单实际执行时间" title="订单实际执行时间" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">订单总金额:</td>
-								<td><input type="number" name="MEDICALTOTALAMOUNT" id="MEDICALTOTALAMOUNT" value="${pd.MEDICALTOTALAMOUNT}" maxlength="32" placeholder="这里输入订单总金额" title="订单总金额" style="width:98%;"/></td>
-							</tr>
-							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">订单状态:</td>
 								<td><input type="text" name="STATUS" id="STATUS" value="${pd.STATUS}" maxlength="255" placeholder="这里输入订单状态" title="订单状态" style="width:98%;"/></td>
 							</tr>
