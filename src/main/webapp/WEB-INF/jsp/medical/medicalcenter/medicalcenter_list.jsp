@@ -75,16 +75,23 @@
 									<c:if test="${QX.cha == 1 }">
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
-											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MEDICALCENTER_ID}" class="ace" /><span class="lbl"></span></label>
-											</td>
+											<c:choose>
+												<c:when test="${var.STATUS eq '平台发布'}">
+												<td class='center'></td>
+												</c:when>
+												<c:otherwise>
+													<td class='center'>
+														<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MEDICALCENTER_ID}" class="ace" /><span class="lbl"></span></label>
+													</td>
+												</c:otherwise>
+											</c:choose>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.DESCRIPTION}</td>
 											<td class='center'>${var.LOCATION}</td>
 											<td class='center'>${var.ABBREVIATION}</td>
 											<td class='center'>${var.TELEPHONE}</td>
-											<td class='center'>${var.STATUS}</td>
+											<td class='center'>${var.STATUS	}</td>
 											<td class='center'>
 												<c:if test="${var.LOGO != '' }">
 													<img alt="" src="<%=basePath %>uploadFiles/uploadImgs/${var.LOGO }" id="image" style="width:65px;height:65px;">
@@ -95,7 +102,11 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<c:if test="${QX.edit == 1 }">
+													<c:choose>
+														<c:when test="${var.STATUS eq '平台发布'}">
+														</c:when>
+														<c:otherwise>
+														<c:if test="${QX.edit == 1 }">
 														<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MEDICALCENTER_ID}');">
 															<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 														</a>
@@ -115,6 +126,8 @@
 															<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 														</a>
 													</c:if>
+														</c:otherwise>
+													</c:choose>
 												</div>
 												<div class="hidden-md hidden-lg">
 													<div class="inline pos-rel">
