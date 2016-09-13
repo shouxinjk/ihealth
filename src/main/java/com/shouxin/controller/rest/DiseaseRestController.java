@@ -194,8 +194,6 @@ public class DiseaseRestController extends BaseController {
 				pd.put("USER_ID", userID);
 				pd.put("DISEASE_ID", personalDiseaseID[i]);
 				diseaseService.userSavepPersonalDisease(pd);
-				//qchzhu: hook analysis interface
-				userDisease.addSufferedDisease(personalDiseaseID[i]);
 				msg = "success";
 			}
 		}else{
@@ -209,8 +207,6 @@ public class DiseaseRestController extends BaseController {
 				pd.put("USER_ID", userID);
 				pd.put("DISEASE_ID", familyDiseaseID[i]);
 				diseaseService.userSavepFamilyDisease(pd);
-				//qchzhu: hook analysis interface
-				userDisease.addInheritDisease(familyDiseaseID[i]);
 				msg = "success";
 			}
 		}else{
@@ -224,8 +220,6 @@ public class DiseaseRestController extends BaseController {
 				pd.put("USER_ID", userID);
 				pd.put("DISEASE_ID", focusDiseaseID[i]);
 				diseaseService.userSavepFocusDisease(pd);
-				//qchzhu: hook analysis interface
-				userDisease.addConcernDisease(focusDiseaseID[i]);
 				msg = "success";
 			}
 		}else {
@@ -235,7 +229,7 @@ public class DiseaseRestController extends BaseController {
 		this.appuserService.editUserIsModify(userID);
 		//qchzhu: hook analysis interface
 		Transfer transfer = Transfer.getInstance();
-		transfer.transferUserDisease(userDisease);
+		transfer.transferUserDiseases(userID);
 		//end hook analysis interface
 
 		return AppUtil.returnObject(new PageData(), map);
