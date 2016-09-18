@@ -186,7 +186,7 @@ public class DiseaseRestController extends BaseController {
 		userDisease.setUser_id(userID);
 		//end
 		
-		if (personalDiseaseIDStr != null && personalDiseaseID.length >= 0 && userID != null) {
+		if (personalDiseaseIDStr != null && personalDiseaseID.length > 0 && userID != null) {
 			pd.put("USER_ID", userID);
 			diseaseService.deleteDiseaseByUserID(pd);
 			for (int i = 0; i < personalDiseaseID.length; i++) {
@@ -199,7 +199,7 @@ public class DiseaseRestController extends BaseController {
 		}else{
 			msg = "no";
 		} 
-		if(familyDiseaseIDStr != null && familyDiseaseID.length >= 0 && userID != null){
+		if(familyDiseaseIDStr != null && familyDiseaseID.length > 0 && userID != null){
 			pd.put("USER_ID", userID);
 			diseaseService.deleteFamilyDiseaseByUserID(pd);
 			for (int i = 0; i < familyDiseaseID.length; i++) {
@@ -212,7 +212,7 @@ public class DiseaseRestController extends BaseController {
 		}else{
 			msg = "no";
 		} 
-		if(focusDiseaseIDStr != null && focusDiseaseID.length >= 0 && userID != null){
+		if(focusDiseaseIDStr != null && focusDiseaseID.length > 0 && userID != null){
 			pd.put("USER_ID", userID);
 			diseaseService.deleteFocusDiseaseByUserID(pd);
 			for (int i = 0; i < focusDiseaseID.length; i++) {
