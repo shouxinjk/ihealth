@@ -495,6 +495,7 @@ public class RestfullController extends BaseController {
 					name = jasonObject.getString("name").trim();
 					pds.put("NAME", name);
 				}
+				
 				if (jasonObject.get("sex") != null && !"".equals(jasonObject.get("sex"))
 						&& !"null".equals(jasonObject.get("sex"))) {
 					sex = jasonObject.getString("sex").trim();
