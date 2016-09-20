@@ -288,7 +288,7 @@ public class AppuserController extends BaseController {
 		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
-			String keywords = pd.getString("keywords");							//检索条件 关键词
+			String keywords = pd.getString("keywords");							//检索条件 用户名
 			if(null != keywords && !"".equals(keywords)){
 				pd.put("keywords", keywords.trim());
 			}

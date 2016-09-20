@@ -6080,7 +6080,7 @@ body.mob-safari .sidebar.sidebar-fixed {
 }
 
 .btn-xs, .btn-group-xs>.btn {
-	padding-top: 3px;
+	padding-top: 5px;
 	padding-bottom: 3px;
 	border-width: 3px;
 }
@@ -9651,7 +9651,7 @@ textarea.form-control {
 
 select {
 	padding: 3px 4px;
-	height: 30px;
+	height: 32px;
 }
 
 select.form-control {
