@@ -1101,6 +1101,7 @@ public class RestfullController extends BaseController {
 				if (data != null && data.size() > 0) {
 					msg = "success";
 					map.put("data", data);
+					logBefore(logger, "通过openid获取数据==="+data);
 				} else {
 					msg = "no";
 				}
