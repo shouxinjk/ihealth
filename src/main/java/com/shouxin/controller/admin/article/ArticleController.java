@@ -54,6 +54,7 @@ import com.shouxin.service.solrj.impl.SolrManagerImpl;
  * 创建人：shouxin
  * 创建时间：2016-04-13
  */
+
 @Controller
 @RequestMapping(value="/article")
 public class ArticleController extends BaseController {
