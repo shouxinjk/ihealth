@@ -226,8 +226,6 @@
 					 or 
 					TELEPHONE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
 				)
-				
-				
 		</if>
 	</select>
 	

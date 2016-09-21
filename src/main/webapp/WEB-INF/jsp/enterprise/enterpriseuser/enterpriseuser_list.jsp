@@ -324,7 +324,7 @@
 			 diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 nextPage( ${page.currentPage} );
+					 nextPage( ${page.currentPage});
 				}
 				diag.close();
 			 };
