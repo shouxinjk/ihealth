@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -148,7 +148,7 @@
 											<td colspan="100" class="center">您无权查看</td>
 										</tr>
 									</c:if>
-								</c:when> 
+								</c:when>
 								<c:otherwise>
 									<tr class="main_info">
 										<td colspan="100" class="center" >没有相关数据</td>
