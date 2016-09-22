@@ -216,9 +216,9 @@
 						userTagStr +="<label>"+
 							"<input type=\"checkbox\" value=\""+tags[i].TAG_ID+"\" style=\"margin-left: 30px;\" name=\"userTags\" ";
 						for(var j=0;j<userTags.length;j++){
-							if(tags[i].TAG_ID == userTags[j].TAG_ID){
+						/* 	if(tags[i].TAG_ID == userTags[j].TAG_ID){
 								userTagStr+="checked='checked' ";							
-							}
+							} */
 						}
 						userTagStr +="/>"+
 						"<span>"+tags[i].NAME+"</span>"+

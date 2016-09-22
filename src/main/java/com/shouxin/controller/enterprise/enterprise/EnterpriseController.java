@@ -635,9 +635,9 @@ public class EnterpriseController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
-		if(null != ENTERPRISE_ID&&!"".equals(ENTERPRISE_ID)){
+		/*if(null != ENTERPRISE_ID&&!"".equals(ENTERPRISE_ID)){
 			pd.put("ENTERPRISE_ID", ENTERPRISE_ID);
-		}
+		}*/
 		page.setPd(pd);
 		List<PageData>	varList = enterpriseService.list(page);	//列出Enterprise列表
 		mv.setViewName("enterprise/enterprise/enterprise_list");

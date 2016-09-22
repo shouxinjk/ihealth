@@ -179,10 +179,10 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 1=1
-		<if test="pd.ENTERPRISE_ID!= null and pd.ENTERPRISE_ID != ''">
+		 where 1=1
+		<!-- <if test="pd.ENTERPRISE_ID!= null and pd.ENTERPRISE_ID != ''">
 			and (ENTERPRISE_ID = #{pd.ENTERPRISE_ID} or PARENTID = #{pd.ENTERPRISE_ID})
-		</if>
+		</if> -->
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -192,6 +192,7 @@
 				)
 		</if>
 	</select>
+	
 	
 	<!-- 列表 -->
 	<select id="dataStatuslistPage" parameterType="page" resultType="pd">
