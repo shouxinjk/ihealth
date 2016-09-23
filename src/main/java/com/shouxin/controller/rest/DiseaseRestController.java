@@ -208,7 +208,7 @@ public class DiseaseRestController extends BaseController {
 				pd.put("DISEASE_ID", familyDiseaseID[i]);
 				diseaseService.userSavepFamilyDisease(pd);
 				msg = "success";
-			}
+			}  
 		}else{
 			msg = "no";
 		} 
