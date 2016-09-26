@@ -806,7 +806,7 @@ CREATE TABLE `tb_medicalcenter` (
   `LOCATION` varchar(255) DEFAULT NULL COMMENT '体检中心地理位置',
   `ABBREVIATION` varchar(255) DEFAULT NULL COMMENT '体检中心简介',
   `TELEPHONE` varchar(255) DEFAULT NULL COMMENT '体检中心联系电话',
-  `STATUS` set('发布','审核','提交','审核失败','失效','新建') NOT NULL DEFAULT '新建' COMMENT '体检中心状态',
+  `STATUS` set('发布','审核','平台失效','平台发布','平台审核失败','平台审核','已提交','审核失败') NOT NULL DEFAULT '新建' COMMENT '体检中心状态',
   `LOGO` varchar(255) DEFAULT NULL COMMENT '体检中心logo图片地址',
   `OPENINGTIME` varchar(32) DEFAULT NULL COMMENT '体检中心开业时间',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户id',
