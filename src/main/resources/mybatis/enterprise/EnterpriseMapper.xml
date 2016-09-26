@@ -180,9 +180,9 @@
 		from 
 		<include refid="tableName"></include>
 		 where 1=1
-		<!-- <if test="pd.ENTERPRISE_ID!= null and pd.ENTERPRISE_ID != ''">
+		<if test="pd.ENTERPRISE_ID!= null and pd.ENTERPRISE_ID != ''">
 			and (ENTERPRISE_ID = #{pd.ENTERPRISE_ID} or PARENTID = #{pd.ENTERPRISE_ID})
-		</if> -->
+		</if>
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -215,19 +215,20 @@
 		</if>
 	</select>
 	
-	<!-- 列表 -->
+	<!--企业员工 列表 -->
 	<select id="dataEnterpriseUserlistPage" parameterType="page" resultType="pd">
 		select sau.NAME AS NAME,sau.USER_ID as USER_ID,sau.HEIGHT AS HEIGHT,sau.WEIGHT AS WEIGHT,
-		sau.BIRTHDAY AS BIRTHDAY,sau.SEX as SEX,sau.PHONE AS PHONE,sau.ISADMIN AS ISADMIN from sys_app_user sau , tb_enterprise e ,tb_enterpriseadmin ea 
-		where sau.appkey = e.appkey and e.ENTERPRISE_ID = ea.ENTERPRISE_ID and ea.SYS_USER_ID = #{pd.SYS_USER_ID}
-		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+		sau.BIRTHDAY AS BIRTHDAY,sau.SEX as SEX,sau.PHONE AS PHONE,sau.ISADMIN AS ISADMIN from sys_app_user sau
+		 where
+		 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''">
 			and
 				(
 					NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
 					 or 
-					TELEPHONE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+					PHONE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
 				)
-		</if>
+		</if> 
 	</select>
 	
 	<!-- 列表(全部) -->

@@ -37,7 +37,7 @@
 										<td style="text-align: center;padding-top: 10px;">
 											<a class="btn btn-mini btn-primary" onclick="save();">导入</a>
 											<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
-											<a class="btn btn-mini btn-success" onclick="window.location.href='<%=basePath%>/enterprise/downExcel.do'">下载模版</a>
+											<a class="btn btn-mini btn-success" onclick="window.location.href='<%=basePath%>/medicalcenter/downExcel.do'">下载模版</a>
 										</td>
 									</tr>
 								</table>

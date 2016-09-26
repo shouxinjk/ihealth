@@ -58,7 +58,7 @@
 								</td>
 								<td style="width:75px;text-align: right;padding-top: 13px;">家族疾病:</td>
 								<td>
-									<c:forEach items="${fimalyDisease}" var="d">
+									<c:forEach items="${inherDisease}" var="d">
 										${d.NAME}、
 									</c:forEach>
 								</td>
@@ -66,7 +66,7 @@
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">关注疾病:</td>
 								<td>
-									<c:forEach items="${inherDisease}" var="d">
+									<c:forEach items="${fimalyDisease}" var="d">
 										${d.NAME}、
 									</c:forEach>
 								</td>

@@ -39,7 +39,7 @@
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">生日:</td>
-								<td><input type="text" name="BIRTHDAY" id="BIRTHDAY" value="${pd.BIRTHDAY}" maxlength="255" placeholder="生日" title="生日" style="width:98%;"/></td>
+								<td><input type="text" name="BIRTHDAY" id="BIRTHDAY" value="${pd.BIRTHDAY}" maxlength="255" placeholder="这里输入生日" title="生日" style="width:98%;"/></td>
 								<td style="width:75px;text-align: right;padding-top: 13px;">电话:</td>
 								<td><input type="text" name="PHONE" id="PHONE" value="${pd.PHONE}" maxlength="255" placeholder="这里输入联系人电话" title="联系人电话" style="width:98%;"/></td>
 							</tr>
@@ -123,6 +123,18 @@
 				$("#NAME").focus();
 			return false;
 			}
+			if($("#BIRTHDAY").val()==""){
+				$("#BIRTHDAY").tips({
+					side:3,
+		            msg:'输入生日，格式：20160925',
+		            bg:'#AE81FF',
+		            time:3
+		        });
+				$("#BIRTHDAY").focus();
+				return false;
+			}else{
+				$("#BIRTHDAY").val($.trim($("#BIRTHDAY").val()));
+			}	
 			var ALLDISEASE = "";
 			$('input[name="allDisease"]:checked').each(function(){ 
 				ALLDISEASE+=$(this).val()+","; 

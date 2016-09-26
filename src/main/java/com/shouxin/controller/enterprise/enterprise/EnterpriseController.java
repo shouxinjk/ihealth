@@ -688,11 +688,13 @@ public class EnterpriseController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		String SYS_USER_ID = Jurisdiction.getUserId();
+		
 		String keywords = pd.getString("keywords");				//关键词检索条件
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
 		pd.put("SYS_USER_ID", SYS_USER_ID);
+		System.out.println(keywords);
 		page.setPd(pd);
 		List<PageData>	varList = enterpriseService.dataEnterpriseUserlistPage(page);	//列出Enterprise列表
 		mv.setViewName("enterprise/enterpriseuser/enterpriseuser_list");
