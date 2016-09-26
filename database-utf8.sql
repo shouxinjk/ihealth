@@ -61,8 +61,8 @@ CREATE TABLE `sys_app_user_and_user` (
   `user_id_one` varchar(32) DEFAULT NULL,
   `user_id_two` varchar(32) DEFAULT NULL,
   `connection` varchar(255) DEFAULT NULL,
-  `isprivacy` int(11) DEFAULT NULL,
-  `ismodify` int(11) DEFAULT NULL,
+  `isprivacy` int(11) NOT NULL DEFAULT '0',
+  `ismodify` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`useranduser_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- ----------------------------
