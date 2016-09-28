@@ -155,10 +155,10 @@
 		from 
 		<include refid="tableName"></include>
 		where 1=1 
-		<if test="pd.MEDICALCENTER_ID != null and pd.MEDICALCENTER_ID != ''"><!-- 关键词检索 -->
+		<!-- <if test="pd.MEDICALCENTER_ID != null and pd.MEDICALCENTER_ID != ''">关键词检索
 			
 			 and (MEDICALCENTER_ID = #{pd.MEDICALCENTER_ID} OR PARENTID = #{pd.MEDICALCENTER_ID})
-		</if>
+		</if> -->
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
