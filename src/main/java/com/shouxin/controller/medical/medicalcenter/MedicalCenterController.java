@@ -187,7 +187,7 @@ public class MedicalCenterController extends BaseController {
 	@RequestMapping(value="/readExel")
 	public ModelAndView readExel(@RequestParam(value="excel",required=false) MultipartFile file)throws Exception{
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
+		
 //		String USER_ID = Jurisdiction.getUserId();
 //		String msg = "";
 		List<PageData> pds = new ArrayList<PageData>();
@@ -208,12 +208,12 @@ public class MedicalCenterController extends BaseController {
 			 * var7 :所在市
 			 */
 			for(int i=0;i<listPd.size();i++){	
+				PageData pd = new PageData();
 				String MEDICALCENTERID = this.get32UUID();
 				pd.put("MEDICALCENTER_ID", MEDICALCENTERID);													//ID
 				pd.put("NAME", listPd.get(i).getString("var0"));							//医院名称
 				pd.put("ABBREVIATION", listPd.get(i).getString("var1"));							//简介
-				pd.put("DESCRIPTION", Integer.parseInt(listPd.get(i).getString("var2")));		//描述
-				pd.put("LOCATION", Integer.parseInt(listPd.get(i).getString("var3")));		//地址
+				pd.put("LOCATION", listPd.get(i).getString("var3"));	//地址
 				pd.put("TELEPHONE", listPd.get(i).getString("var4"));								//电话
 				pd.put("LOGO", listPd.get(i).getString("var5"));						//logo地址
 				pd.put("PROVINCE", listPd.get(i).getString("var6"));					//省份
