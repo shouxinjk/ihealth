@@ -110,7 +110,7 @@
 													</c:if>
 													<c:if test="${QX.edit == 1 && var.ISADMIN == 0 }">
 														<a class="btn btn-xs btn-info" onclick="saveEnterpriseUser('${var.USER_ID}');">
-															<i class="ace-icon fa fa-search nav-search-icon" title="设置为管理员"></i>
+															<i class="ace-icon fa fa-cog icon-only bigger-110" title="设置为管理员"></i>
 														</a>
 													</c:if>
 												</div>
