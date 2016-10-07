@@ -181,6 +181,7 @@
 					var allUserGuan = data.allUserGuan;//用户关注疾病信息
 					var tags = data.tags;//所有标签信息
 					var userTags = data.userTags;//用户标签信息
+					
 					var allDiseaseStr = "";
 					for(var i =0;i<allDisease.length;i++){
 						allDiseaseStr +="<label>"+
@@ -195,6 +196,7 @@
 					"</label>";
 					}
 					$("#allDisease").html(allDiseaseStr);
+					
 					var allFimalyDiseaseStr = "";
 					for(var i =0;i<allFimaly.length;i++){
 						allFimalyDiseaseStr +="<label>"+
@@ -209,6 +211,7 @@
 					"</label>";
 					}
 					$("#allFimalyDiseaseStr").html(allFimalyDiseaseStr);
+					
 					var allGuanDiseaseStr = "";
 					for(var i =0;i<allGuan.length;i++){
 						allGuanDiseaseStr +="<label>"+
@@ -223,14 +226,15 @@
 					"</label>";
 					}
 					$("#allGuanDiseaseStr").html(allGuanDiseaseStr);
+					
 					var userTagStr = "";
 					for(var i =0;i<tags.length;i++){
 						userTagStr +="<label>"+
 							"<input type=\"checkbox\" value=\""+tags[i].TAG_ID+"\" style=\"margin-left: 30px;\" name=\"userTags\" ";
 						for(var j=0;j<userTags.length;j++){
-						/* 	if(tags[i].TAG_ID == userTags[j].TAG_ID){
-								userTagStr+="checked='checked' ";							
-							} */
+							if(tags[i].TAG_ID == userTags[j].TAG_ID){
+								userTagStr += "checked = \"checked\" ";						
+							} 
 						}
 						userTagStr +="/>"+
 						"<span>"+tags[i].NAME+"</span>"+
