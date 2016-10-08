@@ -802,9 +802,9 @@ DROP TABLE IF EXISTS `tb_medicalcenter`;
 CREATE TABLE `tb_medicalcenter` (
   `MEDICALCENTER_ID` varchar(100) NOT NULL,
   `NAME` varchar(255) DEFAULT NULL COMMENT '体检中心名称',
-  `DESCRIPTION` varchar(255) DEFAULT NULL COMMENT '体检中心描述',
-  `LOCATION` varchar(255) DEFAULT NULL COMMENT '体检中心地理位置',
-  `ABBREVIATION` varchar(255) DEFAULT NULL COMMENT '体检中心简介',
+  `DESCRIPTION` text COMMENT '体检中心描述',
+  `LOCATION` text COMMENT '体检中心地理位置',
+  `ABBREVIATION` text COMMENT '体检中心简介',
   `TELEPHONE` varchar(255) DEFAULT NULL COMMENT '体检中心联系电话',
   `STATUS` set('发布','审核','平台失效','平台发布','平台审核失败','平台审核','已提交','审核失败') NOT NULL DEFAULT '新建' COMMENT '体检中心状态',
   `LOGO` varchar(255) DEFAULT NULL COMMENT '体检中心logo图片地址',
