@@ -213,6 +213,7 @@ public class MedicalCenterController extends BaseController {
 				pd.put("MEDICALCENTER_ID", MEDICALCENTERID);													//ID
 				pd.put("NAME", listPd.get(i).getString("var0"));							//医院名称
 				pd.put("ABBREVIATION", listPd.get(i).getString("var1"));							//简介
+				pd.put("DESCRIPTION", listPd.get(i).getString("var2"));	//描述
 				pd.put("LOCATION", listPd.get(i).getString("var3"));	//地址
 				pd.put("TELEPHONE", listPd.get(i).getString("var4"));								//电话
 				pd.put("LOGO", listPd.get(i).getString("var5"));						//logo地址
