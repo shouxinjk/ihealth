@@ -23,6 +23,11 @@
 	<sql id="categoryTableName">
 		ADMIN_DISEASECATEGORY
 	</sql>
+	
+	<!--疾病关系表名 -->
+	<sql id="disease_di">
+		DISEASE_DISEASE
+	</sql>
 
 	<!-- 字段 -->
 	<sql id="Field">
@@ -73,7 +78,29 @@
 		#{DISEASECATEGORY_ID},
 		#{ISALABLE}
 	</sql>
-
+	
+	<!-- 字段 -->
+	<sql id="Field2">
+		ADMIN_DISEASE,
+		DISEASECATEGORY,
+		INITIATIONDISEASE,
+		INITIATIONTE,
+		INITIATIONDESCRIBE,
+		DISEASE_DID
+		
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue2">
+		#{DISEASE_ID},
+		#{DISEASECATEGORY},
+		#{INITIATIONDISEASE},
+		#{INITIATIONTE},
+		#{INITIATIONDESCRIBE},
+		#{DISEASE_DID}
+		
+	</sql>
+	
 	<!-- 通过疾病分类id获取疾病信息 -->
 	<select id="getDiseaseAndCategoryByID" parameterType="java.lang.String"
 		resultMap="DiseaseReultMap">
@@ -105,6 +132,16 @@
 		d.DISEASECATEGORY_ID=C.DISEASECATEGORY_ID where
 		c.DISEASECATEGORY_ID=#{id}
 	</select>
+		
+	<!-- 获取所有疾病分类-->
+	<select id="diseasecategory" parameterType="page"
+		resultType="pd">
+		select
+			admin_diseasecategory.NAME,
+			admin_diseasecategory.DISEASECATEGORY_ID
+			from admin_diseasecategory
+	</select>
+	
 
 	<!-- 新增 -->
 	<insert id="save" parameterType="pd">
@@ -116,6 +153,14 @@
 		<include refid="FieldValue1"></include>
 		)
 	</insert>
+	
+	<!-- 新增引发疾病信息 -->
+	<insert id="saveDisease" parameterType="pd">
+		insert into disease_disease
+		 values (
+		<include refid="FieldValue2"></include>
+		)
+	</insert>
 
 	<!-- 删除 -->
 	<delete id="delete" parameterType="pd">
@@ -123,6 +168,14 @@
 		<include refid="tableName"></include>
 		where
 		DISEASE_ID = #{DISEASE_ID}
+	</delete>
+	
+	<!-- 删除 -->
+	<delete id="deletedisease" parameterType="pd">
+		delete from
+		<include refid="disease_di"></include>
+		where
+		DISEASE_DID = #{DISEASE_DID}
 	</delete>
 
 	<!-- 修改 -->
@@ -150,6 +203,19 @@
 		<include refid="tableName"></include>
 		where
 		DISEASE_ID = #{DISEASE_ID}
+	</select>
+	
+	<!-- 获取所有疾病名称和ID -->
+	<select id="listdisease" parameterType="page" resultType="pd">
+		select
+			admin_disease.NAME,admin_disease.DISEASE_ID
+		from
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 通过ID获取引发疾病信息 -->
+	<select id="yinFaId" parameterType="pd" resultType="pd">
+		select admin_disease.NAME,admin_disease.DISEASE_ID,disease_disease.DISEASE_DID,disease_disease.INITIATIONDESCRIBE,disease_disease.INITIATIONTE,disease_disease.DISEASECATEGORY from admin_disease,disease_disease where admin_disease.DISEASE_ID=disease_disease.INITIATIONDISEASE and disease_disease.ADMIN_DISEASE= #{DISEASE_ID}
 	</select>
 	
 	<!-- 根据疾病名称获取疾病信息 -->

@@ -30,6 +30,18 @@ public class DiseaseService implements DiseaseManager {
 	public void save(PageData pd) throws Exception {
 		dao.save("DiseaseMapper.save", pd);
 	}
+	
+
+	/**
+	 * 新增疾病关系
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 */
+
+	public void saveDisease(PageData pd) throws Exception {
+		dao.save("DiseaseMapper.saveDisease", pd);
+	}
 
 	/**
 	 * 删除
@@ -41,6 +53,18 @@ public class DiseaseService implements DiseaseManager {
 	public void delete(PageData pd) throws Exception {
 		dao.delete("DiseaseMapper.delete", pd);
 	}
+	
+	/**
+	 * 删除引发关系
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 */
+
+	public void deletedisease(PageData pd) throws Exception {
+		dao.delete("DiseaseMapper.deletedisease", pd);
+	}
+
 
 	/**
 	 * 修改
@@ -87,7 +111,31 @@ public class DiseaseService implements DiseaseManager {
 	public PageData findById(PageData pd) throws Exception {
 		return (PageData) dao.findForObject("DiseaseMapper.findById", pd);
 	}
+	
+	/**
+	 * 通过id获取引发疾病关系
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 */
 
+	@SuppressWarnings("unchecked")
+	public List<PageData> yinFaId(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("DiseaseMapper.yinFaId", pd);
+	}
+
+	/**
+	 * 获取所有疾病分类
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> diseasecategory(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("DiseaseMapper.diseasecategory", page);
+	}
+	
+	
 	/**
 	 * 批量删除
 	 * 
@@ -210,6 +258,15 @@ public class DiseaseService implements DiseaseManager {
 		return (List<PageData>) dao.findForList("DiseaseMapper.getDiseaseAndCategoryByIDPD",id);
 	}
 
-	
+	/**
+	 * 获取所有疾病名称和ID
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listdisease(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("DiseaseMapper.listdisease", page);
+	}
 
 }

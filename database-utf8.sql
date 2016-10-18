@@ -659,6 +659,19 @@ CREATE TABLE `admin_tagcategory` (
   PRIMARY KEY (`TAGCATEGORY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Table structure for disease_disease
+-- ----------------------------
+DROP TABLE IF EXISTS `disease_disease`;
+CREATE TABLE `disease_disease` (
+  `ADMIN_DISEASE` varchar(100) NOT NULL COMMENT '源疾病ID',
+  `DISEASECATEGORY` varchar(100) DEFAULT NULL COMMENT '分类ID',
+  `INITIATIONDISEASE` varchar(255) DEFAULT NULL COMMENT '引发疾病',
+  `INITIATIONTE` char(100) DEFAULT '可能' COMMENT '引发类型',
+  `INITIATIONDESCRIBE` varchar(255) DEFAULT NULL COMMENT '引发描述',
+  `DISEASE_DID` varchar(100) NOT NULL,
+  PRIMARY KEY (`DISEASE_DID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for exam_examcategory

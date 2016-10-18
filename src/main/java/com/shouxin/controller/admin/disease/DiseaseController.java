@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Disease;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
@@ -184,22 +188,97 @@ public class DiseaseController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/goEdit")
-	public ModelAndView goEdit()throws Exception{
+	public ModelAndView goEdit(Page page)throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		String DISEASECATEGORY_ID = null == pd.get("DISEASECATEGORY_ID")?"":pd.get("DISEASECATEGORY_ID").toString();
 		pd.put("DISEASECATEGORY_ID", DISEASECATEGORY_ID);	
-		
 		logBefore(logger, pd.get("DISEASECATEGORY_ID")+"标签分类TAGCATEGORY111===============");
 		mv.addObject("pds",diseasecategoryService.findById(pd));
 		mv.addObject("DISEASECATEGORY_ID",DISEASECATEGORY_ID);
 		pd = diseaseService.findById(pd);//根据ID读取
+		List<PageData> varSouList =  diseaseService.yinFaId(pd);//根据ID读取引发关系信息
+		mv.addObject("varSouList",varSouList);
+		List<PageData>	varListDisease = diseaseService.listdisease(page);//获取疾病名称和ID
+		mv.addObject("varListDisease",varListDisease);
+		//读取疾病所有分类
+		List<PageData>	varList = diseaseService.diseasecategory(page);//获取疾病分类名称和ID
+//		String did = pd.getString("DISEASECATEGORY_ID");
+//		List<PageData> varDisList = diseaseService.getDiseaseAndCategoryByIDPD(did);//查询出所有疾病
 		mv.addObject("pd", pd);
+		mv.addObject("varList", varList);
+//		mv.addObject("varDisList", varDisList);
 		mv.setViewName("admin/disease/disease_edit");
 		mv.addObject("msg", "edit");
 		return mv;
 	}	
+	
+	/**
+	 * 新增疾病关系
+	 * @param resp
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/addSou")
+	public void addSou(HttpServletResponse resp,Page page) throws Exception{
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		logBefore(logger, pd.get("DISEASE_DID")+"DISEASE_DID+++++++++++++++++++");
+		pd.put("DISEASE_DID", this.get32UUID());	//主键
+		System.out.println(pd.getString("DISEASE_DID")+"+++++++++++++++++++++++");
+		diseaseService.saveDisease(pd);
+		/*List<PageData>	varListDisease = diseaseService.listdisease(page);//获取疾病名称和ID
+		JSONArray arraydisease = JSONArray.fromObject(varListDisease);*/
+		List<PageData> varSouList =  diseaseService.yinFaId(pd);//根据ID读取引发关系信息
+		JSONArray array = JSONArray.fromObject(varSouList);
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/html;charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		//out.println(arraydisease);
+		out.println(array);
+		out.close();
+	}
+	
+	/**
+	 * 删除疾病关系
+	 * @param resp
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/delSou")
+	public void delSou(HttpServletResponse resp) throws Exception{
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		diseaseService.deletedisease(pd);
+		List<PageData> varSouList =  diseaseService.yinFaId(pd);//根据ID读取引发关系信息
+		JSONArray array = JSONArray.fromObject(varSouList);
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/html;charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.println(array);
+		out.close();
+		
+	}
+	
+	/**
+	 * 疾病分类两级联动查询
+	 * @param req
+	 * @param resp
+	 * @param DISEASECATEGORY_ID
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/refreshDisease")
+	public void refreshDisease(HttpServletRequest req,HttpServletResponse resp,String DISEASECATEGORY_ID) throws Exception{
+		List<Disease> diseases = diseaseService.listDiseaseByDiseaseCategoryID(DISEASECATEGORY_ID);
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/json;charset=utf-8");
+		req.setAttribute("diseases", diseases);
+		JSONArray json = JSONArray.fromObject(diseases);
+		logBefore(logger, json+"列表disease == json");
+		PrintWriter pw = null;
+		pw=resp.getWriter();
+		pw.print(json);
+		pw.close();
+	}
 	
 	 /**批量删除
 	 * @param

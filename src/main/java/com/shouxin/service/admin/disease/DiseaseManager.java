@@ -19,6 +19,12 @@ public interface DiseaseManager{
 	 */
 	public void save(PageData pd)throws Exception;
 	
+	/**新增
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void saveDisease(PageData pd)throws Exception;
+	
 	/**删除
 	 * @param pd
 	 * @throws Exception
@@ -127,6 +133,20 @@ public interface DiseaseManager{
 	 */
 	public PageData findById(PageData pd)throws Exception;
 	
+
+	/**通过id获取引发疾病信息
+	 * @param pd
+	 * @throws Exception
+	 */
+	public List<PageData> yinFaId(PageData pd)throws Exception;
+	
+	/**获取所有疾病分类
+	 * @param pd
+	 * @throws Exception
+	 */
+	public List<PageData> diseasecategory(Page page)throws Exception;
+	
+	
 	/**批量删除
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
@@ -144,6 +164,21 @@ public interface DiseaseManager{
 	public Disease findDiseaseByName(String NAME) throws Exception;
 	
 	public List<PageData> getDiseaseAndCategoryByIDPD(String id)throws Exception;
-	
+
+	/**
+	 * 获取所有疾病名称和ID
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> listdisease(Page page)throws Exception;
+	/**
+	 * 删除引发关系
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	public void deletedisease(PageData pd)throws Exception;
+
 }
 
