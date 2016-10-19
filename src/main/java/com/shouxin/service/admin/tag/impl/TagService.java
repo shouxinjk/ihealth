@@ -7,6 +7,7 @@ import org.testng.log4testng.Logger;
 
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Disease;
 import com.shouxin.entity.admin.Tag;
 import com.shouxin.util.PageData;
 import com.shouxinjk.ihealth.data.Transfer;
@@ -107,6 +108,30 @@ public class TagService implements TagManager {
 	public PageData findById(PageData pd) throws Exception {
 		return (PageData) dao.findForObject("TagMapper.findById", pd);
 	}
+	
+	/**
+	 * 获取所有标签分类ID和名字
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 */
+	// @Override
+	@SuppressWarnings("unchecked")
+	public List<PageData> tagcategory(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("TagMapper.tagcategory", page);
+	}
+
+	/**
+	 * 获取所有标签ID和名字
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 */
+	// @Override
+	@SuppressWarnings("unchecked")
+	public List<PageData> listTag(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("TagMapper.listTag", page);
+	}
 
 	/**
 	 * 批量删除
@@ -129,6 +154,14 @@ public class TagService implements TagManager {
 	public List<PageData> findAllByTagCategoryId(PageData pd) throws Exception {
 		// TODO Auto-generated method stub
 		return (List<PageData>) dao.findForList("TagMapper.findALLByTagCategoryId", pd);
+	}
+	
+	/**
+	 * T通过标签分类id获取疾病信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Tag> findAllByTagCategoryIdTag(String TAGCATEGORY_ID) throws Exception {
+		return (List<Tag>) dao.findForList("TagMapper.findAllByTagCategoryIdTag", TAGCATEGORY_ID);
 	}
 
 	/**

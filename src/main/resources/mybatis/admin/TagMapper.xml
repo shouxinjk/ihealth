@@ -25,7 +25,9 @@
 		TAG_ID,
 		DESCRIPTION,
 		fieldName,
-		fieldType
+		fieldType,
+		TAGPARENTCATEGORY,
+		TAGPARENT
 	</sql>
 	
 	<!-- 字段值 -->
@@ -37,7 +39,9 @@
 		#{TAG_ID},
 		#{DESCRIPTION},
 		#{fieldName},
-		#{fieldType}
+		#{fieldType},
+		#{TAGPARENTCATEGORY},
+		#{TAGPARENT}
 	</sql>
 	
 	<!-- 字段 -->
@@ -50,7 +54,9 @@
 		TAGCATEGORY_ID,
 		DESCRIPTION,
 		fieldName,
-		fieldType
+		fieldType,
+		TAGPARENTCATEGORY,
+		TAGPARENT
 	</sql>
 	
 	<!-- 字段值 -->
@@ -63,7 +69,10 @@
 		#{TAGCATEGORY_ID},
 		#{DESCRIPTION},
 		#{fieldName},
-		#{fieldType}
+		#{fieldType},
+		#{TAGPARENTCATEGORY},
+		#{TAGPARENT}
+		
 	</sql>
 	
 	<!-- 新增-->
@@ -95,7 +104,9 @@
 			DESCRIPTION = #{DESCRIPTION},
 			fieldName = #{fieldName},
 			fieldType = #{fieldType},
-			TAG_ID = TAG_ID
+			TAG_ID = TAG_ID,
+			TAGPARENTCATEGORY=#{TAGPARENTCATEGORY},
+			TAGPARENT=#{TAGPARENT}
 		where 
 		TAG_ID = #{TAG_ID}
 	</update>
@@ -110,8 +121,35 @@
 			TAG_ID = #{TAG_ID}
 	</select>
 	
+	<!-- 获取所有标签分类ID和名字-->
+	<select id="tagcategory" parameterType="page" resultType="pd">
+		select
+			TAGCATEGORY_ID,
+		 	NAME	
+		from
+			admin_tagcategory
+	</select>
+
+		<!-- 获取所有标签ID和名字-->
+	<select id="listTag" parameterType="page" resultType="pd">
+		select
+			TAG_ID,
+		 	NAME	
+		from
+			admin_tag
+	</select>
+	
 		<!-- 通过tagCategoryID获取tag数据 -->
 	<select id="findALLByTagCategoryId" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field1"></include>
+		from 
+		<include refid="tableName"></include> t
+		where t.TAGCATEGORY_ID =#{TAGCATEGORY_ID}
+	</select>
+	
+		<!-- 通过tagCategoryID获取tag数据 -->
+	<select id="findAllByTagCategoryIdTag" parameterType="java.lang.String" resultType="pd">
 		select 
 		<include refid="Field1"></include>
 		from 

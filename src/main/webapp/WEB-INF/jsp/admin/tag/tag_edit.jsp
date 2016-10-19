@@ -45,6 +45,30 @@
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输入名称" title="名称" style="width:98%;" onblur="tagIsNull();"/></td>
 							</tr>
 							<tr>
+								<td style="width: 75px; text-align: right; padding-top: 13px;">标签关系:</td>
+								<td>
+									<select id="TAGPARENTCATEGORY" name="TAGPARENTCATEGORY" style="width: 30%" onchange="diseaseChange('${pd.TAGCATEGORY_ID}')">
+										<c:forEach items="${varList}" var="va" varStatus="vs">
+										<c:choose>
+											<c:when test="${pd.TAGPARENTCATEGORY eq va.TAGCATEGORY_ID}">
+											<option selected value="${va.TAGCATEGORY_ID}" >${va.NAME}</option>
+											</c:when>
+											<c:otherwise>
+											<option value="${va.TAGCATEGORY_ID}">${va.NAME}</option>
+											</c:otherwise>
+											</c:choose>
+											</c:forEach>
+									</select>
+									<select id="TAGPARENT" name="TAGPARENT" style="width: 30%">
+										<c:forEach items="${varListTag}" var="dis" varStatus="vs">
+											<c:if test="${dis.TAG_ID eq pd.TAGPARENT }">
+												<option value="${dis.TAG_ID }" selected="selected">${dis.NAME}</option>
+											</c:if>
+										</c:forEach>
+									</select>
+								</td>
+							</tr>
+							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">描述:</td>
 								<td><input type="text" name="DESCRIPTION" id="DESCRIPTION" value="${pd.DESCRIPTION}" maxlength="255" placeholder="这里输入描述信息" title="描述" style="width:98%;"/></td>
 							</tr>
@@ -118,6 +142,27 @@
 				}
 			})
 		}
+		
+		 //选择标签分类时两级联动查询
+		function diseaseChange(TAGCATEGORY_ID){
+			var TAGCATEGORY_ID = $("#TAGPARENTCATEGORY").get(0).options[$("#TAGPARENTCATEGORY").get(0).selectedIndex].value;
+			$.ajax({
+				url:"<%=basePath%>tag/refreshTag.do",
+				type : "post",
+				data : {
+					"TAGCATEGORY_ID" : TAGCATEGORY_ID
+				},
+				success : function(data) {
+					var msg = eval(data);
+					var str = "";
+					for (var i = 0; i < msg.length; i++) {
+						str += "<option value="+msg[i].TAG_ID+">"	
+								+ msg[i].NAME + "</option>";
+					}
+					$("#TAGPARENT").html(str);
+				}
+			});
+		} 
 		//保存
 		function save(){
 			if($("#NAME").val()==""){

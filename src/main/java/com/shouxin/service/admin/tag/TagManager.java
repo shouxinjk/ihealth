@@ -100,5 +100,22 @@ public interface TagManager{
 	 * @throws Exception
 	 */
 	public Tag findTagByName(String NAME) throws Exception;
+	
+	/**
+	 * 获取所有标签分类ID和名字
+	 * @param page
+	 * @return
+	 */
+	public List<PageData> tagcategory(Page page)throws Exception;
+	
+	/**
+	 * 获取所有标签ID和名字
+	 * @param page
+	 * @return
+	 */
+	public List<PageData> listTag(Page page)throws Exception;
+
+	public List<Tag> findAllByTagCategoryIdTag(String TAGCATEGORY_ID) throws Exception;
+	
 }
 

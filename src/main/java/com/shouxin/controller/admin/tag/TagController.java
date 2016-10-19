@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Disease;
 import com.shouxin.entity.admin.Tag;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
@@ -192,7 +193,7 @@ public class TagController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/goAdd")
-	public ModelAndView goAdd()throws Exception{
+	public ModelAndView goAdd(Page page)throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
@@ -200,6 +201,10 @@ public class TagController extends BaseController {
 		pd.put("TAGCATEGORY_ID", TAGCATEGORY_ID);	
 		logBefore(logger, pd.get("TAGCATEGORY_ID")+"标签分类TAGCATEGORY_ID===============");
 		mv.addObject("pds",tagcategoryService.findById(pd));
+		List<PageData>	varList = tagService.tagcategory(page);//获取疾病分类名称和ID
+		mv.addObject("varList",varList);
+		List<PageData>	varListTag = tagService.listTag(page);//获取所有标签名称和ID
+		mv.addObject("varListTag",varListTag);
 		mv.setViewName("admin/tag/tag_edit");
 		mv.addObject("msg", "save");
 		mv.addObject("TAGCATEGORY_ID",TAGCATEGORY_ID);
@@ -213,7 +218,7 @@ public class TagController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/goEdit")
-	public ModelAndView goEdit()throws Exception{
+	public ModelAndView goEdit(Page page)throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
@@ -223,6 +228,10 @@ public class TagController extends BaseController {
 		logBefore(logger, pd.get("TAGCATEGORY_ID")+"标签分类TAGCATEGORY111===============");
 		logBefore(logger, tagcategoryService.findById(pd)+"标签分类TAGCATEGORY===============");
 		mv.addObject("pds",tagcategoryService.findById(pd));
+		List<PageData>	varList = tagService.tagcategory(page);//获取疾病分类名称和ID
+		mv.addObject("varList",varList);
+		List<PageData>	varListTag = tagService.listTag(page);//获取所有标签名称和ID
+		mv.addObject("varListTag",varListTag);
 		mv.setViewName("admin/tag/tag_edit");
 		mv.addObject("msg", "edit");
 		pd = tagService.findById(pd);	//根据ID读取
@@ -230,6 +239,26 @@ public class TagController extends BaseController {
 		mv.addObject("pd", pd);
 		return mv;
 	}	
+	/**
+	 * 标签分类两级联动查询
+	 * @param req
+	 * @param resp
+	 * @param DISEASECATEGORY_ID
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/refreshTag")
+	public void refreshTag(HttpServletRequest req,HttpServletResponse resp,String TAGCATEGORY_ID) throws Exception{
+		List<Tag> tag = tagService.findAllByTagCategoryIdTag(TAGCATEGORY_ID);
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/json;charset=utf-8");
+		req.setAttribute("tag", tag);
+		JSONArray json = JSONArray.fromObject(tag);
+		logBefore(logger, json+"列表disease == json");
+		PrintWriter pw = null;
+		pw=resp.getWriter();
+		pw.print(json);
+		pw.close();
+	}
 	
 	 /**批量删除
 	 * @param
