@@ -2,6 +2,7 @@ package com.shouxin.service.subhealth.subhealth;
 
 import java.util.List;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Tag;
 import com.shouxin.entity.subhealth.SubhealthCategory;
 import com.shouxin.util.PageData;
 
@@ -84,6 +85,23 @@ public interface SubhealthManager{
 	 * @throws Exception
 	 */
 	public void restDeleteUserSubhealth(String USER_ID)throws Exception;
+
+	/**
+	 * 获取所有亚健康分类ID和名字
+	 * @param page
+	 * @return
+	 */
+	public List<PageData> subhealthcategory(Page page)throws Exception;
+	
+	/**
+	 * 获取所有亚健康ID和名字
+	 * @param page
+	 * @return
+	 */
+	public List<PageData> listsubhealth(Page page)throws Exception;
+
+	public List<SubhealthCategory> findAllCategoryIdSubhealth(String SUBHEALTHCATEGORY_ID)throws Exception;
+
 	
 }
 

@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.shouxin.dao.DaoSupport;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Tag;
 import com.shouxin.entity.subhealth.SubhealthCategory;
 import com.shouxin.util.PageData;
 import com.shouxin.service.subhealth.subhealth.SubhealthManager;
@@ -77,6 +78,31 @@ public class SubhealthService implements SubhealthManager{
 		return (PageData)dao.findForObject("SubhealthMapper.findById", pd);
 	}
 	
+
+	/**
+	 * 获取所有亚健康分类ID和名字
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 */
+	// @Override
+	@SuppressWarnings("unchecked")
+	public List<PageData> subhealthcategory(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("SubhealthMapper.subhealthcategory", page);
+	}
+
+	/**
+	 * 获取所有亚健康ID和名字
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 */
+	// @Override
+	@SuppressWarnings("unchecked")
+	public List<PageData> listsubhealth(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("SubhealthMapper.listsubhealth", page);
+	}
+	
 	/**批量删除
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
@@ -125,8 +151,15 @@ public class SubhealthService implements SubhealthManager{
 	 */
 	public void restDeleteUserSubhealth(String USER_ID)throws Exception{
 		dao.delete("SubhealthMapper.restDeleteUserSubhealth", USER_ID);
-	};
-	
+	}
+
+	/**
+	 * T通过标签分类id获取疾病信息
+	 */
+	@SuppressWarnings("unchecked")
+	public List<SubhealthCategory> findAllCategoryIdSubhealth(String SUBHEALTHCATEGORY_ID) throws Exception {
+		return (List<SubhealthCategory>) dao.findForList("SubhealthMapper.findAllCategoryIdSubhealth", SUBHEALTHCATEGORY_ID);
+	}
 	
 }
 

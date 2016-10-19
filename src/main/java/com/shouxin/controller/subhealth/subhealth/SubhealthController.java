@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.shouxin.controller.base.BaseController;
 import com.shouxin.entity.Page;
+import com.shouxin.entity.admin.Tag;
+import com.shouxin.entity.subhealth.SubhealthCategory;
 import com.shouxin.util.AppUtil;
 import com.shouxin.util.ObjectExcelView;
 import com.shouxin.util.PageData;
@@ -159,12 +164,16 @@ public class SubhealthController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/goAdd")
-	public ModelAndView goAdd()throws Exception{
+	public ModelAndView goAdd(Page page)throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		logBefore(logger, "SUBHEALTHCATEGORY_ID+++++++++++=="+pd.getString("SUBHEALTHCATEGORY_ID"));
 		PageData pds = this.subhealthcategoryService.findById(pd);
+		List<PageData>	varList = subhealthService.subhealthcategory(page);//获取亚健康分类名称和ID
+		mv.addObject("varList",varList);
+		List<PageData>	varListSubhealth = subhealthService.listsubhealth(page);//获取所有名称和ID
+		mv.addObject("varListSubhealth",varListSubhealth);
 		mv.setViewName("subhealth/subhealth/subhealth_edit");
 		mv.addObject("msg", "save");
 		mv.addObject("pds",pds);
@@ -177,18 +186,44 @@ public class SubhealthController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/goEdit")
-	public ModelAndView goEdit()throws Exception{
+	public ModelAndView goEdit(Page page)throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd = subhealthService.findById(pd);	//根据ID读取
 		PageData pds = this.subhealthcategoryService.findById(pd);
+		List<PageData>	varList = subhealthService.subhealthcategory(page);//获取亚健康分类名称和ID
+		mv.addObject("varList",varList);
+		List<PageData>	varListSubhealth = subhealthService.listsubhealth(page);//获取所有名称和ID
+		mv.addObject("varListSubhealth",varListSubhealth);
 		mv.setViewName("subhealth/subhealth/subhealth_edit");
 		mv.addObject("msg", "edit");
 		mv.addObject("pd", pd);
 		mv.addObject("pds",pds);
 		return mv;
 	}	
+	
+	/**
+	 * 亚健康分类两级联动查询
+	 * @param req
+	 * @param resp
+	 * @param SUBHEALTHCATEGORY_ID
+	 * @throws Exception
+	 */
+	
+	@RequestMapping(value="/refreshSubhealth")
+	public void refreshSubhealth(HttpServletRequest req,HttpServletResponse resp,String SUBHEALTHCATEGORY_ID) throws Exception{
+		List<SubhealthCategory> subhealth = subhealthService.findAllCategoryIdSubhealth(SUBHEALTHCATEGORY_ID);
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/json;charset=utf-8");
+		req.setAttribute("subhealth", subhealth);
+		JSONArray json = JSONArray.fromObject(subhealth);
+		logBefore(logger, json+"列表subhealth == json");
+		PrintWriter pw = null;
+		pw=resp.getWriter();
+		pw.print(json);
+		pw.close();
+	}
 	
 	 /**批量删除
 	 * @param

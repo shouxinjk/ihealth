@@ -16,7 +16,9 @@
 		EXPRESSION,	
 		CREATEBY,	
 		CREATEON,	
-		SUBHEALTH_ID
+		SUBHEALTH_ID,
+		SUBHEALTHPARENTCATEGORY,
+		SUBHEALTHPARENT
 	</sql>
 	
 	<!-- 字段值 -->
@@ -28,7 +30,9 @@
 		#{EXPRESSION},	
 		#{CREATEBY},	
 		#{CREATEON},	
-		#{SUBHEALTH_ID}
+		#{SUBHEALTH_ID},
+		#{SUBHEALTHPARENTCATEGORY},	
+		#{SUBHEALTHPARENT}
 	</sql>
 	
 	<!-- 新增-->
@@ -60,7 +64,9 @@
 			ISALABLE = #{ISALABLE},
 			SUBHEALTHCATEGORY_ID = #{SUBHEALTHCATEGORY_ID},
 			EXPRESSION = #{EXPRESSION},
-		SUBHEALTH_ID = SUBHEALTH_ID
+			SUBHEALTH_ID = SUBHEALTH_ID,
+			SUBHEALTHPARENTCATEGORY=#{SUBHEALTHPARENTCATEGORY},	
+			SUBHEALTHPARENT=#{SUBHEALTHPARENT}
 		where 
 		SUBHEALTH_ID = #{SUBHEALTH_ID}
 	</update>
@@ -73,6 +79,33 @@
 		<include refid="tableName"></include>
 		where 
 			SUBHEALTH_ID = #{SUBHEALTH_ID}
+	</select>
+	
+	<!-- 获取所有亚健康分类ID和名字-->
+	<select id="subhealthcategory" parameterType="page" resultType="pd">
+		select
+			SUBHEALTHCATEGORY_ID,
+		 	NAME	
+		from
+			tb_subhealthcategory
+	</select>
+	
+	<!-- 获取所有亚健康ID和名字-->
+	<select id="listsubhealth" parameterType="page" resultType="pd">
+		select
+			SUBHEALTH_ID,
+		 	NAME	
+		from
+			tb_subhealth
+	</select>
+	
+	<!-- 通过tagCategoryID获取tag数据 -->
+	<select id="findAllCategoryIdSubhealth" parameterType="java.lang.String" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> s
+		where s.SUBHEALTHCATEGORY_ID =#{SUBHEALTHCATEGORY_ID}
 	</select>
 	
 	<!-- 列表 -->

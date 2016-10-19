@@ -44,6 +44,30 @@
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="50" placeholder="这里输入名称" title="名称" style="width:98%;"/></td>
 							</tr>
 							<tr>
+								<td style="width: 75px; text-align: right; padding-top: 13px;">亚健康关系:</td>
+								<td>
+									<select id="SUBHEALTHPARENTCATEGORY" name="SUBHEALTHPARENTCATEGORY" style="width: 30%" onchange="subhealthChange('${pd.SUBHEALTHCATEGORY_ID}')">
+										<c:forEach items="${varList}" var="va" varStatus="vs">
+										<c:choose>
+											<c:when test="${pd.SUBHEALTHPARENTCATEGORY eq va.SUBHEALTHCATEGORY_ID}">
+											<option selected value="${va.SUBHEALTHCATEGORY_ID}" >${va.NAME}</option>
+											</c:when>
+											<c:otherwise>
+											<option value="${va.SUBHEALTHCATEGORY_ID}">${va.NAME}</option>
+											</c:otherwise>
+											</c:choose>
+											</c:forEach>
+									</select>
+									<select id="SUBHEALTHPARENT" name="SUBHEALTHPARENT" style="width: 30%">
+										<c:forEach items="${varListSubhealth}" var="su" varStatus="vs">
+											<c:if test="${su.SUBHEALTH_ID eq pd.SUBHEALTHPARENT }">
+												<option value="${su.SUBHEALTH_ID }" selected="selected">${su.NAME}</option>
+											</c:if>
+										</c:forEach>
+									</select>
+								</td>
+							</tr>
+							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">描述:</td>
 								<td><input type="text" name="DESCRIPTION" id="DESCRIPTION" value="${pd.DESCRIPTION}" maxlength="512" placeholder="这里输入描述" title="描述" style="width:98%;"/></td>
 							</tr>
@@ -161,6 +185,27 @@
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();
 		}
+		
+		 //选择亚健康分类时两级联动查询
+		function subhealthChange(SUBHEALTHCATEGORY_ID){
+			var SUBHEALTHCATEGORY_ID = $("#SUBHEALTHPARENTCATEGORY").get(0).options[$("#SUBHEALTHPARENTCATEGORY").get(0).selectedIndex].value;
+			$.ajax({
+				url:"<%=basePath%>subhealth/refreshSubhealth.do",
+				type : "post",
+				data : {
+					"SUBHEALTHCATEGORY_ID" : SUBHEALTHCATEGORY_ID
+				},
+				success : function(data) {
+					var msg = eval(data);
+					var str = "";
+					for (var i = 0; i < msg.length; i++) {
+						str += "<option value="+msg[i].SUBHEALTH_ID+">"	
+								+ msg[i].NAME + "</option>";
+					}
+					$("#SUBHEALTHPARENT").html(str);
+				}
+			});
+		} 
 		
 		$(function() {
 			//日期框
