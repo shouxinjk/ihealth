@@ -86,6 +86,7 @@ public class ExamCategoryService implements ExamCategoryManager{
 		dao.delete("ExamCategoryMapper.deleteAll", ArrayDATA_IDS);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<ExamCategory> listSubExamCategoryByParentID(String parentID) throws Exception {
 		// TODO Auto-generated method stub
 		return (List<ExamCategory>) dao.findForList("ExamCategoryMapper.listSubExamCategoryByID", parentID);
@@ -107,6 +108,7 @@ public class ExamCategoryService implements ExamCategoryManager{
 	/**
 	 * 指南管理模拟树状结构展示
 	 */
+	@SuppressWarnings("unchecked")
 	public List<ExamCategory> listSubExamCategoryByParentID2(String parentID,String prefix) throws Exception {
 		// TODO Auto-generated method stub
 		List<ExamCategory> c = (List<ExamCategory>) dao.findForList("ExamCategoryMapper.listSubExamCategoryByID", parentID);
