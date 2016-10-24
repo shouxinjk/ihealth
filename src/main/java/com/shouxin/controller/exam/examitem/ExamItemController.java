@@ -113,6 +113,8 @@ public class ExamItemController extends BaseController {
 		pd.put("EXAMCATEGORY_ID", EXAMCATEGORY_ID);
 		page.setPd(pd);
 		List<PageData>	varList = examitemService.list(page);	//列出ExamItem列表
+		/*List<PageData>	countList = examitemService.listcount(page);//统计服务项目
+		mv.addObject("countList",countList);*/
 		mv.setViewName("exam/examitem/examitem_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -166,6 +168,29 @@ public class ExamItemController extends BaseController {
 		return mv;
 	}	
 	
+	 /**去查看体检服务中心页面
+		 * @param
+		 * @throws Exception
+		 */
+		@RequestMapping(value="/goMedical")
+		public ModelAndView goMedical()throws Exception{
+			ModelAndView mv = this.getModelAndView();
+			PageData pd = new PageData();
+			pd = this.getPageData();
+			String EXAMCATEGORY_ID = null == pd.get("EXAMCATEGORY_ID")?"":pd.get("EXAMCATEGORY_ID").toString();
+			pd.put("EXAMCATEGORY_ID", EXAMCATEGORY_ID);	
+			logBefore(logger, pd.get("EXAMCATEGORY_ID")+"标签分类TAGCATEGORY111===============");
+			logBefore(logger, examitemService.findExamCategoryById(pd)+"标签分类TAGCATEGORY===============");
+			mv.addObject("pds",examitemService.findExamCategoryById(pd));
+			List<PageData>	varList = examitemService.findMedical(pd);	//根据体检手段读取体检服务项目
+			mv.setViewName("exam/examitem/examitem_medical");
+			mv.addObject("msg", "list");
+			mv.addObject("varList",varList);
+			mv.addObject("EXAMCATEGORY_ID",EXAMCATEGORY_ID);
+			mv.addObject("pd", pd);
+			return mv;
+		}	
+		
 	 /**去修改页面
 	 * @param
 	 * @throws Exception

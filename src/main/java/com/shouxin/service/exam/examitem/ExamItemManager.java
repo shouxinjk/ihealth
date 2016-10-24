@@ -86,5 +86,19 @@ public interface ExamItemManager{
 	 */
 	public List<PageData> listItemByExamCategoryID(String EXAMCATEGORY_ID) throws Exception;
 	
+	/**
+	 * 通过检查手段名字查询体检服务项目
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public List<PageData> findMedical(PageData pd)throws Exception;
+
+	/**根据体检手段统计服务项目数	
+	 * @param page
+	 * @throws Exception
+	 */
+	public List<PageData> listcount(Page page)throws Exception;
+	
 }
 

@@ -58,6 +58,15 @@ public class ExamItemService implements ExamItemManager{
 		return (List<PageData>)dao.findForList("ExamItemMapper.datalistPage", page);
 	}
 	
+	/**根据体检手段统计服务项目数量
+	 * @param page
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listcount(Page page)throws Exception{
+		return (List<PageData>)dao.findForList("ExamItemMapper.listcount", page);
+	}
+	
 	/**列表(全部)
 	 * @param pd
 	 * @throws Exception
@@ -73,6 +82,15 @@ public class ExamItemService implements ExamItemManager{
 	 */
 	public PageData findById(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("ExamItemMapper.findById", pd);
+	}
+	
+	/**通过体检手段获取所有体检服务项目
+	 * @param pd
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> findMedical(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("ExamItemMapper.findMedical", pd);
 	}
 	
 	/**批量删除

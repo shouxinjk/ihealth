@@ -64,6 +64,7 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">名称</th>
 									<th class="center">描述</th>
+									<th class="center">统计</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -81,6 +82,7 @@
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.DESCRIPTION}</td>
+											<td class="center" ><a title="查看" onclick="Medical('${var.EXAMITEM_ID}')">${var.Statistics}</a></td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
@@ -288,6 +290,24 @@
 			  diag.Height = 600;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+					 parent.location.href="<%=basePath%>examitem/listAllExamCategory.do?EXAMCATEGORY_ID=${EXAMCATEGORY_ID}&dnowPage=${page.currentPage}";
+				}
+				diag.close();
+			 };
+			 diag.show();
+		}
+		
+		//体检服务中心
+		function Medical(EXAMITEM_ID){
+			 top.jzts();
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="查看";
+			 diag.URL = '<%=basePath%>examitem/goMedical.do?EXAMITEM_ID='+EXAMITEM_ID;
+			 diag.Width = 800;
+			  diag.Height = 600;
+			 diag.CancelEvent = function(){ //关闭事件
+				 if(diag.innerFrame.contentWindow.document.getElementById('zhong').style.display == 'none'){
 					 parent.location.href="<%=basePath%>examitem/listAllExamCategory.do?EXAMCATEGORY_ID=${EXAMCATEGORY_ID}&dnowPage=${page.currentPage}";
 				}
 				diag.close();
