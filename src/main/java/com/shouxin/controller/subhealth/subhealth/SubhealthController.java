@@ -123,6 +123,10 @@ public class SubhealthController extends BaseController {
 		pd.put("SUBHEALTHCATEGORY_ID", SUBHEALTHCATEGORY_ID);
 		page.setPd(pd);
 		List<PageData>	varList = subhealthService.list(page);	//列出Subhealth列表
+		List<PageData>	varListCategory = subhealthService.subhealthcategory(page);//获取亚健康分类名称和ID
+		mv.addObject("varListCategory",varListCategory);
+		List<PageData>	varListSubhealth = subhealthService.listsubhealth(page);//获取所有名称和ID
+		mv.addObject("varListSubhealth",varListSubhealth);
 		mv.setViewName("subhealth/subhealth/subhealth_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);

@@ -60,6 +60,7 @@
 									<th class="center">描述</th>
 									<th class="center">是否为按钮</th>
 									<th class="center">附加表达式</th>
+									<th class="center">父亚健康分类-父亚健康</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -86,6 +87,17 @@
 												</c:if>
 											</td>
 											<td class='center'>${var.EXPRESSION}</td>
+											<td class='center' >
+												<c:forEach items="${varListCategory}" var="c" varStatus="vs">
+												<c:forEach items="${varListSubhealth}" var="t" varStatus="vs">
+												<c:if test="${c.SUBHEALTHCATEGORY_ID == var.SUBHEALTHPARENTCATEGORY }">
+												<c:if test="${t.SUBHEALTH_ID == var.SUBHEALTHPARENT }">
+													<span>${c.NAME}</br>${t.NAME}</span>
+												</c:if>
+												</c:if>
+												</c:forEach>
+												</c:forEach>
+											</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
