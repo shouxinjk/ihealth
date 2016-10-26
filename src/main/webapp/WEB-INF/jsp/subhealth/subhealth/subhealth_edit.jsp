@@ -161,16 +161,6 @@
 				$("#ISALABLE").focus();
 			return false;
 			}
-			if($("#SUBHEALTHCATEGORY_ID").val()==""){
-				$("#SUBHEALTHCATEGORY_ID").tips({
-					side:3,
-		            msg:'请输入亚健康分类id',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#SUBHEALTHCATEGORY_ID").focus();
-			return false;
-			}
 			if($("#EXPRESSION").val()==""){
 				$("#EXPRESSION").tips({
 					side:3,
