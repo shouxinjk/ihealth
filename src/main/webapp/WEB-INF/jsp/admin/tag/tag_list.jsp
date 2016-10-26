@@ -62,7 +62,7 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">父标签分类-父标签</th>
+									<th class="center">父标签</th>
 									<th class="center">名称</th>
 									<th class="center">表达式</th>
 									<th class="center">字段名称</th>
