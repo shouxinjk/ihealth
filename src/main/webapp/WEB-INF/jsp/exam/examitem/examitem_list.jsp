@@ -64,7 +64,7 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">名称</th>
 									<th class="center">描述</th>
-									<th class="center">统计</th>
+									<th class="center">服务项目</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
