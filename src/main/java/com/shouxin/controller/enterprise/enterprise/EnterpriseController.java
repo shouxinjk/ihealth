@@ -818,25 +818,26 @@ public class EnterpriseController extends BaseController {
 		Map<Object, Object> allMap = new HashMap<Object, Object>();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		List<PageData> allDisease = diseaseService.listAll(pd);
+		List<PageData> allDisease = diseaseService.listAll(pd);//个人疾病信息
 		System.out.println(allDisease+"==================++");
-		List<PageData> allIsInheritableDisease = diseaseService.listAllIsInheritable(pd);
-		List<PageData> allIsHighIncidenceDiseae = diseaseService.listAllIsHighIncidence(pd);
-		List<PageData> tags = this.tagService.listAll(pd);
+		List<PageData> allIsInheritableDisease = diseaseService.listAllIsInheritable(pd);//关注疾病信息
+		List<PageData> allIsHighIncidenceDiseae = diseaseService.listAllIsHighIncidence(pd);//家族疾病信息
+		List<PageData> tags = this.tagService.listAll(pd);//生活疾病信息
 		//查询属于该用户疾病信息
 		List<PageData> allUserDisease = diseaseService.listAllByUserID(pd);//个人疾病
-		List<PageData> allDiseaseIsHighIncaidence = diseaseService.listAllByUserIDIsHighIncaidence(pd);//家族疾病信息
-		List<PageData> allDiseaseIsInherItable = diseaseService.listAllByUserIDIsInherItable(pd);//关注疾病信息
+		List<PageData> allDiseaseIsInherItable = diseaseService.listAllByUserIDIsHighIncaidence(pd);//家族疾病信息
+		List<PageData> allDiseaseIsHighIncaidence = diseaseService.listAllByUserIDIsInherItable(pd);//关注疾病信息
 		List<PageData> userTags = tagService.listTagByUserID(pd);//该用户标签信息
 		resp.setCharacterEncoding("utf-8");
 		resp.setContentType("application/json;charet=utf-8");
 		allMap.put("allDisease", allDisease);
 		allMap.put("allFimaly", allIsHighIncidenceDiseae);
 		allMap.put("allGuan", allIsInheritableDisease);
+		allMap.put("tags", tags);
+		
 		allMap.put("allUserDisease", allUserDisease);
 		allMap.put("allUserFimaly", allDiseaseIsHighIncaidence);
 		allMap.put("allUserGuan", allDiseaseIsInherItable);
-		allMap.put("tags", tags);
 		allMap.put("userTags", userTags);
 		JSONObject json = JSONObject.fromObject(allMap);
 		System.out.println(json+"======");

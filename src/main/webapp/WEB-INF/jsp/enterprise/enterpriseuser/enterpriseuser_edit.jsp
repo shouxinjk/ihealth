@@ -33,26 +33,26 @@
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">姓名:</td>
-								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="姓名" title="姓名" style="width:98%;"/></td>
+								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="姓名（必填）" title="姓名" style="width:98%;"/></td>
 								<td style="width:75px;text-align: right;padding-top: 13px;">性别:</td>
-								<td><input type="text" name="SEX" id="SEX" value="${pd.SEX}" maxlength="255" placeholder="性别" title="性别" style="width:98%;"/></td>
+								<td><input type="text" name="SEX" id="SEX" value="${pd.SEX}" maxlength="255" placeholder="男/女" title="性别" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">生日:</td>
-								<td><input type="text" name="BIRTHDAY" id="BIRTHDAY" value="${pd.BIRTHDAY}" maxlength="255" placeholder="这里输入生日" title="生日" style="width:98%;"/></td>
+								<td><input type="text" name="BIRTHDAY" id="BIRTHDAY" value="${pd.BIRTHDAY}" maxlength="255" placeholder="19900101（必填）" title="生日" style="width:98%;"/></td>
 								<td style="width:75px;text-align: right;padding-top: 13px;">电话:</td>
 								<td><input type="text" name="PHONE" id="PHONE" value="${pd.PHONE}" maxlength="255" placeholder="这里输入联系人电话" title="联系人电话" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">身高:</td>
-								<td><input type="text" name="HEIGHT" id="HEIGHT" value="${pd.HEIGHT}" maxlength="255" placeholder="身高" title="身高" style="width:98%;"/></td>
+								<td><input type="text" name="HEIGHT" id="HEIGHT" value="${pd.HEIGHT}" maxlength="255" placeholder="身高cm" title="身高" style="width:98%;"/></td>
 								<td style="width:75px;text-align: right;padding-top: 13px;">体重:</td>
 								<td>
 									<input type="hidden" name="ALLDISEASE" id="ALLDISEASE" value=""/>
 									<input type="hidden" name="FIMALYDISEASE" id="FIMALYDISEASE" value=""/>
 									<input type="hidden" name="GUANDISEASE" id="GUANDISEASE" value=""/>
 									<input type="hidden" name="TAG" id="TAG" value=""/>
-									<input type="text" name="WEIGHT" id="WEIGHT" value="${pd.WEIGHT}" maxlength="255" placeholder="体重" title="体重" style="width:98%;"/>
+									<input type="text" name="WEIGHT" id="WEIGHT" value="${pd.WEIGHT}" maxlength="255" placeholder="体重kg" title="体重" style="width:98%;"/>
 								</td>
 							</tr>
 							<tr>
@@ -62,12 +62,12 @@
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">家族疾病:</td>
-								<td style="width:75px;text-align: left;padding-top: 13px;" id = "allFimalyDiseaseStr" colspan="3">
+								<td style="width:75px;text-align: left;padding-top: 13px;" id = "allFimalyDisease" colspan="3">
 								</td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">关注疾病:</td>
-								<td style="width:75px;text-align: left;padding-top: 13px;" id="allGuanDiseaseStr" colspan="3">
+								<td style="width:75px;text-align: left;padding-top: 13px;" id="allGuanDisease" colspan="3">
 								</td>
 							</tr>
 							<tr>
@@ -140,20 +140,24 @@
 				ALLDISEASE+=$(this).val()+","; 
 			}); 
 			ALLDISEASE = ALLDISEASE.substring(0,ALLDISEASE.length-1);
+			
 			var FIMALYDISEASE = "";
 			$('input[name="allFimalyDisease"]:checked').each(function(){ 
 				FIMALYDISEASE+=$(this).val()+","; 
 			}); 
 			FIMALYDISEASE = FIMALYDISEASE.substring(0,FIMALYDISEASE.length-1);
+			
 			var GUANDISEASE = "";
 			$('input[name="allGuanDisease"]:checked').each(function(){ 
 				GUANDISEASE+=$(this).val()+","; 
 			}); 
 			GUANDISEASE = GUANDISEASE.substring(0,GUANDISEASE.length-1);
+			
 			var TAG = "";
 			$('input[name="userTags"]:checked').each(function(){ 
 				TAG+=$(this).val()+","; 
 			}); 
+			
 			TAG = TAG.substring(0,TAG.length-1);
 			$("#ALLDISEASE").val(ALLDISEASE);
 			$("#FIMALYDISEASE").val(FIMALYDISEASE);
@@ -210,7 +214,7 @@
 						"<span>"+allFimaly[i].NAME+"</span>"+
 					"</label>";
 					}
-					$("#allFimalyDiseaseStr").html(allFimalyDiseaseStr);
+					$("#allFimalyDisease").html(allFimalyDiseaseStr);
 					
 					var allGuanDiseaseStr = "";
 					for(var i =0;i<allGuan.length;i++){
@@ -225,7 +229,7 @@
 						"<span>"+allGuan[i].NAME+"</span>"+
 					"</label>";
 					}
-					$("#allGuanDiseaseStr").html(allGuanDiseaseStr);
+					$("#allGuanDisease").html(allGuanDiseaseStr);
 					
 					var userTagStr = "";
 					for(var i =0;i<tags.length;i++){
@@ -233,7 +237,7 @@
 							"<input type=\"checkbox\" value=\""+tags[i].TAG_ID+"\" style=\"margin-left: 30px;\" name=\"userTags\" ";
 						for(var j=0;j<userTags.length;j++){
 							if(tags[i].TAG_ID == userTags[j].TAG_ID){
-								userTagStr += "checked = \"checked\" ";						
+								 userTagStr += "checked = \"checked\" ";	 				
 							} 
 						}
 						userTagStr +="/>"+
