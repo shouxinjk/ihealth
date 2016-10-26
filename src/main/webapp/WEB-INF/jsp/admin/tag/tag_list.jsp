@@ -67,10 +67,10 @@
 									<th class="center">字段名称</th>
 									<th class="center">字段类型</th>
 									<th class="center">描述</th>
+									<th class="center">父标签分类-父标签</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
-													
 							<tbody>
 							<!-- 开始循环 -->	
 							<c:choose>
@@ -87,6 +87,17 @@
 											<td class='center'>${var.fieldName}</td>
 											<td class='center'>${var.fieldType}</td>
 											<td class='center'>${var.DESCRIPTION}</td>
+											<td class='center' >
+												<c:forEach items="${varListCategory}" var="c" varStatus="vs">
+												<c:forEach items="${varListTag}" var="t" varStatus="vs">
+												<c:if test="${c.TAGCATEGORY_ID == var.TAGPARENTCATEGORY }">
+												<c:if test="${t.TAG_ID == var.TAGPARENT }">
+													<span>${c.NAME}</br>${t.NAME}</span>
+												</c:if>
+												</c:if>
+												</c:forEach>
+												</c:forEach>
+											</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

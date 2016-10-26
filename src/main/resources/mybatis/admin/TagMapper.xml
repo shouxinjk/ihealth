@@ -166,6 +166,8 @@
 		t.fieldName AS fieldName,
 		t.fieldType AS fieldType,
 		t.DESCRIPTION as DESCRIPTION,
+		t.TAGPARENTCATEGORY,
+		t.TAGPARENT,
 		tc.ISEXCLUSIVE as ISEXCLUSIVE
 		from 
 		<include refid="tableName"></include> t ,admin_tagcategory tc 

@@ -151,6 +151,10 @@ public class TagController extends BaseController {
 		logBefore(logger, pd.get("TAGCATEGORY_ID")+"列表DiseaseCategory=======");
 		page.setPd(pd);
 		List<PageData>	varList = tagService.list(page);	//列出Tag列表
+		List<PageData>	varListCategory = tagService.tagcategory(page);//获取标签分类名称和ID
+		mv.addObject("varListCategory",varListCategory);
+		List<PageData>	varListTag = tagService.listTag(page);//获取所有标签名称和ID
+		mv.addObject("varListTag",varListTag);
 		mv.setViewName("admin/tag/tag_list");
 		mv.addObject("varList", varList);
 		mv.addObject("TAGCATEGORY_ID", TAGCATEGORY_ID);		
@@ -201,7 +205,7 @@ public class TagController extends BaseController {
 		pd.put("TAGCATEGORY_ID", TAGCATEGORY_ID);	
 		logBefore(logger, pd.get("TAGCATEGORY_ID")+"标签分类TAGCATEGORY_ID===============");
 		mv.addObject("pds",tagcategoryService.findById(pd));
-		List<PageData>	varList = tagService.tagcategory(page);//获取疾病分类名称和ID
+		List<PageData>	varList = tagService.tagcategory(page);//获取标签分类名称和ID
 		mv.addObject("varList",varList);
 		List<PageData>	varListTag = tagService.listTag(page);//获取所有标签名称和ID
 		mv.addObject("varListTag",varListTag);
