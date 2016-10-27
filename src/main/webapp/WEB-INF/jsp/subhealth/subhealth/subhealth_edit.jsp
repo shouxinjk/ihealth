@@ -93,6 +93,14 @@
 								<td><input type="text" name="EXPRESSION" id="EXPRESSION" value="${pd.EXPRESSION}" maxlength="1024" placeholder="这里输入附加表达式" title="附加表达式" style="width:98%;"/></td>
 							</tr>
 							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">字段名称:</td>
+								<td><input type="text" name="fieldName" id="fieldName" value="${pd.fieldName}" maxlength="512" placeholder="这里输入字段名称" title="字段名称" style="width:98%;"/></td>
+							</tr>
+							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">字段类型:</td>
+								<td><input type="text" name="fieldType" id="fieldType" value="${pd.fieldType}" maxlength="512" placeholder="这里输入字段属性" title="字段属性" style="width:98%;"/></td>
+							</tr>
+							<tr>
 								<td style="text-align: center;" colspan="10">
 									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
 									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>

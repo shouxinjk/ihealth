@@ -26,6 +26,7 @@
 		DESCRIPTION,
 		fieldName,
 		fieldType,
+		ISALABLE,
 		TAGPARENTCATEGORY,
 		TAGPARENT
 	</sql>
@@ -40,6 +41,7 @@
 		#{DESCRIPTION},
 		#{fieldName},
 		#{fieldType},
+		#{ISALABLE},
 		#{TAGPARENTCATEGORY},
 		#{TAGPARENT}
 	</sql>
@@ -55,6 +57,7 @@
 		DESCRIPTION,
 		fieldName,
 		fieldType,
+		ISALABLE,
 		TAGPARENTCATEGORY,
 		TAGPARENT
 	</sql>
@@ -70,6 +73,7 @@
 		#{DESCRIPTION},
 		#{fieldName},
 		#{fieldType},
+		#{ISALABLE},
 		#{TAGPARENTCATEGORY},
 		#{TAGPARENT}
 		
@@ -104,6 +108,7 @@
 			DESCRIPTION = #{DESCRIPTION},
 			fieldName = #{fieldName},
 			fieldType = #{fieldType},
+			ISALABLE = #{ISALABLE},
 			TAG_ID = TAG_ID,
 			TAGPARENTCATEGORY=#{TAGPARENTCATEGORY},
 			TAGPARENT=#{TAGPARENT}
@@ -166,6 +171,7 @@
 		t.fieldName AS fieldName,
 		t.fieldType AS fieldType,
 		t.DESCRIPTION as DESCRIPTION,
+		t.ISALABLE as ISALABLE,
 		t.TAGPARENTCATEGORY,
 		t.TAGPARENT,
 		tc.ISEXCLUSIVE as ISEXCLUSIVE

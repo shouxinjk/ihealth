@@ -64,10 +64,11 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">父标签</th>
 									<th class="center">名称</th>
+									<th class="center">描述</th>
 									<th class="center">表达式</th>
 									<th class="center">字段名称</th>
 									<th class="center">字段类型</th>
-									<th class="center">描述</th>
+									<th class="center">是否为按钮</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -94,10 +95,18 @@
 												</c:forEach>
 											</td>
 											<td class='center'>${var.NAME}</td>
+											<td class='center'>${var.DESCRIPTION}</td>
 											<td class='center'>${var.EXPRESSION}</td>
 											<td class='center'>${var.fieldName}</td>
 											<td class='center'>${var.fieldType}</td>
-											<td class='center'>${var.DESCRIPTION}</td>
+											<td class='center'>
+											<c:if test="${var.ISALABLE eq 1}">
+													是
+												</c:if>
+												<c:if test="${var.ISALABLE eq 0 }">
+													否
+												</c:if>
+											</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

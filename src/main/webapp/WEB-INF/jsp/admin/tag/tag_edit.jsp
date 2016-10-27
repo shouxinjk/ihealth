@@ -87,6 +87,23 @@
 								<td><input type="text" name="EXPRESSION" id="EXPRESSION" value="${pd.EXPRESSION}" maxlength="255" placeholder="这里输入表达式" title="表达式" style="width:98%;"/></td>
 							</tr>
 							<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">是否为按钮:</td>
+								<td>
+									<c:if test="${pd.ISALABLE eq 1}">
+										<label><input type="radio" name="ISALABLE" value="1" checked="checked"/><span>是</span></label>
+										<label><input type="radio" name="ISALABLE" value="0"/><span>否</span></label>
+									</c:if>
+									<c:if test="${pd.ISALABLE eq 0}">
+										<label><input type="radio" name="ISALABLE" value="1"/><span>是</span></label>
+										<label><input type="radio" name="ISALABLE" value="0" checked="checked"/><span>否</span></label>
+									</c:if>
+									<c:if test="${pd.ISALABLE eq null}">
+										<label><input type="radio" name="ISALABLE" value="1" checked="checked"/><span>是</span></label>
+										<label><input type="radio" name="ISALABLE" value="0" /><span>否</span></label>
+									</c:if>
+								</td>
+							</tr>
+							<tr>
 								<td style="text-align: center;" colspan="10">
 									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
 									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
