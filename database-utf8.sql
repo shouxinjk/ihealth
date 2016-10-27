@@ -637,6 +637,7 @@ CREATE TABLE `admin_tag` (
   `DESCRIPTION` varchar(255) DEFAULT NULL,
   `fieldName` varchar(512) DEFAULT NULL COMMENT '字段名称',
   `fieldType` varchar(512) DEFAULT NULL COMMENT '字段属性',
+  `ISALABLE` int(11) NOT NULL COMMENT '是否为按钮',
    `TAGPARENTCATEGORY` varchar(32) DEFAULT NULL COMMENT '关联标签父类分类ID',
   `TAGPARENT` varchar(32) DEFAULT NULL COMMENT '关联标签父类ID',
   PRIMARY KEY (`TAG_ID`)
@@ -1148,6 +1149,8 @@ CREATE TABLE `tb_subhealth` (
   `EXPRESSION` varchar(1024) DEFAULT NULL COMMENT '附加表达式',
   `CREATEBY` varchar(255) DEFAULT NULL COMMENT '创建该记录用户',
   `CREATEON` varchar(255) DEFAULT NULL COMMENT '创建该记录时间',
+  `fieldName` varchar(512) DEFAULT NULL,
+  `fieldType` varchar(512) DEFAULT NULL,
   `SUBHEALTHPARENTCATEGORY` varchar(32) DEFAULT NULL COMMENT '关联亚健康父类分类ID',
   `SUBHEALTHPARENT` varchar(32) DEFAULT NULL COMMENT '关联亚健康父类ID',
   PRIMARY KEY (`SUBHEALTH_ID`)
